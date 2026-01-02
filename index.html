@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Allocate</title>
   <style>
     :root{
@@ -11,11 +11,12 @@
       --card:#ffffffcc;
       --ink:#1b1020;
       --muted:#5b4b61;
+      --stroke:#ffffff66;
       --accent:#ff5f9a;
       --accent2:#ff9a5a;
       --shadow: 0 20px 55px rgba(25, 10, 30, .18);
       --shadow2: 0 10px 24px rgba(25, 10, 30, .12);
-      --radius: 24px;
+      --radius: 22px;
     }
 
     *{ box-sizing:border-box; }
@@ -24,38 +25,41 @@
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--ink);
-      background: radial-gradient(1200px 800px at 20% 10%, rgba(255,255,255,.35), transparent 55%),
-                  linear-gradient(145deg, var(--bg1), var(--bg2));
+      background:
+        radial-gradient(1200px 800px at 20% 10%, rgba(255,255,255,.35), transparent 55%),
+        linear-gradient(145deg, var(--bg1), var(--bg2));
       display:flex;
       align-items:flex-start;
       justify-content:center;
-      padding:22px 14px 40px;
+      padding: calc(18px + env(safe-area-inset-top)) 14px calc(26px + env(safe-area-inset-bottom));
     }
 
     .phone{
       width:min(420px, 100%);
-      border-radius: 36px;
-      padding: 16px;
+      border-radius: 32px;
+      padding: 14px;
       background: rgba(255,255,255,.18);
       border: 1px solid rgba(255,255,255,.25);
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
     .topbar{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      padding: 6px 6px 14px;
-      gap: 10px;
+      gap:10px;
+      padding: 6px 4px 10px;
     }
     .brand{
-      font-weight:800;
+      font-weight:900;
       letter-spacing:.2px;
       font-size:18px;
       display:flex;
       align-items:center;
       gap:10px;
+      min-width: 0;
     }
     .dot{
       width:10px;
@@ -65,6 +69,7 @@
       box-shadow: 0 6px 14px rgba(255,95,154,.35);
       flex: 0 0 auto;
     }
+
     .pillbtn{
       border:1px solid rgba(255,255,255,.55);
       background: rgba(255,255,255,.28);
@@ -72,14 +77,35 @@
       padding: 10px 12px;
       border-radius: 999px;
       cursor:pointer;
-      font-weight:700;
+      font-weight:800;
       box-shadow: var(--shadow2);
       transition: transform .08s ease;
       user-select:none;
-      flex: 0 0 auto;
       white-space: nowrap;
+      flex: 0 0 auto;
     }
     .pillbtn:active{ transform: translateY(1px) scale(.99); }
+
+    .tabs{
+      display:flex;
+      gap:10px;
+      padding: 0 4px 10px;
+    }
+    .tab{
+      flex:1;
+      text-align:center;
+      padding: 12px 10px;
+      border-radius: 18px;
+      font-weight:900;
+      cursor:pointer;
+      border:1px solid rgba(255,255,255,.55);
+      background: rgba(255,255,255,.22);
+      user-select:none;
+    }
+    .tab.active{ background: rgba(255,255,255,.62); }
+
+    .section{ display:none; }
+    .section.active{ display:block; }
 
     .card{
       background: var(--card);
@@ -90,17 +116,10 @@
     }
     .stack{ display:flex; flex-direction:column; gap:12px; }
 
-    .hero{
-      text-align:center;
-      padding: 18px 16px 14px;
-    }
-    .hero .label{
-      font-weight:800;
-      font-size:18px;
-      margin: 0 0 6px 0;
-    }
+    .hero{ text-align:center; padding: 16px 14px 12px; }
+    .hero .label{ font-weight:900; font-size:18px; margin: 0 0 6px 0; }
     .big{
-      font-weight:900;
+      font-weight:950;
       font-size:64px;
       line-height:1;
       margin: 0;
@@ -126,30 +145,30 @@
       min-width: 155px;
       text-align:left;
     }
-    .kpi .klabel{ font-size:12px; color:var(--muted); font-weight:700; }
-    .kpi .kval{ font-size:18px; font-weight:900; margin-top: 2px; }
+    .kpi .klabel{ font-size:12px; color:var(--muted); font-weight:800; }
+    .kpi .kval{ font-size:18px; font-weight:950; margin-top: 2px; }
 
     .row{
       display:flex;
       gap:10px;
-      align-items:flex-end;
+      align-items:stretch;
       flex-wrap:wrap;
     }
     label{
       display:block;
       font-size:12px;
       color:var(--muted);
-      font-weight:800;
+      font-weight:900;
       margin: 0 0 6px 2px;
     }
     input{
       width:100%;
       border:1px solid rgba(255,255,255,.8);
-      background: rgba(255,255,255,.8);
+      background: rgba(255,255,255,.85);
       border-radius: 16px;
       padding: 12px 12px;
       font-size: 16px;
-      font-weight:800;
+      font-weight:900;
       outline:none;
     }
     input:focus{
@@ -157,8 +176,9 @@
       box-shadow: 0 0 0 4px rgba(255,95,154,.18);
     }
 
-    .field{ flex: 1 1 170px; }
-    .field.small{ flex: 1 1 140px; }
+    .field{ flex: 1 1 170px; min-width: 0; }
+    .field.small{ flex: 0 0 110px; }
+    .field.small .btn{ height: 100%; }
 
     .toggle{
       display:flex;
@@ -169,7 +189,8 @@
       background: rgba(255,255,255,.6);
       border: 1px solid rgba(255,255,255,.75);
       min-height: 50px;
-      flex: 1 1 190px;
+      flex: 1 1 170px;
+      min-width: 0;
     }
     .toggle input{
       width: 20px;
@@ -179,8 +200,9 @@
       box-shadow:none;
     }
     .toggle span{
-      font-weight:900;
+      font-weight:950;
       font-size:16px;
+      white-space: nowrap;
     }
 
     .btn{
@@ -189,7 +211,7 @@
       cursor:pointer;
       border-radius: 18px;
       padding: 14px 14px;
-      font-weight:900;
+      font-weight:950;
       font-size: 18px;
       color: #fff;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
@@ -205,105 +227,104 @@
       box-shadow: var(--shadow2);
     }
 
-    .tabs{
-      display:flex;
-      gap:10px;
-      padding: 12px 6px 0;
-    }
-    .tab{
-      flex:1;
-      text-align:center;
-      padding: 12px 12px;
-      border-radius: 18px;
-      font-weight:900;
-      cursor:pointer;
-      border:1px solid rgba(255,255,255,.55);
-      background: rgba(255,255,255,.22);
-      user-select:none;
-    }
-    .tab.active{
-      background: rgba(255,255,255,.62);
-    }
-
-    .section{ display:none; margin-top:12px; }
-    .section.active{ display:block; }
-
     .mini{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
-      margin-top: 6px;
+      margin-top: 8px;
     }
     .mini .hint{
       font-size:12px;
       color: var(--muted);
-      font-weight:700;
+      font-weight:800;
     }
 
-    .log{
-      width:100%;
-      border-collapse: collapse;
-      overflow:hidden;
-      border-radius: 18px;
+    .adds{
+      margin-top: 10px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .addRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding: 10px 12px;
+      border-radius: 16px;
       background: rgba(255,255,255,.55);
       border: 1px solid rgba(255,255,255,.72);
     }
-    .log th, .log td{
-      text-align:left;
-      padding: 10px 10px;
-      font-size: 13px;
-      border-bottom: 1px solid rgba(255,255,255,.55);
-      vertical-align: top;
+    .addRow .amt{
+      font-weight:950;
+      font-size:14px;
     }
-    .log th{
-      font-size: 12px;
+    .addRow .meta{
+      font-size:12px;
+      font-weight:800;
       color: var(--muted);
-      font-weight:900;
-      letter-spacing:.2px;
-      background: rgba(255,255,255,.45);
     }
-    .log tr:last-child td{ border-bottom:0; }
-    .right{ text-align:right; }
-    .del{
-      border: 1px solid rgba(255,255,255,.7);
-      background: rgba(255,255,255,.55);
+    .xbtn{
+      border: 1px solid rgba(255,255,255,.75);
+      background: rgba(255,255,255,.6);
       color: var(--ink);
       border-radius: 12px;
       padding: 8px 10px;
-      font-weight:900;
+      font-weight:950;
       cursor:pointer;
       user-select:none;
-      white-space: nowrap;
+      flex: 0 0 auto;
     }
-    .del:active{ transform: translateY(1px) scale(.99); }
+    .xbtn:active{ transform: translateY(1px) scale(.99); }
 
-    .sunday{ display:none; }
-    .sunday.show{ display:block; }
-
-    .spacer{ height: 8px; }
-
-    /* Mobile tidy for the 2 KPI tiles (prevents iPhone home screen weird wrapping) */
-    .kpiGrid{
+    .loglist{ display:flex; flex-direction:column; gap:10px; }
+    .daycard{
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(255,255,255,.72);
+      border-radius: 18px;
+      padding: 12px;
+    }
+    .dayhead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom: 10px;
+    }
+    .dayhead .date{
+      font-weight:950;
+      font-size:14px;
+    }
+    .grid{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap:10px;
     }
-    .kpiGrid .kpi{
-      min-width: 0;
-      width: 100%;
+    .metric{
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(255,255,255,.72);
+      border-radius: 16px;
+      padding: 10px 10px;
     }
-    @media (max-width: 360px){
-      .kpiGrid{
-        grid-template-columns: 1fr;
-      }
+    .metric .ml{ font-size:12px; color: var(--muted); font-weight:900; }
+    .metric .mv{ font-size:16px; font-weight:950; margin-top: 2px; }
+
+    .spacer{ height: 8px; }
+
+    @media (max-width: 390px){
+      .kpi{ min-width: 145px; }
+      .big{ font-size: 60px; }
+      .field.small{ flex: 0 0 100%; }
+      .field.small .btn{ padding: 12px 14px; }
+      .grid{ grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
 <body>
   <div class="phone">
     <div class="topbar">
-      <div class="brand"><span class="dot"></span>Allocate</div>
+      <div class="brand"><span class="dot"></span><span>Allocate</span></div>
       <button class="pillbtn" id="exportBtn">Export</button>
     </div>
 
@@ -314,6 +335,7 @@
 
     <div class="section active" id="dash">
       <div class="stack">
+
         <div class="card hero">
           <div class="label">Calories left today</div>
           <p class="big" id="leftBig">0</p>
@@ -337,7 +359,7 @@
               <input id="tdeeInput" type="number" inputmode="numeric" min="0" />
             </div>
 
-            <div class="toggle" title="Maintenance day">
+            <div class="toggle">
               <input id="maintenanceToggle" type="checkbox" />
               <span>Maintenance day</span>
             </div>
@@ -365,31 +387,33 @@
 
           <div class="spacer"></div>
 
-          <div class="kpiGrid">
-            <div class="kpi">
-              <div class="klabel">Today's running intake</div>
-              <div class="kval" id="intakeKpi">0</div>
+          <div class="row">
+            <div class="field">
+              <div class="kpi" style="min-width:100%">
+                <div class="klabel">Today's running intake</div>
+                <div class="kval" id="intakeKpi">0</div>
+              </div>
             </div>
-            <div class="kpi">
-              <div class="klabel">Remaining</div>
-              <div class="kval" id="remainKpi">0</div>
+            <div class="field">
+              <div class="kpi" style="min-width:100%">
+                <div class="klabel">Remaining</div>
+                <div class="kval" id="remainKpi">0</div>
+              </div>
             </div>
           </div>
 
           <div class="spacer"></div>
-          <button class="btn" id="endDayBtn">End day</button>
-        </div>
 
-        <div class="card sunday" id="weighCard">
           <div class="row">
             <div class="field">
-              <label for="weightInput">Weekly weigh-in</label>
-              <input id="weightInput" type="number" inputmode="decimal" step="0.1" min="0" />
+              <button class="btn ghost" id="undoBtn">Undo last add</button>
             </div>
-            <div class="field small">
-              <button class="btn ghost" id="saveWeightBtn">Save</button>
+            <div class="field">
+              <button class="btn" id="endDayBtn">End day</button>
             </div>
           </div>
+
+          <div class="adds" id="addsList"></div>
         </div>
 
       </div>
@@ -398,21 +422,7 @@
     <div class="section" id="log">
       <div class="stack">
         <div class="card">
-          <table class="log" id="logTable">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th class="right">TDEE</th>
-                <th class="right">Budget</th>
-                <th class="right">Intake</th>
-                <th class="right">Left</th>
-                <th>Mode</th>
-                <th class="right">Weight</th>
-                <th class="right"></th>
-              </tr>
-            </thead>
-            <tbody id="logBody"></tbody>
-          </table>
+          <div class="loglist" id="logList"></div>
         </div>
       </div>
     </div>
@@ -421,9 +431,9 @@
 
   <script>
     const DEFICIT = 500;
-    const LS_STATE = "allocate_today_state_v2";
-    const LS_LOG = "allocate_log_v2";
-    const LS_WEIGHTS = "allocate_weights_v2";
+
+    const LS_STATE = "allocate_today_state_v3";
+    const LS_LOG = "allocate_log_v3";
 
     const el = (id) => document.getElementById(id);
 
@@ -440,16 +450,9 @@
       return `${yyyy}-${mm}-${dd}`;
     };
 
-    const isSunday = () => new Date().getDay() === 0;
-
-    const isoWeekKey = (date = new Date()) => {
-      const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-      const dayNum = d.getUTCDay() || 7;
-      d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-      const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-      const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-      const year = d.getUTCFullYear();
-      return `${year}-W${String(weekNo).padStart(2, "0")}`;
+    const prettyDate = (iso) => {
+      const d = new Date(iso + "T00:00:00");
+      return d.toLocaleDateString("en-GB", { weekday:"short", day:"2-digit", month:"short", year:"numeric" });
     };
 
     const loadJSON = (key, fallback) => {
@@ -470,8 +473,8 @@
       date: todayISO(),
       yTdee: 0,
       maintenance: false,
-      budget: 0,
-      intake: 0
+      intake: 0,
+      adds: [] // { id, amount, ts }
     });
 
     let state = loadJSON(LS_STATE, null);
@@ -483,31 +486,115 @@
       state = defaultState();
       saveJSON(LS_STATE, state);
     }
+    if(!Array.isArray(state.adds)) state.adds = [];
 
     const getLog = () => loadJSON(LS_LOG, []);
     const setLog = (arr) => saveJSON(LS_LOG, arr);
 
-    const getWeights = () => loadJSON(LS_WEIGHTS, {});
-    const setWeights = (obj) => saveJSON(LS_WEIGHTS, obj);
-
     const calcBudget = () => {
       const t = Math.max(0, Number(state.yTdee || 0));
-      if(state.maintenance) return t;
-      return Math.max(0, t - DEFICIT);
+      return state.maintenance ? t : Math.max(0, t - DEFICIT);
     };
 
     const calcLeft = () => Math.round(calcBudget() - Number(state.intake || 0));
 
+    const recalcIntakeFromAdds = () => {
+      state.intake = Math.max(0, Math.round((state.adds || []).reduce((sum, a) => sum + (Number(a.amount) || 0), 0)));
+    };
+
+    const renderAdds = () => {
+      const list = el("addsList");
+      list.innerHTML = "";
+
+      const adds = (state.adds || []).slice().sort((a,b) => (b.ts || 0) - (a.ts || 0));
+      if(adds.length === 0){
+        el("undoBtn").disabled = true;
+        return;
+      }
+      el("undoBtn").disabled = false;
+
+      for(const a of adds){
+        const row = document.createElement("div");
+        row.className = "addRow";
+        const time = new Date(a.ts || Date.now()).toLocaleTimeString("en-GB", { hour:"2-digit", minute:"2-digit" });
+
+        row.innerHTML = `
+          <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+            <div class="amt">+${fmt(Number(a.amount) || 0)}</div>
+            <div class="meta">${time}</div>
+          </div>
+          <button class="xbtn" data-deladd="${a.id}">Delete</button>
+        `;
+        list.appendChild(row);
+      }
+
+      list.querySelectorAll("[data-deladd]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-deladd");
+          state.adds = (state.adds || []).filter(x => String(x.id) !== String(id));
+          recalcIntakeFromAdds();
+          saveJSON(LS_STATE, state);
+          render();
+        });
+      });
+    };
+
+    const renderLog = () => {
+      const log = getLog().slice().sort((a,b) => (a.date < b.date ? 1 : -1));
+      const host = el("logList");
+      host.innerHTML = "";
+
+      if(log.length === 0){
+        const empty = document.createElement("div");
+        empty.style.fontWeight = "900";
+        empty.style.color = "var(--muted)";
+        empty.textContent = "No days logged yet.";
+        host.appendChild(empty);
+        return;
+      }
+
+      for(const entry of log){
+        const budget = Math.round(entry.budget || 0);
+        const intake = Math.round(entry.intake || 0);
+        const deficit = Math.round(budget - intake);
+
+        const card = document.createElement("div");
+        card.className = "daycard";
+        card.innerHTML = `
+          <div class="dayhead">
+            <div class="date">${prettyDate(entry.date || "")}</div>
+            <button class="xbtn" data-dellog="${entry.id}">Delete</button>
+          </div>
+          <div class="grid">
+            <div class="metric"><div class="ml">TDEE</div><div class="mv">${fmt(entry.yTdee || 0)}</div></div>
+            <div class="metric"><div class="ml">Budget</div><div class="mv">${fmt(budget)}</div></div>
+            <div class="metric"><div class="ml">Intake</div><div class="mv">${fmt(intake)}</div></div>
+            <div class="metric"><div class="ml">Deficit</div><div class="mv">${fmt(deficit)}</div></div>
+          </div>
+        `;
+        host.appendChild(card);
+      }
+
+      host.querySelectorAll("[data-dellog]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-dellog");
+          const next = getLog().filter(x => String(x.id) !== String(id));
+          setLog(next);
+          renderLog();
+        });
+      });
+    };
+
     const render = () => {
-      state.budget = calcBudget();
+      const budget = calcBudget();
+      const left = calcLeft();
 
       el("tdeeInput").value = state.yTdee ? String(state.yTdee) : "";
       el("maintenanceToggle").checked = !!state.maintenance;
 
       el("yTdeeKpi").textContent = fmt(state.yTdee || 0);
-      el("budgetKpi").textContent = fmt(state.budget || 0);
+      el("budgetKpi").textContent = fmt(budget);
 
-      const left = calcLeft();
       el("leftBig").textContent = fmt(left);
       el("intakeKpi").textContent = fmt(state.intake || 0);
       el("remainKpi").textContent = fmt(left);
@@ -517,109 +604,67 @@
 
       saveJSON(LS_STATE, state);
 
+      renderAdds();
       renderLog();
-      renderSundayWeighIn();
-    };
-
-    const renderLog = () => {
-      const log = getLog().slice().sort((a,b) => (a.date < b.date ? 1 : -1));
-      const weights = getWeights();
-
-      const body = el("logBody");
-      body.innerHTML = "";
-
-      for(const entry of log){
-        const tr = document.createElement("tr");
-
-        const left = Math.round((entry.budget || 0) - (entry.intake || 0));
-        const w = (weights && weights[entry.weekKey]) ? weights[entry.weekKey] : "";
-
-        tr.innerHTML = `
-          <td>${entry.date || ""}</td>
-          <td class="right">${fmt(entry.yTdee || 0)}</td>
-          <td class="right">${fmt(entry.budget || 0)}</td>
-          <td class="right">${fmt(entry.intake || 0)}</td>
-          <td class="right">${fmt(left)}</td>
-          <td>${entry.maintenance ? "Maintenance" : "Deficit"}</td>
-          <td class="right">${w !== "" ? String(w) : ""}</td>
-          <td class="right"><button class="del" data-del="${entry.id}">Delete</button></td>
-        `;
-
-        body.appendChild(tr);
-      }
-
-      body.querySelectorAll("[data-del]").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const id = btn.getAttribute("data-del");
-          const next = getLog().filter(x => String(x.id) !== String(id));
-          setLog(next);
-          renderLog();
-        });
-      });
-    };
-
-    const renderSundayWeighIn = () => {
-      const card = el("weighCard");
-      if(!isSunday()){
-        card.classList.remove("show");
-        return;
-      }
-      const key = isoWeekKey(new Date());
-      const weights = getWeights();
-      const has = Object.prototype.hasOwnProperty.call(weights, key);
-
-      card.classList.add("show");
-      el("weightInput").value = has ? String(weights[key]) : "";
-      el("saveWeightBtn").disabled = has;
-      el("saveWeightBtn").textContent = has ? "Saved" : "Save";
     };
 
     el("applyBtn").addEventListener("click", () => {
       const v = Number(el("tdeeInput").value || 0);
       state.yTdee = Number.isFinite(v) ? Math.round(v) : 0;
       state.maintenance = !!el("maintenanceToggle").checked;
+      saveJSON(LS_STATE, state);
       render();
     });
 
     el("maintenanceToggle").addEventListener("change", () => {
       state.maintenance = !!el("maintenanceToggle").checked;
+      saveJSON(LS_STATE, state);
       render();
     });
 
     el("addBtn").addEventListener("click", () => {
       const v = Number(el("addInput").value || 0);
       if(!Number.isFinite(v) || v <= 0) return;
-      state.intake = Math.max(0, Math.round(Number(state.intake || 0) + v));
+
+      const add = { id: `${Date.now()}_${Math.random().toString(16).slice(2)}`, amount: Math.round(v), ts: Date.now() };
+      state.adds = Array.isArray(state.adds) ? state.adds : [];
+      state.adds.push(add);
+      recalcIntakeFromAdds();
+
       el("addInput").value = "";
+      saveJSON(LS_STATE, state);
       render();
     });
 
     el("addInput").addEventListener("keydown", (e) => {
-      if(e.key === "Enter"){
-        el("addBtn").click();
-      }
+      if(e.key === "Enter") el("addBtn").click();
+    });
+
+    el("undoBtn").addEventListener("click", () => {
+      if(!state.adds || state.adds.length === 0) return;
+      state.adds.sort((a,b) => (a.ts || 0) - (b.ts || 0));
+      state.adds.pop();
+      recalcIntakeFromAdds();
+      saveJSON(LS_STATE, state);
+      render();
     });
 
     el("endDayBtn").addEventListener("click", () => {
-      state.budget = calcBudget();
-
+      const budget = calcBudget();
       const entry = {
         id: `${state.date}_${Date.now()}`,
         date: state.date,
         yTdee: Math.round(state.yTdee || 0),
         maintenance: !!state.maintenance,
-        budget: Math.round(state.budget || 0),
-        intake: Math.round(state.intake || 0),
-        weekKey: isoWeekKey(new Date())
+        budget: Math.round(budget || 0),
+        intake: Math.round(state.intake || 0)
       };
 
       const log = getLog();
-      const existingIdx = log.findIndex(x => x.date === entry.date);
-      if(existingIdx >= 0){
-        log[existingIdx] = entry;
-      }else{
-        log.push(entry);
-      }
+      const idx = log.findIndex(x => x.date === entry.date);
+      if(idx >= 0) log[idx] = entry;
+      else log.push(entry);
+
       setLog(log);
 
       state = defaultState();
@@ -627,30 +672,12 @@
       render();
     });
 
-    el("saveWeightBtn").addEventListener("click", () => {
-      if(!isSunday()) return;
-
-      const key = isoWeekKey(new Date());
-      const weights = getWeights();
-      if(Object.prototype.hasOwnProperty.call(weights, key)) return;
-
-      const v = Number(el("weightInput").value || 0);
-      if(!Number.isFinite(v) || v <= 0) return;
-
-      weights[key] = v;
-      setWeights(weights);
-      renderSundayWeighIn();
-      renderLog();
-    });
-
     el("exportBtn").addEventListener("click", () => {
       const payload = {
         exportedAt: new Date().toISOString(),
         deficit: DEFICIT,
-        log: getLog(),
-        weights: getWeights()
+        log: getLog()
       };
-
       const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -666,7 +693,6 @@
       t.addEventListener("click", () => {
         document.querySelectorAll(".tab").forEach(x => x.classList.remove("active"));
         t.classList.add("active");
-
         const name = t.getAttribute("data-tab");
         el("dash").classList.toggle("active", name === "dash");
         el("log").classList.toggle("active", name === "log");
