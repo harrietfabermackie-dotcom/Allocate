@@ -2,17 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Allocate</title>
   <style>
     :root{
       --bg1:#ff7aa2;
       --bg2:#ffb36a;
       --card:#ffffffcc;
-      --card2:#ffffffb3;
       --ink:#1b1020;
       --muted:#5b4b61;
-      --stroke:#ffffff66;
       --accent:#ff5f9a;
       --accent2:#ff9a5a;
       --shadow: 0 20px 55px rgba(25, 10, 30, .18);
@@ -31,7 +29,7 @@
       display:flex;
       align-items:flex-start;
       justify-content:center;
-      padding:22px 14px 40px;
+      padding: calc(18px + env(safe-area-inset-top)) 14px calc(28px + env(safe-area-inset-bottom));
     }
 
     .phone{
@@ -133,6 +131,11 @@
       align-items:flex-end;
       flex-wrap:wrap;
     }
+    .row.nowrap{
+      flex-wrap:nowrap;
+      align-items:stretch;
+    }
+
     label{
       display:block;
       font-size:12px;
@@ -156,7 +159,7 @@
     }
 
     .field{ flex: 1 1 170px; }
-    .field.small{ flex: 1 1 140px; }
+    .field.small{ flex: 0 0 96px; }
 
     .toggle{
       display:flex;
@@ -204,12 +207,12 @@
     }
 
     .tabs{
-      display:flex;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
       gap:10px;
       padding: 12px 6px 0;
     }
     .tab{
-      flex:1;
       text-align:center;
       padding: 12px 12px;
       border-radius: 18px;
@@ -275,12 +278,16 @@
     }
     .del:active{ transform: translateY(1px) scale(.99); }
 
-    .sunday{
-      display:none;
-    }
+    .sunday{ display:none; }
     .sunday.show{ display:block; }
 
     .spacer{ height: 8px; }
+
+    @media (max-width: 380px){
+      .big{ font-size:56px; }
+      .field.small{ flex-basis: 88px; }
+      .btn{ font-size:17px; }
+    }
   </style>
 </head>
 <body>
@@ -336,7 +343,7 @@
         </div>
 
         <div class="card">
-          <div class="row">
+          <div class="row nowrap">
             <div class="field">
               <label for="addInput">Add calories</label>
               <input id="addInput" type="number" inputmode="numeric" min="0" />
@@ -657,9 +664,6 @@
     });
 
     render();
-
-    // FYI: This app saves to localStorage.
-    // If you clear site data for this file, the log disappears, so export when you want a backup.
   </script>
 </body>
 </html>
