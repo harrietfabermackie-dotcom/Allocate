@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Allocate</title>
   <style>
     :root{
@@ -29,7 +29,7 @@
       display:flex;
       align-items:flex-start;
       justify-content:center;
-      padding: calc(18px + env(safe-area-inset-top)) 14px calc(28px + env(safe-area-inset-bottom));
+      padding:22px 14px 40px;
     }
 
     .phone{
@@ -47,6 +47,7 @@
       align-items:center;
       justify-content:space-between;
       padding: 6px 6px 14px;
+      gap: 10px;
     }
     .brand{
       font-weight:800;
@@ -62,6 +63,7 @@
       border-radius:999px;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       box-shadow: 0 6px 14px rgba(255,95,154,.35);
+      flex: 0 0 auto;
     }
     .pillbtn{
       border:1px solid rgba(255,255,255,.55);
@@ -74,6 +76,8 @@
       box-shadow: var(--shadow2);
       transition: transform .08s ease;
       user-select:none;
+      flex: 0 0 auto;
+      white-space: nowrap;
     }
     .pillbtn:active{ transform: translateY(1px) scale(.99); }
 
@@ -131,11 +135,6 @@
       align-items:flex-end;
       flex-wrap:wrap;
     }
-    .row.nowrap{
-      flex-wrap:nowrap;
-      align-items:stretch;
-    }
-
     label{
       display:block;
       font-size:12px;
@@ -159,7 +158,7 @@
     }
 
     .field{ flex: 1 1 170px; }
-    .field.small{ flex: 0 0 96px; }
+    .field.small{ flex: 1 1 140px; }
 
     .toggle{
       display:flex;
@@ -207,12 +206,12 @@
     }
 
     .tabs{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
+      display:flex;
       gap:10px;
       padding: 12px 6px 0;
     }
     .tab{
+      flex:1;
       text-align:center;
       padding: 12px 12px;
       border-radius: 18px;
@@ -275,6 +274,7 @@
       font-weight:900;
       cursor:pointer;
       user-select:none;
+      white-space: nowrap;
     }
     .del:active{ transform: translateY(1px) scale(.99); }
 
@@ -283,10 +283,20 @@
 
     .spacer{ height: 8px; }
 
-    @media (max-width: 380px){
-      .big{ font-size:56px; }
-      .field.small{ flex-basis: 88px; }
-      .btn{ font-size:17px; }
+    /* Mobile tidy for the 2 KPI tiles (prevents iPhone home screen weird wrapping) */
+    .kpiGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    .kpiGrid .kpi{
+      min-width: 0;
+      width: 100%;
+    }
+    @media (max-width: 360px){
+      .kpiGrid{
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -343,7 +353,7 @@
         </div>
 
         <div class="card">
-          <div class="row nowrap">
+          <div class="row">
             <div class="field">
               <label for="addInput">Add calories</label>
               <input id="addInput" type="number" inputmode="numeric" min="0" />
@@ -355,12 +365,12 @@
 
           <div class="spacer"></div>
 
-          <div class="kpis" style="justify-content:space-between">
-            <div class="kpi" style="min-width: 48%;">
+          <div class="kpiGrid">
+            <div class="kpi">
               <div class="klabel">Today's running intake</div>
               <div class="kval" id="intakeKpi">0</div>
             </div>
-            <div class="kpi" style="min-width: 48%;">
+            <div class="kpi">
               <div class="klabel">Remaining</div>
               <div class="kval" id="remainKpi">0</div>
             </div>
