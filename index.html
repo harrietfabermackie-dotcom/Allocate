@@ -10,10 +10,8 @@
       --bg1:#ff7aa2;
       --bg2:#ffb36a;
       --card:#ffffffcc;
-      --card2:#ffffffb3;
       --ink:#1b1020;
       --muted:#5b4b61;
-      --stroke:#ffffff66;
       --accent:#ff5f9a;
       --accent2:#ff9a5a;
       --shadow: 0 20px 55px rgba(25, 10, 30, .18);
@@ -210,7 +208,6 @@
 
     .spacer{ height: 8px; }
 
-    /* iOS vibe switch */
     .switchRow{
       display:flex;
       align-items:center;
@@ -272,7 +269,6 @@
       transform: translateX(20px);
     }
 
-    /* Bottom tabs */
     .bottomTabsWrap{
       margin-top: 12px;
       padding: 10px 10px;
@@ -314,7 +310,6 @@
       color: var(--ink);
     }
 
-    /* Logging list */
     .entryList{
       margin: 10px 0 0 0;
       padding: 0;
@@ -363,11 +358,9 @@
     }
     .xbtn:active{ transform: translateY(1px) scale(.99); }
 
-    /* Pages */
     .page{ display:none; margin-top:12px; }
     .page.active{ display:block; }
 
-    /* Progress cards */
     .dayCardHeader{
       display:flex;
       align-items:center;
@@ -393,7 +386,6 @@
     }
     .smBtn:active{ transform: translateY(1px) scale(.99); }
 
-    /* Modal */
     .modalBack{
       position: fixed;
       inset: 0;
@@ -474,26 +466,18 @@
 
           <div class="spacer"></div>
 
-          <div class="row">
-            <div class="field">
-              <label for="tdeeInput">Yesterday's TDEE</label>
-              <input id="tdeeInput" type="number" inputmode="numeric" min="0" placeholder="Enter TDEE" />
+          <div class="grid2">
+            <div class="kpi">
+              <div class="klabel">Rollover bank</div>
+              <div class="kval" id="rolloverBankKpi">0</div>
             </div>
-
-            <div class="field">
-              <div class="switchRow">
-                <div class="slabel">Maintenance</div>
-                <div class="iosSwitch" aria-label="Maintenance">
-                  <input id="maintenanceToggle" type="checkbox" />
-                  <span class="iosTrack"></span>
-                  <span class="iosThumb"></span>
-                </div>
-              </div>
+            <div class="kpi">
+              <div class="klabel">Event bank</div>
+              <div class="kval" id="eventBankKpi">0</div>
             </div>
           </div>
 
           <div class="spacer"></div>
-          <button class="btn" id="applyBtn">Apply</button>
 
           <div class="mini">
             <div class="hint" id="modeHint"></div>
@@ -554,6 +538,27 @@
     <!-- LOGGING -->
     <div class="page" id="pageLogging">
       <div class="stack">
+        <div class="card">
+          <div class="row">
+            <div class="field">
+              <label for="tdeeInput">Yesterday's TDEE</label>
+              <input id="tdeeInput" type="number" inputmode="numeric" min="0" placeholder="Enter TDEE" />
+            </div>
+            <div class="field">
+              <div class="switchRow">
+                <div class="slabel">Maintenance</div>
+                <div class="iosSwitch" aria-label="Maintenance">
+                  <input id="maintenanceToggle" type="checkbox" />
+                  <span class="iosTrack"></span>
+                  <span class="iosThumb"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="spacer"></div>
+          <button class="btn" id="applyBtn">Apply</button>
+        </div>
+
         <div class="card hero">
           <div class="label">Calories left today</div>
           <p class="big" id="leftBig">0</p>
@@ -644,11 +649,30 @@
     </div>
   </div>
 
+  <!-- End day options modal -->
+  <div class="modalBack" id="endBack">
+    <div class="modal">
+      <div class="modalTop">
+        <div class="mtitle">Leftover calories</div>
+        <button class="closeBtn" id="endClose">Close</button>
+      </div>
+      <div class="note" id="endNote"></div>
+      <div class="spacer"></div>
+      <div class="stack">
+        <button class="btn" id="optRollover">Rollover to tomorrow</button>
+        <button class="btn ghost" id="optEvent">Bank for future event</button>
+        <button class="btn ghost" id="optMoveOn">Move on</button>
+      </div>
+      <div class="note">Event banking is stored as a total for now.</div>
+    </div>
+  </div>
+
   <script>
-    const LS_SETTINGS = "allocate_settings_v3";
-    const LS_STATS = "allocate_stats_v3";
-    const LS_TODAY = "allocate_today_v3";
-    const LS_DAYS = "allocate_days_v3";
+    const LS_SETTINGS = "allocate_settings_v4";
+    const LS_STATS = "allocate_stats_v4";
+    const LS_TODAY = "allocate_today_v4";
+    const LS_DAYS = "allocate_days_v4";
+    const LS_BANKS = "allocate_banks_v4";
 
     const DEFAULT_DEFICIT = 750;
     const DAY_CUTOFF_HOUR = 3;
@@ -702,6 +726,16 @@
     const getStats = () => loadJSON(LS_STATS, { heightCm:"", weightLb:"", age:"", gender:"" });
     const setStats = (stats) => saveJSON(LS_STATS, stats);
 
+    const getBanks = () => {
+      const b = loadJSON(LS_BANKS, null);
+      if(!b) return { rollover: 0, event: 0 };
+      return {
+        rollover: Math.max(0, Math.round(Number(b.rollover || 0))),
+        event: Math.max(0, Math.round(Number(b.event || 0)))
+      };
+    };
+    const setBanks = (banks) => saveJSON(LS_BANKS, banks);
+
     const defaultToday = () => ({
       dayKey: dayKeyWithCutoff(),
       yTdee: 0,
@@ -752,14 +786,17 @@
     const render = () => {
       const settings = getSettings();
       const today = getToday();
+      const banks = getBanks();
 
-      const budget = calcBudget(today, settings);
+      const budgetBase = calcBudget(today, settings);
       const intake = sumIntake(today.entries);
-      const left = Math.round(budget - intake);
 
-      el("budgetBig").textContent = fmt(budget);
+      el("budgetBig").textContent = fmt(budgetBase);
       el("yTdeeKpi").textContent = fmt(today.yTdee || 0);
       el("deficitKpi").textContent = today.maintenance ? "0" : `-${fmt(settings.deficit)}`;
+
+      el("rolloverBankKpi").textContent = fmt(banks.rollover || 0);
+      el("eventBankKpi").textContent = fmt(banks.event || 0);
 
       el("tdeeInput").value = today.yTdee ? String(today.yTdee) : "";
       el("maintenanceToggle").checked = !!today.maintenance;
@@ -767,9 +804,12 @@
       el("modeHint").textContent = today.maintenance ? "Maintenance" : "Deficit";
       el("savedHint").textContent = "Saved";
 
+      const budgetWithRollover = Math.round(budgetBase + (banks.rollover || 0));
+      const left = Math.round(budgetWithRollover - intake);
+
       el("leftBig").textContent = fmt(left);
       el("intakeKpi").textContent = fmt(intake);
-      el("budgetLogKpi").textContent = fmt(budget);
+      el("budgetLogKpi").textContent = fmt(budgetWithRollover);
 
       el("deficitInput").value = String(settings.deficit);
 
@@ -940,19 +980,21 @@
       render();
     });
 
-    el("endDayBtn").addEventListener("click", () => {
+    const saveDayToProgress = () => {
       const settings = getSettings();
       const today = getToday();
+      const banks = getBanks();
 
       const intake = sumIntake(today.entries);
-      const budget = calcBudget(today, settings);
+      const budgetBase = calcBudget(today, settings);
+      const budgetWithRollover = Math.round(budgetBase + (banks.rollover || 0));
 
       const dayObj = {
         id: `day_${today.dayKey}`,
         dayKey: today.dayKey,
         yTdee: Math.round(today.yTdee || 0),
         maintenance: !!today.maintenance,
-        budget: Math.round(budget),
+        budget: Math.round(budgetWithRollover),
         intake: Math.round(intake)
       };
 
@@ -962,9 +1004,77 @@
       else days.push(dayObj);
       setDays(days);
 
+      return { left: Math.round(budgetWithRollover - intake) };
+    };
+
+    const openEndOptions = (left) => {
+      el("endNote").textContent = `${fmt(left)} calories left.`;
+      el("endBack").classList.add("show");
+    };
+    const closeEndOptions = () => el("endBack").classList.remove("show");
+
+    el("endClose").addEventListener("click", closeEndOptions);
+    el("endBack").addEventListener("click", (e) => {
+      if(e.target === el("endBack")) closeEndOptions();
+    });
+
+    const finishEndDay = () => {
       setToday(defaultToday());
       render();
       setActivePage("Progress");
+    };
+
+    el("endDayBtn").addEventListener("click", () => {
+      const res = saveDayToProgress();
+
+      if(res.left > 0){
+        openEndOptions(res.left);
+      }else{
+        finishEndDay();
+      }
+    });
+
+    el("optRollover").addEventListener("click", () => {
+      const settings = getSettings();
+      const today = getToday();
+      const banks = getBanks();
+
+      const intake = sumIntake(today.entries);
+      const budgetBase = calcBudget(today, settings);
+      const budgetWithRollover = Math.round(budgetBase + (banks.rollover || 0));
+      const left = Math.round(budgetWithRollover - intake);
+
+      banks.rollover = Math.round(left);
+      setBanks(banks);
+
+      closeEndOptions();
+      finishEndDay();
+    });
+
+    el("optEvent").addEventListener("click", () => {
+      const settings = getSettings();
+      const today = getToday();
+      const banks = getBanks();
+
+      const intake = sumIntake(today.entries);
+      const budgetBase = calcBudget(today, settings);
+      const budgetWithRollover = Math.round(budgetBase + (banks.rollover || 0));
+      const left = Math.round(budgetWithRollover - intake);
+
+      banks.event = Math.round((banks.event || 0) + left);
+      banks.rollover = 0;
+      setBanks(banks);
+
+      closeEndOptions();
+      finishEndDay();
+    });
+
+    el("optMoveOn").addEventListener("click", () => {
+      const banks = getBanks();
+      banks.rollover = 0;
+      setBanks(banks);
+      closeEndOptions();
+      finishEndDay();
     });
 
     el("saveSettingsBtn").addEventListener("click", () => {
@@ -1004,9 +1114,7 @@
 
     const wireStatsUnsaved = () => {
       const btn = el("saveStatsBtn");
-      const markUnsaved = () => {
-        setUnsavedButton(btn, "Save", true);
-      };
+      const markUnsaved = () => setUnsavedButton(btn, "Save", true);
       ["heightInput","weightStatInput","ageInput","genderInput"].forEach((id) => {
         el(id).addEventListener("input", markUnsaved);
         el(id).addEventListener("change", markUnsaved);
@@ -1015,9 +1123,7 @@
 
     const wireSettingsUnsaved = () => {
       const btn = el("saveSettingsBtn");
-      el("deficitInput").addEventListener("input", () => {
-        setUnsavedButton(btn, "Save", false);
-      });
+      el("deficitInput").addEventListener("input", () => setUnsavedButton(btn, "Save", false));
     };
 
     el("exportBtn").addEventListener("click", () => {
@@ -1026,6 +1132,7 @@
         cutoffHour: DAY_CUTOFF_HOUR,
         settings: getSettings(),
         stats: getStats(),
+        banks: getBanks(),
         today: getToday(),
         days: getDays()
       };
@@ -1103,7 +1210,6 @@
     wireStatsUnsaved();
     wireSettingsUnsaved();
 
-    // if stats exist, show Saved instantly so it feels real
     const existingStats = getStats();
     const hasAnyStats = Object.values(existingStats).some(v => String(v || "").trim() !== "");
     if(hasAnyStats){
