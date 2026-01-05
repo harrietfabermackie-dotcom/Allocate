@@ -99,6 +99,12 @@
       font-size:18px;
       margin: 0 0 6px 0;
     }
+    .subline{
+      font-size:12px;
+      color: rgba(91,75,97,.85);
+      font-weight:900;
+      margin: 0 0 10px 0;
+    }
     .big{
       font-weight:900;
       font-size:64px;
@@ -128,14 +134,32 @@
       text-align:left;
       min-width: 0;
     }
-    .kpi .klabel{ font-size:12px; color:var(--muted); font-weight:900; display:flex; align-items:center; gap:8px; }
-    .kpi .kval{ font-size:18px; font-weight:900; margin-top: 2px; }
-
-    .kpiTopRow{
+    .kpi .klabel{
+      font-size:12px;
+      color:var(--muted);
+      font-weight:900;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .kpi .kval{
+      font-size:18px;
+      font-weight:900;
+      margin-top: 2px;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
+      min-width: 0;
+    }
+    .kpi .knum{
+      min-width: 0;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .row{
@@ -382,6 +406,26 @@
     }
     .smBtn:active{ transform: translateY(1px) scale(.99); }
 
+    .iconBtn{
+      width: 40px;
+      height: 40px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.65);
+      background: rgba(255,255,255,.35);
+      box-shadow: var(--shadow2);
+      cursor:pointer;
+      font-weight:900;
+      color: var(--ink);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      -webkit-tap-highlight-color: transparent;
+      flex: 0 0 auto;
+      font-size: 20px;
+      line-height: 1;
+    }
+    .iconBtn:active{ transform: translateY(1px) scale(.99); }
+
     .modalBack{
       position: fixed;
       inset: 0;
@@ -422,6 +466,7 @@
       font-weight:900;
       cursor:pointer;
       -webkit-tap-highlight-color: transparent;
+      color: var(--ink);
     }
     .closeBtn:active{ transform: translateY(1px) scale(.99); }
 
@@ -445,9 +490,9 @@
       color: rgba(27,16,32,.85);
     }
     .pencil{
-      width: 36px;
-      height: 36px;
-      border-radius: 14px;
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
       border: 1px solid rgba(255,255,255,.65);
       background: rgba(255,255,255,.35);
       box-shadow: var(--shadow2);
@@ -457,6 +502,9 @@
       align-items:center;
       justify-content:center;
       -webkit-tap-highlight-color: transparent;
+      color: var(--ink);
+      font-size: 20px;
+      line-height: 1;
     }
     .pencil:active{ transform: translateY(1px) scale(.99); }
 
@@ -476,26 +524,39 @@
     .kv .k{ font-size:12px; color: var(--muted); font-weight:900; }
     .kv .v{ font-size:14px; font-weight:900; margin-top: 2px; }
 
-    .inlineUse{
+    .calcWrap{ display:none; }
+    .calcRow{
       display:flex;
-      gap:8px;
-      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:flex-end;
     }
-    .useBtn{
-      border:1px solid rgba(255,255,255,.65);
-      background: rgba(255,255,255,.35);
-      color: var(--ink);
-      padding: 6px 10px;
-      border-radius: 999px;
-      cursor:pointer;
+    .calcMsg{
       font-weight:900;
-      box-shadow: var(--shadow2);
-      -webkit-tap-highlight-color: transparent;
-      font-size: 12px;
-      line-height: 1;
-      flex: 0 0 auto;
+      color: rgba(27,16,32,.85);
+      margin-top: 10px;
+      text-align:center;
     }
-    .useBtn:active{ transform: translateY(1px) scale(.99); }
+    .loadingDots{
+      display:inline-block;
+      width: 38px;
+      text-align:left;
+    }
+    .loadingDots span{
+      display:inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(27,16,32,.65);
+      margin-right: 6px;
+      animation: bounce 1s infinite ease-in-out;
+    }
+    .loadingDots span:nth-child(2){ animation-delay: .15s; }
+    .loadingDots span:nth-child(3){ animation-delay: .30s; }
+    @keyframes bounce{
+      0%, 80%, 100%{ transform: translateY(0); opacity:.55; }
+      40%{ transform: translateY(-6px); opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -509,6 +570,7 @@
     <div class="page active" id="pageDash">
       <div class="stack">
         <div class="card hero">
+          <p class="subline" id="todayDate"></p>
           <div class="label">Today's budget</div>
           <p class="big" id="budgetBig">0</p>
 
@@ -517,11 +579,11 @@
           <div class="grid2">
             <div class="kpi">
               <div class="klabel">Burned yesterday</div>
-              <div class="kval" id="yTdeeKpi">0</div>
+              <div class="kval"><span class="knum" id="yTdeeKpi">0</span></div>
             </div>
             <div class="kpi">
               <div class="klabel">Deficit</div>
-              <div class="kval" id="deficitKpi">-0</div>
+              <div class="kval"><span class="knum" id="deficitKpi">-0</span></div>
             </div>
           </div>
 
@@ -530,16 +592,14 @@
           <div class="grid2">
             <div class="kpi">
               <div class="klabel">Rollover calories</div>
-              <div class="kval" id="rolloverKpi">0</div>
+              <div class="kval"><span class="knum" id="rolloverKpi">0</span></div>
             </div>
             <div class="kpi">
-              <div class="klabel kpiTopRow">
-                <span>Banked calories</span>
-                <span class="inlineUse">
-                  <button class="useBtn" id="useBankedBtn">USE</button>
-                </span>
+              <div class="klabel">Banked calories</div>
+              <div class="kval">
+                <span class="knum" id="bankedKpi">0</span>
+                <button class="iconBtn" id="useBankedBtn" aria-label="Use banked calories">＋</button>
               </div>
-              <div class="kval" id="bankedKpi">0</div>
             </div>
           </div>
 
@@ -635,6 +695,36 @@
 
           <div class="note" id="statsSavedHint" style="display:none;">Saved</div>
         </div>
+
+        <div class="card calcWrap" id="goalCard">
+          <div style="font-weight:900; font-size:14px; color: rgba(27,16,32,.85);">Goal calculator</div>
+          <div class="spacer"></div>
+
+          <div class="calcRow">
+            <div class="field">
+              <label for="currentWeightInput">Current weight (lb)</label>
+              <input id="currentWeightInput" type="number" inputmode="decimal" step="0.1" min="0" />
+            </div>
+            <div class="field">
+              <label for="targetWeightInput">Target weight (lb)</label>
+              <input id="targetWeightInput" type="number" inputmode="decimal" step="0.1" min="0" />
+            </div>
+          </div>
+
+          <div class="spacer"></div>
+
+          <div class="calcRow">
+            <div class="field">
+              <label for="targetDateInput">Target date</label>
+              <input id="targetDateInput" type="date" />
+            </div>
+            <div class="field small">
+              <button class="btn" id="calcBtn">Calculate</button>
+            </div>
+          </div>
+
+          <div class="calcMsg" id="calcMsg"></div>
+        </div>
       </div>
     </div>
 
@@ -650,11 +740,11 @@
           <div class="grid2">
             <div class="kpi">
               <div class="klabel">Running intake</div>
-              <div class="kval" id="intakeKpi">0</div>
+              <div class="kval"><span class="knum" id="intakeKpi">0</span></div>
             </div>
             <div class="kpi">
               <div class="klabel">Budget</div>
-              <div class="kval" id="budgetLogKpi">0</div>
+              <div class="kval"><span class="knum" id="budgetLogKpi">0</span></div>
             </div>
           </div>
         </div>
@@ -768,11 +858,11 @@
   </div>
 
   <script>
-    const LS_SETTINGS = "allocate_settings_v5";
-    const LS_STATS = "allocate_stats_v5";
-    const LS_TODAY = "allocate_today_v5";
-    const LS_DAYS = "allocate_days_v5";
-    const LS_BANKS = "allocate_banks_v5";
+    const LS_SETTINGS = "allocate_settings_v6";
+    const LS_STATS = "allocate_stats_v6";
+    const LS_TODAY = "allocate_today_v6";
+    const LS_DAYS = "allocate_days_v6";
+    const LS_BANKS = "allocate_banks_v6";
 
     const DEFAULT_DEFICIT = 750;
     const DAY_CUTOFF_HOUR = 3;
@@ -813,6 +903,35 @@
 
     const timeHHMM = (date = new Date()) => `${pad2(date.getHours())}:${pad2(date.getMinutes())}`;
 
+    const ordinal = (n) => {
+      const v = n % 100;
+      if(v >= 11 && v <= 13) return `${n}th`;
+      const last = n % 10;
+      if(last === 1) return `${n}st`;
+      if(last === 2) return `${n}nd`;
+      if(last === 3) return `${n}rd`;
+      return `${n}th`;
+    };
+
+    const formatTodayLine = (date = new Date()) => {
+      const d = new Date(date);
+      const weekday = d.toLocaleDateString("en-GB", { weekday: "short" });
+      const day = d.getDate();
+      const month = d.toLocaleDateString("en-GB", { month: "short" });
+      return `${weekday} ${month} ${ordinal(day)}`;
+    };
+
+    const formatDayKey = (key) => {
+      const parts = String(key).split("-");
+      if(parts.length !== 3) return key;
+      const y = Number(parts[0]);
+      const m = Number(parts[1]) - 1;
+      const d = Number(parts[2]);
+      const dt = new Date(y, m, d);
+      const month = dt.toLocaleDateString("en-GB", { month: "short" });
+      return `${month} ${ordinal(d)}`;
+    };
+
     const getSettings = () => {
       const s = loadJSON(LS_SETTINGS, null);
       if(!s || typeof s.deficit !== "number"){
@@ -825,6 +944,10 @@
 
     const getStats = () => loadJSON(LS_STATS, { heightCm:"", weightLb:"", age:"", gender:"" });
     const setStats = (stats) => saveJSON(LS_STATS, stats);
+
+    const hasFilledStats = (s) => {
+      return !!(s.heightCm && s.weightLb && s.age && s.gender);
+    };
 
     const getBanks = () => {
       const b = loadJSON(LS_BANKS, null);
@@ -877,7 +1000,6 @@
     };
 
     const ensureDayRoll = () => {
-      const settings = getSettings(); // eslint-disable-line no-unused-vars
       const banks = getBanks();
       const today = getToday();
 
@@ -961,7 +1083,7 @@
 
         card.innerHTML = `
           <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px;">
-            <div style="font-weight:900; font-size:14px; color: rgba(27,16,32,.75);">${d.dayKey}</div>
+            <div style="font-weight:900; font-size:14px; color: rgba(27,16,32,.75);">${formatDayKey(d.dayKey)}</div>
             <div style="display:flex; gap:8px;">
               <button class="smBtn" data-edit="${d.id}">Edit</button>
               <button class="smBtn" data-delday="${d.id}">Delete</button>
@@ -971,11 +1093,11 @@
           <div class="grid2">
             <div class="kpi">
               <div class="klabel">TDEE</div>
-              <div class="kval">${fmt(Number(d.yTdee||0))}</div>
+              <div class="kval"><span class="knum">${fmt(Number(d.yTdee||0))}</span></div>
             </div>
             <div class="kpi">
               <div class="klabel">Budget</div>
-              <div class="kval">${fmt(Number(d.budget||0))}</div>
+              <div class="kval"><span class="knum">${fmt(Number(d.budget||0))}</span></div>
             </div>
           </div>
 
@@ -984,11 +1106,11 @@
           <div class="grid2">
             <div class="kpi">
               <div class="klabel">Intake</div>
-              <div class="kval">${fmt(Number(d.intake||0))}</div>
+              <div class="kval"><span class="knum">${fmt(Number(d.intake||0))}</span></div>
             </div>
             <div class="kpi">
               <div class="klabel">Deficit</div>
-              <div class="kval">${d.maintenance ? "0" : `-${fmt(deficit)}`}</div>
+              <div class="kval"><span class="knum">${d.maintenance ? "0" : `-${fmt(deficit)}`}</span></div>
             </div>
           </div>
         `;
@@ -1017,6 +1139,16 @@
       el("svAge").textContent = s.age ? String(s.age) : "-";
       const g = s.gender || "";
       el("svGender").textContent = g ? (g === "na" ? "N/A" : (g.charAt(0).toUpperCase() + g.slice(1))) : "-";
+
+      const showCalc = hasFilledStats(s);
+      el("goalCard").style.display = showCalc ? "block" : "none";
+
+      if(showCalc){
+        const cw = el("currentWeightInput");
+        if(!cw.value){
+          cw.value = s.weightLb || "";
+        }
+      }
     };
 
     const openStatsEdit = () => {
@@ -1055,12 +1187,13 @@
       const banks = getBanks();
       const today = getToday();
 
-      const budgetBase = calcBudgetBase(today, settings);
       const budgetTotal = calcBudgetTotal(today, settings);
       const intake = sumIntake(today.entries);
       const left = Math.round(budgetTotal - intake);
 
+      el("todayDate").textContent = formatTodayLine(new Date());
       el("budgetBig").textContent = fmt(budgetTotal);
+
       el("yTdeeKpi").textContent = fmt(today.yTdee || 0);
       el("deficitKpi").textContent = today.maintenance ? "0" : `-${fmt(settings.deficit)}`;
 
@@ -1176,7 +1309,6 @@
     });
 
     const finishEndDay = () => {
-      const today = getToday();
       const next = defaultToday();
       next.dayKey = dayKeyWithCutoff(new Date());
       setToday(next);
@@ -1278,6 +1410,56 @@
       setTimeout(() => { el("statsSavedHint").style.display = "none"; }, 1000);
     });
 
+    // Goal calculator
+    const showCalcLoading = () => {
+      el("calcMsg").innerHTML = `
+        <span class="loadingDots" aria-label="Loading">
+          <span></span><span></span><span></span>
+        </span>
+      `;
+    };
+
+    const calcDailyDeficit = () => {
+      const cw = Number(el("currentWeightInput").value || 0);
+      const tw = Number(el("targetWeightInput").value || 0);
+      const td = String(el("targetDateInput").value || "");
+
+      if(!Number.isFinite(cw) || cw <= 0) return { ok:false, msg:"Enter your current weight." };
+      if(!Number.isFinite(tw) || tw <= 0) return { ok:false, msg:"Enter your target weight." };
+      if(tw >= cw) return { ok:false, msg:"Target weight must be lower than current weight." };
+      if(!td) return { ok:false, msg:"Pick a target date." };
+
+      const targetDate = new Date(`${td}T12:00:00`);
+      if(Number.isNaN(targetDate.getTime())) return { ok:false, msg:"Pick a valid target date." };
+
+      const startKey = dayKeyWithCutoff(new Date());
+      const startParts = startKey.split("-").map(Number);
+      const startDate = new Date(startParts[0], startParts[1]-1, startParts[2], 12, 0, 0);
+
+      const msPerDay = 86400000;
+      const days = Math.ceil((targetDate - startDate) / msPerDay);
+
+      if(days <= 0) return { ok:false, msg:"Target date must be in the future." };
+
+      const lbsToLose = cw - tw;
+      const totalCals = lbsToLose * 3500;
+      const daily = Math.round(totalCals / days);
+
+      return { ok:true, daily, days };
+    };
+
+    el("calcBtn").addEventListener("click", () => {
+      showCalcLoading();
+      setTimeout(() => {
+        const res = calcDailyDeficit();
+        if(!res.ok){
+          el("calcMsg").textContent = res.msg;
+          return;
+        }
+        el("calcMsg").textContent = `Daily deficit: ${fmt(res.daily)}.`;
+      }, 750);
+    });
+
     // Use banked
     const openUseModal = () => {
       const banks = getBanks();
@@ -1348,7 +1530,7 @@
       if(!d) return;
 
       editingId = id;
-      el("editTitle").textContent = `Edit ${d.dayKey}`;
+      el("editTitle").textContent = `Edit ${formatDayKey(d.dayKey)}`;
       el("editYTdee").value = String(d.yTdee || 0);
       el("editIntake").value = String(d.intake || 0);
       el("editBack").classList.add("show");
