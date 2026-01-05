@@ -557,6 +557,81 @@
       0%, 80%, 100%{ transform: translateY(0); opacity:.55; }
       40%{ transform: translateY(-6px); opacity: 1; }
     }
+
+    .roundRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.58);
+      border: 1px solid rgba(255,255,255,.72);
+      margin-top: 10px;
+    }
+    .roundRow .rlabel{
+      font-weight:900;
+      font-size:14px;
+      color: rgba(27,16,32,.85);
+    }
+    .roundControls{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+    }
+    .seg{
+      display:flex;
+      border-radius: 999px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.75);
+      background: rgba(255,255,255,.45);
+      box-shadow: var(--shadow2);
+    }
+    .seg button{
+      border:0;
+      background: transparent;
+      padding: 8px 10px;
+      font-weight:900;
+      cursor:pointer;
+      color: rgba(27,16,32,.8);
+      -webkit-tap-highlight-color: transparent;
+      min-width: 68px;
+    }
+    .seg button.active{
+      background: rgba(255,255,255,.75);
+      color: var(--ink);
+    }
+
+    .planBar{
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(91,75,97,.18);
+      border: 1px solid rgba(255,255,255,.65);
+      overflow:hidden;
+      margin-top: 10px;
+    }
+    .planFill{
+      height:100%;
+      width: 0%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 999px;
+      transition: width .35s ease;
+    }
+    .planMeta{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-top: 10px;
+      flex-wrap:wrap;
+    }
+    .planMeta .pm{
+      font-size:12px;
+      color: rgba(91,75,97,.9);
+      font-weight:900;
+    }
   </style>
 </head>
 <body>
@@ -703,7 +778,7 @@
           <div class="calcRow">
             <div class="field">
               <label for="currentWeightInput">Current weight (lb)</label>
-              <input id="currentWeightInput" type="number" inputmode="decimal" step="0.1" min="0" />
+              <input id="currentWeightInput" type="number" inputmode="decimal" step="0.1" min="0" placeholder="From stats" />
             </div>
             <div class="field">
               <label for="targetWeightInput">Target weight (lb)</label>
@@ -724,6 +799,28 @@
           </div>
 
           <div class="calcMsg" id="calcMsg"></div>
+
+          <div id="savePlanWrap" style="display:none;">
+            <div class="roundRow">
+              <div class="rlabel">Round to 50</div>
+              <div class="roundControls">
+                <div class="iosSwitch" aria-label="Round to 50">
+                  <input id="roundToggle" type="checkbox" />
+                  <span class="iosTrack"></span>
+                  <span class="iosThumb"></span>
+                </div>
+                <div class="seg" id="roundModeSeg" style="display:none;">
+                  <button type="button" data-mode="down">Down</button>
+                  <button type="button" data-mode="nearest" class="active">Nearest</button>
+                  <button type="button" data-mode="up">Up</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="spacer"></div>
+            <button class="btn" id="savePlanBtn">Save plan</button>
+            <div class="note" id="savePlanHint" style="display:none;">Saved</div>
+          </div>
         </div>
       </div>
     </div>
@@ -858,11 +955,12 @@
   </div>
 
   <script>
-    const LS_SETTINGS = "allocate_settings_v6";
-    const LS_STATS = "allocate_stats_v6";
-    const LS_TODAY = "allocate_today_v6";
-    const LS_DAYS = "allocate_days_v6";
-    const LS_BANKS = "allocate_banks_v6";
+    const LS_SETTINGS = "allocate_settings_v7";
+    const LS_STATS = "allocate_stats_v7";
+    const LS_TODAY = "allocate_today_v7";
+    const LS_DAYS = "allocate_days_v7";
+    const LS_BANKS = "allocate_banks_v7";
+    const LS_PLAN = "allocate_plan_v7";
 
     const DEFAULT_DEFICIT = 750;
     const DAY_CUTOFF_HOUR = 3;
@@ -932,6 +1030,12 @@
       return `${month} ${ordinal(d)}`;
     };
 
+    const parseDayKeyToDateNoon = (key) => {
+      const p = String(key).split("-").map(Number);
+      if(p.length !== 3 || !p[0] || !p[1] || !p[2]) return new Date();
+      return new Date(p[0], p[1]-1, p[2], 12, 0, 0);
+    };
+
     const getSettings = () => {
       const s = loadJSON(LS_SETTINGS, null);
       if(!s || typeof s.deficit !== "number"){
@@ -948,6 +1052,9 @@
     const hasFilledStats = (s) => {
       return !!(s.heightCm && s.weightLb && s.age && s.gender);
     };
+
+    const getPlan = () => loadJSON(LS_PLAN, null);
+    const setPlan = (plan) => saveJSON(LS_PLAN, plan);
 
     const getBanks = () => {
       const b = loadJSON(LS_BANKS, null);
@@ -1060,10 +1167,56 @@
       });
     };
 
+    const computePlanProgress = (plan) => {
+      if(!plan || !plan.startDayKey || !plan.targetDateISO) return null;
+
+      const start = parseDayKeyToDateNoon(plan.startDayKey);
+      const target = new Date(`${plan.targetDateISO}T12:00:00`);
+      if(Number.isNaN(target.getTime())) return null;
+
+      const msPerDay = 86400000;
+      const totalDays = Math.max(1, Math.ceil((target - start) / msPerDay));
+
+      const nowKey = dayKeyWithCutoff(new Date());
+      const now = parseDayKeyToDateNoon(nowKey);
+      const elapsed = Math.min(totalDays, Math.max(0, Math.floor((now - start) / msPerDay)));
+
+      const pct = Math.max(0, Math.min(1, elapsed / totalDays));
+      return { totalDays, elapsedDays: elapsed, pct };
+    };
+
     const renderProgress = () => {
       const settings = getSettings();
       const stack = el("progressStack");
       stack.innerHTML = "";
+
+      const plan = getPlan();
+      if(plan && plan.targetWeightLb && plan.targetDateISO && plan.dailyDeficit){
+        const prog = computePlanProgress(plan);
+
+        const c = document.createElement("div");
+        c.className = "card";
+        const targetDate = new Date(`${plan.targetDateISO}T12:00:00`);
+        const targetDateText = targetDate.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+
+        const pctW = prog ? Math.round(prog.pct * 100) : 0;
+        const elapsed = prog ? prog.elapsedDays : 0;
+        const total = prog ? prog.totalDays : 0;
+
+        c.innerHTML = `
+          <div style="font-weight:900; font-size:16px; margin-bottom:6px;">Plan</div>
+          <div style="font-weight:900; color: rgba(27,16,32,.85);">Hit ${fmt(Number(plan.targetWeightLb))} lb by ${targetDateText}</div>
+          <div style="margin-top:6px; font-weight:900; color: rgba(91,75,97,.95);">Daily deficit: ${fmt(Number(plan.dailyDeficit))}</div>
+          <div class="planBar" aria-label="Plan progress">
+            <div class="planFill" style="width:${pctW}%;"></div>
+          </div>
+          <div class="planMeta">
+            <div class="pm">${elapsed} of ${total} days</div>
+            <div class="pm">Good job</div>
+          </div>
+        `;
+        stack.appendChild(c);
+      }
 
       const days = getDays().slice().sort((a,b) => (a.dayKey < b.dayKey ? 1 : -1));
 
@@ -1145,9 +1298,12 @@
 
       if(showCalc){
         const cw = el("currentWeightInput");
-        if(!cw.value){
-          cw.value = s.weightLb || "";
+        const w = s.weightLb ? String(s.weightLb) : "";
+        if(w){
+          cw.value = w;
         }
+      }else{
+        el("currentWeightInput").value = "";
       }
     };
 
@@ -1408,9 +1564,18 @@
 
       el("statsSavedHint").style.display = "block";
       setTimeout(() => { el("statsSavedHint").style.display = "none"; }, 1000);
+
+      el("calcMsg").textContent = "";
+      el("savePlanWrap").style.display = "none";
+      lastCalc = null;
+
+      render();
     });
 
-    // Goal calculator
+    // Goal calculator with save plan
+    let lastCalc = null;
+    let roundMode = "nearest";
+
     const showCalcLoading = () => {
       el("calcMsg").innerHTML = `
         <span class="loadingDots" aria-label="Loading">
@@ -1419,45 +1584,97 @@
       `;
     };
 
+    const roundTo50 = (value, mode) => {
+      const v = Math.max(0, Math.round(Number(value) || 0));
+      const base = Math.floor(v / 50) * 50;
+      const up = base + 50;
+      if(mode === "down") return base;
+      if(mode === "up") return up;
+      const mid = base + 25;
+      return v < mid ? base : up;
+    };
+
     const calcDailyDeficit = () => {
       const cw = Number(el("currentWeightInput").value || 0);
       const tw = Number(el("targetWeightInput").value || 0);
       const td = String(el("targetDateInput").value || "");
 
-      if(!Number.isFinite(cw) || cw <= 0) return { ok:false, msg:"Enter your current weight." };
-      if(!Number.isFinite(tw) || tw <= 0) return { ok:false, msg:"Enter your target weight." };
-      if(tw >= cw) return { ok:false, msg:"Target weight must be lower than current weight." };
+      if(!Number.isFinite(cw) || cw <= 0) return { ok:false, msg:"Your stats need a weight." };
+      if(!Number.isFinite(tw) || tw <= 0) return { ok:false, msg:"Enter a target weight." };
+      if(tw >= cw) return { ok:false, msg:"Target weight must be lower." };
       if(!td) return { ok:false, msg:"Pick a target date." };
 
       const targetDate = new Date(`${td}T12:00:00`);
       if(Number.isNaN(targetDate.getTime())) return { ok:false, msg:"Pick a valid target date." };
 
       const startKey = dayKeyWithCutoff(new Date());
-      const startParts = startKey.split("-").map(Number);
-      const startDate = new Date(startParts[0], startParts[1]-1, startParts[2], 12, 0, 0);
+      const startDate = parseDayKeyToDateNoon(startKey);
 
       const msPerDay = 86400000;
       const days = Math.ceil((targetDate - startDate) / msPerDay);
-
       if(days <= 0) return { ok:false, msg:"Target date must be in the future." };
 
       const lbsToLose = cw - tw;
       const totalCals = lbsToLose * 3500;
       const daily = Math.round(totalCals / days);
 
-      return { ok:true, daily, days };
+      return { ok:true, daily, days, cw, tw, targetDateISO: td, startKey };
     };
 
     el("calcBtn").addEventListener("click", () => {
       showCalcLoading();
+      el("savePlanWrap").style.display = "none";
+      el("savePlanHint").style.display = "none";
+      lastCalc = null;
+
       setTimeout(() => {
         const res = calcDailyDeficit();
         if(!res.ok){
           el("calcMsg").textContent = res.msg;
           return;
         }
+        lastCalc = res;
         el("calcMsg").textContent = `Daily deficit: ${fmt(res.daily)}.`;
-      }, 750);
+        el("savePlanWrap").style.display = "block";
+      }, 650);
+    });
+
+    el("roundToggle").addEventListener("change", () => {
+      el("roundModeSeg").style.display = el("roundToggle").checked ? "flex" : "none";
+    });
+
+    document.querySelectorAll("#roundModeSeg button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        roundMode = btn.getAttribute("data-mode") || "nearest";
+        document.querySelectorAll("#roundModeSeg button").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+      });
+    });
+
+    el("savePlanBtn").addEventListener("click", () => {
+      if(!lastCalc) return;
+
+      const doRound = el("roundToggle").checked;
+      const finalDef = doRound ? roundTo50(lastCalc.daily, roundMode) : Math.max(0, Math.round(lastCalc.daily));
+
+      setSettings({ deficit: finalDef });
+      el("deficitInput").value = String(finalDef);
+
+      setPlan({
+        savedAtISO: new Date().toISOString(),
+        startDayKey: lastCalc.startKey,
+        currentWeightLb: lastCalc.cw,
+        targetWeightLb: lastCalc.tw,
+        targetDateISO: lastCalc.targetDateISO,
+        dailyDeficit: finalDef,
+        rounding: doRound ? { enabled:true, mode: roundMode } : { enabled:false, mode:"" }
+      });
+
+      el("savePlanHint").style.display = "block";
+      setTimeout(() => { el("savePlanHint").style.display = "none"; }, 1000);
+
+      render();
+      setActivePage("Progress");
     });
 
     // Use banked
@@ -1506,6 +1723,7 @@
         settings: getSettings(),
         stats: getStats(),
         banks: getBanks(),
+        plan: getPlan(),
         today: getToday(),
         days: getDays()
       };
