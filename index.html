@@ -9,7 +9,6 @@
       --bg1:#ff7aa2;
       --bg2:#ffb36a;
       --card:#ffffffcc;
-      --card2:#ffffffb3;
       --ink:#1b1020;
       --muted:#5b4b61;
       --stroke:#ffffff66;
@@ -26,8 +25,9 @@
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--ink);
-      background: radial-gradient(1200px 800px at 20% 10%, rgba(255,255,255,.35), transparent 55%),
-                  linear-gradient(145deg, var(--bg1), var(--bg2));
+      background:
+        radial-gradient(1200px 800px at 20% 10%, rgba(255,255,255,.35), transparent 55%),
+        linear-gradient(145deg, var(--bg1), var(--bg2));
       display:flex;
       align-items:flex-start;
       justify-content:center;
@@ -42,8 +42,8 @@
       border: 1px solid rgba(255,255,255,.25);
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
-      position:relative;
-      overflow:hidden;
+      padding-bottom: 92px;
+      position: relative;
     }
 
     .topbar{
@@ -67,6 +67,7 @@
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       box-shadow: 0 6px 14px rgba(255,95,154,.35);
     }
+
     .pillbtn{
       border:1px solid rgba(255,255,255,.55);
       background: rgba(255,255,255,.28);
@@ -116,32 +117,28 @@
       gap:10px;
       margin-top: 14px;
       justify-content:center;
-      flex-wrap:wrap;
-    }
-    .kpis.two{
       flex-wrap:nowrap;
+      align-items:stretch;
     }
     .kpi{
       background: rgba(255,255,255,.58);
       border: 1px solid rgba(255,255,255,.72);
       border-radius: 18px;
       padding: 10px 12px;
-      min-width: 155px;
+      width: calc(50% - 5px);
       text-align:left;
-    }
-    .kpis.two .kpi{
-      flex: 1 1 0;
       min-width: 0;
     }
-    .kpi .klabel{ font-size:12px; color:var(--muted); font-weight:700; }
-    .kpi .kval{ font-size:18px; font-weight:900; margin-top: 2px; }
+    .kpi .klabel{ font-size:12px; color:var(--muted); font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .kpi .kval{ font-size:18px; font-weight:900; margin-top: 2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
     .row{
       display:flex;
       gap:10px;
       align-items:flex-end;
-      flex-wrap:wrap;
+      flex-wrap:nowrap;
     }
+
     label{
       display:block;
       font-size:12px;
@@ -159,42 +156,40 @@
       font-weight:800;
       outline:none;
     }
-    input::placeholder{
-      color: rgba(91,75,97,.55);
-      font-weight:800;
-    }
     input:focus{
       border-color: rgba(255,95,154,.55);
       box-shadow: 0 0 0 4px rgba(255,95,154,.18);
     }
 
-    .field{ flex: 1 1 170px; }
-    .field.small{ flex: 1 1 140px; }
+    .field{ flex: 1 1 0; min-width: 0; }
+    .field.small{ flex: 0 0 120px; }
 
     .toggle{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
-      padding: 12px 12px;
+      padding: 12px 14px;
       border-radius: 18px;
       background: rgba(255,255,255,.6);
       border: 1px solid rgba(255,255,255,.75);
       min-height: 50px;
-      flex: 1 1 190px;
+      flex: 1 1 0;
+      min-width: 0;
     }
-    .toggle .tlabel{
+    .toggle span{
       font-weight:900;
       font-size:16px;
-      line-height:1;
+      white-space:nowrap;
     }
-    .switch{
-      position:relative;
+
+    .iosSwitch{
+      position: relative;
       width: 52px;
       height: 32px;
       flex: 0 0 auto;
     }
-    .switch input{
+    .iosSwitch input{
       opacity:0;
       width:0;
       height:0;
@@ -202,30 +197,31 @@
     }
     .slider{
       position:absolute;
+      cursor:pointer;
       inset:0;
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(255,255,255,.85);
       border-radius: 999px;
-      background: rgba(255,255,255,.85);
-      border: 1px solid rgba(255,255,255,.75);
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,.04);
-      transition: .2s ease;
+      transition: .18s;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,.08);
     }
     .slider:before{
       content:"";
       position:absolute;
-      height: 26px;
-      width: 26px;
-      left: 3px;
-      top: 2.5px;
-      border-radius: 999px;
+      height: 28px;
+      width: 28px;
+      left: 1px;
+      top: 1px;
       background: #fff;
-      box-shadow: 0 8px 18px rgba(25, 10, 30, .16);
-      transition: .2s ease;
+      border-radius: 999px;
+      transition: .18s;
+      box-shadow: 0 8px 16px rgba(25,10,30,.18);
     }
-    .switch input:checked + .slider{
-      background: linear-gradient(135deg, rgba(255,95,154,.85), rgba(255,154,90,.85));
-      border-color: rgba(255,255,255,.65);
+    .iosSwitch input:checked + .slider{
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-color: rgba(255,255,255,.55);
     }
-    .switch input:checked + .slider:before{
+    .iosSwitch input:checked + .slider:before{
       transform: translateX(20px);
     }
 
@@ -251,9 +247,6 @@
       box-shadow: var(--shadow2);
     }
 
-    .section{ display:none; margin-top:12px; padding-bottom: 88px; }
-    .section.active{ display:block; }
-
     .mini{
       display:flex;
       align-items:center;
@@ -264,17 +257,23 @@
     .mini .hint{
       font-size:12px;
       color: var(--muted);
-      font-weight:700;
+      font-weight:800;
     }
 
-    .log{
+    .logWrap{
+      overflow-x:auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 18px;
+    }
+    table.log{
       width:100%;
       border-collapse: collapse;
-      overflow:hidden;
-      border-radius: 18px;
       background: rgba(255,255,255,.55);
       border: 1px solid rgba(255,255,255,.72);
+      border-radius: 18px;
+      overflow:hidden;
       table-layout: fixed;
+      min-width: 360px;
     }
     .log th, .log td{
       text-align:left;
@@ -282,7 +281,7 @@
       font-size: 13px;
       border-bottom: 1px solid rgba(255,255,255,.55);
       vertical-align: top;
-      word-wrap: break-word;
+      white-space: nowrap;
     }
     .log th{
       font-size: 12px;
@@ -293,6 +292,7 @@
     }
     .log tr:last-child td{ border-bottom:0; }
     .right{ text-align:right; }
+
     .del{
       border: 1px solid rgba(255,255,255,.7);
       background: rgba(255,255,255,.55);
@@ -302,73 +302,69 @@
       font-weight:900;
       cursor:pointer;
       user-select:none;
-      white-space: nowrap;
     }
     .del:active{ transform: translateY(1px) scale(.99); }
 
-    .sunday{ display:none; }
-    .sunday.show{ display:block; }
-
     .spacer{ height: 8px; }
 
-    .bottomnav{
+    .page{ display:none; margin-top: 12px; }
+    .page.active{ display:block; }
+
+    .tabbar{
       position:absolute;
       left: 16px;
       right: 16px;
-      bottom: 14px;
-      height: 64px;
+      bottom: 16px;
+      background: rgba(255,255,255,.28);
+      border: 1px solid rgba(255,255,255,.45);
       border-radius: 22px;
-      background: rgba(255,255,255,.34);
-      border: 1px solid rgba(255,255,255,.5);
       box-shadow: var(--shadow2);
       backdrop-filter: blur(10px);
+      padding: 10px 10px;
       display:flex;
-      align-items:center;
-      justify-content:space-around;
-      padding: 8px 10px;
       gap: 8px;
+      justify-content:space-between;
+      align-items:center;
     }
-    .navbtn{
-      border:0;
+    .tabbtn{
+      flex: 1 1 0;
+      border: 0;
       background: transparent;
+      color: rgba(27,16,32,.65);
+      border-radius: 16px;
+      padding: 10px 0;
       cursor:pointer;
-      width: 54px;
-      height: 48px;
-      border-radius: 18px;
+      font-weight:900;
       display:flex;
       align-items:center;
       justify-content:center;
-      transition: transform .08s ease, background .15s ease;
+      gap: 8px;
       user-select:none;
     }
-    .navbtn:active{ transform: translateY(1px) scale(.99); }
-    .navbtn.active{
-      background: rgba(255,255,255,.45);
-      border: 1px solid rgba(255,255,255,.55);
-      box-shadow: 0 10px 22px rgba(25, 10, 30, .10);
+    .tabbtn.active{
+      background: rgba(255,255,255,.48);
+      color: var(--ink);
+      box-shadow: 0 8px 16px rgba(25,10,30,.10);
     }
-    .navbtn svg{
+    .icon{
       width: 22px;
       height: 22px;
-      fill: rgba(27,16,32,.70);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size: 18px;
+      line-height: 1;
     }
-    .navbtn.active svg{
-      fill: rgba(255,95,154,.95);
-    }
-
     .coming{
       text-align:center;
-      padding: 34px 16px 16px;
-      color: rgba(27,16,32,.72);
       font-weight:900;
-      font-size: 18px;
+      color: rgba(27,16,32,.60);
+      padding: 22px 10px;
     }
-    .coming small{
-      display:block;
-      margin-top: 10px;
-      font-size: 13px;
-      font-weight:800;
-      color: rgba(91,75,97,.70);
+
+    @media (max-width: 380px){
+      .field.small{ flex: 0 0 110px; }
+      .big{ font-size: 58px; }
     }
   </style>
 </head>
@@ -379,21 +375,21 @@
       <button class="pillbtn" id="exportBtn">Export</button>
     </div>
 
-    <!-- Dashboard -->
-    <div class="section active" id="mainApp">
+    <!-- DASHBOARD -->
+    <div class="page active" id="pageDash">
       <div class="stack">
         <div class="card hero">
-          <div class="label">Calories left today</div>
-          <p class="big" id="leftBig">0</p>
+          <div class="label">Today's budget</div>
+          <p class="big" id="budgetBig">0</p>
 
-          <div class="kpis two">
+          <div class="kpis">
             <div class="kpi">
               <div class="klabel">Burned yesterday</div>
               <div class="kval" id="yTdeeKpi">0</div>
             </div>
             <div class="kpi">
-              <div class="klabel">Allocated today</div>
-              <div class="kval" id="budgetKpi">0</div>
+              <div class="klabel">Deficit</div>
+              <div class="kval" id="deficitKpi">0</div>
             </div>
           </div>
 
@@ -405,9 +401,9 @@
               <input id="tdeeInput" type="number" inputmode="numeric" min="0" placeholder="Enter TDEE" />
             </div>
 
-            <div class="toggle" aria-label="Maintenance day">
-              <div class="tlabel">Maintenance day</div>
-              <label class="switch">
+            <div class="toggle">
+              <span>Maintenance</span>
+              <label class="iosSwitch" aria-label="Maintenance day">
                 <input id="maintenanceToggle" type="checkbox" />
                 <span class="slider"></span>
               </label>
@@ -422,31 +418,49 @@
             <div class="hint" id="savedHint"></div>
           </div>
         </div>
+      </div>
+    </div>
 
-        <div class="card sunday" id="weighCard">
+    <!-- SETTINGS -->
+    <div class="page" id="pageSettings">
+      <div class="stack">
+        <div class="card">
           <div class="row">
             <div class="field">
-              <label for="weightInput">Weekly weigh-in</label>
-              <input id="weightInput" type="number" inputmode="decimal" step="0.1" min="0" />
+              <label for="deficitInput">Daily deficit</label>
+              <input id="deficitInput" type="number" inputmode="numeric" min="0" />
             </div>
             <div class="field small">
-              <button class="btn ghost" id="saveWeightBtn">Save</button>
+              <button class="btn ghost" id="saveDeficitBtn">Save</button>
+            </div>
+          </div>
+          <div class="mini">
+            <div class="hint"></div>
+            <div class="hint" id="deficitSavedHint"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOGGING -->
+    <div class="page" id="pageLogging">
+      <div class="stack">
+        <div class="card hero">
+          <div class="label">Calories left today</div>
+          <p class="big" id="leftBig">0</p>
+
+          <div class="kpis" style="justify-content:space-between">
+            <div class="kpi">
+              <div class="klabel">Today's running intake</div>
+              <div class="kval" id="intakeKpi">0</div>
+            </div>
+            <div class="kpi">
+              <div class="klabel">Remaining</div>
+              <div class="kval" id="remainKpi">0</div>
             </div>
           </div>
         </div>
 
-        <div class="card coming" style="display:none" id="dashEmpty"></div>
-      </div>
-    </div>
-
-    <!-- Settings -->
-    <div class="section" id="settingsPage">
-      <div class="card coming">Settings<small>Coming soon</small></div>
-    </div>
-
-    <!-- Logging -->
-    <div class="section" id="loggingPage">
-      <div class="stack">
         <div class="card">
           <div class="row">
             <div class="field">
@@ -455,19 +469,6 @@
             </div>
             <div class="field small">
               <button class="btn" id="addBtn">Add</button>
-            </div>
-          </div>
-
-          <div class="spacer"></div>
-
-          <div class="kpis two" style="justify-content:space-between">
-            <div class="kpi">
-              <div class="klabel">Today's running intake</div>
-              <div class="kval" id="intakeKpi">0</div>
-            </div>
-            <div class="kpi">
-              <div class="klabel">Remaining</div>
-              <div class="kval" id="remainKpi">0</div>
             </div>
           </div>
 
@@ -485,61 +486,49 @@
       </div>
     </div>
 
-    <!-- Info hub -->
-    <div class="section" id="infoPage">
-      <div class="card coming">Info hub<small>Coming soon</small></div>
+    <!-- INFO HUB (lightning after swap) -->
+    <div class="page" id="pageInfo">
+      <div class="card coming">Coming soon</div>
     </div>
 
-    <!-- Progress (Log for now) -->
-    <div class="section" id="progressPage">
+    <!-- PROGRESS (book after swap) -->
+    <div class="page" id="pageProgress">
       <div class="stack">
         <div class="card">
-          <table class="log" id="logTable">
-            <thead>
-              <tr>
-                <th class="right">TDEE</th>
-                <th class="right">Budget</th>
-                <th class="right">Intake</th>
-                <th class="right">Deficit</th>
-                <th class="right"></th>
-              </tr>
-            </thead>
-            <tbody id="logBody"></tbody>
-          </table>
+          <div class="logWrap">
+            <table class="log" id="logTable">
+              <thead>
+                <tr>
+                  <th class="right">TDEE</th>
+                  <th class="right">Budget</th>
+                  <th class="right">Intake</th>
+                  <th class="right">Deficit</th>
+                  <th class="right"></th>
+                </tr>
+              </thead>
+              <tbody id="logBody"></tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Bottom nav -->
-    <nav class="bottomnav" aria-label="Bottom navigation">
-      <button class="navbtn active" data-page="mainApp" aria-label="Dashboard">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l1.2 5.2L18.5 8.5l-5.3 1.3L12 15l-1.2-5.2L5.5 8.5l5.3-1.3L12 2zm8 10l.7 3.1 3.3.9-3.3.9L20 20l-.7-3.1-3.3-.9 3.3-.9L20 12zM4 13l.6 2.6L7 16.3l-2.4.7L4 19.6l-.6-2.6L1 16.3l2.4-.7L4 13z"/></svg>
-      </button>
-
-      <button class="navbtn" data-page="settingsPage" aria-label="Settings">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.4 13a7.9 7.9 0 000-2l2-1.5-2-3.4-2.4 1a7.8 7.8 0 00-1.7-1L15 3h-6l-.3 2.1a7.8 7.8 0 00-1.7 1l-2.4-1-2 3.4 2 1.5a7.9 7.9 0 000 2l-2 1.5 2 3.4 2.4-1a7.8 7.8 0 001.7 1L9 21h6l.3-2.1a7.8 7.8 0 001.7-1l2.4 1 2-3.4-2-1.5zM12 15.5A3.5 3.5 0 1112 8a3.5 3.5 0 010 7.5z"/></svg>
-      </button>
-
-      <button class="navbtn" data-page="loggingPage" aria-label="Logging">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5h2v14h-2V5zm-6 6h14v2H5v-2z"/></svg>
-      </button>
-
-      <button class="navbtn" data-page="infoPage" aria-label="Info hub">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h11a2 2 0 012 2v14a2 2 0 01-2 2H6a3 3 0 01-3-3V6a3 3 0 013-3zm0 2a1 1 0 00-1 1v12a1 1 0 001 1h11a.5.5 0 00.5-.5V5.5A.5.5 0 0017 5H6zm2 2h7v2H8V7zm0 4h7v2H8v-2z"/></svg>
-      </button>
-
-      <button class="navbtn" data-page="progressPage" aria-label="Progress">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L3 14h7l-1 8 12-14h-7l-1-6z"/></svg>
-      </button>
-    </nav>
+    <!-- TAB BAR -->
+    <div class="tabbar">
+      <button class="tabbtn active" data-go="dash" aria-label="Dashboard"><span class="icon">✨</span></button>
+      <button class="tabbtn" data-go="settings" aria-label="Settings"><span class="icon">⚙️</span></button>
+      <button class="tabbtn" data-go="logging" aria-label="Logging"><span class="icon">＋</span></button>
+      <button class="tabbtn" data-go="progress" aria-label="Progress"><span class="icon">📖</span></button>
+      <button class="tabbtn" data-go="info" aria-label="Info hub"><span class="icon">⚡</span></button>
+    </div>
   </div>
 
   <script>
-    const DEFICIT = 750;
-    const LS_STATE = "allocate_today_state_v2";
-    const LS_LOG = "allocate_log_v2";
-    const LS_WEIGHTS = "allocate_weights_v2";
-    const LS_UNDO = "allocate_undo_v2";
+    const ROLLOVER_HOUR = 3;
+
+    const LS_STATE = "allocate_today_state_v3";
+    const LS_LOG = "allocate_log_v3";
+    const LS_DEFICIT = "allocate_deficit_v1";
 
     const el = (id) => document.getElementById(id);
 
@@ -548,17 +537,23 @@
       return x.toLocaleString("en-GB");
     };
 
-    const todayISO = () => {
+    const effectiveNow = () => {
       const d = new Date();
+      if(d.getHours() < ROLLOVER_HOUR){
+        d.setDate(d.getDate() - 1);
+      }
+      return d;
+    };
+
+    const todayISO = () => {
+      const d = effectiveNow();
       const yyyy = d.getFullYear();
       const mm = String(d.getMonth() + 1).padStart(2, "0");
       const dd = String(d.getDate()).padStart(2, "0");
       return `${yyyy}-${mm}-${dd}`;
     };
 
-    const isSunday = () => new Date().getDay() === 0;
-
-    const isoWeekKey = (date = new Date()) => {
+    const isoWeekKey = (date = effectiveNow()) => {
       const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
       const dayNum = d.getUTCDay() || 7;
       d.setUTCDate(d.getUTCDate() + 4 - dayNum);
@@ -582,12 +577,23 @@
       localStorage.setItem(key, JSON.stringify(value));
     };
 
+    const getDeficit = () => {
+      const v = Number(localStorage.getItem(LS_DEFICIT));
+      if(Number.isFinite(v) && v >= 0) return Math.round(v);
+      return 750;
+    };
+
+    const setDeficit = (v) => {
+      localStorage.setItem(LS_DEFICIT, String(Math.max(0, Math.round(v))));
+    };
+
     const defaultState = () => ({
       date: todayISO(),
       yTdee: 0,
       maintenance: false,
       budget: 0,
-      intake: 0
+      intake: 0,
+      lastAdd: 0
     });
 
     let state = loadJSON(LS_STATE, null);
@@ -598,19 +604,16 @@
     if(state.date !== todayISO()){
       state = defaultState();
       saveJSON(LS_STATE, state);
-      saveJSON(LS_UNDO, null);
     }
 
     const getLog = () => loadJSON(LS_LOG, []);
     const setLog = (arr) => saveJSON(LS_LOG, arr);
 
-    const getWeights = () => loadJSON(LS_WEIGHTS, {});
-    const setWeights = (obj) => saveJSON(LS_WEIGHTS, obj);
-
     const calcBudget = () => {
       const t = Math.max(0, Number(state.yTdee || 0));
+      const deficit = getDeficit();
       if(state.maintenance) return t;
-      return Math.max(0, t - DEFICIT);
+      return Math.max(0, t - deficit);
     };
 
     const calcLeft = () => Math.round(calcBudget() - Number(state.intake || 0));
@@ -621,22 +624,24 @@
       el("tdeeInput").value = state.yTdee ? String(state.yTdee) : "";
       el("maintenanceToggle").checked = !!state.maintenance;
 
+      const deficit = getDeficit();
       el("yTdeeKpi").textContent = fmt(state.yTdee || 0);
-      el("budgetKpi").textContent = fmt(state.budget || 0);
+      el("deficitKpi").textContent = `-${fmt(deficit)}`;
+
+      el("budgetBig").textContent = fmt(state.budget || 0);
 
       const left = calcLeft();
       el("leftBig").textContent = fmt(left);
       el("intakeKpi").textContent = fmt(state.intake || 0);
       el("remainKpi").textContent = fmt(left);
 
-      el("modeHint").textContent = state.maintenance ? "Maintenance day" : "Deficit day";
+      el("modeHint").textContent = state.maintenance ? "Maintenance" : "Deficit";
       el("savedHint").textContent = "Saved";
 
+      el("deficitInput").value = String(getDeficit());
       saveJSON(LS_STATE, state);
 
       renderLog();
-      renderSundayWeighIn();
-      renderUndoState();
     };
 
     const renderLog = () => {
@@ -646,8 +651,7 @@
 
       for(const entry of log){
         const tr = document.createElement("tr");
-        const deficit = Math.round((entry.yTdee || 0) - (entry.intake || 0));
-
+        const deficit = Math.max(0, Math.round((entry.yTdee || 0) - (entry.budget || 0)));
         tr.innerHTML = `
           <td class="right">${fmt(entry.yTdee || 0)}</td>
           <td class="right">${fmt(entry.budget || 0)}</td>
@@ -655,7 +659,6 @@
           <td class="right">${fmt(deficit)}</td>
           <td class="right"><button class="del" data-del="${entry.id}">Delete</button></td>
         `;
-
         body.appendChild(tr);
       }
 
@@ -669,32 +672,9 @@
       });
     };
 
-    const renderSundayWeighIn = () => {
-      const card = el("weighCard");
-      if(!isSunday()){
-        card.classList.remove("show");
-        return;
-      }
-      const key = isoWeekKey(new Date());
-      const weights = getWeights();
-      const has = Object.prototype.hasOwnProperty.call(weights, key);
-
-      card.classList.add("show");
-      el("weightInput").value = has ? String(weights[key]) : "";
-      el("saveWeightBtn").disabled = has;
-      el("saveWeightBtn").textContent = has ? "Saved" : "Save";
-    };
-
-    const renderUndoState = () => {
-      const undo = loadJSON(LS_UNDO, null);
-      el("undoBtn").disabled = !undo;
-      el("undoBtn").style.opacity = undo ? "1" : ".65";
-    };
-
     el("applyBtn").addEventListener("click", () => {
       const v = Number(el("tdeeInput").value || 0);
       state.yTdee = Number.isFinite(v) ? Math.round(v) : 0;
-      state.maintenance = !!el("maintenanceToggle").checked;
       render();
     });
 
@@ -706,10 +686,8 @@
     el("addBtn").addEventListener("click", () => {
       const v = Number(el("addInput").value || 0);
       if(!Number.isFinite(v) || v <= 0) return;
-
-      saveJSON(LS_UNDO, { prevIntake: Number(state.intake || 0) });
-
       state.intake = Math.max(0, Math.round(Number(state.intake || 0) + v));
+      state.lastAdd = Math.round(v);
       el("addInput").value = "";
       render();
     });
@@ -721,10 +699,10 @@
     });
 
     el("undoBtn").addEventListener("click", () => {
-      const undo = loadJSON(LS_UNDO, null);
-      if(!undo) return;
-      state.intake = Math.max(0, Math.round(Number(undo.prevIntake || 0)));
-      saveJSON(LS_UNDO, null);
+      const v = Math.round(Number(state.lastAdd || 0));
+      if(!Number.isFinite(v) || v <= 0) return;
+      state.intake = Math.max(0, Math.round(Number(state.intake || 0) - v));
+      state.lastAdd = 0;
       render();
     });
 
@@ -738,7 +716,7 @@
         maintenance: !!state.maintenance,
         budget: Math.round(state.budget || 0),
         intake: Math.round(state.intake || 0),
-        weekKey: isoWeekKey(new Date())
+        weekKey: isoWeekKey(effectiveNow())
       };
 
       const log = getLog();
@@ -752,32 +730,23 @@
 
       state = defaultState();
       saveJSON(LS_STATE, state);
-      saveJSON(LS_UNDO, null);
       render();
     });
 
-    el("saveWeightBtn").addEventListener("click", () => {
-      if(!isSunday()) return;
-
-      const key = isoWeekKey(new Date());
-      const weights = getWeights();
-      if(Object.prototype.hasOwnProperty.call(weights, key)) return;
-
-      const v = Number(el("weightInput").value || 0);
-      if(!Number.isFinite(v) || v <= 0) return;
-
-      weights[key] = v;
-      setWeights(weights);
-      renderSundayWeighIn();
-      renderLog();
+    el("saveDeficitBtn").addEventListener("click", () => {
+      const v = Number(el("deficitInput").value || 0);
+      if(!Number.isFinite(v) || v < 0) return;
+      setDeficit(v);
+      el("deficitSavedHint").textContent = "Saved";
+      render();
+      setTimeout(() => { el("deficitSavedHint").textContent = ""; }, 900);
     });
 
     el("exportBtn").addEventListener("click", () => {
       const payload = {
         exportedAt: new Date().toISOString(),
-        deficit: DEFICIT,
-        log: getLog(),
-        weights: getWeights()
+        deficit: getDeficit(),
+        log: getLog()
       };
 
       const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
@@ -791,14 +760,24 @@
       URL.revokeObjectURL(url);
     });
 
-    const pages = ["mainApp","settingsPage","loggingPage","infoPage","progressPage"];
-    const showPage = (id) => {
-      pages.forEach(pid => el(pid).classList.toggle("active", pid === id));
-      document.querySelectorAll(".navbtn").forEach(b => b.classList.toggle("active", b.getAttribute("data-page") === id));
+    const showPage = (name) => {
+      const map = {
+        dash: "pageDash",
+        settings: "pageSettings",
+        logging: "pageLogging",
+        info: "pageInfo",
+        progress: "pageProgress"
+      };
+
+      Object.values(map).forEach((id) => el(id).classList.remove("active"));
+      el(map[name]).classList.add("active");
+
+      document.querySelectorAll(".tabbtn").forEach((b) => b.classList.remove("active"));
+      document.querySelector(`.tabbtn[data-go="${name}"]`).classList.add("active");
     };
 
-    document.querySelectorAll(".navbtn").forEach((b) => {
-      b.addEventListener("click", () => showPage(b.getAttribute("data-page")));
+    document.querySelectorAll(".tabbtn").forEach((b) => {
+      b.addEventListener("click", () => showPage(b.getAttribute("data-go")));
     });
 
     render();
