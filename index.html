@@ -188,6 +188,12 @@
       border: 1px solid rgba(255,255,255,.65);
       box-shadow: var(--shadow2);
     }
+    .btn.saved{
+      background: rgba(255,255,255,.55);
+      color: var(--ink);
+      border: 1px solid rgba(255,255,255,.75);
+      box-shadow: var(--shadow2);
+    }
 
     .mini{
       display:flex;
@@ -501,16 +507,13 @@
     <div class="page" id="pageSettings">
       <div class="stack">
         <div class="card">
-          <div class="row">
-            <div class="field">
-              <label for="deficitInput">Deficit</label>
-              <input id="deficitInput" type="number" inputmode="numeric" min="0" placeholder="750" />
-              <div class="note">This updates your budget when you're not on Maintenance.</div>
-            </div>
-            <div class="field small">
-              <button class="btn" id="saveSettingsBtn">Save</button>
-            </div>
+          <div class="field">
+            <label for="deficitInput">Deficit</label>
+            <input id="deficitInput" type="number" inputmode="numeric" min="0" placeholder="750" />
+            <div class="note">This updates your budget when you're not on Maintenance.</div>
           </div>
+          <div class="spacer"></div>
+          <button class="btn" id="saveSettingsBtn">Save</button>
         </div>
 
         <div class="card">
@@ -563,8 +566,8 @@
               <div class="kval" id="intakeKpi">0</div>
             </div>
             <div class="kpi">
-              <div class="klabel">Remaining</div>
-              <div class="kval" id="remainKpi">0</div>
+              <div class="klabel">Budget</div>
+              <div class="kval" id="budgetLogKpi">0</div>
             </div>
           </div>
         </div>
@@ -642,15 +645,13 @@
   </div>
 
   <script>
-    // Storage keys (kept stable so you don't lose data)
     const LS_SETTINGS = "allocate_settings_v3";
     const LS_STATS = "allocate_stats_v3";
     const LS_TODAY = "allocate_today_v3";
     const LS_DAYS = "allocate_days_v3";
 
-    // Defaults
     const DEFAULT_DEFICIT = 750;
-    const DAY_CUTOFF_HOUR = 3; // 03:00
+    const DAY_CUTOFF_HOUR = 3;
 
     const el = (id) => document.getElementById(id);
 
@@ -705,7 +706,7 @@
       dayKey: dayKeyWithCutoff(),
       yTdee: 0,
       maintenance: false,
-      entries: [] // { id, time, cals }
+      entries: []
     });
 
     const getToday = () => {
@@ -736,11 +737,22 @@
       return Math.max(0, Math.round(t - settings.deficit));
     };
 
+    const setSavedButton = (buttonEl, savedText = "Saved") => {
+      buttonEl.textContent = savedText;
+      buttonEl.classList.add("saved");
+      buttonEl.classList.remove("ghost");
+    };
+
+    const setUnsavedButton = (buttonEl, text = "Save", makeGhost = true) => {
+      buttonEl.textContent = text;
+      buttonEl.classList.remove("saved");
+      if(makeGhost) buttonEl.classList.add("ghost");
+    };
+
     const render = () => {
       const settings = getSettings();
       const today = getToday();
 
-      // Dashboard numbers
       const budget = calcBudget(today, settings);
       const intake = sumIntake(today.entries);
       const left = Math.round(budget - intake);
@@ -749,29 +761,21 @@
       el("yTdeeKpi").textContent = fmt(today.yTdee || 0);
       el("deficitKpi").textContent = today.maintenance ? "0" : `-${fmt(settings.deficit)}`;
 
-      // Inputs
       el("tdeeInput").value = today.yTdee ? String(today.yTdee) : "";
       el("maintenanceToggle").checked = !!today.maintenance;
 
-      // Hints
       el("modeHint").textContent = today.maintenance ? "Maintenance" : "Deficit";
       el("savedHint").textContent = "Saved";
 
-      // Logging page
       el("leftBig").textContent = fmt(left);
       el("intakeKpi").textContent = fmt(intake);
-      el("remainKpi").textContent = fmt(left);
+      el("budgetLogKpi").textContent = fmt(budget);
 
-      // Settings page
       el("deficitInput").value = String(settings.deficit);
 
-      // Entry list
       renderEntries(today);
-
-      // Progress
       renderProgress(settings);
 
-      // Persist
       setToday(today);
     };
 
@@ -779,7 +783,8 @@
       const list = el("entryList");
       list.innerHTML = "";
 
-      const entries = today.entries.slice().sort((a,b) => (a.createdAt || 0) - (b.createdAt || 0));
+      const entries = today.entries.slice().sort((a,b) => (b.createdAt || 0) - (a.createdAt || 0));
+
       for(const e of entries){
         const li = document.createElement("li");
         li.className = "entry";
@@ -874,7 +879,6 @@
       });
     };
 
-    // Page nav
     const setActivePage = (name) => {
       ["Dash","Settings","Logging","Progress","Info"].forEach((p) => {
         el(`page${p}`).classList.toggle("active", p === name);
@@ -888,7 +892,6 @@
       b.addEventListener("click", () => setActivePage(b.getAttribute("data-page")));
     });
 
-    // Apply TDEE + maintenance
     el("applyBtn").addEventListener("click", () => {
       const today = getToday();
       const v = Number(el("tdeeInput").value || 0);
@@ -905,7 +908,6 @@
       render();
     });
 
-    // Logging add
     el("addBtn").addEventListener("click", () => {
       const today = getToday();
       const v = Number(el("addInput").value || 0);
@@ -929,7 +931,6 @@
       if(e.key === "Enter") el("addBtn").click();
     });
 
-    // Undo last add
     el("undoBtn").addEventListener("click", () => {
       const today = getToday();
       if(!today.entries.length) return;
@@ -939,7 +940,6 @@
       render();
     });
 
-    // End day (saves to Progress)
     el("endDayBtn").addEventListener("click", () => {
       const settings = getSettings();
       const today = getToday();
@@ -962,23 +962,25 @@
       else days.push(dayObj);
       setDays(days);
 
-      // Reset today's state but keep dayKey logic handled by cutoff
       setToday(defaultToday());
       render();
       setActivePage("Progress");
     });
 
-    // Settings save
     el("saveSettingsBtn").addEventListener("click", () => {
       const v = Number(el("deficitInput").value || 0);
       const deficit = (Number.isFinite(v) && v >= 0) ? Math.round(v) : DEFAULT_DEFICIT;
       setSettings({ deficit });
 
-      // Also refresh the dashboard deficit tile and budgets
+      const btn = el("saveSettingsBtn");
+      setSavedButton(btn, "Saved");
+      setTimeout(() => {
+        setUnsavedButton(btn, "Save", false);
+      }, 1200);
+
       render();
     });
 
-    // Stats save
     el("saveStatsBtn").addEventListener("click", () => {
       const stats = {
         heightCm: el("heightInput").value || "",
@@ -987,10 +989,11 @@
         gender: el("genderInput").value || ""
       };
       setStats(stats);
-      render();
+
+      const btn = el("saveStatsBtn");
+      setSavedButton(btn, "Saved");
     });
 
-    // Load stats into inputs
     const hydrateStats = () => {
       const s = getStats();
       el("heightInput").value = s.heightCm || "";
@@ -999,7 +1002,24 @@
       el("genderInput").value = s.gender || "";
     };
 
-    // Export
+    const wireStatsUnsaved = () => {
+      const btn = el("saveStatsBtn");
+      const markUnsaved = () => {
+        setUnsavedButton(btn, "Save", true);
+      };
+      ["heightInput","weightStatInput","ageInput","genderInput"].forEach((id) => {
+        el(id).addEventListener("input", markUnsaved);
+        el(id).addEventListener("change", markUnsaved);
+      });
+    };
+
+    const wireSettingsUnsaved = () => {
+      const btn = el("saveSettingsBtn");
+      el("deficitInput").addEventListener("input", () => {
+        setUnsavedButton(btn, "Save", false);
+      });
+    };
+
     el("exportBtn").addEventListener("click", () => {
       const payload = {
         exportedAt: new Date().toISOString(),
@@ -1021,7 +1041,6 @@
       URL.revokeObjectURL(url);
     });
 
-    // Edit modal
     let editingId = null;
 
     const openEdit = (id) => {
@@ -1059,7 +1078,6 @@
       days[idx].yTdee = Number.isFinite(y) ? Math.max(0, Math.round(y)) : 0;
       days[idx].intake = Number.isFinite(i) ? Math.max(0, Math.round(i)) : 0;
 
-      // Recompute budget based on maintenance + current deficit setting
       const settings = getSettings();
       const tdee = days[idx].yTdee || 0;
       const budget = days[idx].maintenance ? tdee : Math.max(0, Math.round(tdee - settings.deficit));
@@ -1070,7 +1088,6 @@
       render();
     });
 
-    // Auto rollover at cutoff (runs on open and every minute)
     const rolloverCheck = () => {
       const today = getToday();
       const keyNow = dayKeyWithCutoff();
@@ -1082,8 +1099,17 @@
 
     setInterval(rolloverCheck, 60000);
 
-    // Init
     hydrateStats();
+    wireStatsUnsaved();
+    wireSettingsUnsaved();
+
+    // if stats exist, show Saved instantly so it feels real
+    const existingStats = getStats();
+    const hasAnyStats = Object.values(existingStats).some(v => String(v || "").trim() !== "");
+    if(hasAnyStats){
+      setSavedButton(el("saveStatsBtn"), "Saved");
+    }
+
     render();
   </script>
 </body>
