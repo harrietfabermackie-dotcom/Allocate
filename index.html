@@ -180,10 +180,12 @@
     .field.small{ flex: 0 0 110px; }
     .field.small .btn{ height: 100%; }
 
-    .toggle{
+    /* Sleek iPhone-friendly toggle */
+    .toggleWrap{
       display:flex;
       align-items:center;
-      gap:10px;
+      justify-content:space-between;
+      gap:12px;
       padding: 12px 12px;
       border-radius: 18px;
       background: rgba(255,255,255,.6);
@@ -192,17 +194,49 @@
       flex: 1 1 170px;
       min-width: 0;
     }
-    .toggle input{
-      width: 20px;
-      height: 20px;
-      margin:0;
-      accent-color: var(--accent);
-      box-shadow:none;
-    }
-    .toggle span{
+    .toggleWrap .tlabel{
       font-weight:950;
       font-size:16px;
       white-space: nowrap;
+    }
+    .switch{
+      position:relative;
+      width: 48px;
+      height: 28px;
+      flex: 0 0 auto;
+    }
+    .switch input{
+      opacity:0;
+      width:0;
+      height:0;
+      position:absolute;
+    }
+    .slider{
+      position:absolute;
+      cursor:pointer;
+      inset:0;
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(255,255,255,.75);
+      border-radius: 999px;
+      transition: .18s ease;
+    }
+    .slider:before{
+      content:"";
+      position:absolute;
+      height: 22px;
+      width: 22px;
+      left: 3px;
+      top: 2px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 999px;
+      transition: .18s ease;
+      box-shadow: 0 10px 18px rgba(255,95,154,.22);
+    }
+    .switch input:checked + .slider{
+      background: rgba(255,255,255,.75);
+    }
+    .switch input:checked + .slider:before{
+      transform: translateX(20px);
     }
 
     .btn{
@@ -296,6 +330,11 @@
       font-weight:950;
       font-size:14px;
     }
+    .dayactions{
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
     .grid{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -342,7 +381,7 @@
 
           <div class="kpis">
             <div class="kpi">
-              <div class="klabel">Burned yesterday</div>
+              <div class="klabel">Yesterday's TDEE</div>
               <div class="kval" id="yTdeeKpi">0</div>
             </div>
             <div class="kpi">
@@ -355,13 +394,16 @@
 
           <div class="row">
             <div class="field">
-              <label for="tdeeInput">Yesterday's TDEE</label>
+              <label for="tdeeInput">TDEE</label>
               <input id="tdeeInput" type="number" inputmode="numeric" min="0" />
             </div>
 
-            <div class="toggle">
-              <input id="maintenanceToggle" type="checkbox" />
-              <span>Maintenance day</span>
+            <div class="toggleWrap">
+              <div class="tlabel">Maintenance</div>
+              <label class="switch" aria-label="Maintenance day">
+                <input id="maintenanceToggle" type="checkbox" />
+                <span class="slider"></span>
+              </label>
             </div>
           </div>
 
@@ -390,7 +432,7 @@
           <div class="row">
             <div class="field">
               <div class="kpi" style="min-width:100%">
-                <div class="klabel">Today's running intake</div>
+                <div class="klabel">Intake</div>
                 <div class="kval" id="intakeKpi">0</div>
               </div>
             </div>
@@ -430,10 +472,11 @@
   </div>
 
   <script>
-    const DEFICIT = 500;
+    const DEFICIT = 750;
+    const DAY_ENDS_AT_HOUR = 3;
 
-    const LS_STATE = "allocate_today_state_v3";
-    const LS_LOG = "allocate_log_v3";
+    const LS_STATE = "allocate_today_state_v4";
+    const LS_LOG = "allocate_log_v4";
 
     const el = (id) => document.getElementById(id);
 
@@ -442,8 +485,14 @@
       return x.toLocaleString("en-GB");
     };
 
-    const todayISO = () => {
+    const effectiveNow = () => {
       const d = new Date();
+      d.setHours(d.getHours() - DAY_ENDS_AT_HOUR);
+      return d;
+    };
+
+    const dayKeyISO = () => {
+      const d = effectiveNow();
       const yyyy = d.getFullYear();
       const mm = String(d.getMonth() + 1).padStart(2, "0");
       const dd = String(d.getDate()).padStart(2, "0");
@@ -470,11 +519,11 @@
     };
 
     const defaultState = () => ({
-      date: todayISO(),
+      date: dayKeyISO(),
       yTdee: 0,
       maintenance: false,
       intake: 0,
-      adds: [] // { id, amount, ts }
+      adds: []
     });
 
     let state = loadJSON(LS_STATE, null);
@@ -482,7 +531,8 @@
       state = defaultState();
       saveJSON(LS_STATE, state);
     }
-    if(state.date !== todayISO()){
+    const todayKey = dayKeyISO();
+    if(state.date !== todayKey){
       state = defaultState();
       saveJSON(LS_STATE, state);
     }
@@ -563,7 +613,10 @@
         card.innerHTML = `
           <div class="dayhead">
             <div class="date">${prettyDate(entry.date || "")}</div>
-            <button class="xbtn" data-dellog="${entry.id}">Delete</button>
+            <div class="dayactions">
+              <button class="xbtn" data-editlog="${entry.id}">Edit</button>
+              <button class="xbtn" data-dellog="${entry.id}">Delete</button>
+            </div>
           </div>
           <div class="grid">
             <div class="metric"><div class="ml">TDEE</div><div class="mv">${fmt(entry.yTdee || 0)}</div></div>
@@ -583,6 +636,38 @@
           renderLog();
         });
       });
+
+      host.querySelectorAll("[data-editlog]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-editlog");
+          const log = getLog();
+          const idx = log.findIndex(x => String(x.id) === String(id));
+          if(idx < 0) return;
+
+          const current = log[idx];
+          const newTdeeRaw = prompt("Edit TDEE", String(current.yTdee ?? ""));
+          if(newTdeeRaw === null) return;
+
+          const newIntakeRaw = prompt("Edit Intake", String(current.intake ?? ""));
+          if(newIntakeRaw === null) return;
+
+          const newTdee = Math.max(0, Math.round(Number(newTdeeRaw || 0)));
+          const newIntake = Math.max(0, Math.round(Number(newIntakeRaw || 0)));
+
+          const maintenance = !!current.maintenance;
+          const newBudget = maintenance ? newTdee : Math.max(0, newTdee - DEFICIT);
+
+          log[idx] = {
+            ...current,
+            yTdee: newTdee,
+            intake: newIntake,
+            budget: Math.round(newBudget)
+          };
+
+          setLog(log);
+          renderLog();
+        });
+      });
     };
 
     const render = () => {
@@ -599,7 +684,7 @@
       el("intakeKpi").textContent = fmt(state.intake || 0);
       el("remainKpi").textContent = fmt(left);
 
-      el("modeHint").textContent = state.maintenance ? "Maintenance day" : "Deficit day";
+      el("modeHint").textContent = state.maintenance ? "Maintenance" : "Deficit";
       el("savedHint").textContent = "Saved";
 
       saveJSON(LS_STATE, state);
@@ -676,13 +761,14 @@
       const payload = {
         exportedAt: new Date().toISOString(),
         deficit: DEFICIT,
+        dayEndsAtHour: DAY_ENDS_AT_HOUR,
         log: getLog()
       };
       const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `allocate_export_${todayISO()}.json`;
+      a.download = `allocate_export_${dayKeyISO()}.json`;
       document.body.appendChild(a);
       a.click();
       a.remove();
