@@ -118,6 +118,9 @@
       justify-content:center;
       flex-wrap:wrap;
     }
+    .kpis.two{
+      flex-wrap:nowrap;
+    }
     .kpi{
       background: rgba(255,255,255,.58);
       border: 1px solid rgba(255,255,255,.72);
@@ -125,6 +128,10 @@
       padding: 10px 12px;
       min-width: 155px;
       text-align:left;
+    }
+    .kpis.two .kpi{
+      flex: 1 1 0;
+      min-width: 0;
     }
     .kpi .klabel{ font-size:12px; color:var(--muted); font-weight:700; }
     .kpi .kval{ font-size:18px; font-weight:900; margin-top: 2px; }
@@ -164,7 +171,6 @@
     .field{ flex: 1 1 170px; }
     .field.small{ flex: 1 1 140px; }
 
-    /* iOS style toggle, vibe colours */
     .toggle{
       display:flex;
       align-items:center;
@@ -245,24 +251,6 @@
       box-shadow: var(--shadow2);
     }
 
-    .tabs{
-      display:flex;
-      gap:10px;
-      padding: 12px 6px 0;
-    }
-    .tab{
-      flex:1;
-      text-align:center;
-      padding: 12px 12px;
-      border-radius: 18px;
-      font-weight:900;
-      cursor:pointer;
-      border:1px solid rgba(255,255,255,.55);
-      background: rgba(255,255,255,.22);
-      user-select:none;
-    }
-    .tab.active{ background: rgba(255,255,255,.62); }
-
     .section{ display:none; margin-top:12px; padding-bottom: 88px; }
     .section.active{ display:block; }
 
@@ -323,7 +311,6 @@
 
     .spacer{ height: 8px; }
 
-    /* Bottom nav */
     .bottomnav{
       position:absolute;
       left: 16px;
@@ -392,174 +379,163 @@
       <button class="pillbtn" id="exportBtn">Export</button>
     </div>
 
-    <!-- Main app content (kept exactly as you like) -->
+    <!-- Dashboard -->
     <div class="section active" id="mainApp">
-      <div class="tabs">
-        <div class="tab active" data-tab="dash">Dashboard</div>
-        <div class="tab" data-tab="log">Log</div>
-      </div>
+      <div class="stack">
+        <div class="card hero">
+          <div class="label">Calories left today</div>
+          <p class="big" id="leftBig">0</p>
 
-      <div class="section active" id="dash">
-        <div class="stack">
-          <div class="card hero">
-            <div class="label">Calories left today</div>
-            <p class="big" id="leftBig">0</p>
-
-            <div class="kpis">
-              <div class="kpi">
-                <div class="klabel">Burned yesterday</div>
-                <div class="kval" id="yTdeeKpi">0</div>
-              </div>
-              <div class="kpi">
-                <div class="klabel">Allocated today</div>
-                <div class="kval" id="budgetKpi">0</div>
-              </div>
+          <div class="kpis two">
+            <div class="kpi">
+              <div class="klabel">Burned yesterday</div>
+              <div class="kval" id="yTdeeKpi">0</div>
             </div>
-
-            <div class="spacer"></div>
-
-            <div class="row">
-              <div class="field">
-                <label for="tdeeInput">Yesterday's TDEE</label>
-                <input id="tdeeInput" type="number" inputmode="numeric" min="0" placeholder="Enter TDEE" />
-              </div>
-
-              <div class="toggle" aria-label="Maintenance day">
-                <div class="tlabel">Maintenance day</div>
-                <label class="switch">
-                  <input id="maintenanceToggle" type="checkbox" />
-                  <span class="slider"></span>
-                </label>
-              </div>
-            </div>
-
-            <div class="spacer"></div>
-            <button class="btn" id="applyBtn">Apply</button>
-
-            <div class="mini">
-              <div class="hint" id="modeHint"></div>
-              <div class="hint" id="savedHint"></div>
+            <div class="kpi">
+              <div class="klabel">Allocated today</div>
+              <div class="kval" id="budgetKpi">0</div>
             </div>
           </div>
 
-          <div class="card">
-            <div class="row">
-              <div class="field">
-                <label for="addInput">Log calories</label>
-                <input id="addInput" type="number" inputmode="numeric" min="0" />
-              </div>
-              <div class="field small">
-                <button class="btn" id="addBtn">Add</button>
-              </div>
+          <div class="spacer"></div>
+
+          <div class="row">
+            <div class="field">
+              <label for="tdeeInput">Yesterday's TDEE</label>
+              <input id="tdeeInput" type="number" inputmode="numeric" min="0" placeholder="Enter TDEE" />
             </div>
 
-            <div class="spacer"></div>
-
-            <div class="kpis" style="justify-content:space-between">
-              <div class="kpi" style="min-width: 48%;">
-                <div class="klabel">Today's running intake</div>
-                <div class="kval" id="intakeKpi">0</div>
-              </div>
-              <div class="kpi" style="min-width: 48%;">
-                <div class="klabel">Remaining</div>
-                <div class="kval" id="remainKpi">0</div>
-              </div>
-            </div>
-
-            <div class="spacer"></div>
-
-            <div class="row">
-              <div class="field">
-                <button class="btn ghost" id="undoBtn">Undo last add</button>
-              </div>
-              <div class="field">
-                <button class="btn" id="endDayBtn">End day</button>
-              </div>
+            <div class="toggle" aria-label="Maintenance day">
+              <div class="tlabel">Maintenance day</div>
+              <label class="switch">
+                <input id="maintenanceToggle" type="checkbox" />
+                <span class="slider"></span>
+              </label>
             </div>
           </div>
 
-          <div class="card sunday" id="weighCard">
-            <div class="row">
-              <div class="field">
-                <label for="weightInput">Weekly weigh-in</label>
-                <input id="weightInput" type="number" inputmode="decimal" step="0.1" min="0" />
-              </div>
-              <div class="field small">
-                <button class="btn ghost" id="saveWeightBtn">Save</button>
-              </div>
+          <div class="spacer"></div>
+          <button class="btn" id="applyBtn">Apply</button>
+
+          <div class="mini">
+            <div class="hint" id="modeHint"></div>
+            <div class="hint" id="savedHint"></div>
+          </div>
+        </div>
+
+        <div class="card sunday" id="weighCard">
+          <div class="row">
+            <div class="field">
+              <label for="weightInput">Weekly weigh-in</label>
+              <input id="weightInput" type="number" inputmode="decimal" step="0.1" min="0" />
+            </div>
+            <div class="field small">
+              <button class="btn ghost" id="saveWeightBtn">Save</button>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="section" id="log">
-        <div class="stack">
-          <div class="card">
-            <table class="log" id="logTable">
-              <thead>
-                <tr>
-                  <th class="right">TDEE</th>
-                  <th class="right">Budget</th>
-                  <th class="right">Intake</th>
-                  <th class="right">Deficit</th>
-                  <th class="right"></th>
-                </tr>
-              </thead>
-              <tbody id="logBody"></tbody>
-            </table>
-          </div>
-        </div>
+        <div class="card coming" style="display:none" id="dashEmpty"></div>
       </div>
     </div>
 
-    <!-- Empty pages (visitable) -->
+    <!-- Settings -->
     <div class="section" id="settingsPage">
       <div class="card coming">Settings<small>Coming soon</small></div>
     </div>
 
+    <!-- Logging -->
     <div class="section" id="loggingPage">
-      <div class="card coming">Logging<small>Coming soon</small></div>
+      <div class="stack">
+        <div class="card">
+          <div class="row">
+            <div class="field">
+              <label for="addInput">Log calories</label>
+              <input id="addInput" type="number" inputmode="numeric" min="0" />
+            </div>
+            <div class="field small">
+              <button class="btn" id="addBtn">Add</button>
+            </div>
+          </div>
+
+          <div class="spacer"></div>
+
+          <div class="kpis two" style="justify-content:space-between">
+            <div class="kpi">
+              <div class="klabel">Today's running intake</div>
+              <div class="kval" id="intakeKpi">0</div>
+            </div>
+            <div class="kpi">
+              <div class="klabel">Remaining</div>
+              <div class="kval" id="remainKpi">0</div>
+            </div>
+          </div>
+
+          <div class="spacer"></div>
+
+          <div class="row">
+            <div class="field">
+              <button class="btn ghost" id="undoBtn">Undo last add</button>
+            </div>
+            <div class="field">
+              <button class="btn" id="endDayBtn">End day</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
+    <!-- Info hub -->
     <div class="section" id="infoPage">
       <div class="card coming">Info hub<small>Coming soon</small></div>
     </div>
 
+    <!-- Progress (Log for now) -->
     <div class="section" id="progressPage">
-      <div class="card coming">Progress<small>Coming soon</small></div>
+      <div class="stack">
+        <div class="card">
+          <table class="log" id="logTable">
+            <thead>
+              <tr>
+                <th class="right">TDEE</th>
+                <th class="right">Budget</th>
+                <th class="right">Intake</th>
+                <th class="right">Deficit</th>
+                <th class="right"></th>
+              </tr>
+            </thead>
+            <tbody id="logBody"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
-    <!-- Bottom tabs -->
+    <!-- Bottom nav -->
     <nav class="bottomnav" aria-label="Bottom navigation">
       <button class="navbtn active" data-page="mainApp" aria-label="Dashboard">
-        <!-- Sparkle -->
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l1.2 5.2L18.5 8.5l-5.3 1.3L12 15l-1.2-5.2L5.5 8.5l5.3-1.3L12 2zm8 10l.7 3.1 3.3.9-3.3.9L20 20l-.7-3.1-3.3-.9 3.3-.9L20 12zM4 13l.6 2.6L7 16.3l-2.4.7L4 19.6l-.6-2.6L1 16.3l2.4-.7L4 13z"/></svg>
       </button>
 
       <button class="navbtn" data-page="settingsPage" aria-label="Settings">
-        <!-- Cog -->
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.4 13a7.9 7.9 0 000-2l2-1.5-2-3.4-2.4 1a7.8 7.8 0 00-1.7-1L15 3h-6l-.3 2.1a7.8 7.8 0 00-1.7 1l-2.4-1-2 3.4 2 1.5a7.9 7.9 0 000 2l-2 1.5 2 3.4 2.4-1a7.8 7.8 0 001.7 1L9 21h6l.3-2.1a7.8 7.8 0 001.7-1l2.4 1 2-3.4-2-1.5zM12 15.5A3.5 3.5 0 1112 8a3.5 3.5 0 010 7.5z"/></svg>
       </button>
 
       <button class="navbtn" data-page="loggingPage" aria-label="Logging">
-        <!-- Plus -->
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5h2v14h-2V5zm-6 6h14v2H5v-2z"/></svg>
       </button>
 
       <button class="navbtn" data-page="infoPage" aria-label="Info hub">
-        <!-- Book -->
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h11a2 2 0 012 2v14a2 2 0 01-2 2H6a3 3 0 01-3-3V6a3 3 0 013-3zm0 2a1 1 0 00-1 1v12a1 1 0 001 1h11a.5.5 0 00.5-.5V5.5A.5.5 0 0017 5H6zm2 2h7v2H8V7zm0 4h7v2H8v-2z"/></svg>
       </button>
 
       <button class="navbtn" data-page="progressPage" aria-label="Progress">
-        <!-- Lightning -->
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L3 14h7l-1 8 12-14h-7l-1-6z"/></svg>
       </button>
     </nav>
   </div>
 
   <script>
-    const DEFICIT = 500;
+    const DEFICIT = 750;
     const LS_STATE = "allocate_today_state_v2";
     const LS_LOG = "allocate_log_v2";
     const LS_WEIGHTS = "allocate_weights_v2";
@@ -813,17 +789,6 @@
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
-    });
-
-    document.querySelectorAll(".tab").forEach((t) => {
-      t.addEventListener("click", () => {
-        document.querySelectorAll(".tab").forEach(x => x.classList.remove("active"));
-        t.classList.add("active");
-
-        const name = t.getAttribute("data-tab");
-        el("dash").classList.toggle("active", name === "dash");
-        el("log").classList.toggle("active", name === "log");
-      });
     });
 
     const pages = ["mainApp","settingsPage","loggingPage","infoPage","progressPage"];
