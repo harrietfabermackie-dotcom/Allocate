@@ -4,11 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Allocate</title>
+  <meta name="theme-color" content="#ff7aa2" />
   <style>
     :root{
       --bg1:#ff7aa2;
       --bg2:#ffb36a;
       --card:#ffffffcc;
+      --card2:#ffffffb3;
       --ink:#1b1020;
       --muted:#5b4b61;
       --stroke:#ffffff66;
@@ -42,15 +44,14 @@
       border: 1px solid rgba(255,255,255,.25);
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
-      padding-bottom: 92px;
-      position: relative;
+      -webkit-backdrop-filter: blur(10px);
     }
 
     .topbar{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      padding: 6px 6px 14px;
+      padding: 6px 6px 12px;
     }
     .brand{
       font-weight:800;
@@ -67,7 +68,6 @@
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       box-shadow: 0 6px 14px rgba(255,95,154,.35);
     }
-
     .pillbtn{
       border:1px solid rgba(255,255,255,.55);
       background: rgba(255,255,255,.28);
@@ -75,10 +75,11 @@
       padding: 10px 12px;
       border-radius: 999px;
       cursor:pointer;
-      font-weight:700;
+      font-weight:800;
       box-shadow: var(--shadow2);
       transition: transform .08s ease;
       user-select:none;
+      -webkit-tap-highlight-color: transparent;
     }
     .pillbtn:active{ transform: translateY(1px) scale(.99); }
 
@@ -96,7 +97,7 @@
       padding: 18px 16px 14px;
     }
     .hero .label{
-      font-weight:800;
+      font-weight:900;
       font-size:18px;
       margin: 0 0 6px 0;
     }
@@ -112,118 +113,58 @@
       letter-spacing: -1.5px;
     }
 
-    .kpis{
-      display:flex;
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
       gap:10px;
-      margin-top: 14px;
-      justify-content:center;
-      flex-wrap:nowrap;
-      align-items:stretch;
     }
+    @media (max-width: 360px){
+      .grid2{ grid-template-columns: 1fr; }
+    }
+
     .kpi{
       background: rgba(255,255,255,.58);
       border: 1px solid rgba(255,255,255,.72);
       border-radius: 18px;
       padding: 10px 12px;
-      width: calc(50% - 5px);
       text-align:left;
       min-width: 0;
     }
-    .kpi .klabel{ font-size:12px; color:var(--muted); font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .kpi .kval{ font-size:18px; font-weight:900; margin-top: 2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .kpi .klabel{ font-size:12px; color:var(--muted); font-weight:900; }
+    .kpi .kval{ font-size:18px; font-weight:900; margin-top: 2px; }
 
     .row{
       display:flex;
       gap:10px;
       align-items:flex-end;
-      flex-wrap:nowrap;
+      flex-wrap:wrap;
     }
-
     label{
       display:block;
       font-size:12px;
       color:var(--muted);
-      font-weight:800;
+      font-weight:900;
       margin: 0 0 6px 2px;
     }
-    input{
+    input, select{
       width:100%;
       border:1px solid rgba(255,255,255,.8);
       background: rgba(255,255,255,.8);
       border-radius: 16px;
       padding: 12px 12px;
       font-size: 16px;
-      font-weight:800;
+      font-weight:900;
       outline:none;
+      color: var(--ink);
     }
-    input:focus{
+    input::placeholder{ color: rgba(91,75,97,.65); font-weight:800; }
+    input:focus, select:focus{
       border-color: rgba(255,95,154,.55);
       box-shadow: 0 0 0 4px rgba(255,95,154,.18);
     }
 
-    .field{ flex: 1 1 0; min-width: 0; }
+    .field{ flex: 1 1 170px; min-width: 0; }
     .field.small{ flex: 0 0 120px; }
-
-    .toggle{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding: 12px 14px;
-      border-radius: 18px;
-      background: rgba(255,255,255,.6);
-      border: 1px solid rgba(255,255,255,.75);
-      min-height: 50px;
-      flex: 1 1 0;
-      min-width: 0;
-    }
-    .toggle span{
-      font-weight:900;
-      font-size:16px;
-      white-space:nowrap;
-    }
-
-    .iosSwitch{
-      position: relative;
-      width: 52px;
-      height: 32px;
-      flex: 0 0 auto;
-    }
-    .iosSwitch input{
-      opacity:0;
-      width:0;
-      height:0;
-      position:absolute;
-    }
-    .slider{
-      position:absolute;
-      cursor:pointer;
-      inset:0;
-      background: rgba(255,255,255,.75);
-      border: 1px solid rgba(255,255,255,.85);
-      border-radius: 999px;
-      transition: .18s;
-      box-shadow: inset 0 1px 2px rgba(0,0,0,.08);
-    }
-    .slider:before{
-      content:"";
-      position:absolute;
-      height: 28px;
-      width: 28px;
-      left: 1px;
-      top: 1px;
-      background: #fff;
-      border-radius: 999px;
-      transition: .18s;
-      box-shadow: 0 8px 16px rgba(25,10,30,.18);
-    }
-    .iosSwitch input:checked + .slider{
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      border-color: rgba(255,255,255,.55);
-    }
-    .iosSwitch input:checked + .slider:before{
-      transform: translateX(20px);
-    }
 
     .btn{
       width:100%;
@@ -238,6 +179,7 @@
       box-shadow: 0 14px 30px rgba(255,95,154,.30);
       transition: transform .08s ease;
       user-select:none;
+      -webkit-tap-highlight-color: transparent;
     }
     .btn:active{ transform: translateY(1px) scale(.995); }
     .btn.ghost{
@@ -252,48 +194,156 @@
       align-items:center;
       justify-content:space-between;
       gap:10px;
-      margin-top: 6px;
+      margin-top: 8px;
     }
     .mini .hint{
       font-size:12px;
       color: var(--muted);
-      font-weight:800;
+      font-weight:900;
     }
 
-    .logWrap{
-      overflow-x:auto;
-      -webkit-overflow-scrolling: touch;
+    .spacer{ height: 8px; }
+
+    /* iOS vibe switch */
+    .switchRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding: 12px 12px;
       border-radius: 18px;
+      background: rgba(255,255,255,.6);
+      border: 1px solid rgba(255,255,255,.75);
+      min-height: 50px;
+      flex: 1 1 190px;
+      min-width: 0;
     }
-    table.log{
-      width:100%;
-      border-collapse: collapse;
-      background: rgba(255,255,255,.55);
-      border: 1px solid rgba(255,255,255,.72);
-      border-radius: 18px;
+    .switchRow .slabel{
+      font-weight:900;
+      font-size:16px;
+      white-space:nowrap;
       overflow:hidden;
-      table-layout: fixed;
-      min-width: 360px;
+      text-overflow:ellipsis;
     }
-    .log th, .log td{
-      text-align:left;
+    .iosSwitch{
+      position:relative;
+      width: 52px;
+      height: 32px;
+      flex: 0 0 52px;
+    }
+    .iosSwitch input{
+      position:absolute;
+      inset:0;
+      opacity:0;
+      margin:0;
+      width:100%;
+      height:100%;
+    }
+    .iosTrack{
+      position:absolute;
+      inset:0;
+      border-radius: 999px;
+      background: rgba(91,75,97,.18);
+      border: 1px solid rgba(255,255,255,.65);
+      transition: background .15s ease;
+    }
+    .iosThumb{
+      position:absolute;
+      top: 3px;
+      left: 3px;
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.95);
+      box-shadow: 0 8px 18px rgba(25, 10, 30, .18);
+      transition: transform .15s ease;
+    }
+    .iosSwitch input:checked + .iosTrack{
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-color: rgba(255,255,255,.65);
+    }
+    .iosSwitch input:checked ~ .iosThumb{
+      transform: translateX(20px);
+    }
+
+    /* Bottom tabs */
+    .bottomTabsWrap{
+      margin-top: 12px;
       padding: 10px 10px;
-      font-size: 13px;
-      border-bottom: 1px solid rgba(255,255,255,.55);
-      vertical-align: top;
-      white-space: nowrap;
+      background: rgba(255,255,255,.22);
+      border: 1px solid rgba(255,255,255,.45);
+      border-radius: 20px;
+      box-shadow: var(--shadow2);
     }
-    .log th{
-      font-size: 12px;
+    .bottomTabs{
+      display:grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap:8px;
+      align-items:center;
+    }
+    .btab{
+      border:1px solid transparent;
+      background: transparent;
+      border-radius: 16px;
+      padding: 10px 8px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      font-weight:900;
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      color: rgba(27,16,32,.75);
+      min-width: 0;
+    }
+    .btab .ico{
+      font-size:18px;
+      line-height: 1;
+    }
+    .btab.active{
+      background: rgba(255,255,255,.45);
+      border-color: rgba(255,255,255,.65);
+      box-shadow: 0 10px 22px rgba(25,10,30,.10);
+      color: var(--ink);
+    }
+
+    /* Logging list */
+    .entryList{
+      margin: 10px 0 0 0;
+      padding: 0;
+      list-style: none;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .entry{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.58);
+      border: 1px solid rgba(255,255,255,.72);
+      min-width: 0;
+    }
+    .entry .left{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width: 0;
+    }
+    .entry .time{
+      font-size:12px;
       color: var(--muted);
       font-weight:900;
-      letter-spacing:.2px;
-      background: rgba(255,255,255,.45);
     }
-    .log tr:last-child td{ border-bottom:0; }
-    .right{ text-align:right; }
-
-    .del{
+    .entry .cals{
+      font-size:16px;
+      font-weight:900;
+    }
+    .xbtn{
       border: 1px solid rgba(255,255,255,.7);
       background: rgba(255,255,255,.55);
       color: var(--ink);
@@ -302,69 +352,90 @@
       font-weight:900;
       cursor:pointer;
       user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      flex: 0 0 auto;
     }
-    .del:active{ transform: translateY(1px) scale(.99); }
+    .xbtn:active{ transform: translateY(1px) scale(.99); }
 
-    .spacer{ height: 8px; }
-
-    .page{ display:none; margin-top: 12px; }
+    /* Pages */
+    .page{ display:none; margin-top:12px; }
     .page.active{ display:block; }
 
-    .tabbar{
-      position:absolute;
-      left: 16px;
-      right: 16px;
-      bottom: 16px;
-      background: rgba(255,255,255,.28);
-      border: 1px solid rgba(255,255,255,.45);
-      border-radius: 22px;
-      box-shadow: var(--shadow2);
-      backdrop-filter: blur(10px);
-      padding: 10px 10px;
+    /* Progress cards */
+    .dayCardHeader{
       display:flex;
-      gap: 8px;
-      justify-content:space-between;
       align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom: 8px;
     }
-    .tabbtn{
-      flex: 1 1 0;
-      border: 0;
-      background: transparent;
-      color: rgba(27,16,32,.65);
-      border-radius: 16px;
-      padding: 10px 0;
+    .dayTitle{
+      font-weight:900;
+      font-size:14px;
+      color: rgba(27,16,32,.75);
+    }
+    .smBtn{
+      border:1px solid rgba(255,255,255,.65);
+      background: rgba(255,255,255,.35);
+      color: var(--ink);
+      padding: 8px 10px;
+      border-radius: 999px;
       cursor:pointer;
       font-weight:900;
+      box-shadow: var(--shadow2);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .smBtn:active{ transform: translateY(1px) scale(.99); }
+
+    /* Modal */
+    .modalBack{
+      position: fixed;
+      inset: 0;
+      background: rgba(25,10,30,.25);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      z-index: 50;
+    }
+    .modalBack.show{ display:flex; }
+    .modal{
+      width:min(420px, 100%);
+      border-radius: 24px;
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(255,255,255,.75);
+      box-shadow: var(--shadow);
+      padding: 14px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .modalTop{
       display:flex;
       align-items:center;
-      justify-content:center;
-      gap: 8px;
-      user-select:none;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom: 10px;
     }
-    .tabbtn.active{
-      background: rgba(255,255,255,.48);
-      color: var(--ink);
-      box-shadow: 0 8px 16px rgba(25,10,30,.10);
-    }
-    .icon{
-      width: 22px;
-      height: 22px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      font-size: 18px;
-      line-height: 1;
-    }
-    .coming{
-      text-align:center;
+    .modalTop .mtitle{
       font-weight:900;
-      color: rgba(27,16,32,.60);
-      padding: 22px 10px;
+      font-size:16px;
     }
+    .closeBtn{
+      border: 1px solid rgba(255,255,255,.75);
+      background: rgba(255,255,255,.55);
+      border-radius: 999px;
+      padding: 8px 10px;
+      font-weight:900;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .closeBtn:active{ transform: translateY(1px) scale(.99); }
 
-    @media (max-width: 380px){
-      .field.small{ flex: 0 0 110px; }
-      .big{ font-size: 58px; }
+    .note{
+      font-size:12px;
+      color: rgba(91,75,97,.8);
+      font-weight:800;
+      margin-top: 6px;
     }
   </style>
 </head>
@@ -382,14 +453,16 @@
           <div class="label">Today's budget</div>
           <p class="big" id="budgetBig">0</p>
 
-          <div class="kpis">
+          <div class="spacer"></div>
+
+          <div class="grid2">
             <div class="kpi">
               <div class="klabel">Burned yesterday</div>
               <div class="kval" id="yTdeeKpi">0</div>
             </div>
             <div class="kpi">
               <div class="klabel">Deficit</div>
-              <div class="kval" id="deficitKpi">0</div>
+              <div class="kval" id="deficitKpi">-0</div>
             </div>
           </div>
 
@@ -401,12 +474,15 @@
               <input id="tdeeInput" type="number" inputmode="numeric" min="0" placeholder="Enter TDEE" />
             </div>
 
-            <div class="toggle">
-              <span>Maintenance</span>
-              <label class="iosSwitch" aria-label="Maintenance day">
-                <input id="maintenanceToggle" type="checkbox" />
-                <span class="slider"></span>
-              </label>
+            <div class="field">
+              <div class="switchRow">
+                <div class="slabel">Maintenance</div>
+                <div class="iosSwitch" aria-label="Maintenance">
+                  <input id="maintenanceToggle" type="checkbox" />
+                  <span class="iosTrack"></span>
+                  <span class="iosThumb"></span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -427,17 +503,47 @@
         <div class="card">
           <div class="row">
             <div class="field">
-              <label for="deficitInput">Daily deficit</label>
-              <input id="deficitInput" type="number" inputmode="numeric" min="0" />
+              <label for="deficitInput">Deficit</label>
+              <input id="deficitInput" type="number" inputmode="numeric" min="0" placeholder="750" />
+              <div class="note">This updates your budget when you're not on Maintenance.</div>
             </div>
             <div class="field small">
-              <button class="btn ghost" id="saveDeficitBtn">Save</button>
+              <button class="btn" id="saveSettingsBtn">Save</button>
             </div>
           </div>
-          <div class="mini">
-            <div class="hint"></div>
-            <div class="hint" id="deficitSavedHint"></div>
+        </div>
+
+        <div class="card">
+          <div style="font-weight:900; font-size:14px; margin-bottom:10px;">My stats</div>
+          <div class="row">
+            <div class="field">
+              <label for="heightInput">Height (cm)</label>
+              <input id="heightInput" type="number" inputmode="numeric" min="0" placeholder="e.g. 168" />
+            </div>
+            <div class="field">
+              <label for="weightStatInput">Weight (lb)</label>
+              <input id="weightStatInput" type="number" inputmode="decimal" step="0.1" min="0" placeholder="e.g. 140" />
+            </div>
           </div>
+          <div class="spacer"></div>
+          <div class="row">
+            <div class="field">
+              <label for="ageInput">Age</label>
+              <input id="ageInput" type="number" inputmode="numeric" min="0" placeholder="e.g. 23" />
+            </div>
+            <div class="field">
+              <label for="genderInput">Gender</label>
+              <select id="genderInput">
+                <option value="">Select</option>
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+                <option value="other">Other</option>
+                <option value="na">Prefer not to say</option>
+              </select>
+            </div>
+          </div>
+          <div class="spacer"></div>
+          <button class="btn ghost" id="saveStatsBtn">Save</button>
         </div>
       </div>
     </div>
@@ -449,9 +555,11 @@
           <div class="label">Calories left today</div>
           <p class="big" id="leftBig">0</p>
 
-          <div class="kpis" style="justify-content:space-between">
+          <div class="spacer"></div>
+
+          <div class="grid2">
             <div class="kpi">
-              <div class="klabel">Today's running intake</div>
+              <div class="klabel">Running intake</div>
               <div class="kval" id="intakeKpi">0</div>
             </div>
             <div class="kpi">
@@ -472,95 +580,83 @@
             </div>
           </div>
 
+          <ul class="entryList" id="entryList"></ul>
+
           <div class="spacer"></div>
 
-          <div class="row">
-            <div class="field">
-              <button class="btn ghost" id="undoBtn">Undo last add</button>
-            </div>
-            <div class="field">
-              <button class="btn" id="endDayBtn">End day</button>
-            </div>
+          <div class="grid2">
+            <button class="btn ghost" id="undoBtn">Undo last add</button>
+            <button class="btn" id="endDayBtn">End day</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- INFO HUB (lightning after swap) -->
-    <div class="page" id="pageInfo">
-      <div class="card coming">Coming soon</div>
+    <!-- PROGRESS (LOG) -->
+    <div class="page" id="pageProgress">
+      <div class="stack" id="progressStack"></div>
     </div>
 
-    <!-- PROGRESS (book after swap) -->
-    <div class="page" id="pageProgress">
+    <!-- INFO HUB -->
+    <div class="page" id="pageInfo">
       <div class="stack">
         <div class="card">
-          <div class="logWrap">
-            <table class="log" id="logTable">
-              <thead>
-                <tr>
-                  <th class="right">TDEE</th>
-                  <th class="right">Budget</th>
-                  <th class="right">Intake</th>
-                  <th class="right">Deficit</th>
-                  <th class="right"></th>
-                </tr>
-              </thead>
-              <tbody id="logBody"></tbody>
-            </table>
-          </div>
+          <div style="font-weight:900; font-size:16px;">Coming soon</div>
         </div>
       </div>
     </div>
 
-    <!-- TAB BAR -->
-    <div class="tabbar">
-      <button class="tabbtn active" data-go="dash" aria-label="Dashboard"><span class="icon">✨</span></button>
-      <button class="tabbtn" data-go="settings" aria-label="Settings"><span class="icon">⚙️</span></button>
-      <button class="tabbtn" data-go="logging" aria-label="Logging"><span class="icon">＋</span></button>
-      <button class="tabbtn" data-go="progress" aria-label="Progress"><span class="icon">📖</span></button>
-      <button class="tabbtn" data-go="info" aria-label="Info hub"><span class="icon">⚡</span></button>
+    <!-- Bottom tabs -->
+    <div class="bottomTabsWrap">
+      <div class="bottomTabs">
+        <button class="btab active" data-page="Dash" aria-label="Dashboard"><span class="ico">✨</span></button>
+        <button class="btab" data-page="Settings" aria-label="Settings"><span class="ico">⚙️</span></button>
+        <button class="btab" data-page="Logging" aria-label="Logging"><span class="ico">＋</span></button>
+        <button class="btab" data-page="Progress" aria-label="Progress"><span class="ico">⚡</span></button>
+        <button class="btab" data-page="Info" aria-label="Info hub"><span class="ico">📖</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit modal -->
+  <div class="modalBack" id="editBack">
+    <div class="modal">
+      <div class="modalTop">
+        <div class="mtitle" id="editTitle">Edit day</div>
+        <button class="closeBtn" id="editClose">Close</button>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="editYTdee">TDEE</label>
+          <input id="editYTdee" type="number" inputmode="numeric" min="0" />
+        </div>
+        <div class="field">
+          <label for="editIntake">Intake</label>
+          <input id="editIntake" type="number" inputmode="numeric" min="0" />
+        </div>
+      </div>
+      <div class="spacer"></div>
+      <button class="btn" id="editSave">Save</button>
+      <div class="note">This edits your saved day in Progress only.</div>
     </div>
   </div>
 
   <script>
-    const ROLLOVER_HOUR = 3;
+    // Storage keys (kept stable so you don't lose data)
+    const LS_SETTINGS = "allocate_settings_v3";
+    const LS_STATS = "allocate_stats_v3";
+    const LS_TODAY = "allocate_today_v3";
+    const LS_DAYS = "allocate_days_v3";
 
-    const LS_STATE = "allocate_today_state_v3";
-    const LS_LOG = "allocate_log_v3";
-    const LS_DEFICIT = "allocate_deficit_v1";
+    // Defaults
+    const DEFAULT_DEFICIT = 750;
+    const DAY_CUTOFF_HOUR = 3; // 03:00
 
     const el = (id) => document.getElementById(id);
 
     const fmt = (n) => {
       const x = Number.isFinite(n) ? Math.round(n) : 0;
       return x.toLocaleString("en-GB");
-    };
-
-    const effectiveNow = () => {
-      const d = new Date();
-      if(d.getHours() < ROLLOVER_HOUR){
-        d.setDate(d.getDate() - 1);
-      }
-      return d;
-    };
-
-    const todayISO = () => {
-      const d = effectiveNow();
-      const yyyy = d.getFullYear();
-      const mm = String(d.getMonth() + 1).padStart(2, "0");
-      const dd = String(d.getDate()).padStart(2, "0");
-      return `${yyyy}-${mm}-${dd}`;
-    };
-
-    const isoWeekKey = (date = effectiveNow()) => {
-      const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-      const dayNum = d.getUTCDay() || 7;
-      d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-      const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-      const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-      const year = d.getUTCFullYear();
-      return `${year}-W${String(weekNo).padStart(2, "0")}`;
     };
 
     const loadJSON = (key, fallback) => {
@@ -577,209 +673,417 @@
       localStorage.setItem(key, JSON.stringify(value));
     };
 
-    const getDeficit = () => {
-      const v = Number(localStorage.getItem(LS_DEFICIT));
-      if(Number.isFinite(v) && v >= 0) return Math.round(v);
-      return 750;
+    const pad2 = (n) => String(n).padStart(2, "0");
+
+    const dayKeyWithCutoff = (date = new Date()) => {
+      const d = new Date(date);
+      if(d.getHours() < DAY_CUTOFF_HOUR){
+        d.setDate(d.getDate() - 1);
+      }
+      const yyyy = d.getFullYear();
+      const mm = pad2(d.getMonth() + 1);
+      const dd = pad2(d.getDate());
+      return `${yyyy}-${mm}-${dd}`;
     };
 
-    const setDeficit = (v) => {
-      localStorage.setItem(LS_DEFICIT, String(Math.max(0, Math.round(v))));
+    const timeHHMM = (date = new Date()) => `${pad2(date.getHours())}:${pad2(date.getMinutes())}`;
+
+    const getSettings = () => {
+      const s = loadJSON(LS_SETTINGS, null);
+      if(!s || typeof s.deficit !== "number"){
+        return { deficit: DEFAULT_DEFICIT };
+      }
+      return { deficit: Math.max(0, Math.round(s.deficit)) };
     };
 
-    const defaultState = () => ({
-      date: todayISO(),
+    const setSettings = (settings) => saveJSON(LS_SETTINGS, settings);
+
+    const getStats = () => loadJSON(LS_STATS, { heightCm:"", weightLb:"", age:"", gender:"" });
+    const setStats = (stats) => saveJSON(LS_STATS, stats);
+
+    const defaultToday = () => ({
+      dayKey: dayKeyWithCutoff(),
       yTdee: 0,
       maintenance: false,
-      budget: 0,
-      intake: 0,
-      lastAdd: 0
+      entries: [] // { id, time, cals }
     });
 
-    let state = loadJSON(LS_STATE, null);
-    if(!state || !state.date){
-      state = defaultState();
-      saveJSON(LS_STATE, state);
-    }
-    if(state.date !== todayISO()){
-      state = defaultState();
-      saveJSON(LS_STATE, state);
-    }
-
-    const getLog = () => loadJSON(LS_LOG, []);
-    const setLog = (arr) => saveJSON(LS_LOG, arr);
-
-    const calcBudget = () => {
-      const t = Math.max(0, Number(state.yTdee || 0));
-      const deficit = getDeficit();
-      if(state.maintenance) return t;
-      return Math.max(0, t - deficit);
+    const getToday = () => {
+      const t = loadJSON(LS_TODAY, null);
+      if(!t || !t.dayKey) return defaultToday();
+      const keyNow = dayKeyWithCutoff();
+      if(t.dayKey !== keyNow){
+        return defaultToday();
+      }
+      if(!Array.isArray(t.entries)) t.entries = [];
+      return t;
     };
 
-    const calcLeft = () => Math.round(calcBudget() - Number(state.intake || 0));
+    const setToday = (today) => saveJSON(LS_TODAY, today);
+
+    const getDays = () => {
+      const arr = loadJSON(LS_DAYS, []);
+      return Array.isArray(arr) ? arr : [];
+    };
+
+    const setDays = (arr) => saveJSON(LS_DAYS, arr);
+
+    const sumIntake = (entries) => entries.reduce((a,e) => a + (Number(e.cals)||0), 0);
+
+    const calcBudget = (today, settings) => {
+      const t = Math.max(0, Number(today.yTdee || 0));
+      if(today.maintenance) return Math.round(t);
+      return Math.max(0, Math.round(t - settings.deficit));
+    };
 
     const render = () => {
-      state.budget = calcBudget();
+      const settings = getSettings();
+      const today = getToday();
 
-      el("tdeeInput").value = state.yTdee ? String(state.yTdee) : "";
-      el("maintenanceToggle").checked = !!state.maintenance;
+      // Dashboard numbers
+      const budget = calcBudget(today, settings);
+      const intake = sumIntake(today.entries);
+      const left = Math.round(budget - intake);
 
-      const deficit = getDeficit();
-      el("yTdeeKpi").textContent = fmt(state.yTdee || 0);
-      el("deficitKpi").textContent = `-${fmt(deficit)}`;
+      el("budgetBig").textContent = fmt(budget);
+      el("yTdeeKpi").textContent = fmt(today.yTdee || 0);
+      el("deficitKpi").textContent = today.maintenance ? "0" : `-${fmt(settings.deficit)}`;
 
-      el("budgetBig").textContent = fmt(state.budget || 0);
+      // Inputs
+      el("tdeeInput").value = today.yTdee ? String(today.yTdee) : "";
+      el("maintenanceToggle").checked = !!today.maintenance;
 
-      const left = calcLeft();
-      el("leftBig").textContent = fmt(left);
-      el("intakeKpi").textContent = fmt(state.intake || 0);
-      el("remainKpi").textContent = fmt(left);
-
-      el("modeHint").textContent = state.maintenance ? "Maintenance" : "Deficit";
+      // Hints
+      el("modeHint").textContent = today.maintenance ? "Maintenance" : "Deficit";
       el("savedHint").textContent = "Saved";
 
-      el("deficitInput").value = String(getDeficit());
-      saveJSON(LS_STATE, state);
+      // Logging page
+      el("leftBig").textContent = fmt(left);
+      el("intakeKpi").textContent = fmt(intake);
+      el("remainKpi").textContent = fmt(left);
 
-      renderLog();
+      // Settings page
+      el("deficitInput").value = String(settings.deficit);
+
+      // Entry list
+      renderEntries(today);
+
+      // Progress
+      renderProgress(settings);
+
+      // Persist
+      setToday(today);
     };
 
-    const renderLog = () => {
-      const log = getLog().slice().sort((a,b) => (a.date < b.date ? 1 : -1));
-      const body = el("logBody");
-      body.innerHTML = "";
+    const renderEntries = (today) => {
+      const list = el("entryList");
+      list.innerHTML = "";
 
-      for(const entry of log){
-        const tr = document.createElement("tr");
-        const deficit = Math.max(0, Math.round((entry.yTdee || 0) - (entry.budget || 0)));
-        tr.innerHTML = `
-          <td class="right">${fmt(entry.yTdee || 0)}</td>
-          <td class="right">${fmt(entry.budget || 0)}</td>
-          <td class="right">${fmt(entry.intake || 0)}</td>
-          <td class="right">${fmt(deficit)}</td>
-          <td class="right"><button class="del" data-del="${entry.id}">Delete</button></td>
+      const entries = today.entries.slice().sort((a,b) => (a.createdAt || 0) - (b.createdAt || 0));
+      for(const e of entries){
+        const li = document.createElement("li");
+        li.className = "entry";
+        li.innerHTML = `
+          <div class="left">
+            <div class="time">${e.time || ""}</div>
+            <div class="cals">${fmt(Number(e.cals)||0)}</div>
+          </div>
+          <button class="xbtn" data-x="${e.id}">X</button>
         `;
-        body.appendChild(tr);
+        list.appendChild(li);
       }
 
-      body.querySelectorAll("[data-del]").forEach((btn) => {
+      list.querySelectorAll("[data-x]").forEach((btn) => {
         btn.addEventListener("click", () => {
-          const id = btn.getAttribute("data-del");
-          const next = getLog().filter(x => String(x.id) !== String(id));
-          setLog(next);
-          renderLog();
+          const today = getToday();
+          const id = btn.getAttribute("data-x");
+          today.entries = today.entries.filter(x => String(x.id) !== String(id));
+          setToday(today);
+          render();
         });
       });
     };
 
+    const renderProgress = (settings) => {
+      const stack = el("progressStack");
+      stack.innerHTML = "";
+
+      const days = getDays().slice().sort((a,b) => (a.dayKey < b.dayKey ? 1 : -1));
+
+      if(days.length === 0){
+        const c = document.createElement("div");
+        c.className = "card";
+        c.innerHTML = `<div style="font-weight:900; font-size:16px;">No days saved yet</div>`;
+        stack.appendChild(c);
+        return;
+      }
+
+      for(const d of days){
+        const deficit = d.maintenance ? 0 : settings.deficit;
+        const budget = Number(d.budget || 0);
+        const intake = Number(d.intake || 0);
+
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+          <div class="dayCardHeader">
+            <div class="dayTitle">${d.dayKey}</div>
+            <div style="display:flex; gap:8px;">
+              <button class="smBtn" data-edit="${d.id}">Edit</button>
+              <button class="smBtn" data-delday="${d.id}">Delete</button>
+            </div>
+          </div>
+          <div class="grid2">
+            <div class="kpi">
+              <div class="klabel">TDEE</div>
+              <div class="kval">${fmt(Number(d.yTdee||0))}</div>
+            </div>
+            <div class="kpi">
+              <div class="klabel">Budget</div>
+              <div class="kval">${fmt(budget)}</div>
+            </div>
+          </div>
+          <div class="spacer"></div>
+          <div class="grid2">
+            <div class="kpi">
+              <div class="klabel">Intake</div>
+              <div class="kval">${fmt(intake)}</div>
+            </div>
+            <div class="kpi">
+              <div class="klabel">Deficit</div>
+              <div class="kval">${d.maintenance ? "0" : `-${fmt(deficit)}`}</div>
+            </div>
+          </div>
+        `;
+
+        stack.appendChild(card);
+      }
+
+      stack.querySelectorAll("[data-delday]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-delday");
+          const next = getDays().filter(x => String(x.id) !== String(id));
+          setDays(next);
+          render();
+        });
+      });
+
+      stack.querySelectorAll("[data-edit]").forEach((btn) => {
+        btn.addEventListener("click", () => openEdit(btn.getAttribute("data-edit")));
+      });
+    };
+
+    // Page nav
+    const setActivePage = (name) => {
+      ["Dash","Settings","Logging","Progress","Info"].forEach((p) => {
+        el(`page${p}`).classList.toggle("active", p === name);
+      });
+      document.querySelectorAll(".btab").forEach((b) => {
+        b.classList.toggle("active", b.getAttribute("data-page") === name);
+      });
+    };
+
+    document.querySelectorAll(".btab").forEach((b) => {
+      b.addEventListener("click", () => setActivePage(b.getAttribute("data-page")));
+    });
+
+    // Apply TDEE + maintenance
     el("applyBtn").addEventListener("click", () => {
+      const today = getToday();
       const v = Number(el("tdeeInput").value || 0);
-      state.yTdee = Number.isFinite(v) ? Math.round(v) : 0;
+      today.yTdee = Number.isFinite(v) ? Math.round(v) : 0;
+      today.maintenance = !!el("maintenanceToggle").checked;
+      setToday(today);
       render();
     });
 
     el("maintenanceToggle").addEventListener("change", () => {
-      state.maintenance = !!el("maintenanceToggle").checked;
+      const today = getToday();
+      today.maintenance = !!el("maintenanceToggle").checked;
+      setToday(today);
       render();
     });
 
+    // Logging add
     el("addBtn").addEventListener("click", () => {
+      const today = getToday();
       const v = Number(el("addInput").value || 0);
       if(!Number.isFinite(v) || v <= 0) return;
-      state.intake = Math.max(0, Math.round(Number(state.intake || 0) + v));
-      state.lastAdd = Math.round(v);
+
+      const entry = {
+        id: `${today.dayKey}_${Date.now()}`,
+        time: timeHHMM(new Date()),
+        cals: Math.round(v),
+        createdAt: Date.now()
+      };
+
+      today.entries.push(entry);
+      setToday(today);
+
       el("addInput").value = "";
       render();
     });
 
     el("addInput").addEventListener("keydown", (e) => {
-      if(e.key === "Enter"){
-        el("addBtn").click();
-      }
+      if(e.key === "Enter") el("addBtn").click();
     });
 
+    // Undo last add
     el("undoBtn").addEventListener("click", () => {
-      const v = Math.round(Number(state.lastAdd || 0));
-      if(!Number.isFinite(v) || v <= 0) return;
-      state.intake = Math.max(0, Math.round(Number(state.intake || 0) - v));
-      state.lastAdd = 0;
+      const today = getToday();
+      if(!today.entries.length) return;
+      today.entries.sort((a,b) => (a.createdAt || 0) - (b.createdAt || 0));
+      today.entries.pop();
+      setToday(today);
       render();
     });
 
+    // End day (saves to Progress)
     el("endDayBtn").addEventListener("click", () => {
-      state.budget = calcBudget();
+      const settings = getSettings();
+      const today = getToday();
 
-      const entry = {
-        id: `${state.date}_${Date.now()}`,
-        date: state.date,
-        yTdee: Math.round(state.yTdee || 0),
-        maintenance: !!state.maintenance,
-        budget: Math.round(state.budget || 0),
-        intake: Math.round(state.intake || 0),
-        weekKey: isoWeekKey(effectiveNow())
+      const intake = sumIntake(today.entries);
+      const budget = calcBudget(today, settings);
+
+      const dayObj = {
+        id: `day_${today.dayKey}`,
+        dayKey: today.dayKey,
+        yTdee: Math.round(today.yTdee || 0),
+        maintenance: !!today.maintenance,
+        budget: Math.round(budget),
+        intake: Math.round(intake)
       };
 
-      const log = getLog();
-      const existingIdx = log.findIndex(x => x.date === entry.date);
-      if(existingIdx >= 0){
-        log[existingIdx] = entry;
-      }else{
-        log.push(entry);
-      }
-      setLog(log);
+      const days = getDays();
+      const idx = days.findIndex(x => x.dayKey === dayObj.dayKey);
+      if(idx >= 0) days[idx] = dayObj;
+      else days.push(dayObj);
+      setDays(days);
 
-      state = defaultState();
-      saveJSON(LS_STATE, state);
+      // Reset today's state but keep dayKey logic handled by cutoff
+      setToday(defaultToday());
       render();
+      setActivePage("Progress");
     });
 
-    el("saveDeficitBtn").addEventListener("click", () => {
+    // Settings save
+    el("saveSettingsBtn").addEventListener("click", () => {
       const v = Number(el("deficitInput").value || 0);
-      if(!Number.isFinite(v) || v < 0) return;
-      setDeficit(v);
-      el("deficitSavedHint").textContent = "Saved";
+      const deficit = (Number.isFinite(v) && v >= 0) ? Math.round(v) : DEFAULT_DEFICIT;
+      setSettings({ deficit });
+
+      // Also refresh the dashboard deficit tile and budgets
       render();
-      setTimeout(() => { el("deficitSavedHint").textContent = ""; }, 900);
     });
 
+    // Stats save
+    el("saveStatsBtn").addEventListener("click", () => {
+      const stats = {
+        heightCm: el("heightInput").value || "",
+        weightLb: el("weightStatInput").value || "",
+        age: el("ageInput").value || "",
+        gender: el("genderInput").value || ""
+      };
+      setStats(stats);
+      render();
+    });
+
+    // Load stats into inputs
+    const hydrateStats = () => {
+      const s = getStats();
+      el("heightInput").value = s.heightCm || "";
+      el("weightStatInput").value = s.weightLb || "";
+      el("ageInput").value = s.age || "";
+      el("genderInput").value = s.gender || "";
+    };
+
+    // Export
     el("exportBtn").addEventListener("click", () => {
       const payload = {
         exportedAt: new Date().toISOString(),
-        deficit: getDeficit(),
-        log: getLog()
+        cutoffHour: DAY_CUTOFF_HOUR,
+        settings: getSettings(),
+        stats: getStats(),
+        today: getToday(),
+        days: getDays()
       };
 
       const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `allocate_export_${todayISO()}.json`;
+      a.download = `allocate_export_${dayKeyWithCutoff()}.json`;
       document.body.appendChild(a);
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
     });
 
-    const showPage = (name) => {
-      const map = {
-        dash: "pageDash",
-        settings: "pageSettings",
-        logging: "pageLogging",
-        info: "pageInfo",
-        progress: "pageProgress"
-      };
+    // Edit modal
+    let editingId = null;
 
-      Object.values(map).forEach((id) => el(id).classList.remove("active"));
-      el(map[name]).classList.add("active");
+    const openEdit = (id) => {
+      const days = getDays();
+      const d = days.find(x => String(x.id) === String(id));
+      if(!d) return;
 
-      document.querySelectorAll(".tabbtn").forEach((b) => b.classList.remove("active"));
-      document.querySelector(`.tabbtn[data-go="${name}"]`).classList.add("active");
+      editingId = id;
+      el("editTitle").textContent = `Edit ${d.dayKey}`;
+      el("editYTdee").value = String(d.yTdee || 0);
+      el("editIntake").value = String(d.intake || 0);
+      el("editBack").classList.add("show");
     };
 
-    document.querySelectorAll(".tabbtn").forEach((b) => {
-      b.addEventListener("click", () => showPage(b.getAttribute("data-go")));
+    const closeEdit = () => {
+      editingId = null;
+      el("editBack").classList.remove("show");
+    };
+
+    el("editClose").addEventListener("click", closeEdit);
+    el("editBack").addEventListener("click", (e) => {
+      if(e.target === el("editBack")) closeEdit();
     });
 
+    el("editSave").addEventListener("click", () => {
+      if(!editingId) return;
+
+      const days = getDays();
+      const idx = days.findIndex(x => String(x.id) === String(editingId));
+      if(idx < 0) return;
+
+      const y = Number(el("editYTdee").value || 0);
+      const i = Number(el("editIntake").value || 0);
+
+      days[idx].yTdee = Number.isFinite(y) ? Math.max(0, Math.round(y)) : 0;
+      days[idx].intake = Number.isFinite(i) ? Math.max(0, Math.round(i)) : 0;
+
+      // Recompute budget based on maintenance + current deficit setting
+      const settings = getSettings();
+      const tdee = days[idx].yTdee || 0;
+      const budget = days[idx].maintenance ? tdee : Math.max(0, Math.round(tdee - settings.deficit));
+      days[idx].budget = budget;
+
+      setDays(days);
+      closeEdit();
+      render();
+    });
+
+    // Auto rollover at cutoff (runs on open and every minute)
+    const rolloverCheck = () => {
+      const today = getToday();
+      const keyNow = dayKeyWithCutoff();
+      if(today.dayKey !== keyNow){
+        setToday(defaultToday());
+        render();
+      }
+    };
+
+    setInterval(rolloverCheck, 60000);
+
+    // Init
+    hydrateStats();
     render();
   </script>
 </body>
