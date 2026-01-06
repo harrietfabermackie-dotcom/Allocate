@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Allocate</title>
   <meta name="theme-color" content="#ff7aa2" />
   <style>
@@ -12,16 +12,12 @@
       --card:#ffffffcc;
       --ink:#1b1020;
       --muted:#5b4b61;
+      --off:#1f1a22;
       --accent:#ff5f9a;
       --accent2:#ff9a5a;
       --shadow: 0 20px 55px rgba(25, 10, 30, .18);
       --shadow2: 0 10px 24px rgba(25, 10, 30, .12);
       --radius: 24px;
-
-      --navBg: rgba(255,255,255,.92);
-      --navBorder: rgba(255,255,255,.75);
-      --navIcon: rgba(27,16,32,.72);
-      --navIconActive: var(--accent);
     }
 
     *{ box-sizing:border-box; }
@@ -36,7 +32,7 @@
       display:flex;
       align-items:flex-start;
       justify-content:center;
-      padding:22px 14px 40px;
+      padding: 22px 14px calc(130px + env(safe-area-inset-bottom));
     }
 
     .phone{
@@ -48,17 +44,6 @@
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-
-      max-height: calc(100vh - 44px);
-      overflow: hidden;
-      position: relative;
-    }
-
-    .scrollArea{
-      max-height: calc(100vh - 44px);
-      overflow:auto;
-      -webkit-overflow-scrolling: touch;
-      padding-bottom: 116px;
     }
 
     .topbar{
@@ -66,14 +51,6 @@
       align-items:center;
       justify-content:space-between;
       padding: 6px 6px 12px;
-      position: sticky;
-      top: 0;
-      z-index: 5;
-      background: rgba(255,255,255,.10);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,.15);
     }
     .brand{
       font-weight:900;
@@ -82,7 +59,6 @@
       display:flex;
       align-items:center;
       gap:10px;
-      padding-left: 6px;
     }
     .dot{
       width:10px;
@@ -140,6 +116,17 @@
       background-clip:text;
       color: transparent;
       letter-spacing: -1.5px;
+    }
+    .bigSmall{
+      font-weight:900;
+      font-size:42px;
+      line-height:1.05;
+      margin: 0;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+      letter-spacing: -1px;
     }
 
     .grid2{
@@ -231,7 +218,7 @@
       color: #fff;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       box-shadow: 0 14px 30px rgba(255,95,154,.30);
-      transition: transform .08s ease, opacity .12s ease;
+      transition: transform .08s ease, opacity .15s ease;
       user-select:none;
       -webkit-tap-highlight-color: transparent;
     }
@@ -248,9 +235,9 @@
       border: 1px solid rgba(255,255,255,.75);
       box-shadow: var(--shadow2);
     }
-    .btn.loading{
-      opacity: .88;
-      pointer-events: none;
+    .btn:disabled{
+      opacity: .65;
+      cursor: default;
     }
 
     .mini{
@@ -329,125 +316,8 @@
       transform: translateX(20px);
     }
 
-    .bottomTabsWrap{
-      position:absolute;
-      left: 16px;
-      right: 16px;
-      bottom: 16px;
-      padding: 10px 10px;
-      background: var(--navBg);
-      border: 1px solid var(--navBorder);
-      border-radius: 20px;
-      box-shadow: var(--shadow2);
-      z-index: 20;
-    }
-    .bottomTabs{
-      display:grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap:8px;
-      align-items:center;
-    }
-    .btab{
-      border:1px solid transparent;
-      background: transparent;
-      border-radius: 16px;
-      padding: 10px 8px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      cursor:pointer;
-      user-select:none;
-      -webkit-tap-highlight-color: transparent;
-      color: var(--navIcon);
-      min-width: 0;
-    }
-    .btab .ico{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      width: 22px;
-      height: 22px;
-      color: inherit;
-    }
-    .btab .ico svg{
-      width: 20px;
-      height: 20px;
-      display:block;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2.2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-    .btab.active{
-      background: rgba(255,255,255,.70);
-      border-color: rgba(255,255,255,.85);
-      box-shadow: 0 10px 22px rgba(25,10,30,.10);
-      color: var(--navIconActive);
-    }
-
     .page{ display:none; margin-top:12px; }
     .page.active{ display:block; }
-
-    .presetRow{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:space-between;
-      margin-top: 10px;
-    }
-    .presetGrid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:10px;
-      width: 100%;
-    }
-    .presetBtn{
-      border: 1px solid rgba(255,255,255,.72);
-      background: rgba(255,255,255,.50);
-      border-radius: 18px;
-      padding: 12px 10px;
-      box-shadow: var(--shadow2);
-      cursor:pointer;
-      -webkit-tap-highlight-color: transparent;
-      user-select:none;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:6px;
-      min-height: 74px;
-    }
-    .presetBtn:active{ transform: translateY(1px) scale(.99); }
-    .presetEmoji{
-      font-size: 22px;
-      line-height: 1;
-    }
-    .presetNum{
-      font-weight:900;
-      font-size:16px;
-      color: var(--ink);
-      opacity: .92;
-    }
-    .presetEditBtn{
-      width: 44px;
-      height: 44px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.65);
-      background: rgba(255,255,255,.35);
-      box-shadow: var(--shadow2);
-      cursor:pointer;
-      font-weight:900;
-      color: var(--ink);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      -webkit-tap-highlight-color: transparent;
-      flex: 0 0 auto;
-      font-size: 20px;
-      line-height: 1;
-    }
-    .presetEditBtn:active{ transform: translateY(1px) scale(.99); }
 
     .entryList{
       margin: 10px 0 0 0;
@@ -464,8 +334,8 @@
       gap:10px;
       padding: 10px 12px;
       border-radius: 16px;
-      background: rgba(255,255,255,.50);
-      border: 1px solid rgba(255,255,255,.68);
+      background: rgba(255,255,255,.58);
+      border: 1px solid rgba(255,255,255,.72);
       min-width: 0;
     }
     .entry .left{
@@ -476,25 +346,18 @@
     }
     .entry .time{
       font-size:12px;
-      color: rgba(91,75,97,.82);
+      color: var(--muted);
       font-weight:900;
     }
     .entry .cals{
       font-size:16px;
       font-weight:900;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip:text;
-      background-clip:text;
-      color: transparent;
-      letter-spacing: .1px;
-      display:flex;
-      align-items:center;
-      gap:8px;
+      color: rgba(255,95,154,.95);
     }
     .xbtn{
       border: 1px solid rgba(255,255,255,.7);
-      background: rgba(255,255,255,.40);
-      color: rgba(27,16,32,.75);
+      background: rgba(255,255,255,.55);
+      color: var(--ink);
       border-radius: 12px;
       padding: 8px 10px;
       font-weight:900;
@@ -527,25 +390,13 @@
       background: rgba(255,255,255,.35);
       box-shadow: var(--shadow2);
       cursor:pointer;
-      font-weight:900;
-      color: var(--ink);
       display:flex;
       align-items:center;
       justify-content:center;
       -webkit-tap-highlight-color: transparent;
       flex: 0 0 auto;
-      font-size: 20px;
-      line-height: 1;
     }
     .iconBtn:active{ transform: translateY(1px) scale(.99); }
-
-    .iconBtn.gradArrow{
-      background: rgba(255,255,255,.35);
-      color: transparent;
-      background-image: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      background-clip: text;
-    }
 
     .modalBack{
       position: fixed;
@@ -565,6 +416,8 @@
       border: 1px solid rgba(255,255,255,.75);
       box-shadow: var(--shadow);
       padding: 14px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
     .modalTop{
       display:flex;
@@ -616,15 +469,13 @@
       background: rgba(255,255,255,.35);
       box-shadow: var(--shadow2);
       cursor:pointer;
-      font-weight:900;
       display:flex;
       align-items:center;
       justify-content:center;
       -webkit-tap-highlight-color: transparent;
       color: var(--ink);
-      font-size: 22px;
-      line-height: 1;
     }
+    .pencil svg{ width: 20px; height: 20px; }
     .pencil:active{ transform: translateY(1px) scale(.99); }
 
     .kvRow{
@@ -644,48 +495,25 @@
     .kv .v{ font-size:14px; font-weight:900; margin-top: 2px; }
 
     .calcWrap{ display:none; }
-    .calcRow{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:flex-end;
-    }
     .calcMsg{
       font-weight:900;
       color: rgba(27,16,32,.85);
       margin-top: 10px;
       text-align:center;
-    }
-    .calcBig{
-      display:block;
-      font-size: 22px;
-      line-height: 1.1;
-      margin-top: 2px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip:text;
-      background-clip:text;
-      color: transparent;
-      letter-spacing: -0.2px;
-    }
-    .calcSub{
-      display:block;
-      margin-top: 6px;
-      font-size: 12px;
-      color: rgba(91,75,97,.88);
-      font-weight:900;
+      min-height: 22px;
     }
 
     .loadingDots{
       display:inline-block;
-      width: 38px;
+      width: 40px;
       text-align:left;
     }
     .loadingDots span{
       display:inline-block;
-      width: 6px;
-      height: 6px;
+      width: 7px;
+      height: 7px;
       border-radius: 999px;
-      background: rgba(27,16,32,.65);
+      background: rgba(27,16,32,.55);
       margin-right: 6px;
       animation: bounce 1s infinite ease-in-out;
     }
@@ -696,96 +524,13 @@
       40%{ transform: translateY(-6px); opacity: 1; }
     }
 
-    .roundRow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding: 10px 12px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.58);
-      border: 1px solid rgba(255,255,255,.72);
-      margin-top: 10px;
-    }
-    .roundRow .rlabel{
-      font-weight:900;
-      font-size:14px;
-      color: rgba(27,16,32,.85);
-    }
-    .roundPick{
-      font-weight:900;
-      font-size:12px;
-      color: rgba(91,75,97,.92);
-      white-space: nowrap;
-      overflow:hidden;
-      text-overflow: ellipsis;
-    }
-
-    .choiceRow{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-    }
-    @media (max-width: 360px){
-      .choiceRow{ grid-template-columns: 1fr; }
-    }
-    .choiceCard{
-      border: 1px solid rgba(255,255,255,.72);
-      background: rgba(255,255,255,.55);
-      border-radius: 18px;
-      padding: 12px;
-      box-shadow: var(--shadow2);
-      cursor:pointer;
-      -webkit-tap-highlight-color: transparent;
-      text-align:left;
-    }
-    .choiceCard:active{ transform: translateY(1px) scale(.99); }
-    .choiceCard.selected{
-      outline: 3px solid rgba(255,95,154,.26);
-    }
-    .choiceTop{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      font-weight:900;
-      font-size:14px;
-      color: rgba(27,16,32,.88);
-    }
-    .choiceVal{
-      margin-top: 6px;
-      font-weight:900;
-      font-size:18px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip:text;
-      background-clip:text;
-      color: transparent;
-    }
-    .choiceSmall{
-      margin-top: 4px;
-      font-weight:900;
-      font-size:12px;
-      color: rgba(91,75,97,.86);
-    }
-
-    .planCardTitle{
-      font-weight:900;
-      font-size:18px;
-      margin: 0 0 4px 0;
-      color: rgba(27,16,32,.90);
-    }
-    .planCardSub{
-      font-weight:900;
-      font-size:14px;
-      color: rgba(91,75,97,.92);
-    }
     .planBar{
       height: 10px;
       border-radius: 999px;
       background: rgba(91,75,97,.18);
       border: 1px solid rgba(255,255,255,.65);
       overflow:hidden;
-      margin-top: 12px;
+      margin-top: 10px;
     }
     .planFill{
       height:100%;
@@ -808,398 +553,472 @@
       font-weight:900;
     }
 
-    .weighRow{
-      display:flex;
-      align-items:flex-end;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .lockPill{
-      border: 1px solid rgba(255,255,255,.72);
-      background: rgba(255,255,255,.55);
-      border-radius: 18px;
-      padding: 10px 12px;
+    .onTrack{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
+      margin-bottom: 10px;
     }
-    .lockPill .lpLeft{
+    .onTrack .title{
+      font-weight:900;
+      font-size:16px;
+    }
+    .onTrack .miniRow{
       display:flex;
-      flex-direction:column;
-      gap:3px;
+      gap:10px;
+      align-items:center;
     }
-    .lockPill .lpTop{
+    .lockPill{
       display:flex;
       align-items:center;
       gap:8px;
-      font-weight:900;
-      color: rgba(27,16,32,.86);
-      font-size:14px;
-    }
-    .lockPill .lpSub{
-      font-weight:900;
-      color: rgba(91,75,97,.90);
-      font-size:12px;
-    }
-    .tinyQ{
-      border: 0;
-      background: transparent;
-      padding: 0;
-      margin: 0;
-      font-weight:900;
-      color: rgba(27,16,32,.78);
-      cursor:pointer;
-      -webkit-tap-highlight-color: transparent;
-      font-size: 12px;
-      line-height: 1;
-    }
-    .tinyTag{
-      opacity:.72;
-      font-weight:900;
-      font-size:12px;
-    }
-
-    .fadeIn{
-      animation: fadeIn .18s ease;
-    }
-    @keyframes fadeIn{
-      from{ opacity:0; transform: translateY(4px); }
-      to{ opacity:1; transform: translateY(0); }
-    }
-
-    .transitionBack{
-      position: fixed;
-      inset: 0;
-      background: rgba(25,10,30,.18);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding: 18px;
-      z-index: 80;
-    }
-    .transitionBack.show{ display:flex; }
-    .transitionCard{
-      width:min(420px, 100%);
-      border-radius: 24px;
-      background: rgba(255,255,255,.94);
-      border: 1px solid rgba(255,255,255,.85);
-      box-shadow: var(--shadow);
-      padding: 16px;
-      text-align:center;
-      animation: popIn .22s ease;
-    }
-    @keyframes popIn{
-      from{ opacity:0; transform: scale(.98) translateY(6px); }
-      to{ opacity:1; transform: scale(1) translateY(0); }
-    }
-    .transitionTitle{
-      font-weight:900;
-      font-size:16px;
-      color: rgba(27,16,32,.92);
-    }
-    .transitionSub{
-      font-weight:900;
-      font-size:12px;
-      color: rgba(91,75,97,.88);
-      margin-top: 6px;
-    }
-    .check{
-      width: 44px;
-      height: 44px;
+      padding: 8px 10px;
       border-radius: 999px;
-      margin: 0 auto 10px;
+      border: 1px solid rgba(255,255,255,.7);
+      background: rgba(255,255,255,.55);
+      font-weight:900;
+      color: rgba(27,16,32,.85);
+      box-shadow: var(--shadow2);
+      user-select:none;
+    }
+    .qBtn{
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.7);
+      background: rgba(255,255,255,.55);
+      box-shadow: var(--shadow2);
+      cursor:pointer;
       display:flex;
       align-items:center;
       justify-content:center;
-      background: rgba(255,255,255,.70);
-      border: 1px solid rgba(255,255,255,.85);
-      box-shadow: var(--shadow2);
-      color: transparent;
-      background-image: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      background-clip: text;
       font-weight:900;
-      font-size: 22px;
-      line-height: 1;
+      color: rgba(27,16,32,.85);
+      -webkit-tap-highlight-color: transparent;
     }
+    .qBtn:active{ transform: translateY(1px) scale(.99); }
+    .qBtn span{ font-size: 12px; line-height: 1; }
+
+    .presetRow{
+      display:grid;
+      grid-template-columns: 48px 1fr 1fr 1fr;
+      gap:10px;
+      align-items:stretch;
+      margin-top: 10px;
+    }
+    .presetEditBtn{
+      border: 1px solid rgba(255,255,255,.65);
+      background: rgba(255,255,255,.35);
+      box-shadow: var(--shadow2);
+      border-radius: 16px;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .presetEditBtn:active{ transform: translateY(1px) scale(.99); }
+    .presetEditBtn svg{ width: 20px; height: 20px; }
+
+    .presetBtn{
+      border: 1px solid rgba(255,255,255,.72);
+      background: rgba(255,255,255,.58);
+      border-radius: 18px;
+      cursor:pointer;
+      box-shadow: var(--shadow2);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      padding: 10px 8px;
+      -webkit-tap-highlight-color: transparent;
+      user-select:none;
+    }
+    .presetBtn:active{ transform: translateY(1px) scale(.99); }
+    .pEmoji{ font-size: 22px; line-height:1; }
+    .pAmt{ font-weight:900; color: rgba(27,16,32,.85); font-size: 14px; }
+
+    /* Fixed bottom nav, no blur, no jumping */
+    .bottomTabsWrap{
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: calc(12px + env(safe-area-inset-bottom));
+      width: min(420px, calc(100% - 28px));
+      padding: 10px 10px;
+      background: rgba(255,255,255,.35);
+      border: 1px solid rgba(255,255,255,.55);
+      border-radius: 20px;
+      box-shadow: var(--shadow2);
+      z-index: 40;
+    }
+    .bottomTabs{
+      display:grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap:8px;
+      align-items:center;
+    }
+    .btab{
+      border:1px solid transparent;
+      background: transparent;
+      border-radius: 16px;
+      padding: 10px 8px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      color: rgba(31,26,34,.75);
+    }
+    .btab svg{
+      width: 20px;
+      height: 20px;
+      stroke: rgba(31,26,34,.78);
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .btab.active{
+      background: rgba(255,255,255,.58);
+      border-color: rgba(255,255,255,.7);
+      box-shadow: 0 10px 22px rgba(25,10,30,.10);
+    }
+    .btab.active svg{
+      stroke: rgba(31,26,34,.92);
+    }
+
+    .fadeOverlay{
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,.0);
+      display:none;
+      z-index: 60;
+      pointer-events:none;
+      transition: background .18s ease;
+    }
+    .fadeOverlay.show{
+      display:block;
+      background: rgba(255,255,255,.18);
+    }
+
+    .choiceRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 10px;
+    }
+    .choiceBtn{
+      flex: 1 1 140px;
+      border: 1px solid rgba(255,255,255,.75);
+      background: rgba(255,255,255,.55);
+      border-radius: 18px;
+      padding: 10px 12px;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow: var(--shadow2);
+      -webkit-tap-highlight-color: transparent;
+      color: rgba(27,16,32,.88);
+      text-align:left;
+    }
+    .choiceBtn strong{
+      display:block;
+      font-size:14px;
+      margin-bottom: 2px;
+    }
+    .choiceBtn span{
+      display:block;
+      font-size:12px;
+      color: rgba(91,75,97,.9);
+      font-weight:900;
+    }
+    .choiceBtn.active{
+      border-color: rgba(255,95,154,.45);
+      box-shadow: 0 0 0 4px rgba(255,95,154,.14), var(--shadow2);
+    }
+
+    .emojiGrid{
+      display:grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap:8px;
+      margin-top: 10px;
+    }
+    .eBtn{
+      border: 1px solid rgba(255,255,255,.7);
+      background: rgba(255,255,255,.55);
+      border-radius: 14px;
+      padding: 8px 0;
+      cursor:pointer;
+      font-size: 20px;
+      line-height: 1;
+      -webkit-tap-highlight-color: transparent;
+      user-select:none;
+    }
+    .eBtn:active{ transform: translateY(1px) scale(.99); }
   </style>
 </head>
 <body>
   <div class="phone">
-    <div class="scrollArea">
-      <div class="topbar">
-        <div class="brand"><span class="dot"></span>Allocate</div>
-        <button class="pillbtn" id="exportBtn">Export</button>
-      </div>
+    <div class="topbar">
+      <div class="brand"><span class="dot"></span>Allocate</div>
+      <button class="pillbtn" id="exportBtn">Export</button>
+    </div>
 
-      <!-- DASHBOARD -->
-      <div class="page active" id="pageDash">
-        <div class="stack">
-          <div class="card hero">
-            <p class="subline" id="todayDate"></p>
-            <div class="label">Today's budget</div>
-            <p class="big" id="budgetBig">0</p>
+    <!-- DASHBOARD -->
+    <div class="page active" id="pageDash">
+      <div class="stack">
+        <div class="card hero">
+          <p class="subline" id="todayDate"></p>
+          <div class="label">Today's budget</div>
+          <p class="big" id="budgetBig">0</p>
 
-            <div class="spacer"></div>
+          <div class="spacer"></div>
 
-            <div class="grid2">
-              <div class="kpi">
-                <div class="klabel">Burned yesterday</div>
-                <div class="kval"><span class="knum" id="yTdeeKpi">0</span></div>
-              </div>
-              <div class="kpi">
-                <div class="klabel">Deficit</div>
-                <div class="kval"><span class="knum" id="deficitKpi">-0</span></div>
-              </div>
+          <div class="grid2">
+            <div class="kpi">
+              <div class="klabel">Burned yesterday</div>
+              <div class="kval"><span class="knum" id="yTdeeKpi">0</span></div>
             </div>
-
-            <div class="spacer"></div>
-
-            <div class="grid2">
-              <div class="kpi">
-                <div class="klabel">Rollover calories</div>
-                <div class="kval"><span class="knum" id="rolloverKpi">0</span></div>
-              </div>
-              <div class="kpi">
-                <div class="klabel">Banked calories</div>
-                <div class="kval">
-                  <span class="knum" id="bankedKpi">0</span>
-                  <button class="iconBtn gradArrow" id="useBankedBtn" aria-label="Use banked calories">↑</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="spacer"></div>
-
-            <div class="row">
-              <div class="field">
-                <label for="tdeeInputDash">Yesterday's TDEE</label>
-                <input id="tdeeInputDash" type="number" inputmode="numeric" min="0" placeholder="Enter TDEE" />
-              </div>
-
-              <div class="field">
-                <div class="switchRow">
-                  <div class="slabel">Maintenance</div>
-                  <div class="iosSwitch" aria-label="Maintenance">
-                    <input id="maintenanceToggleDash" type="checkbox" />
-                    <span class="iosTrack"></span>
-                    <span class="iosThumb"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="spacer"></div>
-            <button class="btn" id="applyDashBtn">Apply</button>
-
-            <div class="mini">
-              <div class="hint" id="modeHint"></div>
-              <div class="hint" id="savedHint"></div>
+            <div class="kpi">
+              <div class="klabel">Deficit</div>
+              <div class="kval"><span class="knum" id="deficitKpi">-0</span></div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <!-- SETTINGS -->
-      <div class="page" id="pageSettings">
-        <div class="stack">
-          <div class="card">
+          <div class="spacer"></div>
+
+          <div class="grid2">
+            <div class="kpi">
+              <div class="klabel">Rollover calories</div>
+              <div class="kval"><span class="knum" id="rolloverKpi">0</span></div>
+            </div>
+            <div class="kpi">
+              <div class="klabel">Banked calories</div>
+              <div class="kval">
+                <span class="knum" id="bankedKpi">0</span>
+                <button class="iconBtn" id="useBankedBtn" aria-label="Use banked calories">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="gradArrow" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#ff5f9a"/>
+                        <stop offset="1" stop-color="#ff9a5a"/>
+                      </linearGradient>
+                    </defs>
+                    <path d="M12 19V5" stroke="url(#gradArrow)" stroke-width="2.6" stroke-linecap="round"/>
+                    <path d="M7 10l5-5 5 5" stroke="url(#gradArrow)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="spacer"></div>
+
+          <div class="row">
             <div class="field">
-              <label for="deficitInput">Deficit</label>
-              <input id="deficitInput" type="number" inputmode="numeric" min="0" placeholder="750" />
+              <label for="tdeeInputDash">Yesterday's TDEE</label>
+              <input id="tdeeInputDash" type="number" inputmode="numeric" min="0" placeholder="Enter TDEE" />
             </div>
-            <div class="spacer"></div>
-            <button class="btn" id="saveSettingsBtn">Save</button>
+
+            <div class="field">
+              <div class="switchRow">
+                <div class="slabel">Maintenance</div>
+                <div class="iosSwitch" aria-label="Maintenance">
+                  <input id="maintenanceToggleDash" type="checkbox" />
+                  <span class="iosTrack"></span>
+                  <span class="iosThumb"></span>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="card" id="statsCard">
-            <div class="statsHeader">
-              <div class="statsTitle">My stats</div>
-              <button class="pencil" id="editStatsBtn" aria-label="Edit stats">✎</button>
-            </div>
+          <div class="spacer"></div>
+          <button class="btn" id="applyDashBtn">Apply</button>
 
-            <div id="statsView">
-              <div class="kvRow">
-                <div class="kv"><div class="k">Height</div><div class="v" id="svHeight">-</div></div>
-                <div class="kv"><div class="k">Weight</div><div class="v" id="svWeight">-</div></div>
-                <div class="kv"><div class="k">Age</div><div class="v" id="svAge">-</div></div>
-                <div class="kv"><div class="k">Gender</div><div class="v" id="svGender">-</div></div>
-              </div>
-            </div>
-
-            <div id="statsEdit" style="display:none;">
-              <div class="row">
-                <div class="field">
-                  <label for="heightInput">Height (cm)</label>
-                  <input id="heightInput" type="number" inputmode="numeric" min="0" />
-                </div>
-                <div class="field">
-                  <label for="weightStatInput">Weight (lb)</label>
-                  <input id="weightStatInput" type="number" inputmode="decimal" step="0.1" min="0" />
-                </div>
-              </div>
-              <div class="spacer"></div>
-              <div class="row">
-                <div class="field">
-                  <label for="ageInput">Age</label>
-                  <input id="ageInput" type="number" inputmode="numeric" min="0" />
-                </div>
-                <div class="field">
-                  <label for="genderInput">Gender</label>
-                  <select id="genderInput">
-                    <option value="">Select</option>
-                    <option value="female">Female</option>
-                    <option value="male">Male</option>
-                    <option value="other">Other</option>
-                    <option value="na">Prefer not to say</option>
-                  </select>
-                </div>
-              </div>
-              <div class="spacer"></div>
-              <button class="btn ghost" id="applyStatsBtn">Apply</button>
-            </div>
-
-            <div class="note" id="statsSavedHint" style="display:none;">Saved</div>
-          </div>
-
-          <div class="card calcWrap" id="goalCard">
-            <div style="font-weight:900; font-size:14px; color: rgba(27,16,32,.85);">Goal calculator</div>
-            <div class="spacer"></div>
-
-            <div class="calcRow">
-              <div class="field">
-                <label for="currentWeightInput">Current weight (lb)</label>
-                <input id="currentWeightInput" type="number" inputmode="decimal" step="0.1" min="0" placeholder="From stats" />
-              </div>
-              <div class="field">
-                <label for="targetWeightInput">Target weight (lb)</label>
-                <input id="targetWeightInput" type="number" inputmode="decimal" step="0.1" min="0" />
-              </div>
-            </div>
-
-            <div class="spacer"></div>
-
-            <div class="calcRow">
-              <div class="field">
-                <label for="targetDateInput">Target date</label>
-                <input id="targetDateInput" type="date" />
-              </div>
-              <div class="field small">
-                <button class="btn" id="calcBtn">Calculate</button>
-              </div>
-            </div>
-
-            <div class="calcMsg" id="calcMsg"></div>
-
-            <div id="savePlanWrap" style="display:none;">
-              <div class="spacer"></div>
-
-              <div class="roundRow">
-                <div class="rlabel">Round to 50</div>
-                <div style="display:flex; align-items:center; gap:10px; min-width:0;">
-                  <div class="roundPick" id="roundPickText">Optional</div>
-                  <button class="smBtn" id="roundOpenBtn" type="button">Choose</button>
-                </div>
-              </div>
-
-              <div class="spacer"></div>
-              <button class="btn" id="savePlanBtn">Save plan</button>
-              <div class="note" id="savePlanHint" style="display:none;">Saved</div>
-            </div>
+          <div class="mini">
+            <div class="hint" id="modeHint"></div>
+            <div class="hint" id="savedHint"></div>
           </div>
         </div>
-      </div>
-
-      <!-- LOGGING -->
-      <div class="page" id="pageLogging">
-        <div class="stack">
-          <div class="card hero">
-            <div class="label">Calories left today</div>
-            <p class="big" id="leftBig">0</p>
-
-            <div class="spacer"></div>
-
-            <div class="grid2">
-              <div class="kpi">
-                <div class="klabel">Running intake</div>
-                <div class="kval"><span class="knum" id="intakeKpi">0</span></div>
-              </div>
-              <div class="kpi">
-                <div class="klabel">Budget</div>
-                <div class="kval"><span class="knum" id="budgetLogKpi">0</span></div>
-              </div>
-            </div>
-
-            <div class="presetRow">
-              <button class="presetEditBtn" id="editPresetsBtn" aria-label="Edit presets">✎</button>
-              <div class="presetGrid" id="presetGrid"></div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="row">
-              <div class="field">
-                <label for="addInput">Log calories</label>
-                <input id="addInput" type="number" inputmode="numeric" min="0" />
-              </div>
-              <div class="field small">
-                <button class="btn" id="addBtn">Add</button>
-              </div>
-            </div>
-
-            <ul class="entryList" id="entryList"></ul>
-
-            <div class="spacer"></div>
-
-            <div class="grid2">
-              <button class="btn ghost" id="undoBtn">Undo last add</button>
-              <button class="btn" id="endDayBtn">End day</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- PROGRESS -->
-      <div class="page" id="pageProgress">
-        <div class="stack" id="progressStack"></div>
-      </div>
-
-      <!-- LOG -->
-      <div class="page" id="pageLog">
-        <div class="stack" id="logStack"></div>
       </div>
     </div>
 
-    <!-- Bottom tabs -->
-    <div class="bottomTabsWrap">
-      <div class="bottomTabs">
-        <button class="btab active" data-page="Dash" aria-label="Dashboard">
-          <span class="ico" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M12 2l1.2 4.2L17 7.5l-3.8 1.2L12 13l-1.2-4.3L7 7.5l3.8-1.3L12 2z"></path><path d="M5 13l.8 2.7L8.5 16l-2.7.8L5 19.5l-.8-2.7L1.5 16l2.7-.8L5 13z"></path></svg>
-          </span>
-        </button>
-        <button class="btab" data-page="Settings" aria-label="Settings">
-          <span class="ico" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path><path d="M19.4 15a8.2 8.2 0 0 0 .1-2l2-1.2-2-3.4-2.3.7a7.6 7.6 0 0 0-1.7-1L15.2 5h-4.4L10.5 8a7.6 7.6 0 0 0-1.7 1l-2.3-.7-2 3.4 2 1.2a8.2 8.2 0 0 0 .1 2l-2 1.2 2 3.4 2.3-.7a7.6 7.6 0 0 0 1.7 1l.3 3h4.4l.3-3a7.6 7.6 0 0 0 1.7-1l2.3.7 2-3.4-2-1.2z"></path></svg>
-          </span>
-        </button>
-        <button class="btab" data-page="Logging" aria-label="Logging">
-          <span class="ico" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
-          </span>
-        </button>
-        <button class="btab" data-page="Log" aria-label="Log">
-          <span class="ico" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M7 4h10a2 2 0 0 1 2 2v14H7a2 2 0 0 0-2 2V6a2 2 0 0 1 2-2z"></path><path d="M7 4v16"></path><path d="M10 8h6"></path><path d="M10 12h6"></path></svg>
-          </span>
-        </button>
-        <button class="btab" data-page="Progress" aria-label="Progress">
-          <span class="ico" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z"></path></svg>
-          </span>
-        </button>
+    <!-- SETTINGS -->
+    <div class="page" id="pageSettings">
+      <div class="stack">
+        <div class="card">
+          <div class="field">
+            <label for="deficitInput">Deficit</label>
+            <input id="deficitInput" type="number" inputmode="numeric" min="0" placeholder="750" />
+          </div>
+          <div class="spacer"></div>
+          <button class="btn" id="saveSettingsBtn">Save</button>
+        </div>
+
+        <div class="card" id="statsCard">
+          <div class="statsHeader">
+            <div class="statsTitle">My stats</div>
+            <button class="pencil" id="editStatsBtn" aria-label="Edit stats">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 20h9" />
+                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
+              </svg>
+            </button>
+          </div>
+
+          <div id="statsView">
+            <div class="kvRow">
+              <div class="kv"><div class="k">Height</div><div class="v" id="svHeight">-</div></div>
+              <div class="kv"><div class="k">Weight</div><div class="v" id="svWeight">-</div></div>
+              <div class="kv"><div class="k">Age</div><div class="v" id="svAge">-</div></div>
+              <div class="kv"><div class="k">Gender</div><div class="v" id="svGender">-</div></div>
+            </div>
+          </div>
+
+          <div id="statsEdit" style="display:none;">
+            <div class="row">
+              <div class="field">
+                <label for="heightInput">Height (cm)</label>
+                <input id="heightInput" type="number" inputmode="numeric" min="0" />
+              </div>
+              <div class="field">
+                <label for="weightStatInput">Weight (lb)</label>
+                <input id="weightStatInput" type="number" inputmode="decimal" step="0.1" min="0" />
+              </div>
+            </div>
+            <div class="spacer"></div>
+            <div class="row">
+              <div class="field">
+                <label for="ageInput">Age</label>
+                <input id="ageInput" type="number" inputmode="numeric" min="0" />
+              </div>
+              <div class="field">
+                <label for="genderInput">Gender</label>
+                <select id="genderInput">
+                  <option value="">Select</option>
+                  <option value="female">Female</option>
+                  <option value="male">Male</option>
+                  <option value="other">Other</option>
+                  <option value="na">Prefer not to say</option>
+                </select>
+              </div>
+            </div>
+            <div class="spacer"></div>
+            <button class="btn ghost" id="applyStatsBtn">Apply</button>
+          </div>
+
+          <div class="note" id="statsSavedHint" style="display:none;">Saved</div>
+        </div>
+
+        <div class="card calcWrap" id="goalCard">
+          <div style="font-weight:900; font-size:14px; color: rgba(27,16,32,.85);">Goal calculator</div>
+          <div class="spacer"></div>
+
+          <div class="row">
+            <div class="field">
+              <label for="currentWeightInput">Current weight (lb)</label>
+              <input id="currentWeightInput" type="number" inputmode="decimal" step="0.1" min="0" placeholder="From stats" />
+            </div>
+            <div class="field">
+              <label for="targetWeightInput">Target weight (lb)</label>
+              <input id="targetWeightInput" type="number" inputmode="decimal" step="0.1" min="0" />
+            </div>
+          </div>
+
+          <div class="spacer"></div>
+
+          <div class="row">
+            <div class="field">
+              <label for="targetDateInput">Target date</label>
+              <input id="targetDateInput" type="date" />
+            </div>
+            <div class="field small">
+              <button class="btn" id="calcBtn" style="margin-top: 0;">Calculate</button>
+            </div>
+          </div>
+
+          <div class="calcMsg" id="calcMsg"></div>
+
+          <div id="resultWrap" style="display:none; text-align:center; margin-top: 10px;">
+            <div style="font-weight:900; font-size:12px; color: rgba(91,75,97,.9);">Daily deficit</div>
+            <div class="bigSmall" id="dailyDefBig">0</div>
+            <div class="spacer"></div>
+            <button class="btn ghost" id="roundPopupBtn">Rounding (optional)</button>
+            <div class="spacer"></div>
+            <button class="btn" id="savePlanBtn">Save plan</button>
+            <div class="note" id="savePlanHint" style="display:none;">Saved</div>
+          </div>
+        </div>
       </div>
+    </div>
+
+    <!-- LOGGING -->
+    <div class="page" id="pageLogging">
+      <div class="stack">
+        <div class="card hero">
+          <div class="label">Calories left today</div>
+          <p class="big" id="leftBig">0</p>
+
+          <div class="spacer"></div>
+
+          <div class="grid2">
+            <div class="kpi">
+              <div class="klabel">Running intake</div>
+              <div class="kval"><span class="knum" id="intakeKpi">0</span></div>
+            </div>
+            <div class="kpi">
+              <div class="klabel">Budget</div>
+              <div class="kval"><span class="knum" id="budgetLogKpi">0</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="row">
+            <div class="field">
+              <label for="addInput">Log calories</label>
+              <input id="addInput" type="number" inputmode="numeric" min="0" />
+            </div>
+            <div class="field small">
+              <button class="btn" id="addBtn">Add</button>
+            </div>
+          </div>
+
+          <div class="presetRow">
+            <button class="presetEditBtn" id="editPresetsBtn" aria-label="Edit presets">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 20h9" />
+                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
+              </svg>
+            </button>
+            <button class="presetBtn" id="preset1"><div class="pEmoji" id="p1e">☕️</div><div class="pAmt" id="p1a">50</div></button>
+            <button class="presetBtn" id="preset2"><div class="pEmoji" id="p2e">🍽️</div><div class="pAmt" id="p2a">400</div></button>
+            <button class="presetBtn" id="preset3"><div class="pEmoji" id="p3e">🍿</div><div class="pAmt" id="p3a">150</div></button>
+          </div>
+
+          <ul class="entryList" id="entryList"></ul>
+
+          <div class="spacer"></div>
+
+          <div class="grid2">
+            <button class="btn ghost" id="undoBtn">Undo last add</button>
+            <button class="btn" id="endDayBtn">End day</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="page" id="pageProgress">
+      <div class="stack" id="progressStack"></div>
+    </div>
+
+    <!-- LOG (was Info) -->
+    <div class="page" id="pageInfo">
+      <div class="stack" id="logStack"></div>
     </div>
   </div>
 
@@ -1215,7 +1034,7 @@
       <div class="stack">
         <button class="btn" id="optRollover">Rollover calories</button>
         <button class="btn ghost" id="optFuture">Save for a future day</button>
-        <button class="btn ghost" id="optQuicker">Hit goal quicker</button>
+        <button class="btn ghost" id="optMoveOn">Hit goal quicker</button>
       </div>
     </div>
   </div>
@@ -1240,29 +1059,19 @@
     </div>
   </div>
 
-  <!-- Edit saved day modal -->
-  <div class="modalBack" id="editBack">
+  <!-- Rounding popup -->
+  <div class="modalBack" id="roundBack">
     <div class="modal">
       <div class="modalTop">
-        <div class="mtitle" id="editTitle">Edit day</div>
-        <button class="closeBtn" id="editClose">Close</button>
+        <div class="mtitle">Rounding</div>
+        <button class="closeBtn" id="roundClose">Close</button>
       </div>
-      <div class="row">
-        <div class="field">
-          <label for="editYTdee">TDEE</label>
-          <input id="editYTdee" type="number" inputmode="numeric" min="0" />
-        </div>
-        <div class="field">
-          <label for="editIntake">Intake</label>
-          <input id="editIntake" type="number" inputmode="numeric" min="0" />
-        </div>
-      </div>
-      <div class="spacer"></div>
-      <button class="btn" id="editSave">Save</button>
+      <div class="note">Optional. Pick one, or close to keep the exact number.</div>
+      <div class="choiceRow" id="roundChoices"></div>
     </div>
   </div>
 
-  <!-- Presets modal -->
+  <!-- Preset editor -->
   <div class="modalBack" id="presetBack">
     <div class="modal">
       <div class="modalTop">
@@ -1270,94 +1079,76 @@
         <button class="closeBtn" id="presetClose">Close</button>
       </div>
 
-      <div class="note">Pick an emoji and calories for each tile.</div>
-      <div class="spacer"></div>
+      <div class="row">
+        <div class="field">
+          <label for="presetSlot">Slot</label>
+          <select id="presetSlot">
+            <option value="1">Preset 1</option>
+            <option value="2">Preset 2</option>
+            <option value="3">Preset 3</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="presetAmt">Calories</label>
+          <input id="presetAmt" type="number" inputmode="numeric" min="0" />
+        </div>
+      </div>
 
-      <div class="stack" id="presetEditor"></div>
+      <div class="note" style="margin-top:10px;">Pick an emoji</div>
+      <div class="emojiGrid" id="emojiGrid"></div>
 
       <div class="spacer"></div>
-      <button class="btn" id="presetSaveBtn">Save</button>
-      <div class="note" id="presetSavedHint" style="display:none;">Saved</div>
+      <button class="btn" id="presetSave">Save</button>
+      <div class="note" id="presetHint" style="display:none;">Saved</div>
     </div>
   </div>
 
-  <!-- Weigh info modal -->
+  <!-- Weigh in info -->
   <div class="modalBack" id="weighInfoBack">
     <div class="modal">
       <div class="modalTop">
-        <div class="mtitle">Weekly weigh-in</div>
+        <div class="mtitle">Weekly weigh in</div>
         <button class="closeBtn" id="weighInfoClose">Close</button>
       </div>
-      <div class="note">
-        This only unlocks every 7 days so it stays calm and consistent.
-      </div>
+      <div class="note">It's saved locally on your phone. You can log once every 7 days.</div>
     </div>
   </div>
 
-  <!-- Round to 50 modal -->
-  <div class="modalBack" id="roundBack">
-    <div class="modal">
-      <div class="modalTop">
-        <div class="mtitle">Round to 50</div>
-        <button class="closeBtn" id="roundClose">Close</button>
-      </div>
+  <div class="fadeOverlay" id="fadeOverlay"></div>
 
-      <div class="note">Optional. You can keep the exact number if you want.</div>
-      <div class="spacer"></div>
-
-      <div class="choiceRow">
-        <button class="choiceCard" id="roundDownBtn" type="button">
-          <div class="choiceTop"><span>Round down</span><span id="roundDownVal"></span></div>
-          <div class="choiceVal" id="roundDownValBig">0</div>
-          <div class="choiceSmall" id="roundDownDate"></div>
-        </button>
-
-        <button class="choiceCard" id="roundUpBtn" type="button">
-          <div class="choiceTop"><span>Round up</span><span id="roundUpVal"></span></div>
-          <div class="choiceVal" id="roundUpValBig">0</div>
-          <div class="choiceSmall" id="roundUpDate"></div>
-        </button>
-      </div>
-
-      <div class="spacer"></div>
-      <button class="btn ghost" id="roundExactBtn" type="button">Use exact</button>
-    </div>
-  </div>
-
-  <!-- Transition overlay -->
-  <div class="transitionBack" id="transitionBack" aria-hidden="true">
-    <div class="transitionCard">
-      <div class="check">✓</div>
-      <div class="transitionTitle" id="transitionTitle">Saved</div>
-      <div class="transitionSub" id="transitionSub">Nice and steady.</div>
+  <!-- Bottom tabs -->
+  <div class="bottomTabsWrap" aria-label="Bottom navigation">
+    <div class="bottomTabs">
+      <button class="btab active" data-page="Dash" aria-label="Dashboard">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 10v10h12V10"/></svg>
+      </button>
+      <button class="btab" data-page="Settings" aria-label="Settings">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/><path d="M19.4 15a7.9 7.9 0 0 0 .1-2l2-1.2-2-3.5-2.2.6a8.5 8.5 0 0 0-1.7-1l-.3-2.3H10.7l-.3 2.3a8.5 8.5 0 0 0-1.7 1L6.5 8.3 4.5 11.8l2 1.2a7.9 7.9 0 0 0 .1 2l-2 1.2 2 3.5 2.2-.6a8.5 8.5 0 0 0 1.7 1l.3 2.3h4.6l.3-2.3a8.5 8.5 0 0 0 1.7-1l2.2.6 2-3.5-2-1.2z"/></svg>
+      </button>
+      <button class="btab" data-page="Logging" aria-label="Logging">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+      </button>
+      <button class="btab" data-page="Progress" aria-label="Progress">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z"/></svg>
+      </button>
+      <button class="btab" data-page="Info" aria-label="Log">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10"/><path d="M7 8h10"/><path d="M7 12h7"/><path d="M6 2h12v20H6z"/></svg>
+      </button>
     </div>
   </div>
 
   <script>
-    const LS_SETTINGS = "allocate_settings_v7";
-    const LS_STATS = "allocate_stats_v7";
-    const LS_TODAY = "allocate_today_v7";
-    const LS_DAYS = "allocate_days_v7";
-    const LS_BANKS = "allocate_banks_v7";
-    const LS_PLAN = "allocate_plan_v7";
-    const LS_PRESETS = "allocate_presets_v8";
+    const LS_SETTINGS = "allocate_settings_v8";
+    const LS_STATS = "allocate_stats_v8";
+    const LS_TODAY = "allocate_today_v8";
+    const LS_DAYS = "allocate_days_v8";
+    const LS_BANKS = "allocate_banks_v8";
+    const LS_PLAN = "allocate_plan_v8";
     const LS_WEIGH = "allocate_weigh_v8";
+    const LS_PRESETS = "allocate_presets_v8";
 
     const DEFAULT_DEFICIT = 750;
     const DAY_CUTOFF_HOUR = 3;
-
-    const EMOJI_CHOICES = [
-      "☕️","🍵","🧋","🥤","🧃","🥛","🧉","🍺","🍷","🥂","🍸","🍹","🍾",
-      "🍎","🍐","🍊","🍋","🍌","🍉","🍇","🍓","🫐","🍒","🥝","🍍","🥭","🍑","🍈",
-      "🥕","🌽","🥦","🥬","🍅","🥒","🫑","🍄","🧄","🧅","🥔","🍠","🫘","🫛",
-      "🥜","🌰",
-      "🍞","🥐","🥖","🥯","🥨","🫓","🥞","🧇","🍳","🥚","🧀","🥓",
-      "🍗","🍖","🌭","🍔","🍟","🍕","🥪","🌯","🌮","🥙","🧆","🥘","🍲","🫕",
-      "🍝","🍜","🍛","🍣","🍱","🍙","🍚","🍘","🍤","🦐","🦀","🐟","🍥","🥟","🥡",
-      "🥗","🥫",
-      "🍦","🍧","🍨","🍩","🍪","🍰","🧁","🍫","🍬","🍭","🍮","🥧",
-      "🥣","🍿","🧂"
-    ];
 
     const el = (id) => document.getElementById(id);
 
@@ -1376,17 +1167,13 @@
       }
     };
 
-    const saveJSON = (key, value) => {
-      localStorage.setItem(key, JSON.stringify(value));
-    };
+    const saveJSON = (key, value) => localStorage.setItem(key, JSON.stringify(value));
 
     const pad2 = (n) => String(n).padStart(2, "0");
 
     const dayKeyWithCutoff = (date = new Date()) => {
       const d = new Date(date);
-      if(d.getHours() < DAY_CUTOFF_HOUR){
-        d.setDate(d.getDate() - 1);
-      }
+      if(d.getHours() < DAY_CUTOFF_HOUR) d.setDate(d.getDate() - 1);
       const yyyy = d.getFullYear();
       const mm = pad2(d.getMonth() + 1);
       const dd = pad2(d.getDate());
@@ -1430,24 +1217,15 @@
       return new Date(p[0], p[1]-1, p[2], 12, 0, 0);
     };
 
-    const addDaysNoon = (date, days) => {
-      const d = new Date(date);
-      d.setDate(d.getDate() + days);
-      return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12, 0, 0);
-    };
-
     const getSettings = () => {
       const s = loadJSON(LS_SETTINGS, null);
-      if(!s || typeof s.deficit !== "number"){
-        return { deficit: DEFAULT_DEFICIT };
-      }
+      if(!s || typeof s.deficit !== "number") return { deficit: DEFAULT_DEFICIT };
       return { deficit: Math.max(0, Math.round(s.deficit)) };
     };
     const setSettings = (settings) => saveJSON(LS_SETTINGS, settings);
 
     const getStats = () => loadJSON(LS_STATS, { heightCm:"", weightLb:"", age:"", gender:"" });
     const setStats = (stats) => saveJSON(LS_STATS, stats);
-
     const hasFilledStats = (s) => !!(s.heightCm && s.weightLb && s.age && s.gender);
 
     const getPlan = () => loadJSON(LS_PLAN, null);
@@ -1462,29 +1240,6 @@
       };
     };
     const setBanks = (banks) => saveJSON(LS_BANKS, banks);
-
-    const defaultPresets = () => ([
-      { id:"p1", emoji:"☕️", cals: 80 },
-      { id:"p2", emoji:"🍽️", cals: 450 },
-      { id:"p3", emoji:"🍎", cals: 120 }
-    ]);
-    const getPresets = () => {
-      const p = loadJSON(LS_PRESETS, null);
-      if(!p || !Array.isArray(p) || p.length !== 3) return defaultPresets();
-      return p.map((x,i) => ({
-        id: x.id || `p${i+1}`,
-        emoji: x.emoji || defaultPresets()[i].emoji,
-        cals: Math.max(0, Math.round(Number(x.cals || 0)))
-      }));
-    };
-    const setPresets = (presets) => saveJSON(LS_PRESETS, presets);
-
-    const getWeigh = () => {
-      const w = loadJSON(LS_WEIGH, null);
-      if(!w) return { lastAt: 0, valueLb: 0 };
-      return { lastAt: Number(w.lastAt || 0), valueLb: Number(w.valueLb || 0) };
-    };
-    const setWeigh = (w) => saveJSON(LS_WEIGH, w);
 
     const defaultToday = () => ({
       dayKey: dayKeyWithCutoff(),
@@ -1527,7 +1282,6 @@
     const ensureDayRoll = () => {
       const banks = getBanks();
       const today = getToday();
-
       const keyNow = dayKeyWithCutoff();
       if(today.dayKey === keyNow) return;
 
@@ -1542,7 +1296,7 @@
     };
 
     const setActivePage = (name) => {
-      ["Dash","Settings","Logging","Progress","Log"].forEach((p) => {
+      ["Dash","Settings","Logging","Progress","Info"].forEach((p) => {
         el(`page${p}`).classList.toggle("active", p === name);
       });
       document.querySelectorAll(".btab").forEach((b) => {
@@ -1554,77 +1308,20 @@
       b.addEventListener("click", () => setActivePage(b.getAttribute("data-page")));
     });
 
-    const showTransition = (title, sub) => {
-      el("transitionTitle").textContent = title || "Saved";
-      el("transitionSub").textContent = sub || "";
-      el("transitionBack").classList.add("show");
-    };
-    const hideTransition = () => el("transitionBack").classList.remove("show");
-
-    const transitionTo = (pageName, title, sub) => {
-      showTransition(title, sub);
-      setTimeout(() => {
-        setActivePage(pageName);
-        setTimeout(() => hideTransition(), 180);
-      }, 520);
-    };
-
-    const addEntry = (cals, emoji = "") => {
-      ensureDayRoll();
-      const today = getToday();
-
-      const v = Number(cals || 0);
-      if(!Number.isFinite(v) || v <= 0) return;
-
-      const entry = {
-        id: `${today.dayKey}_${Date.now()}`,
-        time: timeHHMM(new Date()),
-        cals: Math.round(v),
-        emoji: String(emoji || ""),
-        createdAt: Date.now()
-      };
-
-      today.entries.push(entry);
-      setToday(today);
-    };
-
-    const renderPresets = () => {
-      const grid = el("presetGrid");
-      grid.innerHTML = "";
-      const presets = getPresets();
-
-      presets.forEach((p) => {
-        const btn = document.createElement("button");
-        btn.className = "presetBtn";
-        btn.type = "button";
-        btn.innerHTML = `
-          <div class="presetEmoji">${p.emoji || "✨"}</div>
-          <div class="presetNum">${fmt(p.cals || 0)}</div>
-        `;
-        btn.addEventListener("click", () => {
-          addEntry(p.cals, p.emoji || "");
-          render();
-        });
-        grid.appendChild(btn);
-      });
-    };
-
     const renderEntries = (today) => {
       const list = el("entryList");
       list.innerHTML = "";
-
       const entries = today.entries.slice().sort((a,b) => (b.createdAt || 0) - (a.createdAt || 0));
 
       for(const e of entries){
         const li = document.createElement("li");
         li.className = "entry";
-        const emo = e.emoji ? `<span>${e.emoji}</span>` : "";
         li.innerHTML = `
           <div class="left">
             <div class="time">${e.time || ""}</div>
-            <div class="cals">${emo}<span>${fmt(Number(e.cals)||0)}</span></div>
+            <div class="cals">${fmt(Number(e.cals)||0)}</div>
           </div>
-          <button class="xbtn" data-x="${e.id}" aria-label="Delete entry">X</button>
+          <button class="xbtn" data-x="${e.id}">X</button>
         `;
         list.appendChild(li);
       }
@@ -1632,10 +1329,10 @@
       list.querySelectorAll("[data-x]").forEach((btn) => {
         btn.addEventListener("click", () => {
           ensureDayRoll();
-          const today = getToday();
+          const t = getToday();
           const id = btn.getAttribute("data-x");
-          today.entries = today.entries.filter(x => String(x.id) !== String(id));
-          setToday(today);
+          t.entries = t.entries.filter(x => String(x.id) !== String(id));
+          setToday(t);
           render();
         });
       });
@@ -1659,12 +1356,16 @@
       return { totalDays, elapsedDays: elapsed, pct };
     };
 
+    const getWeigh = () => loadJSON(LS_WEIGH, { lastISO:"", weightLb:"" });
+    const setWeigh = (w) => saveJSON(LS_WEIGH, w);
+
     const canWeigh = () => {
       const w = getWeigh();
-      const now = Date.now();
-      const diff = Math.max(0, now - (w.lastAt || 0));
-      const days = diff / 86400000;
-      return { ok: days >= 7 || w.lastAt === 0, daysLeft: Math.max(0, Math.ceil(7 - days)) };
+      if(!w.lastISO) return true;
+      const last = new Date(w.lastISO);
+      const now = new Date();
+      const diff = now.getTime() - last.getTime();
+      return diff >= 7 * 86400000;
     };
 
     const renderProgress = () => {
@@ -1672,100 +1373,65 @@
       stack.innerHTML = "";
 
       const plan = getPlan();
-      const w = getWeigh();
-      const wStatus = canWeigh();
+      const weigh = getWeigh();
 
       const top = document.createElement("div");
-      top.className = "card fadeIn";
+      top.className = "card";
       top.innerHTML = `
-        <div class="planCardTitle">You're on track</div>
-        <div class="planCardSub" id="trackLine"></div>
+        <div class="onTrack">
+          <div class="title">You're on track!</div>
+          <div class="miniRow">
+            <div class="lockPill" id="weighPill">🔒 <span id="weighTxt">7d</span></div>
+            <button class="qBtn" id="weighQ" aria-label="Why is weigh in locked"><span>?</span></button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="weighInput">Weekly weigh in (lb)</label>
+            <input id="weighInput" type="number" inputmode="decimal" step="0.1" min="0" placeholder="${canWeigh() ? "Enter weight" : "Come back in 7 days"}" ${canWeigh() ? "" : "disabled"} />
+          </div>
+          <div class="field small">
+            <button class="btn ${canWeigh() ? "" : "saved"}" id="weighSaveBtn" ${canWeigh() ? "" : "disabled"}>${canWeigh() ? "Save" : "Saved"}</button>
+          </div>
+        </div>
+        <div class="note">${weigh.weightLb ? `Last saved: ${weigh.weightLb} lb` : ""}</div>
       `;
       stack.appendChild(top);
 
-      const trackLine = top.querySelector("#trackLine");
+      el("weighQ").addEventListener("click", () => el("weighInfoBack").classList.add("show"));
+      el("weighSaveBtn").addEventListener("click", () => {
+        if(!canWeigh()) return;
+        const v = Number(el("weighInput").value || 0);
+        if(!Number.isFinite(v) || v <= 0) return;
+        setWeigh({ lastISO: new Date().toISOString(), weightLb: String(v) });
+        render();
+      });
 
       if(plan && plan.targetWeightLb && plan.targetDateISO && plan.dailyDeficit){
-        const prog = computePlanProgress(plan);
+        const c = document.createElement("div");
+        c.className = "card";
+
         const targetDate = new Date(`${plan.targetDateISO}T12:00:00`);
         const targetDateText = targetDate.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
-
-        trackLine.textContent = `Hit ${fmt(Number(plan.targetWeightLb))} lb by ${targetDateText}, with a daily deficit of ${fmt(Number(plan.dailyDeficit))}.`;
-
+        const prog = computePlanProgress(plan);
         const pctW = prog ? Math.round(prog.pct * 100) : 0;
         const elapsed = prog ? prog.elapsedDays : 0;
         const total = prog ? prog.totalDays : 0;
 
-        const c = document.createElement("div");
-        c.className = "card fadeIn";
         c.innerHTML = `
-          <div style="font-weight:900; color: rgba(27,16,32,.86);">Progress</div>
+          <div style="font-weight:900; font-size:16px; margin-bottom:6px;">Plan</div>
+          <div style="font-weight:900; color: rgba(27,16,32,.85);">Hit ${fmt(Number(plan.targetWeightLb))} lb by ${targetDateText}</div>
+          <div style="margin-top:6px; font-weight:900; color: rgba(91,75,97,.95);">Daily deficit: ${fmt(Number(plan.dailyDeficit))}</div>
           <div class="planBar" aria-label="Plan progress">
             <div class="planFill" style="width:${pctW}%;"></div>
           </div>
           <div class="planMeta">
             <div class="pm">${elapsed} of ${total} days</div>
-            <div class="pm">Keep going</div>
+            <div class="pm"></div>
           </div>
         `;
         stack.appendChild(c);
-      }else{
-        trackLine.textContent = "Set a goal in Settings to get your plan.";
       }
-
-      const weighCard = document.createElement("div");
-      weighCard.className = "card fadeIn";
-      const locked = !wStatus.ok;
-
-      const lockIcon = locked ? "🔒" : "✨";
-      const lockTop = locked ? "Weekly weigh-in locked" : "Weekly weigh-in";
-      const lockSub = locked ? `Unlocks in ${wStatus.daysLeft}d` : "Log once, then come back next week";
-
-      weighCard.innerHTML = `
-        <div class="lockPill">
-          <div class="lpLeft">
-            <div class="lpTop">
-              <span>${lockIcon}</span>
-              <span>${lockTop}</span>
-              <span class="tinyTag">${locked ? "7d" : ""}</span>
-              <button class="tinyQ" id="weighQ" aria-label="Why is it locked?">?</button>
-            </div>
-            <div class="lpSub">${lockSub}</div>
-          </div>
-        </div>
-
-        <div class="spacer"></div>
-
-        <div class="weighRow">
-          <div class="field">
-            <label for="weighInput">Weight (lb)</label>
-            <input id="weighInput" type="number" inputmode="decimal" step="0.1" min="0" ${locked ? "disabled" : ""} placeholder="${w.valueLb ? String(w.valueLb) : ""}" />
-          </div>
-          <div class="field small">
-            <button class="btn ${locked ? "saved" : ""}" id="weighSaveBtn" ${locked ? "disabled" : ""}>${locked ? "Locked" : "Save"}</button>
-          </div>
-        </div>
-      `;
-      stack.appendChild(weighCard);
-
-      weighCard.querySelector("#weighQ").addEventListener("click", () => {
-        el("weighInfoBack").classList.add("show");
-      });
-
-      weighCard.querySelector("#weighSaveBtn").addEventListener("click", () => {
-        if(!wStatus.ok) return;
-
-        const v = Number(weighCard.querySelector("#weighInput").value || 0);
-        if(!Number.isFinite(v) || v <= 0) return;
-
-        setWeigh({ lastAt: Date.now(), valueLb: v });
-
-        const btn = weighCard.querySelector("#weighSaveBtn");
-        btn.classList.add("saved");
-        btn.textContent = "Saved";
-
-        renderProgress();
-      });
     };
 
     const renderLogPage = () => {
@@ -1775,7 +1441,7 @@
       const days = getDays().slice().sort((a,b) => (a.dayKey < b.dayKey ? 1 : -1));
       if(days.length === 0){
         const c = document.createElement("div");
-        c.className = "card fadeIn";
+        c.className = "card";
         c.innerHTML = `<div style="font-weight:900; font-size:16px;">No days saved yet</div>`;
         stack.appendChild(c);
         return;
@@ -1787,13 +1453,11 @@
         const deficit = d.maintenance ? 0 : settings.deficit;
 
         const card = document.createElement("div");
-        card.className = "card fadeIn";
-
+        card.className = "card";
         card.innerHTML = `
           <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px;">
             <div style="font-weight:900; font-size:14px; color: rgba(27,16,32,.75);">${formatDayKey(d.dayKey)}</div>
             <div style="display:flex; gap:8px;">
-              <button class="smBtn" data-edit="${d.id}">Edit</button>
               <button class="smBtn" data-delday="${d.id}">Delete</button>
             </div>
           </div>
@@ -1822,7 +1486,6 @@
             </div>
           </div>
         `;
-
         stack.appendChild(card);
       }
 
@@ -1833,10 +1496,6 @@
           setDays(next);
           render();
         });
-      });
-
-      stack.querySelectorAll("[data-edit]").forEach((btn) => {
-        btn.addEventListener("click", () => openEdit(btn.getAttribute("data-edit")));
       });
     };
 
@@ -1854,9 +1513,7 @@
       if(showCalc){
         const cw = el("currentWeightInput");
         const w = s.weightLb ? String(s.weightLb) : "";
-        if(w){
-          cw.value = w;
-        }
+        if(w) cw.value = w;
       }else{
         el("currentWeightInput").value = "";
       }
@@ -1883,13 +1540,11 @@
       buttonEl.textContent = savedText;
       buttonEl.classList.add("saved");
       buttonEl.classList.remove("ghost");
-      buttonEl.classList.remove("loading");
     };
 
     const setUnsavedButton = (buttonEl, text = "Save", makeGhost = true) => {
       buttonEl.textContent = text;
       buttonEl.classList.remove("saved");
-      buttonEl.classList.remove("loading");
       if(makeGhost) buttonEl.classList.add("ghost");
     };
 
@@ -1925,7 +1580,6 @@
 
       el("deficitInput").value = String(settings.deficit);
 
-      renderPresets();
       renderEntries(today);
       renderProgress();
       renderLogPage();
@@ -1953,10 +1607,21 @@
     });
 
     el("addBtn").addEventListener("click", () => {
+      ensureDayRoll();
+      const today = getToday();
       const v = Number(el("addInput").value || 0);
       if(!Number.isFinite(v) || v <= 0) return;
 
-      addEntry(v, "");
+      const entry = {
+        id: `${today.dayKey}_${Date.now()}`,
+        time: timeHHMM(new Date()),
+        cals: Math.round(v),
+        createdAt: Date.now()
+      };
+
+      today.entries.push(entry);
+      setToday(today);
+
       el("addInput").value = "";
       render();
     });
@@ -2022,11 +1687,8 @@
 
     el("endDayBtn").addEventListener("click", () => {
       const res = saveDayToLog();
-      if(res.left > 0){
-        openEndOptions(res.left);
-      }else{
-        finishEndDay();
-      }
+      if(res.left > 0) openEndOptions(res.left);
+      else finishEndDay();
     });
 
     el("optRollover").addEventListener("click", () => {
@@ -2064,7 +1726,7 @@
       finishEndDay();
     });
 
-    el("optQuicker").addEventListener("click", () => {
+    el("optMoveOn").addEventListener("click", () => {
       const banks = getBanks();
       banks.rolloverPending = 0;
       setBanks(banks);
@@ -2079,13 +1741,10 @@
       setSettings({ deficit });
 
       const btn = el("saveSettingsBtn");
-      btn.classList.add("loading");
-      btn.textContent = "Saving";
-      setTimeout(() => {
-        setSavedButton(btn, "Saved");
-        setTimeout(() => setUnsavedButton(btn, "Save", false), 1100);
-        render();
-      }, 320);
+      setSavedButton(btn, "Saved");
+      setTimeout(() => setUnsavedButton(btn, "Save", false), 1200);
+
+      render();
     });
 
     el("deficitInput").addEventListener("input", () => {
@@ -2114,17 +1773,80 @@
       setTimeout(() => { el("statsSavedHint").style.display = "none"; }, 1000);
 
       el("calcMsg").textContent = "";
-      el("savePlanWrap").style.display = "none";
+      el("resultWrap").style.display = "none";
       lastCalc = null;
-      lastRoundPick = null;
-      updateRoundPickText();
+      roundChoice = null;
 
       render();
     });
 
-    let lastCalc = null;
-    let lastRoundPick = null;
+    // Use banked
+    const openUseModal = () => {
+      const banks = getBanks();
+      const max = Math.round(banks.banked || 0);
+      el("useAmount").value = "";
+      el("useHint").textContent = max > 0 ? `${fmt(max)} available.` : "0 available.";
+      el("useBack").classList.add("show");
+    };
+    const closeUseModal = () => el("useBack").classList.remove("show");
 
+    el("useBankedBtn").addEventListener("click", () => openUseModal());
+    el("useClose").addEventListener("click", closeUseModal);
+    el("useBack").addEventListener("click", (e) => {
+      if(e.target === el("useBack")) closeUseModal();
+    });
+
+    el("useApplyBtn").addEventListener("click", () => {
+      ensureDayRoll();
+      const banks = getBanks();
+      const today = getToday();
+
+      const max = Math.round(banks.banked || 0);
+      const v = Number(el("useAmount").value || 0);
+      if(!Number.isFinite(v) || v <= 0) return;
+
+      const amt = Math.min(max, Math.round(v));
+      if(amt <= 0) return;
+
+      banks.banked = Math.max(0, Math.round(max - amt));
+      setBanks(banks);
+
+      today.usedBanked = Math.round((today.usedBanked || 0) + amt);
+      setToday(today);
+
+      closeUseModal();
+      render();
+    });
+
+    // Export
+    el("exportBtn").addEventListener("click", () => {
+      const payload = {
+        exportedAt: new Date().toISOString(),
+        cutoffHour: DAY_CUTOFF_HOUR,
+        settings: getSettings(),
+        stats: getStats(),
+        banks: getBanks(),
+        plan: getPlan(),
+        today: getToday(),
+        days: getDays(),
+        weigh: getWeigh(),
+        presets: loadJSON(LS_PRESETS, null)
+      };
+
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `allocate_export_${dayKeyWithCutoff()}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    // Goal calculator with loading + optional rounding popup
+    let lastCalc = null;
+    let roundChoice = null; // "exact" | "down" | "up"
     const showCalcLoading = () => {
       el("calcMsg").innerHTML = `
         <span class="loadingDots" aria-label="Loading">
@@ -2132,9 +1854,6 @@
         </span>
       `;
     };
-
-    const roundDown50 = (v) => Math.floor(Math.max(0, v) / 50) * 50;
-    const roundUp50 = (v) => Math.ceil(Math.max(0, v) / 50) * 50;
 
     const calcDailyDeficit = () => {
       const cw = Number(el("currentWeightInput").value || 0);
@@ -2160,70 +1879,257 @@
       const totalCals = lbsToLose * 3500;
       const daily = Math.round(totalCals / days);
 
-      return { ok:true, daily, days, cw, tw, totalCals, targetDateISO: td, startKey };
+      return { ok:true, daily, cw, tw, targetDateISO: td, startKey };
     };
 
-    const makeHitDateText = (def, totalCals, startKey) => {
-      if(def <= 0) return "";
+    const hitDateForDeficit = (dailyDef, cw, tw, startKey) => {
       const startDate = parseDayKeyToDateNoon(startKey);
-      const daysNeed = Math.ceil(totalCals / def);
-      const hit = addDaysNoon(startDate, daysNeed);
-      const txt = hit.toLocaleDateString("en-GB", { day:"numeric", month:"short" });
-      return `Hit date: ${txt}`;
+      const lbsToLose = cw - tw;
+      const totalCals = lbsToLose * 3500;
+      const daysNeeded = Math.max(1, Math.ceil(totalCals / Math.max(1, dailyDef)));
+      const dt = new Date(startDate.getTime() + daysNeeded * 86400000);
+      return dt.toLocaleDateString("en-GB", { day:"numeric", month:"short" });
     };
 
-    const updateRoundPickText = () => {
-      if(!lastCalc){
-        el("roundPickText").textContent = "Optional";
-        return;
-      }
-      if(lastRoundPick === null){
-        el("roundPickText").textContent = "Exact";
-        return;
-      }
-      if(Number.isFinite(lastRoundPick)){
-        el("roundPickText").textContent = `${fmt(lastRoundPick)}`;
-        return;
-      }
-      el("roundPickText").textContent = "Optional";
-    };
+    const roundTo50Down = (v) => Math.floor(Math.max(0, v) / 50) * 50;
+    const roundTo50Up = (v) => Math.ceil(Math.max(0, v) / 50) * 50;
 
-    const openRoundModal = () => {
+    el("calcBtn").addEventListener("click", () => {
+      showCalcLoading();
+      el("resultWrap").style.display = "none";
+      lastCalc = null;
+      roundChoice = null;
+
+      setTimeout(() => {
+        const res = calcDailyDeficit();
+        if(!res.ok){
+          el("calcMsg").textContent = res.msg;
+          return;
+        }
+        lastCalc = res;
+
+        el("calcMsg").textContent = "";
+        el("dailyDefBig").textContent = fmt(res.daily);
+        el("resultWrap").style.display = "block";
+      }, 520);
+    });
+
+    // Rounding popup
+    const openRoundPopup = () => {
       if(!lastCalc) return;
 
-      const down = Math.max(0, roundDown50(lastCalc.daily));
-      const up = Math.max(0, roundUp50(lastCalc.daily));
+      const exact = Math.max(1, Math.round(lastCalc.daily));
+      const down = Math.max(1, roundTo50Down(exact));
+      const up = Math.max(1, roundTo50Up(exact));
 
-      el("roundDownVal").textContent = "";
-      el("roundUpVal").textContent = "";
-      el("roundDownValBig").textContent = fmt(down);
-      el("roundUpValBig").textContent = fmt(up);
+      const exactDate = hitDateForDeficit(exact, lastCalc.cw, lastCalc.tw, lastCalc.startKey);
+      const downDate = hitDateForDeficit(down, lastCalc.cw, lastCalc.tw, lastCalc.startKey);
+      const upDate = hitDateForDeficit(up, lastCalc.cw, lastCalc.tw, lastCalc.startKey);
 
-      el("roundDownDate").textContent = makeHitDateText(down, lastCalc.totalCals, lastCalc.startKey);
-      el("roundUpDate").textContent = makeHitDateText(up, lastCalc.totalCals, lastCalc.startKey);
+      const wrap = el("roundChoices");
+      wrap.innerHTML = "";
 
-      const setSelected = () => {
-        el("roundDownBtn").classList.toggle("selected", lastRoundPick === down);
-        el("roundUpBtn").classList.toggle("selected", lastRoundPick === up);
-      };
-      setSelected();
-
-      el("roundDownBtn").onclick = () => {
-        lastRoundPick = down;
-        setSelected();
-        updateRoundPickText();
-        el("roundBack").classList.remove("show");
-      };
-      el("roundUpBtn").onclick = () => {
-        lastRoundPick = up;
-        setSelected();
-        updateRoundPickText();
-        el("roundBack").classList.remove("show");
-      };
-      el("roundExactBtn").onclick = () => {
-        lastRoundPick = null;
-        updateRoundPickText();
-        el("roundBack").classList.remove("show");
+      const mk = (key, title, def, date) => {
+        const btn = document.createElement("button");
+        btn.className = `choiceBtn ${roundChoice === key ? "active" : ""}`;
+        btn.type = "button";
+        btn.innerHTML = `<strong>${title}</strong><span>${fmt(def)} per day, hit date ${date}</span>`;
+        btn.addEventListener("click", () => {
+          roundChoice = key;
+          openRoundPopup();
+        });
+        wrap.appendChild(btn);
       };
 
-      el("roundBack
+      mk("exact", "Keep exact", exact, exactDate);
+      mk("down", "Round down", down, downDate);
+      mk("up", "Round up", up, upDate);
+
+      el("roundBack").classList.add("show");
+    };
+
+    const closeRoundPopup = () => el("roundBack").classList.remove("show");
+
+    el("roundPopupBtn").addEventListener("click", openRoundPopup);
+    el("roundClose").addEventListener("click", closeRoundPopup);
+    el("roundBack").addEventListener("click", (e) => {
+      if(e.target === el("roundBack")) closeRoundPopup();
+    });
+
+    // Save plan with premium feedback + soft transition
+    const softNavigate = (page) => {
+      el("fadeOverlay").classList.add("show");
+      setTimeout(() => {
+        setActivePage(page);
+        setTimeout(() => el("fadeOverlay").classList.remove("show"), 140);
+      }, 180);
+    };
+
+    el("savePlanBtn").addEventListener("click", () => {
+      if(!lastCalc) return;
+
+      const exact = Math.max(1, Math.round(lastCalc.daily));
+      const down = Math.max(1, roundTo50Down(exact));
+      const up = Math.max(1, roundTo50Up(exact));
+
+      let finalDef = exact;
+      if(roundChoice === "down") finalDef = down;
+      if(roundChoice === "up") finalDef = up;
+
+      const btn = el("savePlanBtn");
+      btn.disabled = true;
+      btn.textContent = "Saving";
+
+      setTimeout(() => {
+        setSettings({ deficit: finalDef });
+        el("deficitInput").value = String(finalDef);
+
+        setPlan({
+          savedAtISO: new Date().toISOString(),
+          startDayKey: lastCalc.startKey,
+          currentWeightLb: lastCalc.cw,
+          targetWeightLb: lastCalc.tw,
+          targetDateISO: lastCalc.targetDateISO,
+          dailyDeficit: finalDef,
+          rounding: roundChoice || "exact"
+        });
+
+        el("savePlanHint").style.display = "block";
+        setTimeout(() => { el("savePlanHint").style.display = "none"; }, 900);
+
+        btn.disabled = false;
+        btn.textContent = "Save plan";
+
+        render();
+        softNavigate("Progress");
+      }, 520);
+    });
+
+    // Presets
+    const defaultPresets = () => ({
+      p1: { emoji: "☕️", cals: 50 },
+      p2: { emoji: "🍽️", cals: 400 },
+      p3: { emoji: "🍿", cals: 150 }
+    });
+
+    const getPresets = () => {
+      const p = loadJSON(LS_PRESETS, null);
+      if(!p || !p.p1 || !p.p2 || !p.p3) return defaultPresets();
+      return p;
+    };
+    const setPresets = (p) => saveJSON(LS_PRESETS, p);
+
+    const emojiChoices = [
+      "☕️","🍵","🥤","🧃","🥛","🍺","🍷",
+      "🍽️","🥣","🍳","🥚","🥞","🧇","🥯","🍞","🥖","🥐",
+      "🧀","🥓","🍗","🍖","🥩","🍔","🌭","🍕","🌯","🌮","🥪",
+      "🍝","🍜","🍲","🍛","🍣","🍱","🍤","🥟","🍟",
+      "🥗","🥦","🥕","🌽","🥔","🍠","🥑","🍅",
+      "🍎","🍌","🍇","🍓","🍍","🥭","🍑","🍒",
+      "🍫","🍪","🍩","🧁","🍰","🍦","🍨","🍿","🥨","🥜"
+    ];
+
+    const renderPresetUI = () => {
+      const p = getPresets();
+      el("p1e").textContent = p.p1.emoji;
+      el("p1a").textContent = String(p.p1.cals);
+      el("p2e").textContent = p.p2.emoji;
+      el("p2a").textContent = String(p.p2.cals);
+      el("p3e").textContent = p.p3.emoji;
+      el("p3a").textContent = String(p.p3.cals);
+    };
+
+    const openPresetModal = () => {
+      const p = getPresets();
+      const slot = el("presetSlot").value || "1";
+      const cur = p[`p${slot}`];
+
+      el("presetAmt").value = String(cur.cals || 0);
+      selectedEmoji = cur.emoji || "☕️";
+      el("presetHint").style.display = "none";
+
+      const grid = el("emojiGrid");
+      grid.innerHTML = "";
+      for(const emo of emojiChoices){
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "eBtn";
+        b.textContent = emo;
+        b.addEventListener("click", () => { selectedEmoji = emo; });
+        grid.appendChild(b);
+      }
+
+      el("presetBack").classList.add("show");
+    };
+    const closePresetModal = () => el("presetBack").classList.remove("show");
+
+    let selectedEmoji = "☕️";
+
+    el("editPresetsBtn").addEventListener("click", openPresetModal);
+    el("presetClose").addEventListener("click", closePresetModal);
+    el("presetBack").addEventListener("click", (e) => {
+      if(e.target === el("presetBack")) closePresetModal();
+    });
+
+    el("presetSave").addEventListener("click", () => {
+      const slot = el("presetSlot").value || "1";
+      const amt = Number(el("presetAmt").value || 0);
+      if(!Number.isFinite(amt) || amt <= 0) return;
+
+      const p = getPresets();
+      p[`p${slot}`] = { emoji: selectedEmoji, cals: Math.round(amt) };
+      setPresets(p);
+
+      el("presetHint").style.display = "block";
+      setTimeout(() => el("presetHint").style.display = "none", 900);
+
+      renderPresetUI();
+    });
+
+    const addPreset = (which) => {
+      ensureDayRoll();
+      const today = getToday();
+      const p = getPresets();
+      const key = `p${which}`;
+      const val = p[key];
+      if(!val || !val.cals) return;
+
+      today.entries.push({
+        id: `${today.dayKey}_${Date.now()}`,
+        time: timeHHMM(new Date()),
+        cals: Math.round(val.cals),
+        createdAt: Date.now()
+      });
+      setToday(today);
+      render();
+    };
+
+    el("preset1").addEventListener("click", () => addPreset(1));
+    el("preset2").addEventListener("click", () => addPreset(2));
+    el("preset3").addEventListener("click", () => addPreset(3));
+
+    // Weigh info modal
+    el("weighInfoClose").addEventListener("click", () => el("weighInfoBack").classList.remove("show"));
+    el("weighInfoBack").addEventListener("click", (e) => {
+      if(e.target === el("weighInfoBack")) el("weighInfoBack").classList.remove("show");
+    });
+
+    // Init presets
+    renderPresetUI();
+
+    // Keep day rollover accurate
+    setInterval(() => {
+      const keyNow = dayKeyWithCutoff();
+      const today = getToday();
+      if(today.dayKey !== keyNow){
+        ensureDayRoll();
+        render();
+      }
+    }, 60000);
+
+    // Init
+    renderStatsView();
+    render();
+  </script>
+</body>
+</html>
