@@ -12,12 +12,12 @@
       --card:#ffffffcc;
       --ink:#1b1020;
       --muted:#5b4b61;
-      --off:#1f1a22;
       --accent:#ff5f9a;
       --accent2:#ff9a5a;
       --shadow: 0 20px 55px rgba(25, 10, 30, .18);
       --shadow2: 0 10px 24px rgba(25, 10, 30, .12);
       --radius: 24px;
+      --navH: 96px;
     }
 
     *{ box-sizing:border-box; }
@@ -32,18 +32,21 @@
       display:flex;
       align-items:flex-start;
       justify-content:center;
-      padding: 22px 14px calc(130px + env(safe-area-inset-bottom));
+      padding:22px 14px 40px;
     }
 
     .phone{
       width:min(420px, 100%);
       border-radius: 36px;
       padding: 16px;
+      padding-bottom: calc(var(--navH) + 18px);
       background: rgba(255,255,255,.18);
       border: 1px solid rgba(255,255,255,.25);
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
+      position: relative;
+      overflow: visible;
     }
 
     .topbar{
@@ -117,17 +120,6 @@
       color: transparent;
       letter-spacing: -1.5px;
     }
-    .bigSmall{
-      font-weight:900;
-      font-size:42px;
-      line-height:1.05;
-      margin: 0;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip:text;
-      background-clip:text;
-      color: transparent;
-      letter-spacing: -1px;
-    }
 
     .grid2{
       display:grid;
@@ -172,6 +164,10 @@
       overflow:hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+    .kpi .kval.tight{
+      justify-content:flex-start;
+      gap:10px;
     }
 
     .row{
@@ -218,7 +214,7 @@
       color: #fff;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       box-shadow: 0 14px 30px rgba(255,95,154,.30);
-      transition: transform .08s ease, opacity .15s ease;
+      transition: transform .08s ease;
       user-select:none;
       -webkit-tap-highlight-color: transparent;
     }
@@ -234,10 +230,6 @@
       color: var(--ink);
       border: 1px solid rgba(255,255,255,.75);
       box-shadow: var(--shadow2);
-    }
-    .btn:disabled{
-      opacity: .65;
-      cursor: default;
     }
 
     .mini{
@@ -316,6 +308,38 @@
       transform: translateX(20px);
     }
 
+    .iconBtn{
+      width: 40px;
+      height: 40px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.65);
+      background: rgba(255,255,255,.35);
+      box-shadow: var(--shadow2);
+      cursor:pointer;
+      font-weight:900;
+      color: var(--ink);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      -webkit-tap-highlight-color: transparent;
+      flex: 0 0 auto;
+    }
+    .iconBtn:active{ transform: translateY(1px) scale(.99); }
+
+    .iconBtn svg{
+      width: 20px;
+      height: 20px;
+      display:block;
+    }
+
+    .gradStroke{
+      stroke: url(#gradArrow);
+      stroke-width: 2.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
     .page{ display:none; margin-top:12px; }
     .page.active{ display:block; }
 
@@ -334,8 +358,8 @@
       gap:10px;
       padding: 10px 12px;
       border-radius: 16px;
-      background: rgba(255,255,255,.58);
-      border: 1px solid rgba(255,255,255,.72);
+      background: rgba(255,255,255,.50);
+      border: 1px solid rgba(255,255,255,.65);
       min-width: 0;
     }
     .entry .left{
@@ -346,13 +370,17 @@
     }
     .entry .time{
       font-size:12px;
-      color: var(--muted);
+      color: rgba(91,75,97,.85);
       font-weight:900;
     }
     .entry .cals{
       font-size:16px;
       font-weight:900;
-      color: rgba(255,95,154,.95);
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+      letter-spacing: -0.2px;
     }
     .xbtn{
       border: 1px solid rgba(255,255,255,.7);
@@ -367,36 +395,6 @@
       flex: 0 0 auto;
     }
     .xbtn:active{ transform: translateY(1px) scale(.99); }
-
-    .smBtn{
-      border:1px solid rgba(255,255,255,.65);
-      background: rgba(255,255,255,.35);
-      color: var(--ink);
-      padding: 8px 10px;
-      border-radius: 999px;
-      cursor:pointer;
-      font-weight:900;
-      box-shadow: var(--shadow2);
-      -webkit-tap-highlight-color: transparent;
-      flex: 0 0 auto;
-    }
-    .smBtn:active{ transform: translateY(1px) scale(.99); }
-
-    .iconBtn{
-      width: 40px;
-      height: 40px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.65);
-      background: rgba(255,255,255,.35);
-      box-shadow: var(--shadow2);
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      -webkit-tap-highlight-color: transparent;
-      flex: 0 0 auto;
-    }
-    .iconBtn:active{ transform: translateY(1px) scale(.99); }
 
     .modalBack{
       position: fixed;
@@ -469,13 +467,15 @@
       background: rgba(255,255,255,.35);
       box-shadow: var(--shadow2);
       cursor:pointer;
+      font-weight:900;
       display:flex;
       align-items:center;
       justify-content:center;
       -webkit-tap-highlight-color: transparent;
       color: var(--ink);
+      font-size: 22px;
+      line-height: 1;
     }
-    .pencil svg{ width: 20px; height: 20px; }
     .pencil:active{ transform: translateY(1px) scale(.99); }
 
     .kvRow{
@@ -495,25 +495,29 @@
     .kv .v{ font-size:14px; font-weight:900; margin-top: 2px; }
 
     .calcWrap{ display:none; }
+    .calcRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:flex-end;
+    }
     .calcMsg{
       font-weight:900;
       color: rgba(27,16,32,.85);
       margin-top: 10px;
       text-align:center;
-      min-height: 22px;
     }
-
     .loadingDots{
       display:inline-block;
-      width: 40px;
+      width: 38px;
       text-align:left;
     }
     .loadingDots span{
       display:inline-block;
-      width: 7px;
-      height: 7px;
+      width: 6px;
+      height: 6px;
       border-radius: 999px;
-      background: rgba(27,16,32,.55);
+      background: rgba(27,16,32,.65);
       margin-right: 6px;
       animation: bounce 1s infinite ease-in-out;
     }
@@ -522,6 +526,52 @@
     @keyframes bounce{
       0%, 80%, 100%{ transform: translateY(0); opacity:.55; }
       40%{ transform: translateY(-6px); opacity: 1; }
+    }
+
+    .choiceRow{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:10px;
+      margin-top: 10px;
+    }
+    @media (max-width: 360px){
+      .choiceRow{ grid-template-columns: 1fr; }
+    }
+    .choiceBtn{
+      border: 1px solid rgba(255,255,255,.72);
+      background: rgba(255,255,255,.50);
+      border-radius: 18px;
+      padding: 12px;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+      box-shadow: var(--shadow2);
+      text-align:center;
+      user-select:none;
+    }
+    .choiceBtn:active{ transform: translateY(1px) scale(.99); }
+    .choiceBtn.active{
+      background: rgba(255,255,255,.78);
+    }
+    .choiceBtn .rTag{
+      font-size:12px;
+      font-weight:900;
+      color: rgba(91,75,97,.9);
+      margin-bottom: 6px;
+    }
+    .choiceBtn .rNum{
+      font-weight:900;
+      font-size:32px;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+      margin-bottom: 6px;
+    }
+    .choiceBtn .rDate{
+      font-size:12px;
+      font-weight:900;
+      color: rgba(27,16,32,.78);
     }
 
     .planBar{
@@ -553,106 +603,153 @@
       font-weight:900;
     }
 
-    .onTrack{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom: 10px;
-    }
-    .onTrack .title{
-      font-weight:900;
-      font-size:16px;
-    }
-    .onTrack .miniRow{
-      display:flex;
-      gap:10px;
-      align-items:center;
-    }
     .lockPill{
-      display:flex;
+      display:inline-flex;
       align-items:center;
-      gap:8px;
+      gap:6px;
       padding: 8px 10px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.7);
+      border: 1px solid rgba(255,255,255,.75);
       background: rgba(255,255,255,.55);
-      font-weight:900;
-      color: rgba(27,16,32,.85);
       box-shadow: var(--shadow2);
+      font-weight:900;
+      color: rgba(27,16,32,.8);
       user-select:none;
+      white-space:nowrap;
+    }
+    .lockPill span{
+      font-size: 14px;
+      font-weight:900;
     }
     .qBtn{
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.7);
+      border: 1px solid rgba(255,255,255,.75);
       background: rgba(255,255,255,.55);
       box-shadow: var(--shadow2);
       cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+      color: rgba(27,16,32,.85);
       display:flex;
       align-items:center;
       justify-content:center;
       font-weight:900;
-      color: rgba(27,16,32,.85);
-      -webkit-tap-highlight-color: transparent;
+      user-select:none;
+    }
+    .qBtn span{
+      font-size: 14px;
+      line-height: 1;
+      transform: translateY(-.5px);
     }
     .qBtn:active{ transform: translateY(1px) scale(.99); }
-    .qBtn span{ font-size: 12px; line-height: 1; }
 
     .presetRow{
       display:grid;
-      grid-template-columns: 48px 1fr 1fr 1fr;
+      grid-template-columns: 44px 1fr 1fr 1fr;
       gap:10px;
-      align-items:stretch;
+      align-items:center;
       margin-top: 10px;
     }
+    @media (max-width: 360px){
+      .presetRow{ grid-template-columns: 44px 1fr; }
+    }
     .presetEditBtn{
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
       border: 1px solid rgba(255,255,255,.65);
       background: rgba(255,255,255,.35);
       box-shadow: var(--shadow2);
-      border-radius: 16px;
       cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
       display:flex;
       align-items:center;
       justify-content:center;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .presetEditBtn:active{ transform: translateY(1px) scale(.99); }
-    .presetEditBtn svg{ width: 20px; height: 20px; }
-
-    .presetBtn{
-      border: 1px solid rgba(255,255,255,.72);
-      background: rgba(255,255,255,.58);
-      border-radius: 18px;
-      cursor:pointer;
-      box-shadow: var(--shadow2);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:6px;
-      padding: 10px 8px;
-      -webkit-tap-highlight-color: transparent;
+      color: var(--ink);
+      font-size: 20px;
+      font-weight:900;
       user-select:none;
     }
-    .presetBtn:active{ transform: translateY(1px) scale(.99); }
-    .pEmoji{ font-size: 22px; line-height:1; }
-    .pAmt{ font-weight:900; color: rgba(27,16,32,.85); font-size: 14px; }
+    .presetEditBtn:active{ transform: translateY(1px) scale(.99); }
 
-    /* Fixed bottom nav, no blur, no jumping */
+    .presetBtn{
+      height: 44px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.65);
+      background: rgba(255,255,255,.45);
+      box-shadow: var(--shadow2);
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      user-select:none;
+      min-width: 0;
+    }
+    .presetBtn:active{ transform: translateY(1px) scale(.99); }
+    .presetBtn .pe{
+      font-size: 18px;
+      line-height: 1;
+    }
+    .presetBtn .pn{
+      font-weight:900;
+      font-size: 16px;
+      letter-spacing: -0.2px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+
+    .emojiGrid{
+      display:grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap:8px;
+      margin-top: 10px;
+    }
+    @media (max-width: 360px){
+      .emojiGrid{ grid-template-columns: repeat(6, 1fr); }
+    }
+    .emojiPick{
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.7);
+      background: rgba(255,255,255,.55);
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+      font-size: 20px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      user-select:none;
+    }
+    .emojiPick.active{
+      background: rgba(255,255,255,.82);
+      border-color: rgba(255,255,255,.85);
+    }
+    .emojiPick:active{ transform: translateY(1px) scale(.99); }
+
     .bottomTabsWrap{
       position: fixed;
       left: 50%;
       transform: translateX(-50%);
-      bottom: calc(12px + env(safe-area-inset-bottom));
+      bottom: 0;
       width: min(420px, calc(100% - 28px));
-      padding: 10px 10px;
-      background: rgba(255,255,255,.35);
-      border: 1px solid rgba(255,255,255,.55);
-      border-radius: 20px;
+      padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(255,255,255,.65);
+      border-radius: 20px 20px 0 0;
       box-shadow: var(--shadow2);
-      z-index: 40;
+      z-index: 30;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
     }
     .bottomTabs{
       display:grid;
@@ -671,96 +768,35 @@
       cursor:pointer;
       user-select:none;
       -webkit-tap-highlight-color: transparent;
-      color: rgba(31,26,34,.75);
-    }
-    .btab svg{
-      width: 20px;
-      height: 20px;
-      stroke: rgba(31,26,34,.78);
-      fill: none;
-      stroke-width: 2.2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+      color: rgba(31,26,34,.78);
+      min-width: 0;
+      height: 44px;
     }
     .btab.active{
-      background: rgba(255,255,255,.58);
-      border-color: rgba(255,255,255,.7);
+      background: rgba(255,255,255,.75);
+      border-color: rgba(255,255,255,.85);
       box-shadow: 0 10px 22px rgba(25,10,30,.10);
+      color: rgba(31,26,34,.92);
     }
-    .btab.active svg{
-      stroke: rgba(31,26,34,.92);
-    }
-
-    .fadeOverlay{
-      position: fixed;
-      inset: 0;
-      background: rgba(255,255,255,.0);
-      display:none;
-      z-index: 60;
-      pointer-events:none;
-      transition: background .18s ease;
-    }
-    .fadeOverlay.show{
+    .btab svg{
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
       display:block;
-      background: rgba(255,255,255,.18);
     }
-
-    .choiceRow{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top: 10px;
-    }
-    .choiceBtn{
-      flex: 1 1 140px;
-      border: 1px solid rgba(255,255,255,.75);
-      background: rgba(255,255,255,.55);
-      border-radius: 18px;
-      padding: 10px 12px;
-      font-weight:900;
-      cursor:pointer;
-      box-shadow: var(--shadow2);
-      -webkit-tap-highlight-color: transparent;
-      color: rgba(27,16,32,.88);
-      text-align:left;
-    }
-    .choiceBtn strong{
-      display:block;
-      font-size:14px;
-      margin-bottom: 2px;
-    }
-    .choiceBtn span{
-      display:block;
-      font-size:12px;
-      color: rgba(91,75,97,.9);
-      font-weight:900;
-    }
-    .choiceBtn.active{
-      border-color: rgba(255,95,154,.45);
-      box-shadow: 0 0 0 4px rgba(255,95,154,.14), var(--shadow2);
-    }
-
-    .emojiGrid{
-      display:grid;
-      grid-template-columns: repeat(8, 1fr);
-      gap:8px;
-      margin-top: 10px;
-    }
-    .eBtn{
-      border: 1px solid rgba(255,255,255,.7);
-      background: rgba(255,255,255,.55);
-      border-radius: 14px;
-      padding: 8px 0;
-      cursor:pointer;
-      font-size: 20px;
-      line-height: 1;
-      -webkit-tap-highlight-color: transparent;
-      user-select:none;
-    }
-    .eBtn:active{ transform: translateY(1px) scale(.99); }
   </style>
 </head>
 <body>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <linearGradient id="gradArrow" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#ff5f9a"/>
+        <stop offset="1" stop-color="#ff9a5a"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
   <div class="phone">
     <div class="topbar">
       <div class="brand"><span class="dot"></span>Allocate</div>
@@ -797,18 +833,12 @@
             </div>
             <div class="kpi">
               <div class="klabel">Banked calories</div>
-              <div class="kval">
+              <div class="kval tight">
                 <span class="knum" id="bankedKpi">0</span>
                 <button class="iconBtn" id="useBankedBtn" aria-label="Use banked calories">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <defs>
-                      <linearGradient id="gradArrow" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#ff5f9a"/>
-                        <stop offset="1" stop-color="#ff9a5a"/>
-                      </linearGradient>
-                    </defs>
-                    <path d="M12 19V5" stroke="url(#gradArrow)" stroke-width="2.6" stroke-linecap="round"/>
-                    <path d="M7 10l5-5 5 5" stroke="url(#gradArrow)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 19V5" class="gradStroke"></path>
+                    <path d="M7 10l5-5 5 5" class="gradStroke"></path>
                   </svg>
                 </button>
               </div>
@@ -850,23 +880,9 @@
     <div class="page" id="pageSettings">
       <div class="stack">
         <div class="card">
-          <div class="field">
-            <label for="deficitInput">Deficit</label>
-            <input id="deficitInput" type="number" inputmode="numeric" min="0" placeholder="750" />
-          </div>
-          <div class="spacer"></div>
-          <button class="btn" id="saveSettingsBtn">Save</button>
-        </div>
-
-        <div class="card" id="statsCard">
           <div class="statsHeader">
             <div class="statsTitle">My stats</div>
-            <button class="pencil" id="editStatsBtn" aria-label="Edit stats">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 20h9" />
-                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
-              </svg>
-            </button>
+            <button class="pencil" id="editStatsBtn" aria-label="Edit stats">✎</button>
           </div>
 
           <div id="statsView">
@@ -917,7 +933,7 @@
           <div style="font-weight:900; font-size:14px; color: rgba(27,16,32,.85);">Goal calculator</div>
           <div class="spacer"></div>
 
-          <div class="row">
+          <div class="calcRow">
             <div class="field">
               <label for="currentWeightInput">Current weight (lb)</label>
               <input id="currentWeightInput" type="number" inputmode="decimal" step="0.1" min="0" placeholder="From stats" />
@@ -930,23 +946,23 @@
 
           <div class="spacer"></div>
 
-          <div class="row">
+          <div class="calcRow">
             <div class="field">
               <label for="targetDateInput">Target date</label>
               <input id="targetDateInput" type="date" />
             </div>
             <div class="field small">
-              <button class="btn" id="calcBtn" style="margin-top: 0;">Calculate</button>
+              <button class="btn" id="calcBtn">Calculate</button>
             </div>
           </div>
 
           <div class="calcMsg" id="calcMsg"></div>
 
-          <div id="resultWrap" style="display:none; text-align:center; margin-top: 10px;">
-            <div style="font-weight:900; font-size:12px; color: rgba(91,75,97,.9);">Daily deficit</div>
-            <div class="bigSmall" id="dailyDefBig">0</div>
+          <div id="savePlanWrap" style="display:none;">
             <div class="spacer"></div>
-            <button class="btn ghost" id="roundPopupBtn">Rounding (optional)</button>
+            <button class="btn" id="openRoundBtn">Rounding</button>
+            <div class="note" id="roundHint" style="display:none;"></div>
+
             <div class="spacer"></div>
             <button class="btn" id="savePlanBtn">Save plan</button>
             <div class="note" id="savePlanHint" style="display:none;">Saved</div>
@@ -988,15 +1004,10 @@
           </div>
 
           <div class="presetRow">
-            <button class="presetEditBtn" id="editPresetsBtn" aria-label="Edit presets">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 20h9" />
-                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
-              </svg>
-            </button>
-            <button class="presetBtn" id="preset1"><div class="pEmoji" id="p1e">☕️</div><div class="pAmt" id="p1a">50</div></button>
-            <button class="presetBtn" id="preset2"><div class="pEmoji" id="p2e">🍽️</div><div class="pAmt" id="p2a">400</div></button>
-            <button class="presetBtn" id="preset3"><div class="pEmoji" id="p3e">🍿</div><div class="pAmt" id="p3a">150</div></button>
+            <button class="presetEditBtn" id="presetEditBtn" aria-label="Edit presets">✎</button>
+            <button class="presetBtn" id="preset1Btn" aria-label="Preset 1"><span class="pe" id="p1e">☕</span><span class="pn" id="p1n">0</span></button>
+            <button class="presetBtn" id="preset2Btn" aria-label="Preset 2"><span class="pe" id="p2e">🍽️</span><span class="pn" id="p2n">0</span></button>
+            <button class="presetBtn" id="preset3Btn" aria-label="Preset 3"><span class="pe" id="p3e">🍿</span><span class="pn" id="p3n">0</span></button>
           </div>
 
           <ul class="entryList" id="entryList"></ul>
@@ -1016,9 +1027,40 @@
       <div class="stack" id="progressStack"></div>
     </div>
 
-    <!-- LOG (was Info) -->
-    <div class="page" id="pageInfo">
+    <!-- LOG -->
+    <div class="page" id="pageLog">
       <div class="stack" id="logStack"></div>
+    </div>
+  </div>
+
+  <!-- Bottom tabs -->
+  <div class="bottomTabsWrap" aria-label="Bottom navigation">
+    <div class="bottomTabs">
+      <button class="btab active" data-page="Dash" aria-label="Dashboard">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3l9 8v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V11l9-8z"></path>
+        </svg>
+      </button>
+      <button class="btab" data-page="Settings" aria-label="Settings">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.4 7.4 0 0 0-1.63-.94l-.36-2.54A.5.5 0 0 0 13.9 1h-3.8a.5.5 0 0 0-.49.42l-.36 2.54c-.58.23-1.12.54-1.63.94l-2.39-.96a.5.5 0 0 0-.6.22L2.71 7.48a.5.5 0 0 0 .12.64l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32c.13.22.39.31.6.22l2.39-.96c.51.4 1.05.71 1.63.94l.36 2.54c.04.24.25.42.49.42h3.8c.24 0 .45-.18.49-.42l.36-2.54c.58-.23 1.12-.54 1.63-.94l2.39.96c.22.09.47 0 .6-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58zM12 15.5A3.5 3.5 0 1 1 12 8a3.5 3.5 0 0 1 0 7.5z"></path>
+        </svg>
+      </button>
+      <button class="btab" data-page="Logging" aria-label="Logging">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M11 5a1 1 0 0 1 2 0v6h6a1 1 0 1 1 0 2h-6v6a1 1 0 1 1-2 0v-6H5a1 1 0 1 1 0-2h6V5z"></path>
+        </svg>
+      </button>
+      <button class="btab" data-page="Progress" aria-label="Progress">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M13 2L3 14h7l-1 8 12-14h-7l-1-6z"></path>
+        </svg>
+      </button>
+      <button class="btab" data-page="Log" aria-label="Log">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 2h12a2 2 0 0 1 2 2v18H4V4a2 2 0 0 1 2-2zm2 6h8v2H8V8zm0 4h8v2H8v-2zm0 4h6v2H8v-2z"></path>
+        </svg>
+      </button>
     </div>
   </div>
 
@@ -1033,7 +1075,7 @@
       <div class="spacer"></div>
       <div class="stack">
         <button class="btn" id="optRollover">Rollover calories</button>
-        <button class="btn ghost" id="optFuture">Save for a future day</button>
+        <button class="btn ghost" id="optBanked">Save for a future day</button>
         <button class="btn ghost" id="optMoveOn">Hit goal quicker</button>
       </div>
     </div>
@@ -1059,19 +1101,30 @@
     </div>
   </div>
 
-  <!-- Rounding popup -->
+  <!-- Weigh info modal -->
+  <div class="modalBack" id="weighInfoBack">
+    <div class="modal">
+      <div class="modalTop">
+        <div class="mtitle">Weekly weigh in</div>
+        <button class="closeBtn" id="weighInfoClose">Close</button>
+      </div>
+      <div class="note">It locks for 7 days after you save, so it stays weekly.</div>
+    </div>
+  </div>
+
+  <!-- Rounding modal -->
   <div class="modalBack" id="roundBack">
     <div class="modal">
       <div class="modalTop">
         <div class="mtitle">Rounding</div>
         <button class="closeBtn" id="roundClose">Close</button>
       </div>
-      <div class="note">Optional. Pick one, or close to keep the exact number.</div>
+      <div class="note">Optional, you can keep it exact.</div>
       <div class="choiceRow" id="roundChoices"></div>
     </div>
   </div>
 
-  <!-- Preset editor -->
+  <!-- Preset editor modal -->
   <div class="modalBack" id="presetBack">
     <div class="modal">
       <div class="modalTop">
@@ -1081,59 +1134,47 @@
 
       <div class="row">
         <div class="field">
-          <label for="presetSlot">Slot</label>
-          <select id="presetSlot">
+          <label for="presetWhich">Preset</label>
+          <select id="presetWhich">
             <option value="1">Preset 1</option>
             <option value="2">Preset 2</option>
             <option value="3">Preset 3</option>
           </select>
         </div>
         <div class="field">
-          <label for="presetAmt">Calories</label>
-          <input id="presetAmt" type="number" inputmode="numeric" min="0" />
+          <label for="presetCals">Calories</label>
+          <input id="presetCals" type="number" inputmode="numeric" min="0" placeholder="e.g. 10" />
         </div>
       </div>
 
-      <div class="note" style="margin-top:10px;">Pick an emoji</div>
+      <div class="note" style="margin-top:10px;">Pick an icon</div>
       <div class="emojiGrid" id="emojiGrid"></div>
 
       <div class="spacer"></div>
-      <button class="btn" id="presetSave">Save</button>
-      <div class="note" id="presetHint" style="display:none;">Saved</div>
+      <button class="btn" id="presetSaveBtn">Save</button>
+      <div class="note" id="presetSavedHint" style="display:none;">Saved</div>
     </div>
   </div>
 
-  <!-- Weigh in info -->
-  <div class="modalBack" id="weighInfoBack">
+  <!-- Edit saved day modal -->
+  <div class="modalBack" id="editBack">
     <div class="modal">
       <div class="modalTop">
-        <div class="mtitle">Weekly weigh in</div>
-        <button class="closeBtn" id="weighInfoClose">Close</button>
+        <div class="mtitle" id="editTitle">Edit day</div>
+        <button class="closeBtn" id="editClose">Close</button>
       </div>
-      <div class="note">It's saved locally on your phone. You can log once every 7 days.</div>
-    </div>
-  </div>
-
-  <div class="fadeOverlay" id="fadeOverlay"></div>
-
-  <!-- Bottom tabs -->
-  <div class="bottomTabsWrap" aria-label="Bottom navigation">
-    <div class="bottomTabs">
-      <button class="btab active" data-page="Dash" aria-label="Dashboard">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 10v10h12V10"/></svg>
-      </button>
-      <button class="btab" data-page="Settings" aria-label="Settings">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/><path d="M19.4 15a7.9 7.9 0 0 0 .1-2l2-1.2-2-3.5-2.2.6a8.5 8.5 0 0 0-1.7-1l-.3-2.3H10.7l-.3 2.3a8.5 8.5 0 0 0-1.7 1L6.5 8.3 4.5 11.8l2 1.2a7.9 7.9 0 0 0 .1 2l-2 1.2 2 3.5 2.2-.6a8.5 8.5 0 0 0 1.7 1l.3 2.3h4.6l.3-2.3a8.5 8.5 0 0 0 1.7-1l2.2.6 2-3.5-2-1.2z"/></svg>
-      </button>
-      <button class="btab" data-page="Logging" aria-label="Logging">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
-      </button>
-      <button class="btab" data-page="Progress" aria-label="Progress">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z"/></svg>
-      </button>
-      <button class="btab" data-page="Info" aria-label="Log">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10"/><path d="M7 8h10"/><path d="M7 12h7"/><path d="M6 2h12v20H6z"/></svg>
-      </button>
+      <div class="row">
+        <div class="field">
+          <label for="editYTdee">TDEE</label>
+          <input id="editYTdee" type="number" inputmode="numeric" min="0" />
+        </div>
+        <div class="field">
+          <label for="editIntake">Intake</label>
+          <input id="editIntake" type="number" inputmode="numeric" min="0" />
+        </div>
+      </div>
+      <div class="spacer"></div>
+      <button class="btn" id="editSave">Save</button>
     </div>
   </div>
 
@@ -1167,13 +1208,17 @@
       }
     };
 
-    const saveJSON = (key, value) => localStorage.setItem(key, JSON.stringify(value));
+    const saveJSON = (key, value) => {
+      localStorage.setItem(key, JSON.stringify(value));
+    };
 
     const pad2 = (n) => String(n).padStart(2, "0");
 
     const dayKeyWithCutoff = (date = new Date()) => {
       const d = new Date(date);
-      if(d.getHours() < DAY_CUTOFF_HOUR) d.setDate(d.getDate() - 1);
+      if(d.getHours() < DAY_CUTOFF_HOUR){
+        d.setDate(d.getDate() - 1);
+      }
       const yyyy = d.getFullYear();
       const mm = pad2(d.getMonth() + 1);
       const dd = pad2(d.getDate());
@@ -1219,17 +1264,33 @@
 
     const getSettings = () => {
       const s = loadJSON(LS_SETTINGS, null);
-      if(!s || typeof s.deficit !== "number") return { deficit: DEFAULT_DEFICIT };
+      if(!s || typeof s.deficit !== "number"){
+        return { deficit: DEFAULT_DEFICIT };
+      }
       return { deficit: Math.max(0, Math.round(s.deficit)) };
     };
+
     const setSettings = (settings) => saveJSON(LS_SETTINGS, settings);
 
     const getStats = () => loadJSON(LS_STATS, { heightCm:"", weightLb:"", age:"", gender:"" });
     const setStats = (stats) => saveJSON(LS_STATS, stats);
+
     const hasFilledStats = (s) => !!(s.heightCm && s.weightLb && s.age && s.gender);
 
     const getPlan = () => loadJSON(LS_PLAN, null);
     const setPlan = (plan) => saveJSON(LS_PLAN, plan);
+
+    const getWeigh = () => loadJSON(LS_WEIGH, null);
+    const setWeigh = (w) => saveJSON(LS_WEIGH, w);
+
+    const canWeigh = () => {
+      const w = getWeigh();
+      if(!w || !w.lastISO) return true;
+      const last = new Date(w.lastISO);
+      if(Number.isNaN(last.getTime())) return true;
+      const diff = Date.now() - last.getTime();
+      return diff >= 7 * 86400000;
+    };
 
     const getBanks = () => {
       const b = loadJSON(LS_BANKS, null);
@@ -1258,12 +1319,14 @@
       if(typeof t.usedBanked !== "number") t.usedBanked = 0;
       return t;
     };
+
     const setToday = (today) => saveJSON(LS_TODAY, today);
 
     const getDays = () => {
       const arr = loadJSON(LS_DAYS, []);
       return Array.isArray(arr) ? arr : [];
     };
+
     const setDays = (arr) => saveJSON(LS_DAYS, arr);
 
     const sumIntake = (entries) => entries.reduce((a,e) => a + (Number(e.cals)||0), 0);
@@ -1282,6 +1345,7 @@
     const ensureDayRoll = () => {
       const banks = getBanks();
       const today = getToday();
+
       const keyNow = dayKeyWithCutoff();
       if(today.dayKey === keyNow) return;
 
@@ -1296,12 +1360,16 @@
     };
 
     const setActivePage = (name) => {
-      ["Dash","Settings","Logging","Progress","Info"].forEach((p) => {
+      ["Dash","Settings","Logging","Progress","Log"].forEach((p) => {
         el(`page${p}`).classList.toggle("active", p === name);
       });
       document.querySelectorAll(".btab").forEach((b) => {
         b.classList.toggle("active", b.getAttribute("data-page") === name);
       });
+    };
+
+    const softNavigate = (name) => {
+      setTimeout(() => setActivePage(name), 220);
     };
 
     document.querySelectorAll(".btab").forEach((b) => {
@@ -1311,6 +1379,7 @@
     const renderEntries = (today) => {
       const list = el("entryList");
       list.innerHTML = "";
+
       const entries = today.entries.slice().sort((a,b) => (b.createdAt || 0) - (a.createdAt || 0));
 
       for(const e of entries){
@@ -1319,7 +1388,7 @@
         li.innerHTML = `
           <div class="left">
             <div class="time">${e.time || ""}</div>
-            <div class="cals">${fmt(Number(e.cals)||0)}</div>
+            <div class="cals">${e.emoji ? `${e.emoji} ` : ""}${fmt(Number(e.cals)||0)}</div>
           </div>
           <button class="xbtn" data-x="${e.id}">X</button>
         `;
@@ -1329,10 +1398,10 @@
       list.querySelectorAll("[data-x]").forEach((btn) => {
         btn.addEventListener("click", () => {
           ensureDayRoll();
-          const t = getToday();
+          const today = getToday();
           const id = btn.getAttribute("data-x");
-          t.entries = t.entries.filter(x => String(x.id) !== String(id));
-          setToday(t);
+          today.entries = today.entries.filter(x => String(x.id) !== String(id));
+          setToday(today);
           render();
         });
       });
@@ -1356,56 +1425,11 @@
       return { totalDays, elapsedDays: elapsed, pct };
     };
 
-    const getWeigh = () => loadJSON(LS_WEIGH, { lastISO:"", weightLb:"" });
-    const setWeigh = (w) => saveJSON(LS_WEIGH, w);
-
-    const canWeigh = () => {
-      const w = getWeigh();
-      if(!w.lastISO) return true;
-      const last = new Date(w.lastISO);
-      const now = new Date();
-      const diff = now.getTime() - last.getTime();
-      return diff >= 7 * 86400000;
-    };
-
     const renderProgress = () => {
       const stack = el("progressStack");
       stack.innerHTML = "";
 
       const plan = getPlan();
-      const weigh = getWeigh();
-
-      const top = document.createElement("div");
-      top.className = "card";
-      top.innerHTML = `
-        <div class="onTrack">
-          <div class="title">You're on track!</div>
-          <div class="miniRow">
-            <div class="lockPill" id="weighPill">🔒 <span id="weighTxt">7d</span></div>
-            <button class="qBtn" id="weighQ" aria-label="Why is weigh in locked"><span>?</span></button>
-          </div>
-        </div>
-        <div class="row">
-          <div class="field">
-            <label for="weighInput">Weekly weigh in (lb)</label>
-            <input id="weighInput" type="number" inputmode="decimal" step="0.1" min="0" placeholder="${canWeigh() ? "Enter weight" : "Come back in 7 days"}" ${canWeigh() ? "" : "disabled"} />
-          </div>
-          <div class="field small">
-            <button class="btn ${canWeigh() ? "" : "saved"}" id="weighSaveBtn" ${canWeigh() ? "" : "disabled"}>${canWeigh() ? "Save" : "Saved"}</button>
-          </div>
-        </div>
-        <div class="note">${weigh.weightLb ? `Last saved: ${weigh.weightLb} lb` : ""}</div>
-      `;
-      stack.appendChild(top);
-
-      el("weighQ").addEventListener("click", () => el("weighInfoBack").classList.add("show"));
-      el("weighSaveBtn").addEventListener("click", () => {
-        if(!canWeigh()) return;
-        const v = Number(el("weighInput").value || 0);
-        if(!Number.isFinite(v) || v <= 0) return;
-        setWeigh({ lastISO: new Date().toISOString(), weightLb: String(v) });
-        render();
-      });
 
       if(plan && plan.targetWeightLb && plan.targetDateISO && plan.dailyDeficit){
         const c = document.createElement("div");
@@ -1413,13 +1437,14 @@
 
         const targetDate = new Date(`${plan.targetDateISO}T12:00:00`);
         const targetDateText = targetDate.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+
         const prog = computePlanProgress(plan);
         const pctW = prog ? Math.round(prog.pct * 100) : 0;
         const elapsed = prog ? prog.elapsedDays : 0;
         const total = prog ? prog.totalDays : 0;
 
         c.innerHTML = `
-          <div style="font-weight:900; font-size:16px; margin-bottom:6px;">Plan</div>
+          <div style="font-weight:900; font-size:16px; margin-bottom:6px;">You're on track!</div>
           <div style="font-weight:900; color: rgba(27,16,32,.85);">Hit ${fmt(Number(plan.targetWeightLb))} lb by ${targetDateText}</div>
           <div style="margin-top:6px; font-weight:900; color: rgba(91,75,97,.95);">Daily deficit: ${fmt(Number(plan.dailyDeficit))}</div>
           <div class="planBar" aria-label="Plan progress">
@@ -1431,14 +1456,64 @@
           </div>
         `;
         stack.appendChild(c);
+      }else{
+        const c = document.createElement("div");
+        c.className = "card";
+        c.innerHTML = `<div style="font-weight:900; font-size:16px;">No plan saved yet</div>`;
+        stack.appendChild(c);
       }
+
+      const w = getWeigh();
+      const hasWeigh = !!(w && w.weightLb);
+      const locked = hasWeigh ? !canWeigh() : false;
+
+      const wCard = document.createElement("div");
+      wCard.className = "card";
+      wCard.innerHTML = `
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px;">
+          <div style="font-weight:900; font-size:16px;">Weigh in (optional)</div>
+          <div style="display:flex; gap:10px; align-items:center;">
+            ${locked ? `<div class="lockPill"><span>🔒</span><span>7d</span></div>` : ""}
+            ${locked ? `<button class="qBtn" id="weighQ" aria-label="Why is weigh in locked"><span>?</span></button>` : ""}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="weighInput">Weekly weigh in (lb)</label>
+            <input id="weighInput" type="number" inputmode="decimal" step="0.1" min="0"
+              placeholder="${locked ? "Come back in 7 days" : "Enter weight"}"
+              ${locked ? "disabled" : ""} />
+          </div>
+          <div class="field small">
+            <button class="btn ${locked ? "saved" : ""}" id="weighSaveBtn" ${locked ? "disabled" : ""}>${locked ? "Saved" : "Save"}</button>
+          </div>
+        </div>
+
+        <div class="note">${hasWeigh ? `Last saved: ${w.weightLb} lb` : "No weigh in saved yet."}</div>
+      `;
+      stack.appendChild(wCard);
+
+      if(locked){
+        el("weighQ").addEventListener("click", () => el("weighInfoBack").classList.add("show"));
+      }
+
+      el("weighSaveBtn").addEventListener("click", () => {
+        if(locked) return;
+        const v = Number(el("weighInput").value || 0);
+        if(!Number.isFinite(v) || v <= 0) return;
+        setWeigh({ lastISO: new Date().toISOString(), weightLb: String(v) });
+        render();
+      });
     };
 
     const renderLogPage = () => {
       const stack = el("logStack");
       stack.innerHTML = "";
 
+      const settings = getSettings();
       const days = getDays().slice().sort((a,b) => (a.dayKey < b.dayKey ? 1 : -1));
+
       if(days.length === 0){
         const c = document.createElement("div");
         c.className = "card";
@@ -1447,18 +1522,18 @@
         return;
       }
 
-      const settings = getSettings();
-
       for(const d of days){
         const deficit = d.maintenance ? 0 : settings.deficit;
 
         const card = document.createElement("div");
         card.className = "card";
+
         card.innerHTML = `
           <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px;">
             <div style="font-weight:900; font-size:14px; color: rgba(27,16,32,.75);">${formatDayKey(d.dayKey)}</div>
             <div style="display:flex; gap:8px;">
-              <button class="smBtn" data-delday="${d.id}">Delete</button>
+              <button class="pillbtn" style="padding:8px 10px;" data-edit="${d.id}">Edit</button>
+              <button class="pillbtn" style="padding:8px 10px;" data-delday="${d.id}">Delete</button>
             </div>
           </div>
 
@@ -1486,6 +1561,7 @@
             </div>
           </div>
         `;
+
         stack.appendChild(card);
       }
 
@@ -1496,6 +1572,10 @@
           setDays(next);
           render();
         });
+      });
+
+      stack.querySelectorAll("[data-edit]").forEach((btn) => {
+        btn.addEventListener("click", () => openEdit(btn.getAttribute("data-edit")));
       });
     };
 
@@ -1536,16 +1616,28 @@
       el("statsView").style.display = "block";
     };
 
-    const setSavedButton = (buttonEl, savedText = "Saved") => {
-      buttonEl.textContent = savedText;
-      buttonEl.classList.add("saved");
-      buttonEl.classList.remove("ghost");
+    const defaultPresets = () => ({
+      p1: { emoji: "☕", cals: 0 },
+      p2: { emoji: "🍽️", cals: 0 },
+      p3: { emoji: "🍿", cals: 0 }
+    });
+
+    const getPresets = () => {
+      const p = loadJSON(LS_PRESETS, null);
+      if(!p || !p.p1 || !p.p2 || !p.p3) return defaultPresets();
+      return p;
     };
 
-    const setUnsavedButton = (buttonEl, text = "Save", makeGhost = true) => {
-      buttonEl.textContent = text;
-      buttonEl.classList.remove("saved");
-      if(makeGhost) buttonEl.classList.add("ghost");
+    const setPresets = (p) => saveJSON(LS_PRESETS, p);
+
+    const renderPresets = () => {
+      const p = getPresets();
+      el("p1e").textContent = p.p1.emoji || "☕";
+      el("p2e").textContent = p.p2.emoji || "🍽️";
+      el("p3e").textContent = p.p3.emoji || "🍿";
+      el("p1n").textContent = fmt(Number(p.p1.cals || 0));
+      el("p2n").textContent = fmt(Number(p.p2.cals || 0));
+      el("p3n").textContent = fmt(Number(p.p3.cals || 0));
     };
 
     const render = () => {
@@ -1578,9 +1670,8 @@
       el("intakeKpi").textContent = fmt(intake);
       el("budgetLogKpi").textContent = fmt(budgetTotal);
 
-      el("deficitInput").value = String(settings.deficit);
-
       renderEntries(today);
+      renderPresets();
       renderProgress();
       renderLogPage();
       renderStatsView();
@@ -1588,6 +1679,7 @@
       setToday(today);
     };
 
+    // Dashboard apply, show Applied
     el("applyDashBtn").addEventListener("click", () => {
       ensureDayRoll();
       const today = getToday();
@@ -1596,6 +1688,15 @@
       today.maintenance = !!el("maintenanceToggleDash").checked;
       setToday(today);
       render();
+
+      const btn = el("applyDashBtn");
+      const prev = btn.textContent;
+      btn.textContent = "Applied";
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = prev;
+        btn.disabled = false;
+      }, 850);
     });
 
     el("maintenanceToggleDash").addEventListener("change", () => {
@@ -1606,6 +1707,7 @@
       render();
     });
 
+    // Logging add
     el("addBtn").addEventListener("click", () => {
       ensureDayRoll();
       const today = getToday();
@@ -1616,6 +1718,7 @@
         id: `${today.dayKey}_${Date.now()}`,
         time: timeHHMM(new Date()),
         cals: Math.round(v),
+        emoji: "",
         createdAt: Date.now()
       };
 
@@ -1640,6 +1743,31 @@
       render();
     });
 
+    // Preset add
+    const addPreset = (which) => {
+      ensureDayRoll();
+      const today = getToday();
+      const p = getPresets();
+      const key = `p${which}`;
+      const val = p[key];
+      if(!val || !val.cals) return;
+
+      today.entries.push({
+        id: `${today.dayKey}_${Date.now()}`,
+        time: timeHHMM(new Date()),
+        cals: Math.round(Number(val.cals || 0)),
+        emoji: val.emoji || "",
+        createdAt: Date.now()
+      });
+      setToday(today);
+      render();
+    };
+
+    el("preset1Btn").addEventListener("click", () => addPreset(1));
+    el("preset2Btn").addEventListener("click", () => addPreset(2));
+    el("preset3Btn").addEventListener("click", () => addPreset(3));
+
+    // End day flow
     const saveDayToLog = () => {
       ensureDayRoll();
       const settings = getSettings();
@@ -1687,8 +1815,11 @@
 
     el("endDayBtn").addEventListener("click", () => {
       const res = saveDayToLog();
-      if(res.left > 0) openEndOptions(res.left);
-      else finishEndDay();
+      if(res.left > 0){
+        openEndOptions(res.left);
+      }else{
+        finishEndDay();
+      }
     });
 
     el("optRollover").addEventListener("click", () => {
@@ -1708,7 +1839,7 @@
       finishEndDay();
     });
 
-    el("optFuture").addEventListener("click", () => {
+    el("optBanked").addEventListener("click", () => {
       ensureDayRoll();
       const settings = getSettings();
       const today = getToday();
@@ -1735,22 +1866,7 @@
       finishEndDay();
     });
 
-    el("saveSettingsBtn").addEventListener("click", () => {
-      const v = Number(el("deficitInput").value || 0);
-      const deficit = (Number.isFinite(v) && v >= 0) ? Math.round(v) : DEFAULT_DEFICIT;
-      setSettings({ deficit });
-
-      const btn = el("saveSettingsBtn");
-      setSavedButton(btn, "Saved");
-      setTimeout(() => setUnsavedButton(btn, "Save", false), 1200);
-
-      render();
-    });
-
-    el("deficitInput").addEventListener("input", () => {
-      setUnsavedButton(el("saveSettingsBtn"), "Save", false);
-    });
-
+    // Stats edit
     el("editStatsBtn").addEventListener("click", () => {
       const isEditing = el("statsEdit").style.display !== "none";
       if(isEditing) closeStatsEdit();
@@ -1773,11 +1889,175 @@
       setTimeout(() => { el("statsSavedHint").style.display = "none"; }, 1000);
 
       el("calcMsg").textContent = "";
-      el("resultWrap").style.display = "none";
+      el("savePlanWrap").style.display = "none";
+      el("savePlanHint").style.display = "none";
       lastCalc = null;
-      roundChoice = null;
 
       render();
+    });
+
+    // Goal calculator
+    let lastCalc = null;
+    let roundChoice = "exact";
+
+    const showCalcLoading = () => {
+      el("calcMsg").innerHTML = `
+        <span class="loadingDots" aria-label="Loading">
+          <span></span><span></span><span></span>
+        </span>
+      `;
+    };
+
+    const daysBetweenNoon = (startKey, targetISO) => {
+      const startDate = parseDayKeyToDateNoon(startKey);
+      const targetDate = new Date(`${targetISO}T12:00:00`);
+      const msPerDay = 86400000;
+      return Math.ceil((targetDate - startDate) / msPerDay);
+    };
+
+    const roundTo50Down = (v) => Math.floor(v / 50) * 50;
+    const roundTo50Up = (v) => Math.ceil(v / 50) * 50;
+
+    const dateIfDailyDeficit = (cw, tw, daily) => {
+      const lbsToLose = cw - tw;
+      const totalCals = lbsToLose * 3500;
+      const days = Math.ceil(totalCals / Math.max(1, daily));
+      const startDate = parseDayKeyToDateNoon(dayKeyWithCutoff(new Date()));
+      const target = new Date(startDate.getTime() + days * 86400000);
+      return target.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+    };
+
+    const calcDailyDeficit = () => {
+      const cw = Number(el("currentWeightInput").value || 0);
+      const tw = Number(el("targetWeightInput").value || 0);
+      const td = String(el("targetDateInput").value || "");
+
+      if(!Number.isFinite(cw) || cw <= 0) return { ok:false, msg:"Your stats need a weight." };
+      if(!Number.isFinite(tw) || tw <= 0) return { ok:false, msg:"Enter a target weight." };
+      if(tw >= cw) return { ok:false, msg:"Target weight must be lower." };
+      if(!td) return { ok:false, msg:"Pick a target date." };
+
+      const targetDate = new Date(`${td}T12:00:00`);
+      if(Number.isNaN(targetDate.getTime())) return { ok:false, msg:"Pick a valid target date." };
+
+      const startKey = dayKeyWithCutoff(new Date());
+      const days = daysBetweenNoon(startKey, td);
+      if(days <= 0) return { ok:false, msg:"Target date must be in the future." };
+
+      const lbsToLose = cw - tw;
+      const totalCals = lbsToLose * 3500;
+      const daily = Math.round(totalCals / days);
+
+      return { ok:true, daily, days, cw, tw, targetDateISO: td, startKey };
+    };
+
+    el("calcBtn").addEventListener("click", () => {
+      showCalcLoading();
+      el("savePlanWrap").style.display = "none";
+      el("savePlanHint").style.display = "none";
+      el("roundHint").style.display = "none";
+      lastCalc = null;
+
+      setTimeout(() => {
+        const res = calcDailyDeficit();
+        if(!res.ok){
+          el("calcMsg").textContent = res.msg;
+          return;
+        }
+        lastCalc = res;
+        el("calcMsg").textContent = `Daily deficit: ${fmt(res.daily)}.`;
+        el("savePlanWrap").style.display = "block";
+        roundChoice = "exact";
+      }, 620);
+    });
+
+    // Rounding modal
+    const openRoundPopup = () => {
+      if(!lastCalc) return;
+
+      const exact = Math.max(1, Math.round(lastCalc.daily));
+      const down = Math.max(1, roundTo50Down(exact));
+      const up = Math.max(1, roundTo50Up(exact));
+
+      const exactDate = dateIfDailyDeficit(lastCalc.cw, lastCalc.tw, exact);
+      const downDate = dateIfDailyDeficit(lastCalc.cw, lastCalc.tw, down);
+      const upDate = dateIfDailyDeficit(lastCalc.cw, lastCalc.tw, up);
+
+      const wrap = el("roundChoices");
+      wrap.innerHTML = "";
+
+      const mk = (key, tag, def, date) => {
+        const btn = document.createElement("button");
+        btn.className = `choiceBtn ${roundChoice === key ? "active" : ""}`;
+        btn.type = "button";
+        btn.innerHTML = `
+          <div class="rTag">${tag}</div>
+          <div class="rNum">${fmt(def)}</div>
+          <div class="rDate">Hit date ${date}</div>
+        `;
+        btn.addEventListener("click", () => {
+          roundChoice = key;
+          openRoundPopup();
+        });
+        wrap.appendChild(btn);
+      };
+
+      mk("exact", "Keep exact", exact, exactDate);
+      mk("down", "Round down", down, downDate);
+      mk("up", "Round up", up, upDate);
+
+      el("roundBack").classList.add("show");
+    };
+
+    const closeRoundPopup = () => el("roundBack").classList.remove("show");
+
+    el("openRoundBtn").addEventListener("click", openRoundPopup);
+    el("roundClose").addEventListener("click", closeRoundPopup);
+    el("roundBack").addEventListener("click", (e) => {
+      if(e.target === el("roundBack")) closeRoundPopup();
+    });
+
+    // Save plan, add premium button state then smooth navigate
+    el("savePlanBtn").addEventListener("click", () => {
+      if(!lastCalc) return;
+
+      const exact = Math.max(1, Math.round(lastCalc.daily));
+      const down = Math.max(1, roundTo50Down(exact));
+      const up = Math.max(1, roundTo50Up(exact));
+
+      let finalDef = exact;
+      if(roundChoice === "down") finalDef = down;
+      if(roundChoice === "up") finalDef = up;
+
+      const btn = el("savePlanBtn");
+      btn.disabled = true;
+      btn.textContent = "Saving";
+
+      setTimeout(() => {
+        setSettings({ deficit: finalDef });
+
+        setPlan({
+          savedAtISO: new Date().toISOString(),
+          startDayKey: lastCalc.startKey,
+          currentWeightLb: lastCalc.cw,
+          targetWeightLb: lastCalc.tw,
+          targetDateISO: lastCalc.targetDateISO,
+          dailyDeficit: finalDef,
+          rounding: roundChoice
+        });
+
+        el("savePlanHint").style.display = "block";
+        setTimeout(() => { el("savePlanHint").style.display = "none"; }, 1000);
+
+        btn.textContent = "Saved";
+
+        setTimeout(() => {
+          btn.disabled = false;
+          btn.textContent = "Save plan";
+          render();
+          softNavigate("Progress");
+        }, 420);
+      }, 540);
     });
 
     // Use banked
@@ -1790,7 +2070,7 @@
     };
     const closeUseModal = () => el("useBack").classList.remove("show");
 
-    el("useBankedBtn").addEventListener("click", () => openUseModal());
+    el("useBankedBtn").addEventListener("click", openUseModal);
     el("useClose").addEventListener("click", closeUseModal);
     el("useBack").addEventListener("click", (e) => {
       if(e.target === el("useBack")) closeUseModal();
@@ -1818,6 +2098,84 @@
       render();
     });
 
+    // Weigh info modal
+    el("weighInfoClose").addEventListener("click", () => el("weighInfoBack").classList.remove("show"));
+    el("weighInfoBack").addEventListener("click", (e) => {
+      if(e.target === el("weighInfoBack")) el("weighInfoBack").classList.remove("show");
+    });
+
+    // Preset editor
+    const EMOJIS = [
+      "☕","🫖","🥤","🧃","🧋","🍵","🥛","🍶",
+      "🍽️","🥣","🍲","🍛","🍜","🍝","🍣","🍱",
+      "🍕","🌯","🥪","🍔","🍟","🍗","🥗","🍳",
+      "🍞","🥐","🥯","🧀","🥓","🌮","🥟","🍤",
+      "🍿","🍫","🍪","🍩","🍦","🍧","🍰","🧁",
+      "🍎","🍌","🍇","🍓","🍉","🍍","🥭","🥝",
+      "🥜","🍯","🧈","🥑","🥕","🥔","🍚","🍙"
+    ];
+
+    let pickedEmoji = "☕";
+
+    const renderEmojiGrid = () => {
+      const g = el("emojiGrid");
+      g.innerHTML = "";
+      for(const e of EMOJIS){
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = `emojiPick ${pickedEmoji === e ? "active" : ""}`;
+        b.textContent = e;
+        b.addEventListener("click", () => {
+          pickedEmoji = e;
+          renderEmojiGrid();
+        });
+        g.appendChild(b);
+      }
+    };
+
+    const openPresetEditor = () => {
+      const p = getPresets();
+      const which = el("presetWhich").value || "1";
+      const obj = p[`p${which}`];
+      pickedEmoji = obj.emoji || "☕";
+      el("presetCals").value = String(obj.cals || 0);
+      el("presetSavedHint").style.display = "none";
+      renderEmojiGrid();
+      el("presetBack").classList.add("show");
+    };
+
+    const closePresetEditor = () => el("presetBack").classList.remove("show");
+
+    el("presetEditBtn").addEventListener("click", openPresetEditor);
+    el("presetClose").addEventListener("click", closePresetEditor);
+    el("presetBack").addEventListener("click", (e) => {
+      if(e.target === el("presetBack")) closePresetEditor();
+    });
+
+    el("presetWhich").addEventListener("change", () => {
+      const p = getPresets();
+      const which = el("presetWhich").value || "1";
+      const obj = p[`p${which}`];
+      pickedEmoji = obj.emoji || "☕";
+      el("presetCals").value = String(obj.cals || 0);
+      renderEmojiGrid();
+    });
+
+    el("presetSaveBtn").addEventListener("click", () => {
+      const which = el("presetWhich").value || "1";
+      const c = Number(el("presetCals").value || 0);
+      if(!Number.isFinite(c) || c < 0) return;
+
+      const p = getPresets();
+      p[`p${which}`] = { emoji: pickedEmoji, cals: Math.round(c) };
+      setPresets(p);
+
+      el("presetSavedHint").style.display = "block";
+      setTimeout(() => { el("presetSavedHint").style.display = "none"; }, 900);
+
+      render();
+    });
+
     // Export
     el("exportBtn").addEventListener("click", () => {
       const payload = {
@@ -1827,10 +2185,10 @@
         stats: getStats(),
         banks: getBanks(),
         plan: getPlan(),
-        today: getToday(),
-        days: getDays(),
         weigh: getWeigh(),
-        presets: loadJSON(LS_PRESETS, null)
+        presets: getPresets(),
+        today: getToday(),
+        days: getDays()
       };
 
       const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
@@ -1844,278 +2202,53 @@
       URL.revokeObjectURL(url);
     });
 
-    // Goal calculator with loading + optional rounding popup
-    let lastCalc = null;
-    let roundChoice = null; // "exact" | "down" | "up"
-    const showCalcLoading = () => {
-      el("calcMsg").innerHTML = `
-        <span class="loadingDots" aria-label="Loading">
-          <span></span><span></span><span></span>
-        </span>
-      `;
+    // Edit saved day modal
+    let editingId = null;
+
+    const openEdit = (id) => {
+      const days = getDays();
+      const d = days.find(x => String(x.id) === String(id));
+      if(!d) return;
+
+      editingId = id;
+      el("editTitle").textContent = `Edit ${formatDayKey(d.dayKey)}`;
+      el("editYTdee").value = String(d.yTdee || 0);
+      el("editIntake").value = String(d.intake || 0);
+      el("editBack").classList.add("show");
     };
 
-    const calcDailyDeficit = () => {
-      const cw = Number(el("currentWeightInput").value || 0);
-      const tw = Number(el("targetWeightInput").value || 0);
-      const td = String(el("targetDateInput").value || "");
-
-      if(!Number.isFinite(cw) || cw <= 0) return { ok:false, msg:"Your stats need a weight." };
-      if(!Number.isFinite(tw) || tw <= 0) return { ok:false, msg:"Enter a target weight." };
-      if(tw >= cw) return { ok:false, msg:"Target weight must be lower." };
-      if(!td) return { ok:false, msg:"Pick a target date." };
-
-      const targetDate = new Date(`${td}T12:00:00`);
-      if(Number.isNaN(targetDate.getTime())) return { ok:false, msg:"Pick a valid target date." };
-
-      const startKey = dayKeyWithCutoff(new Date());
-      const startDate = parseDayKeyToDateNoon(startKey);
-
-      const msPerDay = 86400000;
-      const days = Math.ceil((targetDate - startDate) / msPerDay);
-      if(days <= 0) return { ok:false, msg:"Target date must be in the future." };
-
-      const lbsToLose = cw - tw;
-      const totalCals = lbsToLose * 3500;
-      const daily = Math.round(totalCals / days);
-
-      return { ok:true, daily, cw, tw, targetDateISO: td, startKey };
+    const closeEdit = () => {
+      editingId = null;
+      el("editBack").classList.remove("show");
     };
 
-    const hitDateForDeficit = (dailyDef, cw, tw, startKey) => {
-      const startDate = parseDayKeyToDateNoon(startKey);
-      const lbsToLose = cw - tw;
-      const totalCals = lbsToLose * 3500;
-      const daysNeeded = Math.max(1, Math.ceil(totalCals / Math.max(1, dailyDef)));
-      const dt = new Date(startDate.getTime() + daysNeeded * 86400000);
-      return dt.toLocaleDateString("en-GB", { day:"numeric", month:"short" });
-    };
-
-    const roundTo50Down = (v) => Math.floor(Math.max(0, v) / 50) * 50;
-    const roundTo50Up = (v) => Math.ceil(Math.max(0, v) / 50) * 50;
-
-    el("calcBtn").addEventListener("click", () => {
-      showCalcLoading();
-      el("resultWrap").style.display = "none";
-      lastCalc = null;
-      roundChoice = null;
-
-      setTimeout(() => {
-        const res = calcDailyDeficit();
-        if(!res.ok){
-          el("calcMsg").textContent = res.msg;
-          return;
-        }
-        lastCalc = res;
-
-        el("calcMsg").textContent = "";
-        el("dailyDefBig").textContent = fmt(res.daily);
-        el("resultWrap").style.display = "block";
-      }, 520);
+    el("editClose").addEventListener("click", closeEdit);
+    el("editBack").addEventListener("click", (e) => {
+      if(e.target === el("editBack")) closeEdit();
     });
 
-    // Rounding popup
-    const openRoundPopup = () => {
-      if(!lastCalc) return;
+    el("editSave").addEventListener("click", () => {
+      if(!editingId) return;
 
-      const exact = Math.max(1, Math.round(lastCalc.daily));
-      const down = Math.max(1, roundTo50Down(exact));
-      const up = Math.max(1, roundTo50Up(exact));
+      const days = getDays();
+      const idx = days.findIndex(x => String(x.id) === String(editingId));
+      if(idx < 0) return;
 
-      const exactDate = hitDateForDeficit(exact, lastCalc.cw, lastCalc.tw, lastCalc.startKey);
-      const downDate = hitDateForDeficit(down, lastCalc.cw, lastCalc.tw, lastCalc.startKey);
-      const upDate = hitDateForDeficit(up, lastCalc.cw, lastCalc.tw, lastCalc.startKey);
+      const y = Number(el("editYTdee").value || 0);
+      const i = Number(el("editIntake").value || 0);
 
-      const wrap = el("roundChoices");
-      wrap.innerHTML = "";
+      days[idx].yTdee = Number.isFinite(y) ? Math.max(0, Math.round(y)) : 0;
+      days[idx].intake = Number.isFinite(i) ? Math.max(0, Math.round(i)) : 0;
 
-      const mk = (key, title, def, date) => {
-        const btn = document.createElement("button");
-        btn.className = `choiceBtn ${roundChoice === key ? "active" : ""}`;
-        btn.type = "button";
-        btn.innerHTML = `<strong>${title}</strong><span>${fmt(def)} per day, hit date ${date}</span>`;
-        btn.addEventListener("click", () => {
-          roundChoice = key;
-          openRoundPopup();
-        });
-        wrap.appendChild(btn);
-      };
+      const settings = getSettings();
+      const tdee = days[idx].yTdee || 0;
+      const budget = days[idx].maintenance ? tdee : Math.max(0, Math.round(tdee - settings.deficit));
+      days[idx].budget = budget;
 
-      mk("exact", "Keep exact", exact, exactDate);
-      mk("down", "Round down", down, downDate);
-      mk("up", "Round up", up, upDate);
-
-      el("roundBack").classList.add("show");
-    };
-
-    const closeRoundPopup = () => el("roundBack").classList.remove("show");
-
-    el("roundPopupBtn").addEventListener("click", openRoundPopup);
-    el("roundClose").addEventListener("click", closeRoundPopup);
-    el("roundBack").addEventListener("click", (e) => {
-      if(e.target === el("roundBack")) closeRoundPopup();
-    });
-
-    // Save plan with premium feedback + soft transition
-    const softNavigate = (page) => {
-      el("fadeOverlay").classList.add("show");
-      setTimeout(() => {
-        setActivePage(page);
-        setTimeout(() => el("fadeOverlay").classList.remove("show"), 140);
-      }, 180);
-    };
-
-    el("savePlanBtn").addEventListener("click", () => {
-      if(!lastCalc) return;
-
-      const exact = Math.max(1, Math.round(lastCalc.daily));
-      const down = Math.max(1, roundTo50Down(exact));
-      const up = Math.max(1, roundTo50Up(exact));
-
-      let finalDef = exact;
-      if(roundChoice === "down") finalDef = down;
-      if(roundChoice === "up") finalDef = up;
-
-      const btn = el("savePlanBtn");
-      btn.disabled = true;
-      btn.textContent = "Saving";
-
-      setTimeout(() => {
-        setSettings({ deficit: finalDef });
-        el("deficitInput").value = String(finalDef);
-
-        setPlan({
-          savedAtISO: new Date().toISOString(),
-          startDayKey: lastCalc.startKey,
-          currentWeightLb: lastCalc.cw,
-          targetWeightLb: lastCalc.tw,
-          targetDateISO: lastCalc.targetDateISO,
-          dailyDeficit: finalDef,
-          rounding: roundChoice || "exact"
-        });
-
-        el("savePlanHint").style.display = "block";
-        setTimeout(() => { el("savePlanHint").style.display = "none"; }, 900);
-
-        btn.disabled = false;
-        btn.textContent = "Save plan";
-
-        render();
-        softNavigate("Progress");
-      }, 520);
-    });
-
-    // Presets
-    const defaultPresets = () => ({
-      p1: { emoji: "☕️", cals: 50 },
-      p2: { emoji: "🍽️", cals: 400 },
-      p3: { emoji: "🍿", cals: 150 }
-    });
-
-    const getPresets = () => {
-      const p = loadJSON(LS_PRESETS, null);
-      if(!p || !p.p1 || !p.p2 || !p.p3) return defaultPresets();
-      return p;
-    };
-    const setPresets = (p) => saveJSON(LS_PRESETS, p);
-
-    const emojiChoices = [
-      "☕️","🍵","🥤","🧃","🥛","🍺","🍷",
-      "🍽️","🥣","🍳","🥚","🥞","🧇","🥯","🍞","🥖","🥐",
-      "🧀","🥓","🍗","🍖","🥩","🍔","🌭","🍕","🌯","🌮","🥪",
-      "🍝","🍜","🍲","🍛","🍣","🍱","🍤","🥟","🍟",
-      "🥗","🥦","🥕","🌽","🥔","🍠","🥑","🍅",
-      "🍎","🍌","🍇","🍓","🍍","🥭","🍑","🍒",
-      "🍫","🍪","🍩","🧁","🍰","🍦","🍨","🍿","🥨","🥜"
-    ];
-
-    const renderPresetUI = () => {
-      const p = getPresets();
-      el("p1e").textContent = p.p1.emoji;
-      el("p1a").textContent = String(p.p1.cals);
-      el("p2e").textContent = p.p2.emoji;
-      el("p2a").textContent = String(p.p2.cals);
-      el("p3e").textContent = p.p3.emoji;
-      el("p3a").textContent = String(p.p3.cals);
-    };
-
-    const openPresetModal = () => {
-      const p = getPresets();
-      const slot = el("presetSlot").value || "1";
-      const cur = p[`p${slot}`];
-
-      el("presetAmt").value = String(cur.cals || 0);
-      selectedEmoji = cur.emoji || "☕️";
-      el("presetHint").style.display = "none";
-
-      const grid = el("emojiGrid");
-      grid.innerHTML = "";
-      for(const emo of emojiChoices){
-        const b = document.createElement("button");
-        b.type = "button";
-        b.className = "eBtn";
-        b.textContent = emo;
-        b.addEventListener("click", () => { selectedEmoji = emo; });
-        grid.appendChild(b);
-      }
-
-      el("presetBack").classList.add("show");
-    };
-    const closePresetModal = () => el("presetBack").classList.remove("show");
-
-    let selectedEmoji = "☕️";
-
-    el("editPresetsBtn").addEventListener("click", openPresetModal);
-    el("presetClose").addEventListener("click", closePresetModal);
-    el("presetBack").addEventListener("click", (e) => {
-      if(e.target === el("presetBack")) closePresetModal();
-    });
-
-    el("presetSave").addEventListener("click", () => {
-      const slot = el("presetSlot").value || "1";
-      const amt = Number(el("presetAmt").value || 0);
-      if(!Number.isFinite(amt) || amt <= 0) return;
-
-      const p = getPresets();
-      p[`p${slot}`] = { emoji: selectedEmoji, cals: Math.round(amt) };
-      setPresets(p);
-
-      el("presetHint").style.display = "block";
-      setTimeout(() => el("presetHint").style.display = "none", 900);
-
-      renderPresetUI();
-    });
-
-    const addPreset = (which) => {
-      ensureDayRoll();
-      const today = getToday();
-      const p = getPresets();
-      const key = `p${which}`;
-      const val = p[key];
-      if(!val || !val.cals) return;
-
-      today.entries.push({
-        id: `${today.dayKey}_${Date.now()}`,
-        time: timeHHMM(new Date()),
-        cals: Math.round(val.cals),
-        createdAt: Date.now()
-      });
-      setToday(today);
+      setDays(days);
+      closeEdit();
       render();
-    };
-
-    el("preset1").addEventListener("click", () => addPreset(1));
-    el("preset2").addEventListener("click", () => addPreset(2));
-    el("preset3").addEventListener("click", () => addPreset(3));
-
-    // Weigh info modal
-    el("weighInfoClose").addEventListener("click", () => el("weighInfoBack").classList.remove("show"));
-    el("weighInfoBack").addEventListener("click", (e) => {
-      if(e.target === el("weighInfoBack")) el("weighInfoBack").classList.remove("show");
     });
-
-    // Init presets
-    renderPresetUI();
 
     // Keep day rollover accurate
     setInterval(() => {
@@ -2128,6 +2261,7 @@
     }, 60000);
 
     // Init
+    if(!loadJSON(LS_PRESETS, null)) setPresets(defaultPresets());
     renderStatsView();
     render();
   </script>
