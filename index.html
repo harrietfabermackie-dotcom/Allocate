@@ -38,11 +38,17 @@
       width:min(420px, 100%);
       border-radius: 36px;
       padding: 16px;
+      padding-bottom: 96px;
       background: rgba(255,255,255,.18);
       border: 1px solid rgba(255,255,255,.25);
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
+
+      max-height: calc(100vh - 44px);
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+      position: relative;
     }
 
     .topbar{
@@ -50,6 +56,14 @@
       align-items:center;
       justify-content:space-between;
       padding: 6px 6px 12px;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: rgba(255,255,255,.10);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.15);
     }
     .brand{
       font-weight:900;
@@ -58,6 +72,7 @@
       display:flex;
       align-items:center;
       gap:10px;
+      padding-left: 6px;
     }
     .dot{
       width:10px;
@@ -115,12 +130,6 @@
       background-clip:text;
       color: transparent;
       letter-spacing: -1.5px;
-    }
-    .pinkNum{
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip:text;
-      background-clip:text;
-      color: transparent;
     }
 
     .grid2{
@@ -212,7 +221,7 @@
       color: #fff;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       box-shadow: 0 14px 30px rgba(255,95,154,.30);
-      transition: transform .08s ease;
+      transition: transform .08s ease, opacity .12s ease;
       user-select:none;
       -webkit-tap-highlight-color: transparent;
     }
@@ -228,6 +237,10 @@
       color: var(--ink);
       border: 1px solid rgba(255,255,255,.75);
       box-shadow: var(--shadow2);
+    }
+    .btn.loading{
+      opacity: .88;
+      pointer-events: none;
     }
 
     .mini{
@@ -307,12 +320,19 @@
     }
 
     .bottomTabsWrap{
+      position: sticky;
+      bottom: 0;
+      left: 0;
+      right: 0;
       margin-top: 12px;
       padding: 10px 10px;
       background: rgba(255,255,255,.22);
       border: 1px solid rgba(255,255,255,.45);
       border-radius: 20px;
       box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 10;
     }
     .bottomTabs{
       display:grid;
@@ -350,95 +370,66 @@
     .page{ display:none; margin-top:12px; }
     .page.active{ display:block; }
 
-    /* Quick add presets */
-    .presetHeader{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom: 8px;
-    }
-    .presetTitle{
-      font-weight:900;
-      font-size:12px;
-      color: rgba(91,75,97,.85);
-      text-transform: uppercase;
-      letter-spacing: .3px;
-    }
     .presetRow{
       display:flex;
       gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-    .presetBtn{
-      flex: 1 1 46%;
-      min-width: 140px;
-      border: 1px solid rgba(255,255,255,.72);
-      background: rgba(255,255,255,.45);
-      border-radius: 18px;
-      padding: 10px 12px;
-      cursor:pointer;
-      -webkit-tap-highlight-color: transparent;
-      box-shadow: var(--shadow2);
-      display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:10px;
+      margin-top: 10px;
     }
-    .presetBtn:active{ transform: translateY(1px) scale(.995); }
-    .pLeft{
-      display:flex;
-      align-items:center;
+    .presetGrid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
       gap:10px;
-      min-width: 0;
+      width: 100%;
     }
-    .pIco{
-      width: 30px;
-      height: 30px;
-      border-radius: 14px;
+    .presetBtn{
+      border: 1px solid rgba(255,255,255,.72);
+      background: rgba(255,255,255,.50);
+      border-radius: 18px;
+      padding: 12px 10px;
+      box-shadow: var(--shadow2);
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+      user-select:none;
       display:flex;
+      flex-direction:column;
       align-items:center;
       justify-content:center;
-      background: rgba(255,255,255,.6);
-      border: 1px solid rgba(255,255,255,.75);
-      flex: 0 0 30px;
-      font-size: 16px;
+      gap:6px;
+      min-height: 74px;
     }
-    .pName{
+    .presetBtn:active{ transform: translateY(1px) scale(.99); }
+    .presetEmoji{
+      font-size: 22px;
+      line-height: 1;
+    }
+    .presetNum{
       font-weight:900;
-      font-size:14px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width: 140px;
+      font-size:16px;
+      color: var(--ink);
+      opacity: .92;
     }
-    .pCals{
-      font-weight:900;
-      font-size:14px;
-      flex: 0 0 auto;
-    }
-    .pencilSm{
-      width: 40px;
-      height: 40px;
+    .presetEditBtn{
+      width: 44px;
+      height: 44px;
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,.65);
       background: rgba(255,255,255,.35);
       box-shadow: var(--shadow2);
       cursor:pointer;
       font-weight:900;
+      color: var(--ink);
       display:flex;
       align-items:center;
       justify-content:center;
       -webkit-tap-highlight-color: transparent;
-      color: var(--ink);
-      font-size: 18px;
-      line-height: 1;
       flex: 0 0 auto;
+      font-size: 20px;
+      line-height: 1;
     }
-    .pencilSm:active{ transform: translateY(1px) scale(.99); }
+    .presetEditBtn:active{ transform: translateY(1px) scale(.99); }
 
-    /* Entries */
     .entryList{
       margin: 10px 0 0 0;
       padding: 0;
@@ -454,8 +445,8 @@
       gap:10px;
       padding: 10px 12px;
       border-radius: 16px;
-      background: rgba(255,255,255,.46);
-      border: 1px solid rgba(255,255,255,.62);
+      background: rgba(255,255,255,.50);
+      border: 1px solid rgba(255,255,255,.68);
       min-width: 0;
     }
     .entry .left{
@@ -466,17 +457,25 @@
     }
     .entry .time{
       font-size:12px;
-      color: rgba(91,75,97,.78);
+      color: rgba(91,75,97,.82);
       font-weight:900;
     }
     .entry .cals{
       font-size:16px;
       font-weight:900;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+      letter-spacing: .1px;
+      display:flex;
+      align-items:center;
+      gap:8px;
     }
     .xbtn{
-      border: 1px solid rgba(255,255,255,.65);
+      border: 1px solid rgba(255,255,255,.7);
       background: rgba(255,255,255,.40);
-      color: rgba(27,16,32,.85);
+      color: rgba(27,16,32,.75);
       border-radius: 12px;
       padding: 8px 10px;
       font-weight:900;
@@ -585,8 +584,8 @@
       color: rgba(27,16,32,.85);
     }
     .pencil{
-      width: 44px;
-      height: 44px;
+      width: 48px;
+      height: 48px;
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,.65);
       background: rgba(255,255,255,.35);
@@ -598,7 +597,7 @@
       justify-content:center;
       -webkit-tap-highlight-color: transparent;
       color: var(--ink);
-      font-size: 20px;
+      font-size: 22px;
       line-height: 1;
     }
     .pencil:active{ transform: translateY(1px) scale(.99); }
@@ -669,62 +668,66 @@
       font-size:14px;
       color: rgba(27,16,32,.85);
     }
-    .roundControls{
+    .roundChoices{
       display:flex;
-      gap:8px;
-      align-items:center;
-      justify-content:flex-end;
+      gap:10px;
       flex-wrap:wrap;
+      width:100%;
+      margin-top: 10px;
     }
-    .seg{
-      display:flex;
-      border-radius: 999px;
-      overflow:hidden;
-      border: 1px solid rgba(255,255,255,.75);
-      background: rgba(255,255,255,.45);
+    .choice{
+      flex: 1 1 160px;
+      border: 1px solid rgba(255,255,255,.72);
+      background: rgba(255,255,255,.55);
+      border-radius: 18px;
+      padding: 12px;
       box-shadow: var(--shadow2);
-    }
-    .seg button{
-      border:0;
-      background: transparent;
-      padding: 8px 10px;
-      font-weight:900;
       cursor:pointer;
-      color: rgba(27,16,32,.8);
       -webkit-tap-highlight-color: transparent;
-      min-width: 68px;
     }
-    .seg button.active{
-      background: rgba(255,255,255,.75);
-      color: var(--ink);
+    .choice:active{ transform: translateY(1px) scale(.99); }
+    .choice .ct{
+      font-weight:900;
+      font-size:14px;
+      color: rgba(27,16,32,.88);
+      margin-bottom: 6px;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+    }
+    .choice .cv{
+      font-weight:900;
+      font-size:16px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+    }
+    .choice .cs{
+      margin-top: 4px;
+      font-weight:900;
+      font-size:12px;
+      color: rgba(91,75,97,.85);
     }
 
-    /* Plan */
-    .planTitle{
+    .planCardTitle{
       font-weight:900;
       font-size:18px;
-      margin-bottom: 6px;
-      text-align:center;
+      margin: 0 0 4px 0;
+      color: rgba(27,16,32,.90);
     }
-    .planSub{
+    .planCardSub{
       font-weight:900;
-      color: rgba(27,16,32,.85);
-      text-align:center;
-    }
-    .planVibe{
-      margin-top: 8px;
-      font-weight:900;
-      color: rgba(91,75,97,.95);
-      text-align:center;
+      font-size:14px;
+      color: rgba(91,75,97,.92);
     }
     .planBar{
-      height: 12px;
+      height: 10px;
       border-radius: 999px;
-      background: rgba(91,75,97,.16);
+      background: rgba(91,75,97,.18);
       border: 1px solid rgba(255,255,255,.65);
       overflow:hidden;
       margin-top: 12px;
-      position: relative;
     }
     .planFill{
       height:100%;
@@ -732,21 +735,6 @@
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       border-radius: 999px;
       transition: width .35s ease;
-    }
-    .planMarker{
-      position:absolute;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 22px;
-      height: 22px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.92);
-      border: 1px solid rgba(255,255,255,.9);
-      box-shadow: 0 10px 22px rgba(25,10,30,.14);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size: 12px;
     }
     .planMeta{
       display:flex;
@@ -761,32 +749,80 @@
       color: rgba(91,75,97,.9);
       font-weight:900;
     }
-
-    /* Weigh in */
-    .weighTop{
+    .sparkRow{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
-      margin-bottom: 8px;
+      margin-top: 10px;
     }
-    .weighTitle{
+    .sparkPill{
+      border: 1px solid rgba(255,255,255,.72);
+      background: rgba(255,255,255,.55);
+      border-radius: 999px;
+      padding: 8px 12px;
       font-weight:900;
-      font-size:14px;
-      color: rgba(27,16,32,.85);
-    }
-    .lockPill{
+      font-size:12px;
+      color: rgba(27,16,32,.82);
       display:flex;
       align-items:center;
       gap:8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.45);
-      border: 1px solid rgba(255,255,255,.70);
-      color: rgba(27,16,32,.75);
+      box-shadow: var(--shadow2);
+    }
+
+    .weighRow{
+      display:flex;
+      align-items:flex-end;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .lockPill{
+      border: 1px solid rgba(255,255,255,.72);
+      background: rgba(255,255,255,.55);
+      border-radius: 18px;
+      padding: 10px 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .lockPill .lpLeft{
+      display:flex;
+      flex-direction:column;
+      gap:3px;
+    }
+    .lockPill .lpTop{
+      display:flex;
+      align-items:center;
+      gap:8px;
       font-weight:900;
+      color: rgba(27,16,32,.86);
+      font-size:14px;
+    }
+    .lockPill .lpSub{
+      font-weight:900;
+      color: rgba(91,75,97,.90);
+      font-size:12px;
+    }
+    .tinyQ{
+      border: 0;
+      background: transparent;
+      padding: 0;
+      margin: 0;
+      font-weight:900;
+      color: rgba(27,16,32,.78);
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
       font-size: 12px;
-      white-space:nowrap;
+      line-height: 1;
+    }
+
+    .fadeIn{
+      animation: fadeIn .18s ease;
+    }
+    @keyframes fadeIn{
+      from{ opacity:0; transform: translateY(4px); }
+      to{ opacity:1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -829,7 +865,7 @@
               <div class="klabel">Banked calories</div>
               <div class="kval">
                 <span class="knum" id="bankedKpi">0</span>
-                <button class="iconBtn" id="useBankedBtn" aria-label="Use banked calories">⬆️</button>
+                <button class="iconBtn" id="useBankedBtn" aria-label="Use banked calories">↑</button>
               </div>
             </div>
           </div>
@@ -957,21 +993,14 @@
           <div class="calcMsg" id="calcMsg"></div>
 
           <div id="savePlanWrap" style="display:none;">
+            <div class="spacer"></div>
+
             <div class="roundRow">
               <div class="rlabel">Round to 50</div>
-              <div class="roundControls">
-                <div class="iosSwitch" aria-label="Round to 50">
-                  <input id="roundToggle" type="checkbox" />
-                  <span class="iosTrack"></span>
-                  <span class="iosThumb"></span>
-                </div>
-                <div class="seg" id="roundModeSeg" style="display:none;">
-                  <button type="button" data-mode="down">Down</button>
-                  <button type="button" data-mode="nearest" class="active">Nearest</button>
-                  <button type="button" data-mode="up">Up</button>
-                </div>
-              </div>
+              <div style="font-weight:900; color: rgba(91,75,97,.90); font-size:12px;">Pick one</div>
             </div>
+
+            <div class="roundChoices" id="roundChoices"></div>
 
             <div class="spacer"></div>
             <button class="btn" id="savePlanBtn">Save plan</button>
@@ -1000,17 +1029,14 @@
               <div class="kval"><span class="knum" id="budgetLogKpi">0</span></div>
             </div>
           </div>
+
+          <div class="presetRow">
+            <div class="presetGrid" id="presetGrid"></div>
+            <button class="presetEditBtn" id="editPresetsBtn" aria-label="Edit presets">✎</button>
+          </div>
         </div>
 
         <div class="card">
-          <div class="presetHeader">
-            <div class="presetTitle">Quick add</div>
-            <button class="pencilSm" id="editPresetsBtn" aria-label="Edit quick add">✎</button>
-          </div>
-          <div class="presetRow" id="presetRow"></div>
-
-          <div class="spacer"></div>
-
           <div class="row">
             <div class="field">
               <label for="addInput">Log calories</label>
@@ -1038,7 +1064,7 @@
       <div class="stack" id="progressStack"></div>
     </div>
 
-    <!-- LOG (was Info) -->
+    <!-- LOG -->
     <div class="page" id="pageLog">
       <div class="stack" id="logStack"></div>
     </div>
@@ -1066,8 +1092,8 @@
       <div class="spacer"></div>
       <div class="stack">
         <button class="btn" id="optRollover">Rollover calories</button>
-        <button class="btn ghost" id="optBanked">Banked calories</button>
-        <button class="btn ghost" id="optMoveOn">Move on</button>
+        <button class="btn ghost" id="optFuture">Save for a future day</button>
+        <button class="btn ghost" id="optQuicker">Hit goal quicker</button>
       </div>
     </div>
   </div>
@@ -1114,84 +1140,52 @@
     </div>
   </div>
 
-  <!-- Presets editor modal -->
+  <!-- Presets modal -->
   <div class="modalBack" id="presetBack">
     <div class="modal">
       <div class="modalTop">
-        <div class="mtitle">Quick add</div>
+        <div class="mtitle">Presets</div>
         <button class="closeBtn" id="presetClose">Close</button>
       </div>
 
-      <div class="note" style="margin-bottom:10px;">Tap a tile to log it, edit below.</div>
-
-      <div class="row">
-        <div class="field">
-          <label for="presetPick">Preset</label>
-          <select id="presetPick"></select>
-        </div>
-        <div class="field small">
-          <button class="btn ghost" id="presetNewBtn">New</button>
-        </div>
-      </div>
-
+      <div class="note">Pick an emoji and calories for each tile.</div>
       <div class="spacer"></div>
 
-      <div class="row">
-        <div class="field">
-          <label for="presetName">Name</label>
-          <input id="presetName" type="text" placeholder="Hot drink" />
-        </div>
-        <div class="field">
-          <label for="presetCals">Calories</label>
-          <input id="presetCals" type="number" inputmode="numeric" min="0" placeholder="20" />
-        </div>
-      </div>
+      <div class="stack" id="presetEditor"></div>
 
       <div class="spacer"></div>
-
-      <div class="row">
-        <div class="field">
-          <label for="presetIcon">Icon</label>
-          <select id="presetIcon">
-            <option value="coffee">Coffee</option>
-            <option value="plate">Plate</option>
-            <option value="snack">Snack</option>
-            <option value="bottle">Bottle</option>
-          </select>
-        </div>
-        <div class="field small">
-          <button class="btn" id="presetSaveBtn">Save</button>
-        </div>
-      </div>
-
-      <div class="note" id="presetHint"></div>
+      <button class="btn" id="presetSaveBtn">Save</button>
+      <div class="note" id="presetSavedHint" style="display:none;">Saved</div>
     </div>
   </div>
 
-  <!-- Weigh in info modal -->
+  <!-- Weigh info modal -->
   <div class="modalBack" id="weighInfoBack">
     <div class="modal">
       <div class="modalTop">
-        <div class="mtitle">Weekly weigh in</div>
+        <div class="mtitle">Weekly weigh-in</div>
         <button class="closeBtn" id="weighInfoClose">Close</button>
       </div>
-      <div class="note">It’s weekly so it stays calm. Day to day weight swings are noise.</div>
+      <div class="note">
+        This only unlocks every 7 days so it stays calm and consistent.
+      </div>
     </div>
   </div>
 
   <script>
-    const LS_SETTINGS = "allocate_settings_v8";
-    const LS_STATS = "allocate_stats_v8";
-    const LS_TODAY = "allocate_today_v8";
-    const LS_DAYS = "allocate_days_v8";
-    const LS_BANKS = "allocate_banks_v8";
-    const LS_PLAN = "allocate_plan_v8";
+    const LS_SETTINGS = "allocate_settings_v7";
+    const LS_STATS = "allocate_stats_v7";
+    const LS_TODAY = "allocate_today_v7";
+    const LS_DAYS = "allocate_days_v7";
+    const LS_BANKS = "allocate_banks_v7";
+    const LS_PLAN = "allocate_plan_v7";
     const LS_PRESETS = "allocate_presets_v8";
     const LS_WEIGH = "allocate_weigh_v8";
 
     const DEFAULT_DEFICIT = 750;
     const DAY_CUTOFF_HOUR = 3;
-    const WEIGH_COOLDOWN_DAYS = 7;
+
+    const EMOJI_CHOICES = ["☕️","🍽️","🍎","🥤","🍫","🥐","🍝","🍣","🍦","🍷","🍌","🍪"];
 
     const el = (id) => document.getElementById(id);
 
@@ -1264,6 +1258,12 @@
       return new Date(p[0], p[1]-1, p[2], 12, 0, 0);
     };
 
+    const addDaysNoon = (date, days) => {
+      const d = new Date(date);
+      d.setDate(d.getDate() + days);
+      return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12, 0, 0);
+    };
+
     const getSettings = () => {
       const s = loadJSON(LS_SETTINGS, null);
       if(!s || typeof s.deficit !== "number"){
@@ -1290,6 +1290,29 @@
       };
     };
     const setBanks = (banks) => saveJSON(LS_BANKS, banks);
+
+    const defaultPresets = () => ([
+      { id:"p1", emoji:"☕️", cals: 80 },
+      { id:"p2", emoji:"🍽️", cals: 450 },
+      { id:"p3", emoji:"🍎", cals: 120 }
+    ]);
+    const getPresets = () => {
+      const p = loadJSON(LS_PRESETS, null);
+      if(!p || !Array.isArray(p) || p.length !== 3) return defaultPresets();
+      return p.map((x,i) => ({
+        id: x.id || `p${i+1}`,
+        emoji: x.emoji || defaultPresets()[i].emoji,
+        cals: Math.max(0, Math.round(Number(x.cals || 0)))
+      }));
+    };
+    const setPresets = (presets) => saveJSON(LS_PRESETS, presets);
+
+    const getWeigh = () => {
+      const w = loadJSON(LS_WEIGH, null);
+      if(!w) return { lastAt: 0, valueLb: 0 };
+      return { lastAt: Number(w.lastAt || 0), valueLb: Number(w.valueLb || 0) };
+    };
+    const setWeigh = (w) => saveJSON(LS_WEIGH, w);
 
     const defaultToday = () => ({
       dayKey: dayKeyWithCutoff(),
@@ -1359,62 +1382,46 @@
       b.addEventListener("click", () => setActivePage(b.getAttribute("data-page")));
     });
 
-    /* Presets */
-    const iconMap = {
-      coffee: "☕",
-      plate: "🍽️",
-      snack: "🍿",
-      bottle: "🧋"
+    const addEntry = (cals, emoji = "") => {
+      ensureDayRoll();
+      const today = getToday();
+
+      const v = Number(cals || 0);
+      if(!Number.isFinite(v) || v <= 0) return;
+
+      const entry = {
+        id: `${today.dayKey}_${Date.now()}`,
+        time: timeHHMM(new Date()),
+        cals: Math.round(v),
+        emoji: String(emoji || ""),
+        createdAt: Date.now()
+      };
+
+      today.entries.push(entry);
+      setToday(today);
     };
-
-    const defaultPresets = () => ([
-      { id:"p1", name:"Hot drink", cals:20, icon:"coffee" },
-      { id:"p2", name:"Meal", cals:500, icon:"plate" },
-      { id:"p3", name:"Snack", cals:200, icon:"snack" },
-      { id:"p4", name:"Drink", cals:100, icon:"bottle" }
-    ]);
-
-    const getPresets = () => {
-      const p = loadJSON(LS_PRESETS, null);
-      if(!p || !Array.isArray(p) || p.length === 0) {
-        const d = defaultPresets();
-        saveJSON(LS_PRESETS, d);
-        return d;
-      }
-      return p.map(x => ({
-        id: String(x.id || ""),
-        name: String(x.name || "Preset"),
-        cals: Math.max(0, Math.round(Number(x.cals || 0))),
-        icon: String(x.icon || "plate")
-      }));
-    };
-
-    const setPresets = (arr) => saveJSON(LS_PRESETS, arr);
 
     const renderPresets = () => {
-      const row = el("presetRow");
-      row.innerHTML = "";
-      const presets = getPresets().slice(0, 4);
+      const grid = el("presetGrid");
+      grid.innerHTML = "";
+      const presets = getPresets();
 
-      for(const p of presets){
+      presets.forEach((p) => {
         const btn = document.createElement("button");
         btn.className = "presetBtn";
-        btn.setAttribute("data-pid", p.id);
+        btn.type = "button";
         btn.innerHTML = `
-          <div class="pLeft">
-            <div class="pIco">${iconMap[p.icon] || "🍽️"}</div>
-            <div class="pName">${p.name}</div>
-          </div>
-          <div class="pCals"><span class="pinkNum">${fmt(p.cals)}</span></div>
+          <div class="presetEmoji">${p.emoji || "✨"}</div>
+          <div class="presetNum">${fmt(p.cals || 0)}</div>
         `;
         btn.addEventListener("click", () => {
-          logCalories(p.cals);
+          addEntry(p.cals, p.emoji || "");
+          render();
         });
-        row.appendChild(btn);
-      }
+        grid.appendChild(btn);
+      });
     };
 
-    /* Entries */
     const renderEntries = (today) => {
       const list = el("entryList");
       list.innerHTML = "";
@@ -1424,12 +1431,13 @@
       for(const e of entries){
         const li = document.createElement("li");
         li.className = "entry";
+        const emo = e.emoji ? `<span>${e.emoji}</span>` : "";
         li.innerHTML = `
           <div class="left">
             <div class="time">${e.time || ""}</div>
-            <div class="cals"><span class="pinkNum">${fmt(Number(e.cals)||0)}</span></div>
+            <div class="cals">${emo}<span>${fmt(Number(e.cals)||0)}</span></div>
           </div>
-          <button class="xbtn" data-x="${e.id}">X</button>
+          <button class="xbtn" data-x="${e.id}" aria-label="Delete entry">X</button>
         `;
         list.appendChild(li);
       }
@@ -1446,25 +1454,6 @@
       });
     };
 
-    const logCalories = (amount) => {
-      ensureDayRoll();
-      const today = getToday();
-      const v = Number(amount || 0);
-      if(!Number.isFinite(v) || v <= 0) return;
-
-      const entry = {
-        id: `${today.dayKey}_${Date.now()}`,
-        time: timeHHMM(new Date()),
-        cals: Math.round(v),
-        createdAt: Date.now()
-      };
-
-      today.entries.push(entry);
-      setToday(today);
-      render();
-    };
-
-    /* Plan progress */
     const computePlanProgress = (plan) => {
       if(!plan || !plan.startDayKey || !plan.targetDateISO) return null;
 
@@ -1483,134 +1472,140 @@
       return { totalDays, elapsedDays: elapsed, pct };
     };
 
-    const planVibeLine = (pct) => {
-      if(pct >= 1) return "You did it";
-      if(pct >= 0.66) return "Final stretch";
-      if(pct >= 0.33) return "Momentum";
-      return "Locked in";
-    };
-
-    /* Weigh in */
-    const getWeigh = () => loadJSON(LS_WEIGH, { lastAt: 0, valueLb: "" });
-    const setWeigh = (w) => saveJSON(LS_WEIGH, w);
-
-    const daysUntilNextWeigh = () => {
+    const canWeigh = () => {
       const w = getWeigh();
-      if(!w.lastAt) return 0;
-      const ms = Date.now() - Number(w.lastAt || 0);
-      const days = Math.floor(ms / 86400000);
-      return Math.max(0, WEIGH_COOLDOWN_DAYS - days);
+      const now = Date.now();
+      const diff = Math.max(0, now - (w.lastAt || 0));
+      const days = diff / 86400000;
+      return { ok: days >= 7 || w.lastAt === 0, daysLeft: Math.max(0, Math.ceil(7 - days)) };
     };
-
-    const canWeigh = () => daysUntilNextWeigh() === 0;
 
     const renderProgress = () => {
       const stack = el("progressStack");
       stack.innerHTML = "";
 
       const plan = getPlan();
+      const w = getWeigh();
+      const wStatus = canWeigh();
+
+      const top = document.createElement("div");
+      top.className = "card fadeIn";
+      top.innerHTML = `
+        <div class="planCardTitle">You're on track!</div>
+        <div class="planCardSub" id="trackLine"></div>
+
+        <div class="sparkRow">
+          <div class="sparkPill">✨ Keep it cute</div>
+          <div class="sparkPill">⚡ One day at a time</div>
+        </div>
+      `;
+      stack.appendChild(top);
+
+      const trackLine = top.querySelector("#trackLine");
 
       if(plan && plan.targetWeightLb && plan.targetDateISO && plan.dailyDeficit){
         const prog = computePlanProgress(plan);
-        const pct = prog ? prog.pct : 0;
-        const pctW = Math.round(pct * 100);
-
         const targetDate = new Date(`${plan.targetDateISO}T12:00:00`);
         const targetDateText = targetDate.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
 
-        const c = document.createElement("div");
-        c.className = "card";
-        c.innerHTML = `
-          <div class="planTitle">You’re on track!</div>
-          <div class="planSub">Hit ${fmt(Number(plan.targetWeightLb))} lb by ${targetDateText}</div>
-          <div class="planVibe">${planVibeLine(pct)}</div>
+        trackLine.textContent = `Hit ${fmt(Number(plan.targetWeightLb))} lb by ${targetDateText}. Daily deficit ${fmt(Number(plan.dailyDeficit))}.`;
 
+        const pctW = prog ? Math.round(prog.pct * 100) : 0;
+        const elapsed = prog ? prog.elapsedDays : 0;
+        const total = prog ? prog.totalDays : 0;
+
+        const c = document.createElement("div");
+        c.className = "card fadeIn";
+        c.innerHTML = `
+          <div style="font-weight:900; color: rgba(27,16,32,.86);">Progress</div>
           <div class="planBar" aria-label="Plan progress">
             <div class="planFill" style="width:${pctW}%;"></div>
-            <div class="planMarker" style="left:${pctW}%;">✨</div>
           </div>
-
           <div class="planMeta">
-            <div class="pm">${prog ? `${prog.elapsedDays} of ${prog.totalDays} days` : ""}</div>
-            <div class="pm">Daily deficit: ${fmt(Number(plan.dailyDeficit))}</div>
+            <div class="pm">${elapsed} of ${total} days</div>
+            <div class="pm">You're doing it</div>
           </div>
         `;
         stack.appendChild(c);
       }else{
-        const c = document.createElement("div");
-        c.className = "card";
-        c.innerHTML = `<div style="font-weight:900; font-size:16px; text-align:center;">Set a plan in Settings</div>`;
-        stack.appendChild(c);
+        trackLine.textContent = "Set a goal in Settings to get your plan.";
       }
 
-      const wCard = document.createElement("div");
-      wCard.className = "card";
+      const weighCard = document.createElement("div");
+      weighCard.className = "card fadeIn";
+      const locked = !wStatus.ok;
 
-      const lockedDays = daysUntilNextWeigh();
-      const locked = !canWeigh();
+      const lockIcon = locked ? "🔒" : "✨";
+      const lockTop = locked ? "Weekly weigh-in locked" : "Weekly weigh-in";
+      const lockSub = locked ? `Unlocks in ${wStatus.daysLeft}d` : "Log once, then come back next week";
 
-      wCard.innerHTML = `
-        <div class="weighTop">
-          <div class="weighTitle">Weekly weigh in</div>
-          <div style="display:flex; gap:8px; align-items:center;">
-            <button class="iconBtn" id="weighInfoBtn" aria-label="Weigh in info">?</button>
-            <div class="lockPill">${locked ? `🔒 ${lockedDays}d` : "✅ Ready"}</div>
+      weighCard.innerHTML = `
+        <div class="lockPill">
+          <div class="lpLeft">
+            <div class="lpTop">
+              <span>${lockIcon}</span>
+              <span>${lockTop}</span>
+              <span style="opacity:.72; font-weight:900; font-size:12px;">${locked ? "7d" : ""}</span>
+              <button class="tinyQ" id="weighQ" aria-label="Why is it locked?">?</button>
+            </div>
+            <div class="lpSub">${lockSub}</div>
           </div>
         </div>
 
-        <div class="row">
+        <div class="spacer"></div>
+
+        <div class="weighRow">
           <div class="field">
             <label for="weighInput">Weight (lb)</label>
-            <input id="weighInput" type="number" inputmode="decimal" step="0.1" min="0" ${locked ? "disabled" : ""} />
+            <input id="weighInput" type="number" inputmode="decimal" step="0.1" min="0" ${locked ? "disabled" : ""} placeholder="${w.valueLb ? String(w.valueLb) : ""}" />
           </div>
           <div class="field small">
-            <button class="btn ${locked ? "ghost" : ""}" id="weighSaveBtn" ${locked ? "disabled" : ""}>${locked ? "Locked" : "Log"}</button>
+            <button class="btn ${locked ? "saved" : ""}" id="weighSaveBtn" ${locked ? "disabled" : ""}>${locked ? "Locked" : "Save"}</button>
           </div>
         </div>
-
-        <div class="note" id="weighHint"></div>
       `;
-      stack.appendChild(wCard);
+      stack.appendChild(weighCard);
 
-      const w = getWeigh();
-      const weighHint = w.lastAt ? `Last: ${w.valueLb} lb` : "";
-      el("weighHint").textContent = weighHint;
-
-      el("weighInfoBtn").addEventListener("click", () => {
+      weighCard.querySelector("#weighQ").addEventListener("click", () => {
         el("weighInfoBack").classList.add("show");
       });
 
-      if(!locked){
-        el("weighSaveBtn").addEventListener("click", () => {
-          const v = Number(el("weighInput").value || 0);
-          if(!Number.isFinite(v) || v <= 0) return;
-          setWeigh({ lastAt: Date.now(), valueLb: String(v) });
-          render();
-        });
-      }
+      weighCard.querySelector("#weighSaveBtn").addEventListener("click", () => {
+        if(!wStatus.ok) return;
+
+        const v = Number(weighCard.querySelector("#weighInput").value || 0);
+        if(!Number.isFinite(v) || v <= 0) return;
+
+        setWeigh({ lastAt: Date.now(), valueLb: v });
+
+        const btn = weighCard.querySelector("#weighSaveBtn");
+        btn.classList.add("saved");
+        btn.textContent = "Saved";
+
+        renderProgress();
+      });
     };
 
-    /* Log page (saved days) */
     const renderLogPage = () => {
-      const settings = getSettings();
       const stack = el("logStack");
       stack.innerHTML = "";
 
       const days = getDays().slice().sort((a,b) => (a.dayKey < b.dayKey ? 1 : -1));
-
       if(days.length === 0){
         const c = document.createElement("div");
-        c.className = "card";
+        c.className = "card fadeIn";
         c.innerHTML = `<div style="font-weight:900; font-size:16px;">No days saved yet</div>`;
         stack.appendChild(c);
         return;
       }
 
+      const settings = getSettings();
+
       for(const d of days){
         const deficit = d.maintenance ? 0 : settings.deficit;
 
         const card = document.createElement("div");
-        card.className = "card";
+        card.className = "card fadeIn";
 
         card.innerHTML = `
           <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px;">
@@ -1663,7 +1658,6 @@
       });
     };
 
-    /* Stats view */
     const renderStatsView = () => {
       const s = getStats();
       el("svHeight").textContent = s.heightCm ? `${s.heightCm} cm` : "-";
@@ -1678,7 +1672,9 @@
       if(showCalc){
         const cw = el("currentWeightInput");
         const w = s.weightLb ? String(s.weightLb) : "";
-        if(w) cw.value = w;
+        if(w){
+          cw.value = w;
+        }
       }else{
         el("currentWeightInput").value = "";
       }
@@ -1705,165 +1701,16 @@
       buttonEl.textContent = savedText;
       buttonEl.classList.add("saved");
       buttonEl.classList.remove("ghost");
+      buttonEl.classList.remove("loading");
     };
 
     const setUnsavedButton = (buttonEl, text = "Save", makeGhost = true) => {
       buttonEl.textContent = text;
       buttonEl.classList.remove("saved");
+      buttonEl.classList.remove("loading");
       if(makeGhost) buttonEl.classList.add("ghost");
     };
 
-    /* Day saving */
-    const saveDayToLog = () => {
-      ensureDayRoll();
-      const settings = getSettings();
-      const today = getToday();
-
-      const intake = sumIntake(today.entries);
-      const budgetTotal = calcBudgetTotal(today, settings);
-
-      const dayObj = {
-        id: `day_${today.dayKey}`,
-        dayKey: today.dayKey,
-        yTdee: Math.round(today.yTdee || 0),
-        maintenance: !!today.maintenance,
-        budget: Math.round(budgetTotal),
-        intake: Math.round(intake)
-      };
-
-      const days = getDays();
-      const idx = days.findIndex(x => x.dayKey === dayObj.dayKey);
-      if(idx >= 0) days[idx] = dayObj;
-      else days.push(dayObj);
-      setDays(days);
-
-      return { left: Math.round(budgetTotal - intake) };
-    };
-
-    /* Modals */
-    const openEndOptions = (left) => {
-      el("endNote").textContent = `${fmt(left)} calories left.`;
-      el("endBack").classList.add("show");
-    };
-    const closeEndOptions = () => el("endBack").classList.remove("show");
-
-    el("endClose").addEventListener("click", closeEndOptions);
-    el("endBack").addEventListener("click", (e) => {
-      if(e.target === el("endBack")) closeEndOptions();
-    });
-
-    const finishEndDay = () => {
-      const next = defaultToday();
-      next.dayKey = dayKeyWithCutoff(new Date());
-      setToday(next);
-      render();
-      setActivePage("Progress");
-    };
-
-    /* Goal calculator */
-    let lastCalc = null;
-    let roundMode = "nearest";
-
-    const showCalcLoading = () => {
-      el("calcMsg").innerHTML = `
-        <span class="loadingDots" aria-label="Loading">
-          <span></span><span></span><span></span>
-        </span>
-      `;
-    };
-
-    const roundTo50 = (value, mode) => {
-      const v = Math.max(0, Math.round(Number(value) || 0));
-      const base = Math.floor(v / 50) * 50;
-      const up = base + 50;
-      if(mode === "down") return base;
-      if(mode === "up") return up;
-      const mid = base + 25;
-      return v < mid ? base : up;
-    };
-
-    const calcDailyDeficit = () => {
-      const cw = Number(el("currentWeightInput").value || 0);
-      const tw = Number(el("targetWeightInput").value || 0);
-      const td = String(el("targetDateInput").value || "");
-
-      if(!Number.isFinite(cw) || cw <= 0) return { ok:false, msg:"Your stats need a weight." };
-      if(!Number.isFinite(tw) || tw <= 0) return { ok:false, msg:"Enter a target weight." };
-      if(tw >= cw) return { ok:false, msg:"Target weight must be lower." };
-      if(!td) return { ok:false, msg:"Pick a target date." };
-
-      const targetDate = new Date(`${td}T12:00:00`);
-      if(Number.isNaN(targetDate.getTime())) return { ok:false, msg:"Pick a valid target date." };
-
-      const startKey = dayKeyWithCutoff(new Date());
-      const startDate = parseDayKeyToDateNoon(startKey);
-
-      const msPerDay = 86400000;
-      const days = Math.ceil((targetDate - startDate) / msPerDay);
-      if(days <= 0) return { ok:false, msg:"Target date must be in the future." };
-
-      const lbsToLose = cw - tw;
-      const totalCals = lbsToLose * 3500;
-      const daily = Math.round(totalCals / days);
-
-      return { ok:true, daily, days, cw, tw, targetDateISO: td, startKey };
-    };
-
-    /* Presets editor */
-    let editingPresetId = null;
-
-    const openPresetEditor = () => {
-      const presets = getPresets().slice(0, 4);
-      const pick = el("presetPick");
-      pick.innerHTML = "";
-      for(const p of presets){
-        const opt = document.createElement("option");
-        opt.value = p.id;
-        opt.textContent = `${iconMap[p.icon] || ""} ${p.name}`;
-        pick.appendChild(opt);
-      }
-      editingPresetId = presets[0]?.id || null;
-      pick.value = editingPresetId || "";
-
-      const cur = presets.find(x => x.id === editingPresetId);
-      if(cur){
-        el("presetName").value = cur.name;
-        el("presetCals").value = String(cur.cals);
-        el("presetIcon").value = cur.icon;
-      }
-
-      el("presetHint").textContent = "";
-      el("presetBack").classList.add("show");
-    };
-
-    const closePresetEditor = () => el("presetBack").classList.remove("show");
-
-    /* Edit day modal */
-    let editingDayId = null;
-
-    const openEdit = (id) => {
-      const days = getDays();
-      const d = days.find(x => String(x.id) === String(id));
-      if(!d) return;
-
-      editingDayId = id;
-      el("editTitle").textContent = `Edit ${formatDayKey(d.dayKey)}`;
-      el("editYTdee").value = String(d.yTdee || 0);
-      el("editIntake").value = String(d.intake || 0);
-      el("editBack").classList.add("show");
-    };
-
-    const closeEdit = () => {
-      editingDayId = null;
-      el("editBack").classList.remove("show");
-    };
-
-    el("editClose").addEventListener("click", closeEdit);
-    el("editBack").addEventListener("click", (e) => {
-      if(e.target === el("editBack")) closeEdit();
-    });
-
-    /* Render main */
     const render = () => {
       ensureDayRoll();
 
@@ -1905,7 +1752,6 @@
       setToday(today);
     };
 
-    /* Dashboard actions */
     el("applyDashBtn").addEventListener("click", () => {
       ensureDayRoll();
       const today = getToday();
@@ -1924,12 +1770,13 @@
       render();
     });
 
-    /* Logging actions */
     el("addBtn").addEventListener("click", () => {
       const v = Number(el("addInput").value || 0);
       if(!Number.isFinite(v) || v <= 0) return;
-      logCalories(v);
+
+      addEntry(v, "");
       el("addInput").value = "";
+      render();
     });
 
     el("addInput").addEventListener("keydown", (e) => {
@@ -1946,6 +1793,51 @@
       render();
     });
 
+    const saveDayToLog = () => {
+      ensureDayRoll();
+      const settings = getSettings();
+      const today = getToday();
+
+      const intake = sumIntake(today.entries);
+      const budgetTotal = calcBudgetTotal(today, settings);
+
+      const dayObj = {
+        id: `day_${today.dayKey}`,
+        dayKey: today.dayKey,
+        yTdee: Math.round(today.yTdee || 0),
+        maintenance: !!today.maintenance,
+        budget: Math.round(budgetTotal),
+        intake: Math.round(intake)
+      };
+
+      const days = getDays();
+      const idx = days.findIndex(x => x.dayKey === dayObj.dayKey);
+      if(idx >= 0) days[idx] = dayObj;
+      else days.push(dayObj);
+      setDays(days);
+
+      return { left: Math.round(budgetTotal - intake) };
+    };
+
+    const openEndOptions = (left) => {
+      el("endNote").textContent = `${fmt(left)} calories left.`;
+      el("endBack").classList.add("show");
+    };
+    const closeEndOptions = () => el("endBack").classList.remove("show");
+
+    el("endClose").addEventListener("click", closeEndOptions);
+    el("endBack").addEventListener("click", (e) => {
+      if(e.target === el("endBack")) closeEndOptions();
+    });
+
+    const finishEndDay = () => {
+      const next = defaultToday();
+      next.dayKey = dayKeyWithCutoff(new Date());
+      setToday(next);
+      render();
+      setActivePage("Progress");
+    };
+
     el("endDayBtn").addEventListener("click", () => {
       const res = saveDayToLog();
       if(res.left > 0){
@@ -1955,7 +1847,6 @@
       }
     });
 
-    /* End day options */
     el("optRollover").addEventListener("click", () => {
       ensureDayRoll();
       const settings = getSettings();
@@ -1973,7 +1864,7 @@
       finishEndDay();
     });
 
-    el("optBanked").addEventListener("click", () => {
+    el("optFuture").addEventListener("click", () => {
       ensureDayRoll();
       const settings = getSettings();
       const today = getToday();
@@ -1991,7 +1882,7 @@
       finishEndDay();
     });
 
-    el("optMoveOn").addEventListener("click", () => {
+    el("optQuicker").addEventListener("click", () => {
       const banks = getBanks();
       banks.rolloverPending = 0;
       setBanks(banks);
@@ -2000,7 +1891,6 @@
       finishEndDay();
     });
 
-    /* Settings deficit */
     el("saveSettingsBtn").addEventListener("click", () => {
       const v = Number(el("deficitInput").value || 0);
       const deficit = (Number.isFinite(v) && v >= 0) ? Math.round(v) : DEFAULT_DEFICIT;
@@ -2017,7 +1907,6 @@
       setUnsavedButton(el("saveSettingsBtn"), "Save", false);
     });
 
-    /* Stats */
     el("editStatsBtn").addEventListener("click", () => {
       const isEditing = el("statsEdit").style.display !== "none";
       if(isEditing) closeStatsEdit();
@@ -2046,12 +1935,94 @@
       render();
     });
 
-    /* Goal calculator */
+    // Goal calculator with round choices
+    let lastCalc = null;
+    let lastRoundPick = null;
+
+    const showCalcLoading = () => {
+      el("calcMsg").innerHTML = `
+        <span class="loadingDots" aria-label="Loading">
+          <span></span><span></span><span></span>
+        </span>
+      `;
+    };
+
+    const roundDown50 = (v) => Math.floor(Math.max(0, v) / 50) * 50;
+    const roundUp50 = (v) => Math.ceil(Math.max(0, v) / 50) * 50;
+
+    const calcDailyDeficit = () => {
+      const cw = Number(el("currentWeightInput").value || 0);
+      const tw = Number(el("targetWeightInput").value || 0);
+      const td = String(el("targetDateInput").value || "");
+
+      if(!Number.isFinite(cw) || cw <= 0) return { ok:false, msg:"Your stats need a weight." };
+      if(!Number.isFinite(tw) || tw <= 0) return { ok:false, msg:"Enter a target weight." };
+      if(tw >= cw) return { ok:false, msg:"Target weight must be lower." };
+      if(!td) return { ok:false, msg:"Pick a target date." };
+
+      const targetDate = new Date(`${td}T12:00:00`);
+      if(Number.isNaN(targetDate.getTime())) return { ok:false, msg:"Pick a valid target date." };
+
+      const startKey = dayKeyWithCutoff(new Date());
+      const startDate = parseDayKeyToDateNoon(startKey);
+
+      const msPerDay = 86400000;
+      const days = Math.ceil((targetDate - startDate) / msPerDay);
+      if(days <= 0) return { ok:false, msg:"Target date must be in the future." };
+
+      const lbsToLose = cw - tw;
+      const totalCals = lbsToLose * 3500;
+      const daily = Math.round(totalCals / days);
+
+      return { ok:true, daily, days, cw, tw, totalCals, targetDateISO: td, startKey };
+    };
+
+    const renderRoundChoices = (baseDaily, totalCals, startKey) => {
+      const wrap = el("roundChoices");
+      wrap.innerHTML = "";
+
+      const startDate = parseDayKeyToDateNoon(startKey);
+
+      const down = Math.max(0, roundDown50(baseDaily));
+      const up = Math.max(0, roundUp50(baseDaily));
+
+      const makeDateLine = (def) => {
+        if(def <= 0) return "Pick a higher deficit";
+        const daysNeed = Math.ceil(totalCals / def);
+        const hit = addDaysNoon(startDate, daysNeed);
+        const txt = hit.toLocaleDateString("en-GB", { day:"numeric", month:"short" });
+        return `Hit date: ${txt}`;
+      };
+
+      const mk = (title, def) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "choice";
+        btn.innerHTML = `
+          <div class="ct">${title}</div>
+          <div class="cv">${fmt(def)}</div>
+          <div class="cs">${makeDateLine(def)}</div>
+        `;
+        btn.addEventListener("click", () => {
+          lastRoundPick = def;
+          wrap.querySelectorAll(".choice").forEach(x => x.style.outline = "none");
+          btn.style.outline = "3px solid rgba(255,95,154,.30)";
+        });
+        return btn;
+      };
+
+      wrap.appendChild(mk("Round down", down));
+      wrap.appendChild(mk("Round up", up));
+
+      lastRoundPick = null;
+    };
+
     el("calcBtn").addEventListener("click", () => {
       showCalcLoading();
       el("savePlanWrap").style.display = "none";
       el("savePlanHint").style.display = "none";
       lastCalc = null;
+      lastRoundPick = null;
 
       setTimeout(() => {
         const res = calcDailyDeficit();
@@ -2062,26 +2033,17 @@
         lastCalc = res;
         el("calcMsg").textContent = `Daily deficit: ${fmt(res.daily)}.`;
         el("savePlanWrap").style.display = "block";
+
+        renderRoundChoices(res.daily, res.totalCals, res.startKey);
       }, 650);
-    });
-
-    el("roundToggle").addEventListener("change", () => {
-      el("roundModeSeg").style.display = el("roundToggle").checked ? "flex" : "none";
-    });
-
-    document.querySelectorAll("#roundModeSeg button").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        roundMode = btn.getAttribute("data-mode") || "nearest";
-        document.querySelectorAll("#roundModeSeg button").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-      });
     });
 
     el("savePlanBtn").addEventListener("click", () => {
       if(!lastCalc) return;
 
-      const doRound = el("roundToggle").checked;
-      const finalDef = doRound ? roundTo50(lastCalc.daily, roundMode) : Math.max(0, Math.round(lastCalc.daily));
+      const finalDef = (Number.isFinite(lastRoundPick) && lastRoundPick !== null)
+        ? Math.max(0, Math.round(lastRoundPick))
+        : Math.max(0, Math.round(lastCalc.daily));
 
       setSettings({ deficit: finalDef });
       el("deficitInput").value = String(finalDef);
@@ -2092,18 +2054,30 @@
         currentWeightLb: lastCalc.cw,
         targetWeightLb: lastCalc.tw,
         targetDateISO: lastCalc.targetDateISO,
-        dailyDeficit: finalDef,
-        rounding: doRound ? { enabled:true, mode: roundMode } : { enabled:false, mode:"" }
+        dailyDeficit: finalDef
       });
 
-      el("savePlanHint").style.display = "block";
-      setTimeout(() => { el("savePlanHint").style.display = "none"; }, 1000);
+      const btn = el("savePlanBtn");
+      btn.classList.add("loading");
+      btn.textContent = "Saving";
+      setTimeout(() => {
+        setSavedButton(btn, "Saved");
+        el("savePlanHint").style.display = "block";
+        setTimeout(() => { el("savePlanHint").style.display = "none"; }, 900);
 
-      render();
-      setActivePage("Progress");
+        render();
+
+        setTimeout(() => {
+          setActivePage("Progress");
+          setTimeout(() => {
+            btn.classList.remove("saved");
+            btn.textContent = "Save plan";
+          }, 350);
+        }, 450);
+      }, 420);
     });
 
-    /* Use banked */
+    // Use banked
     const openUseModal = () => {
       const banks = getBanks();
       const max = Math.round(banks.banked || 0);
@@ -2141,7 +2115,70 @@
       render();
     });
 
-    /* Export */
+    // Presets
+    const openPresetModal = () => {
+      const presets = getPresets();
+      const wrap = el("presetEditor");
+      wrap.innerHTML = "";
+
+      presets.forEach((p, idx) => {
+        const row = document.createElement("div");
+        row.className = "card";
+        row.style.padding = "12px";
+        row.innerHTML = `
+          <div class="row">
+            <div class="field">
+              <label>Emoji</label>
+              <select data-emo="${idx}">
+                ${EMOJI_CHOICES.map(e => `<option value="${e}" ${e === p.emoji ? "selected" : ""}>${e}</option>`).join("")}
+              </select>
+            </div>
+            <div class="field">
+              <label>Calories</label>
+              <input data-cal="${idx}" type="number" inputmode="numeric" min="0" value="${p.cals || 0}" />
+            </div>
+          </div>
+        `;
+        wrap.appendChild(row);
+      });
+
+      el("presetSavedHint").style.display = "none";
+      el("presetBack").classList.add("show");
+    };
+    const closePresetModal = () => el("presetBack").classList.remove("show");
+
+    el("editPresetsBtn").addEventListener("click", openPresetModal);
+    el("presetClose").addEventListener("click", closePresetModal);
+    el("presetBack").addEventListener("click", (e) => {
+      if(e.target === el("presetBack")) closePresetModal();
+    });
+
+    el("presetSaveBtn").addEventListener("click", () => {
+      const presets = getPresets();
+
+      const next = presets.map((p, idx) => {
+        const emo = document.querySelector(`[data-emo="${idx}"]`);
+        const cal = document.querySelector(`[data-cal="${idx}"]`);
+        const e = emo ? String(emo.value || p.emoji) : p.emoji;
+        const c = cal ? Math.max(0, Math.round(Number(cal.value || 0))) : p.cals;
+        return { id: p.id, emoji: e, cals: c };
+      });
+
+      setPresets(next);
+      el("presetSavedHint").style.display = "block";
+      setTimeout(() => { el("presetSavedHint").style.display = "none"; }, 900);
+
+      renderPresets();
+      closePresetModal();
+    });
+
+    // Weigh info modal
+    el("weighInfoClose").addEventListener("click", () => el("weighInfoBack").classList.remove("show"));
+    el("weighInfoBack").addEventListener("click", (e) => {
+      if(e.target === el("weighInfoBack")) el("weighInfoBack").classList.remove("show");
+    });
+
+    // Export
     el("exportBtn").addEventListener("click", () => {
       const payload = {
         exportedAt: new Date().toISOString(),
@@ -2167,12 +2204,36 @@
       URL.revokeObjectURL(url);
     });
 
-    /* Edit saved day */
+    // Edit saved day modal
+    let editingId = null;
+
+    const openEdit = (id) => {
+      const days = getDays();
+      const d = days.find(x => String(x.id) === String(id));
+      if(!d) return;
+
+      editingId = id;
+      el("editTitle").textContent = `Edit ${formatDayKey(d.dayKey)}`;
+      el("editYTdee").value = String(d.yTdee || 0);
+      el("editIntake").value = String(d.intake || 0);
+      el("editBack").classList.add("show");
+    };
+
+    const closeEdit = () => {
+      editingId = null;
+      el("editBack").classList.remove("show");
+    };
+
+    el("editClose").addEventListener("click", closeEdit);
+    el("editBack").addEventListener("click", (e) => {
+      if(e.target === el("editBack")) closeEdit();
+    });
+
     el("editSave").addEventListener("click", () => {
-      if(!editingDayId) return;
+      if(!editingId) return;
 
       const days = getDays();
-      const idx = days.findIndex(x => String(x.id) === String(editingDayId));
+      const idx = days.findIndex(x => String(x.id) === String(editingId));
       if(idx < 0) return;
 
       const y = Number(el("editYTdee").value || 0);
@@ -2191,74 +2252,7 @@
       render();
     });
 
-    /* Presets editor wiring */
-    el("editPresetsBtn").addEventListener("click", openPresetEditor);
-    el("presetClose").addEventListener("click", closePresetEditor);
-    el("presetBack").addEventListener("click", (e) => {
-      if(e.target === el("presetBack")) closePresetEditor();
-    });
-
-    el("presetPick").addEventListener("change", () => {
-      const presets = getPresets();
-      const id = el("presetPick").value;
-      editingPresetId = id;
-
-      const cur = presets.find(x => x.id === id);
-      if(!cur) return;
-      el("presetName").value = cur.name;
-      el("presetCals").value = String(cur.cals);
-      el("presetIcon").value = cur.icon;
-      el("presetHint").textContent = "";
-    });
-
-    el("presetNewBtn").addEventListener("click", () => {
-      const presets = getPresets();
-      const nextId = `p${Date.now()}`;
-      const next = { id: nextId, name:"New preset", cals: 0, icon:"plate" };
-
-      const trimmed = presets.slice(0, 4);
-      if(trimmed.length < 4){
-        trimmed.push(next);
-      }else{
-        trimmed[trimmed.length - 1] = next;
-      }
-      setPresets(trimmed);
-
-      openPresetEditor();
-      el("presetPick").value = nextId;
-      el("presetPick").dispatchEvent(new Event("change"));
-      el("presetName").focus();
-    });
-
-    el("presetSaveBtn").addEventListener("click", () => {
-      const presets = getPresets().slice(0, 4);
-      const id = el("presetPick").value;
-      const idx = presets.findIndex(x => x.id === id);
-      if(idx < 0) return;
-
-      const name = String(el("presetName").value || "").trim() || "Preset";
-      const cals = Math.max(0, Math.round(Number(el("presetCals").value || 0)));
-      const icon = String(el("presetIcon").value || "plate");
-
-      presets[idx] = { ...presets[idx], name, cals, icon };
-      setPresets(presets);
-
-      el("presetHint").textContent = "Saved";
-      setTimeout(() => { el("presetHint").textContent = ""; }, 900);
-
-      renderPresets();
-      openPresetEditor();
-      el("presetPick").value = id;
-      el("presetPick").dispatchEvent(new Event("change"));
-    });
-
-    /* Weigh info modal */
-    el("weighInfoClose").addEventListener("click", () => el("weighInfoBack").classList.remove("show"));
-    el("weighInfoBack").addEventListener("click", (e) => {
-      if(e.target === el("weighInfoBack")) el("weighInfoBack").classList.remove("show");
-    });
-
-    /* Keep day rollover accurate */
+    // Keep day rollover accurate
     setInterval(() => {
       const keyNow = dayKeyWithCutoff();
       const today = getToday();
@@ -2268,13 +2262,7 @@
       }
     }, 60000);
 
-    /* Init */
-    el("editClose").addEventListener("click", closeEdit);
-    el("editBack").addEventListener("click", (e) => {
-      if(e.target === el("editBack")) closeEdit();
-    });
-
-    closePresetEditor();
+    // Init
     renderStatsView();
     render();
   </script>
