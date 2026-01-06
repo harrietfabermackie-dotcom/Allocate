@@ -20,7 +20,6 @@
       --accent:#ff5f9a;
       --accent2:#ff9a5a;
 
-      --stroke:#ffffff66;
       --shadow: 0 20px 55px rgba(25, 10, 30, .18);
       --shadow2: 0 10px 24px rgba(25, 10, 30, .12);
       --radius: 24px;
@@ -33,7 +32,7 @@
     html,body{ height:100%; }
     body{
       margin:0;
-      font-family: ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+      font-family: "SF Pro Rounded", ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
       color:var(--ink);
       background:
         radial-gradient(1200px 800px at 20% 10%, rgba(255,255,255,.35), transparent 55%),
@@ -61,6 +60,7 @@
       align-items:center;
       justify-content:space-between;
       padding: 6px 6px 12px;
+      gap: 10px;
     }
     .brand{
       font-weight:900;
@@ -69,6 +69,7 @@
       display:flex;
       align-items:center;
       gap:10px;
+      min-width: 0;
     }
     .dot{
       width:10px;
@@ -76,6 +77,13 @@
       border-radius:999px;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       box-shadow: 0 6px 14px rgba(255,95,154,.35);
+      flex: 0 0 auto;
+    }
+    .topActions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex: 0 0 auto;
     }
     .pillbtn{
       border:1px solid rgba(255,255,255,.55);
@@ -89,11 +97,12 @@
       transition: transform .08s ease;
       user-select:none;
       -webkit-tap-highlight-color: transparent;
+      white-space: nowrap;
     }
     .pillbtn:active{ transform: translateY(1px) scale(.99); }
 
     .content{
-      padding-bottom: calc(var(--tabH) + 12px);
+      padding-bottom: calc(var(--tabH) + 44px);
     }
 
     .card{
@@ -249,6 +258,10 @@
       border: 1px solid rgba(255,255,255,.75);
       box-shadow: var(--shadow2);
     }
+    .btn:disabled{
+      opacity:.75;
+      cursor:not-allowed;
+    }
 
     .mini{
       display:flex;
@@ -301,6 +314,7 @@
       width:100%;
       height:100%;
       cursor:pointer;
+      z-index: 3;
     }
     .iosTrack{
       position:absolute;
@@ -309,6 +323,7 @@
       background: rgba(91,75,97,.18);
       border: 1px solid rgba(255,255,255,.65);
       transition: background .15s ease;
+      z-index: 1;
     }
     .iosThumb{
       position:absolute;
@@ -321,6 +336,7 @@
       box-shadow: 0 8px 18px rgba(25, 10, 30, .18);
       transition: transform .15s ease;
       pointer-events:none;
+      z-index: 2;
     }
     .iosSwitch input:checked + .iosTrack{
       background: linear-gradient(135deg, var(--accent), var(--accent2));
@@ -342,6 +358,7 @@
       display:flex;
       align-items:center;
       justify-content:center;
+      padding: 0;
       -webkit-tap-highlight-color: transparent;
       flex: 0 0 auto;
     }
@@ -413,19 +430,21 @@
 
     /* Bottom nav fixed and opaque */
     .bottomTabsWrap{
-      position: sticky;
-      bottom: 0;
-      margin-top: 12px;
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 14px;
+      width: min(420px, calc(100% - 28px));
       padding: var(--tabPad);
-      background: rgba(255,255,255,.94);
-      border: 1px solid rgba(255,255,255,.75);
+      background: rgba(255,255,255,.98);
+      border: 1px solid rgba(255,255,255,.82);
       border-radius: 20px;
       box-shadow: var(--shadow2);
       height: var(--tabH);
       display:flex;
       align-items:center;
       justify-content:center;
-      z-index: 5;
+      z-index: 999;
     }
     .bottomTabs{
       width:100%;
@@ -453,21 +472,15 @@
       border-color: rgba(0,0,0,.06);
     }
     .navIco{
-      width: 32px;
-      height: 32px;
+      width: 30px;
+      height: 30px;
       display:block;
     }
-    .navIco path, .navIco line, .navIco polyline{
-      stroke: var(--offblack);
-      stroke-width: 3.2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      fill: none;
+    .navIco .fill{
+      fill: var(--offblack);
     }
-    .btab.active .navIco path,
-    .btab.active .navIco line,
-    .btab.active .navIco polyline{
-      stroke: url(#navGrad);
+    .btab.active .navIco .fill{
+      fill: url(#navGrad);
     }
 
     /* Progress */
@@ -477,7 +490,7 @@
       background: rgba(91,75,97,.18);
       border: 1px solid rgba(255,255,255,.65);
       overflow:hidden;
-      margin-top: 10px;
+      margin-top: 12px;
     }
     .planFill{
       height:100%;
@@ -486,32 +499,38 @@
       border-radius: 999px;
       transition: width .35s ease;
     }
-    .planTitle{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .planTitle .t{
+    .trackTitle{
       font-weight:900;
-      font-size:16px;
+      font-size: 28px;
+      line-height: 1.05;
+      margin: 0;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+      letter-spacing: -.6px;
     }
-    .planMeta{
+    .trackSub{
+      margin-top: 10px;
+      font-weight:900;
+      font-size: 15px;
+      color: rgba(27,16,32,.86);
+    }
+    .trackMetaRow{
+      margin-top: 8px;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
-      margin-top: 10px;
       flex-wrap:wrap;
     }
-    .planMeta .pm{
+    .trackMetaRow .pm{
       font-size:12px;
-      color: rgba(91,75,97,.9);
+      color: rgba(91,75,97,.92);
       font-weight:900;
     }
 
-    /* Weekly weigh-in tile */
+    /* Weekly weigh in tile */
     .weighTop{
       display:flex;
       align-items:center;
@@ -545,7 +564,6 @@
     .lockRow{
       display:flex;
       align-items:center;
-      gap:10px;
       justify-content:flex-end;
       margin-top: 8px;
     }
@@ -560,14 +578,17 @@
       align-items:center;
       gap:8px;
     }
-    .lockPill .tinyQ{
-      font-weight:900;
-      opacity:.9;
-      font-size: 12px;
+    .lockPill svg{
+      width: 14px;
+      height: 14px;
+      display:block;
+    }
+    .lockPill .lk{
+      fill: rgba(27,16,32,.62);
     }
     .lockPill .tiny7d{
       font-weight:900;
-      opacity:.9;
+      opacity:.92;
       font-size: 12px;
     }
 
@@ -597,6 +618,7 @@
       justify-content:center;
       -webkit-tap-highlight-color: transparent;
       color: var(--ink);
+      padding: 0;
     }
     .pencil:active{ transform: translateY(1px) scale(.99); }
     .pencil svg{
@@ -736,7 +758,7 @@
       align-items:center;
       justify-content:center;
       padding: 18px;
-      z-index: 50;
+      z-index: 2000;
     }
     .modalBack.show{ display:flex; }
     .modal{
@@ -830,7 +852,6 @@
       to{ transform: translateY(0); opacity:1; }
     }
 
-    /* Gradient stroke helper */
     svg defs linearGradient stop{ stop-opacity:1; }
   </style>
 </head>
@@ -853,7 +874,10 @@
 
     <div class="topbar">
       <div class="brand"><span class="dot"></span>Allocate</div>
-      <button class="pillbtn" id="exportBtn">Export</button>
+      <div class="topActions">
+        <button class="pillbtn" id="resetBtn" style="display:none;">R</button>
+        <button class="pillbtn" id="exportBtn">Export</button>
+      </div>
     </div>
 
     <div class="content" id="contentArea">
@@ -892,9 +916,8 @@
                 <div class="kval">
                   <span class="knum" id="bankedKpi">0</span>
                   <button class="iconBtn" id="useBankedBtn" aria-label="Use calorie bank">
-                    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
-                      <polyline points="8 10 12 6 16 10" fill="none" stroke="url(#pinkGrad)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"></polyline>
-                      <line x1="12" y1="6" x2="12" y2="18" stroke="url(#pinkGrad)" stroke-width="3.2" stroke-linecap="round"></line>
+                    <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 5.8c.4 0 .8.2 1.1.5l4 4a1.6 1.6 0 0 1-2.2 2.2l-1.3-1.3V18a1.6 1.6 0 0 1-3.2 0v-6.8l-1.3 1.3a1.6 1.6 0 0 1-2.2-2.2l4-4c.3-.3.7-.5 1.1-.5z" fill="url(#pinkGrad)"></path>
                     </svg>
                   </button>
                 </div>
@@ -911,8 +934,8 @@
 
               <div class="field">
                 <div class="switchRow">
-                  <div class="slabel">Maintenance</div>
-                  <div class="iosSwitch" aria-label="Maintenance">
+                  <div class="slabel">Maintenance Day</div>
+                  <div class="iosSwitch" aria-label="Maintenance Day">
                     <input id="maintenanceToggleDash" type="checkbox" />
                     <span class="iosTrack"></span>
                     <span class="iosThumb"></span>
@@ -1022,6 +1045,7 @@
                 <input id="targetDateInput" type="date" />
               </div>
               <div class="field small">
+                <label style="visibility:hidden;">Calculate</label>
                 <button class="btn" id="calcBtn">Calculate</button>
               </div>
             </div>
@@ -1030,9 +1054,9 @@
 
             <div id="planActions" style="display:none;">
               <div class="spacer"></div>
-              <button class="btn neutral" id="roundOpenBtn">Round this number</button>
+              <button class="btn neutral" id="roundOpenBtn">Round up or down</button>
               <div class="spacer"></div>
-              <button class="btn" id="savePlanBtn">Save this plan</button>
+              <button class="btn" id="savePlanBtn">Save plan</button>
               <div class="note" id="savePlanHint" style="display:none;">Saved</div>
             </div>
           </div>
@@ -1099,7 +1123,7 @@
         </div>
       </div>
 
-      <!-- LOG (boring log) -->
+      <!-- LOG -->
       <div class="page" id="pageLog">
         <div class="stack" id="logStack"></div>
       </div>
@@ -1115,36 +1139,31 @@
       <div class="bottomTabs">
         <button class="btab active" data-page="Dash" aria-label="Dashboard">
           <svg class="navIco" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 2l1.2 4.6L18 8l-4.8 1.4L12 14l-1.2-4.6L6 8l4.8-1.4L12 2z"></path>
-            <path d="M5.5 13l.7 2.6L9 16.4l-2.8.8-.7 2.6-.7-2.6L2 15.6l2.8-.8.7-2.6z"></path>
+            <path class="fill" d="M12 2.8l2.2 6.2 6.5.2-5.2 3.9 1.9 6.3L12 15.7 6.6 19.4l1.9-6.3-5.2-3.9 6.5-.2L12 2.8z"></path>
           </svg>
         </button>
 
         <button class="btab" data-page="Settings" aria-label="Settings">
           <svg class="navIco" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path>
-            <path d="M19.4 15a8.2 8.2 0 0 0 .1-1l2-1.2-2-3.4-2.3.6a7.2 7.2 0 0 0-.9-.5L14.8 6h-3.6L9.7 9.5a7.2 7.2 0 0 0-.9.5L6.5 9.4l-2 3.4 2 1.2a8.2 8.2 0 0 0 .1 1l-2 1.2 2 3.4 2.3-.6c.3.2.6.4.9.5L11.2 22h3.6l1.5-3.5c.3-.1.6-.3.9-.5l2.3.6 2-3.4-2.1-1.2z"></path>
+            <path class="fill" d="M19.6 13.2c.1-.4.1-.8.1-1.2s0-.8-.1-1.2l2-1.5c.3-.2.4-.6.2-.9l-1.9-3.2c-.2-.3-.6-.4-.9-.3l-2.3 1c-.6-.5-1.2-.9-1.9-1.1l-.4-2.5c-.1-.3-.4-.6-.8-.6H10c-.4 0-.7.3-.8.6l-.4 2.5c-.7.2-1.3.6-1.9 1.1l-2.3-1c-.3-.1-.7 0-.9.3L1.8 8.4c-.2.3-.1.7.2.9l2 1.5c-.1.4-.1.8-.1 1.2s0 .8.1 1.2l-2 1.5c-.3.2-.4.6-.2.9l1.9 3.2c.2.3.6.4.9.3l2.3-1c.6.5 1.2.9 1.9 1.1l.4 2.5c.1.3.4.6.8.6h3.8c.4 0 .7-.3.8-.6l.4-2.5c.7-.2 1.3-.6 1.9-1.1l2.3 1c.3.1.7 0 .9-.3l1.9-3.2c.2-.3.1-.7-.2-.9l-2-1.5zM12 15.7a3.7 3.7 0 1 1 0-7.4 3.7 3.7 0 0 1 0 7.4z"></path>
           </svg>
         </button>
 
         <button class="btab" data-page="Logging" aria-label="Logging">
           <svg class="navIco" viewBox="0 0 24 24" aria-hidden="true">
-            <line x1="12" y1="5" x2="12" y2="19"></line>
-            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <path class="fill" d="M10.7 3.5c0-.7.6-1.3 1.3-1.3s1.3.6 1.3 1.3v7.2h7.2c.7 0 1.3.6 1.3 1.3s-.6 1.3-1.3 1.3h-7.2v7.2c0 .7-.6 1.3-1.3 1.3s-1.3-.6-1.3-1.3v-7.2H3.5c-.7 0-1.3-.6-1.3-1.3s.6-1.3 1.3-1.3h7.2V3.5z"></path>
           </svg>
         </button>
 
         <button class="btab" data-page="Log" aria-label="Log">
           <svg class="navIco" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M7 4h10a2 2 0 0 1 2 2v14l-3-2-3 2-3-2-3 2V6a2 2 0 0 1 2-2z"></path>
-            <line x1="9" y1="8" x2="15" y2="8"></line>
-            <line x1="9" y1="12" x2="15" y2="12"></line>
+            <path class="fill" d="M7 3.2h10c1.2 0 2.2 1 2.2 2.2v16.4l-3.8-2.4-3.4 2.1-3.4-2.1-3.8 2.4V5.4c0-1.2 1-2.2 2.2-2.2z"></path>
           </svg>
         </button>
 
         <button class="btab" data-page="Progress" aria-label="Progress">
           <svg class="navIco" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M13 2L3 14h7l-1 8 12-14h-7l-1-6z"></path>
+            <path class="fill" d="M13.2 2.2c.5 0 .9.3 1.1.7l.1.3 1.3 5.2H21c.8 0 1.2 1 .6 1.6l-.2.2-7.4 7.6-1 5.1c-.1.7-1 .9-1.5.4l-.1-.2-2.5-4.4-4.6-2.6c-.6-.3-.6-1.2 0-1.6l.2-.1 5.2-1 7.6-7.4c.4-.4 1.1-.2 1.3.3l.1.3-5.2 1.3-1.3-5.2c-.1-.5.2-1 .7-1.1h.3z"></path>
           </svg>
         </button>
       </div>
@@ -1189,7 +1208,7 @@
     </div>
   </div>
 
-  <!-- Presets modal (no close button, closes on Save) -->
+  <!-- Presets modal -->
   <div class="modalBack" id="presetBack">
     <div class="modal">
       <div class="modalTop">
@@ -1234,16 +1253,18 @@
       <div class="note" id="roundNote"></div>
 
       <div class="roundTiles">
-        <div class="rTile active" id="rtUp" role="button" tabindex="0">
-          <div class="rtLabel">Round up</div>
-          <div class="rtNum" id="rtUpNum">0</div>
-          <div class="rtDate" id="rtUpDate">-</div>
-        </div>
-
-        <div class="rTile" id="rtDown" role="button" tabindex="0">
+        <!-- Lower on left -->
+        <div class="rTile active" id="rtDown" role="button" tabindex="0">
           <div class="rtLabel">Round down</div>
           <div class="rtNum" id="rtDownNum">0</div>
           <div class="rtDate" id="rtDownDate">-</div>
+        </div>
+
+        <!-- Higher on right -->
+        <div class="rTile" id="rtUp" role="button" tabindex="0">
+          <div class="rtLabel">Round up</div>
+          <div class="rtNum" id="rtUpNum">0</div>
+          <div class="rtDate" id="rtUpDate">-</div>
         </div>
       </div>
 
@@ -1256,28 +1277,30 @@
     </div>
   </div>
 
-  <!-- Weigh-in help modal -->
+  <!-- Weigh in help modal -->
   <div class="modalBack" id="weighHelpBack">
     <div class="modal">
       <div class="modalTop">
-        <div class="mtitle">Weekly weigh-in</div>
+        <div class="mtitle">Weekly weigh in</div>
         <button class="closeBtn" id="weighHelpClose">Close</button>
       </div>
       <div class="note">
-        This is optional. If you log a weigh-in, the box locks for 7 days so it stays weekly.
+        This is optional. If you log a weigh in, the box locks for 7 days so it stays weekly.
       </div>
     </div>
   </div>
 
   <script>
-    const LS_SETTINGS = "allocate_settings_v9";
-    const LS_STATS = "allocate_stats_v9";
-    const LS_TODAY = "allocate_today_v9";
-    const LS_DAYS = "allocate_days_v9";
-    const LS_BANKS = "allocate_banks_v9";
-    const LS_PLAN = "allocate_plan_v9";
-    const LS_PRESETS = "allocate_presets_v9";
-    const LS_WEIGH = "allocate_weigh_v9";
+    const LS_SETTINGS = "allocate_settings_v10";
+    const LS_STATS = "allocate_stats_v10";
+    const LS_TODAY = "allocate_today_v10";
+    const LS_DAYS = "allocate_days_v10";
+    const LS_BANKS = "allocate_banks_v10";
+    const LS_PLAN = "allocate_plan_v10";
+    const LS_PRESETS = "allocate_presets_v10";
+    const LS_WEIGH = "allocate_weigh_v10";
+
+    const ALL_KEYS = [LS_SETTINGS, LS_STATS, LS_TODAY, LS_DAYS, LS_BANKS, LS_PLAN, LS_PRESETS, LS_WEIGH];
 
     const DEFAULT_DEFICIT = 750;
     const DAY_CUTOFF_HOUR = 3;
@@ -1358,6 +1381,13 @@
 
     const toISODate = (d) => `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
 
+    const niceShortDate = (iso) => {
+      if(!iso) return "";
+      const dt = new Date(`${iso}T12:00:00`);
+      if(Number.isNaN(dt.getTime())) return "";
+      return dt.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+    };
+
     const getSettings = () => {
       const s = loadJSON(LS_SETTINGS, null);
       if(!s || typeof s.deficit !== "number"){
@@ -1399,6 +1429,7 @@
       if(!Array.isArray(t.entries)) t.entries = [];
       if(typeof t.rolloverApplied !== "number") t.rolloverApplied = 0;
       if(typeof t.usedBanked !== "number") t.usedBanked = 0;
+      if(typeof t.maintenance !== "boolean") t.maintenance = !!t.maintenance;
       return t;
     };
     const setToday = (today) => saveJSON(LS_TODAY, today);
@@ -1445,6 +1476,8 @@
       document.querySelectorAll(".btab").forEach((b) => {
         b.classList.toggle("active", b.getAttribute("data-page") === name);
       });
+
+      el("resetBtn").style.display = (name === "Settings") ? "inline-flex" : "none";
 
       const area = el("contentArea");
       area.classList.add("fadeNudge");
@@ -1552,7 +1585,7 @@
       });
     };
 
-    /* Log page (boring log) */
+    /* Log page */
     const renderLogPage = () => {
       const settings = getSettings();
       const stack = el("logStack");
@@ -1623,7 +1656,7 @@
       });
     };
 
-    /* Weigh-in */
+    /* Weigh in */
     const getWeighState = () => loadJSON(LS_WEIGH, { lastISO: "", valueLb: "" });
     const setWeighState = (w) => saveJSON(LS_WEIGH, w);
 
@@ -1645,17 +1678,19 @@
       card.className = "card";
 
       const current = w.valueLb ? `${w.valueLb} lb` : "-";
+      const dt = w.lastISO ? niceShortDate(w.lastISO) : "";
+      const currentWithDate = w.valueLb ? `${current}${dt ? `, ${dt}` : ""}` : "-";
 
       card.innerHTML = `
         <div class="weighTop">
-          <div class="wtitle">Weekly weigh-in</div>
+          <div class="wtitle">Weekly weigh in</div>
           <button class="helpBtn" id="weighHelpBtn">?</button>
         </div>
 
         <div class="kvRow">
           <div class="kv" style="flex: 1 1 100%;">
-            <div class="k">Last weigh-in</div>
-            <div class="v">${current}</div>
+            <div class="k">Last weigh in</div>
+            <div class="v">${currentWithDate}</div>
           </div>
         </div>
 
@@ -1663,10 +1698,11 @@
 
         <div class="row">
           <div class="field">
-            <label for="weighInput">Weigh-in (lb)</label>
-            <input id="weighInput" type="number" inputmode="decimal" step="0.1" min="0" placeholder="${allowed ? "Optional" : "Locked"}" ${allowed ? "" : "disabled"} />
+            <label for="weighInput">Weigh in (lb)</label>
+            <input id="weighInput" type="number" inputmode="decimal" step="0.1" min="0" placeholder="${allowed ? "Optional" : ""}" ${allowed ? "" : "disabled"} />
           </div>
           <div class="field small">
+            <label style="visibility:hidden;">Save</label>
             <button class="btn ${allowed ? "" : "neutral"}" id="weighSaveBtn" ${allowed ? "" : "disabled"}>${allowed ? "Save" : "Locked"}</button>
           </div>
         </div>
@@ -1674,8 +1710,10 @@
         ${showLock ? `
           <div class="lockRow">
             <div class="lockPill">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path class="lk" d="M7.5 11V8.7a4.5 4.5 0 0 1 9 0V11h.8c.9 0 1.7.8 1.7 1.7v6.6c0 .9-.8 1.7-1.7 1.7H6.7c-.9 0-1.7-.8-1.7-1.7v-6.6c0-.9.8-1.7 1.7-1.7h.8zm2 0h5V8.7a2.5 2.5 0 0 0-5 0V11z"></path>
+              </svg>
               <span class="tiny7d">7d</span>
-              <span class="tinyQ">?</span>
             </div>
           </div>
         ` : ``}
@@ -1700,7 +1738,7 @@
 
           weighSaveBtn.textContent = "Saved";
           weighSaveBtn.classList.add("saved");
-          setTimeout(() => render(), 300);
+          setTimeout(() => render(), 250);
         });
       }
     };
@@ -1748,26 +1786,22 @@
         const total = prog ? prog.totalDays : 0;
 
         c.innerHTML = `
-          <div class="planTitle">
-            <div class="t">You're on track!</div>
-            <div style="font-weight:900;color:rgba(91,75,97,.95);">You got this.</div>
-          </div>
+          <div>
+            <div class="trackTitle">You're on track!</div>
+            <div class="trackSub">Hit ${fmt(Number(plan.targetWeightLb))} lb by ${targetDateText}</div>
+            <div class="trackMetaRow">
+              <div class="pm">Daily deficit: ${fmt(Number(plan.dailyDeficit))}</div>
+              <div class="pm">You got this</div>
+            </div>
 
-          <div style="margin-top:8px; font-weight:900; color: rgba(27,16,32,.85);">
-            Hit ${fmt(Number(plan.targetWeightLb))} lb by ${targetDateText}
-          </div>
+            <div class="planBar" aria-label="Plan progress">
+              <div class="planFill" style="width:${pctW}%;"></div>
+            </div>
 
-          <div style="margin-top:6px; font-weight:900; color: rgba(91,75,97,.95);">
-            Daily deficit: ${fmt(Number(plan.dailyDeficit))}
-          </div>
-
-          <div class="planBar" aria-label="Plan progress">
-            <div class="planFill" style="width:${pctW}%;"></div>
-          </div>
-
-          <div class="planMeta">
-            <div class="pm">${elapsed} of ${total} days</div>
-            <div class="pm">${pctW}%</div>
+            <div class="trackMetaRow" style="margin-top:10px;">
+              <div class="pm">${elapsed} of ${total} days</div>
+              <div class="pm">${pctW}%</div>
+            </div>
           </div>
         `;
         stack.appendChild(c);
@@ -1826,7 +1860,6 @@
       el("statsView").style.display = "block";
     };
 
-    /* Apply and save button feedback */
     const setSavedButton = (buttonEl, savedText = "Saved") => {
       buttonEl.textContent = savedText;
       buttonEl.classList.add("saved");
@@ -1842,7 +1875,7 @@
 
     /* Goal calc logic */
     let lastCalc = null;
-    let roundChoice = "up"; /* up or down */
+    let roundChoice = "down";
 
     const showCalcLoading = () => {
       el("calcMsg").innerHTML = `
@@ -1905,17 +1938,17 @@
 
       el("roundNote").textContent = `Exact: ${fmt(exact)} per day`;
 
-      el("rtUpNum").textContent = fmt(up);
       el("rtDownNum").textContent = fmt(down);
+      el("rtUpNum").textContent = fmt(up);
 
-      el("rtUpDate").textContent = `Hit by ${projectDateForDeficit(lastCalc.cw, lastCalc.tw, lastCalc.startKey, up)}`;
       el("rtDownDate").textContent = `Hit by ${projectDateForDeficit(lastCalc.cw, lastCalc.tw, lastCalc.startKey, down)}`;
+      el("rtUpDate").textContent = `Hit by ${projectDateForDeficit(lastCalc.cw, lastCalc.tw, lastCalc.startKey, up)}`;
 
       el("roundStickBtn").textContent = `Stick to ${fmt(exact)}`;
 
-      roundChoice = "up";
-      el("rtUp").classList.add("active");
-      el("rtDown").classList.remove("active");
+      roundChoice = "down";
+      el("rtDown").classList.add("active");
+      el("rtUp").classList.remove("active");
 
       el("roundBack").classList.add("show");
     };
@@ -1924,12 +1957,12 @@
 
     const pickRound = (choice) => {
       roundChoice = choice;
-      el("rtUp").classList.toggle("active", choice === "up");
       el("rtDown").classList.toggle("active", choice === "down");
+      el("rtUp").classList.toggle("active", choice === "up");
     };
 
-    el("rtUp").addEventListener("click", () => pickRound("up"));
     el("rtDown").addEventListener("click", () => pickRound("down"));
+    el("rtUp").addEventListener("click", () => pickRound("up"));
 
     el("roundClose").addEventListener("click", closeRoundingModal);
     el("roundBack").addEventListener("click", (e) => {
@@ -2148,7 +2181,7 @@
       el("tdeeInputDash").value = today.yTdee ? String(today.yTdee) : "";
       el("maintenanceToggleDash").checked = !!today.maintenance;
 
-      el("modeHint").textContent = today.maintenance ? "Maintenance" : "Deficit";
+      el("modeHint").textContent = today.maintenance ? "Maintenance Day" : "Deficit";
       if(!el("savedHint").textContent) el("savedHint").textContent = "Saved";
 
       el("leftBig").textContent = fmt(left);
@@ -2174,7 +2207,6 @@
       const v = Number(el("tdeeInputDash").value || 0);
       today.yTdee = Number.isFinite(v) ? Math.round(v) : 0;
 
-      /* Fix: always read the checkbox at click time */
       today.maintenance = !!el("maintenanceToggleDash").checked;
 
       setToday(today);
@@ -2376,7 +2408,7 @@
       if(!lastCalc) return;
 
       const exact = Math.max(0, Math.round(lastCalc.daily));
-      const chosen = roundChoice === "up" ? roundTo50(exact, "up") : roundTo50(exact, "down");
+      const chosen = (roundChoice === "up") ? roundTo50(exact, "up") : roundTo50(exact, "down");
 
       lastCalc._rounded = chosen;
       closeRoundingModal();
@@ -2400,7 +2432,6 @@
       const exact = Math.max(0, Math.round(lastCalc.daily));
       const finalDef = Number.isFinite(lastCalc._rounded) ? Math.max(0, Math.round(lastCalc._rounded)) : exact;
 
-      /* Premium feeling: brief button state then navigate */
       const btn = el("savePlanBtn");
       btn.disabled = true;
       btn.style.opacity = ".92";
@@ -2424,11 +2455,23 @@
 
         btn.disabled = false;
         btn.style.opacity = "1";
-        btn.textContent = "Save this plan";
+        btn.textContent = "Save plan";
 
         render();
         setActivePage("Progress");
       }, 520);
+    });
+
+    /* Reset button */
+    el("resetBtn").addEventListener("click", () => {
+      for(const k of ALL_KEYS){
+        localStorage.removeItem(k);
+      }
+      lastCalc = null;
+      roundChoice = "down";
+      el("savedHint").textContent = "";
+      render();
+      setActivePage("Dash");
     });
 
     /* Export */
