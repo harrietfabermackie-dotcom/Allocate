@@ -43,6 +43,8 @@
       padding:22px 14px 40px;
     }
 
+    button, input, select, textarea{ font-family: inherit; }
+
     .phone{
       width:min(420px, 100%);
       border-radius: 36px;
@@ -141,6 +143,22 @@
       letter-spacing: -1.5px;
     }
 
+    .thinBar{
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(91,75,97,.18);
+      border: 1px solid rgba(255,255,255,.65);
+      overflow:hidden;
+      margin-top: 10px;
+    }
+    .thinFill{
+      height:100%;
+      width: 0%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 999px;
+      transition: width .25s ease;
+    }
+
     .grid2{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -175,15 +193,22 @@
       margin-top: 2px;
       display:flex;
       align-items:center;
-      justify-content:space-between;
       gap:10px;
       min-width: 0;
+      min-height: 32px;
     }
     .kpi .knum{
       min-width: 0;
       overflow:hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      display:flex;
+      align-items:center;
+    }
+
+    .mutedVal{
+      color: rgba(91,75,97,.55);
+      font-weight:900;
     }
 
     .row{
@@ -361,6 +386,7 @@
       padding: 0;
       -webkit-tap-highlight-color: transparent;
       flex: 0 0 auto;
+      margin-left: auto;
     }
     .iconBtn:active{ transform: translateY(1px) scale(.99); }
 
@@ -408,8 +434,11 @@
     .entry .cals{
       font-size:16px;
       font-weight:900;
-      color: rgba(27,16,32,.82);
       white-space:nowrap;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
     }
     .xbtn{
       border: 1px solid rgba(255,255,255,.7);
@@ -428,13 +457,12 @@
     .page{ display:none; margin-top:12px; }
     .page.active{ display:block; }
 
-    /* Bottom nav fixed and opaque */
+    /* Bottom nav pinned inside the phone */
     .bottomTabsWrap{
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
+      position: absolute;
+      left: 16px;
+      right: 16px;
       bottom: 14px;
-      width: min(420px, calc(100% - 28px));
       padding: var(--tabPad);
       background: rgba(255,255,255,.98);
       border: 1px solid rgba(255,255,255,.82);
@@ -499,22 +527,23 @@
       border-radius: 999px;
       transition: width .35s ease;
     }
+
+    .trackCenter{ text-align:center; }
     .trackTitle{
       font-weight:900;
-      font-size: 28px;
-      line-height: 1.05;
+      font-size: 18px;
       margin: 0;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       -webkit-background-clip:text;
       background-clip:text;
       color: transparent;
-      letter-spacing: -.6px;
+      letter-spacing: -.2px;
     }
     .trackSub{
-      margin-top: 10px;
+      margin-top: 8px;
       font-weight:900;
-      font-size: 15px;
-      color: rgba(27,16,32,.86);
+      font-size: 18px;
+      color: rgba(27,16,32,.90);
     }
     .trackMetaRow{
       margin-top: 8px;
@@ -542,6 +571,11 @@
       font-weight:900;
       font-size:16px;
     }
+    .weighActions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
     .helpBtn{
       width: 34px;
       height: 34px;
@@ -561,12 +595,7 @@
       line-height: 1;
     }
     .helpBtn:active{ transform: translateY(1px) scale(.99); }
-    .lockRow{
-      display:flex;
-      align-items:center;
-      justify-content:flex-end;
-      margin-top: 8px;
-    }
+
     .lockPill{
       padding: 6px 10px;
       border-radius: 999px;
@@ -577,6 +606,7 @@
       display:flex;
       align-items:center;
       gap:8px;
+      height: 34px;
     }
     .lockPill svg{
       width: 14px;
@@ -749,6 +779,34 @@
       min-width:0;
     }
 
+    /* Presets modal picker */
+    .presetPickRow{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:10px;
+      margin-top:10px;
+    }
+    .pickTile{
+      background: rgba(255,255,255,.58);
+      border: 1px solid rgba(255,255,255,.72);
+      border-radius: 18px;
+      padding: 14px 10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+      user-select:none;
+      font-weight:900;
+      font-size: 20px;
+      line-height:1;
+    }
+    .pickTile.active{
+      outline: 3px solid rgba(255,95,154,.28);
+      border-color: rgba(255,95,154,.35);
+      background: rgba(255,95,154,.10);
+    }
+
     /* Modals */
     .modalBack{
       position: fixed;
@@ -794,7 +852,7 @@
     }
     .closeBtn:active{ transform: translateY(1px) scale(.99); }
 
-    /* End day modal */
+    /* End day options modal */
     .leftBigLine{
       text-align:center;
       font-weight:900;
@@ -1070,6 +1128,10 @@
             <div class="label">Calories left today</div>
             <p class="big" id="leftBig">0</p>
 
+            <div class="thinBar" aria-label="Intake vs budget">
+              <div class="thinFill" id="intakeFill" style="width:0%;"></div>
+            </div>
+
             <div class="spacer"></div>
 
             <div class="grid2">
@@ -1140,6 +1202,7 @@
         <button class="btab active" data-page="Dash" aria-label="Dashboard">
           <svg class="navIco" viewBox="0 0 24 24" aria-hidden="true">
             <path class="fill" d="M12 2.8l2.2 6.2 6.5.2-5.2 3.9 1.9 6.3L12 15.7 6.6 19.4l1.9-6.3-5.2-3.9 6.5-.2L12 2.8z"></path>
+            <path class="fill" d="M18 2.6l.9 2.2 2.4.1-1.9 1.4.7 2.3-2.1-1.3-2.1 1.3.7-2.3-1.9-1.4 2.4-.1L18 2.6z"></path>
           </svg>
         </button>
 
@@ -1163,7 +1226,7 @@
 
         <button class="btab" data-page="Progress" aria-label="Progress">
           <svg class="navIco" viewBox="0 0 24 24" aria-hidden="true">
-            <path class="fill" d="M13.2 2.2c.5 0 .9.3 1.1.7l.1.3 1.3 5.2H21c.8 0 1.2 1 .6 1.6l-.2.2-7.4 7.6-1 5.1c-.1.7-1 .9-1.5.4l-.1-.2-2.5-4.4-4.6-2.6c-.6-.3-.6-1.2 0-1.6l.2-.1 5.2-1 7.6-7.4c.4-.4 1.1-.2 1.3.3l.1.3-5.2 1.3-1.3-5.2c-.1-.5.2-1 .7-1.1h.3z"></path>
+            <path class="fill" d="M13 2L4 14h6l-1 8 11-14h-6l-1-6z"></path>
           </svg>
         </button>
       </div>
@@ -1213,15 +1276,10 @@
     <div class="modal">
       <div class="modalTop">
         <div class="mtitle">Presets</div>
-        <div style="font-size:12px;font-weight:900;color:rgba(91,75,97,.85);">Choose a tile to edit</div>
+        <div style="font-size:12px;font-weight:900;color:rgba(91,75,97,.85);">Tap a tile to edit</div>
       </div>
 
-      <div class="grid2" style="margin-top:10px;">
-        <button class="btn neutral small" id="pickTile1">Tile 1</button>
-        <button class="btn neutral small" id="pickTile2">Tile 2</button>
-      </div>
-      <div class="spacer"></div>
-      <button class="btn neutral small" id="pickTile3">Tile 3</button>
+      <div class="presetPickRow" id="presetPickRow"></div>
 
       <div class="spacer"></div>
 
@@ -1253,14 +1311,12 @@
       <div class="note" id="roundNote"></div>
 
       <div class="roundTiles">
-        <!-- Lower on left -->
         <div class="rTile active" id="rtDown" role="button" tabindex="0">
           <div class="rtLabel">Round down</div>
           <div class="rtNum" id="rtDownNum">0</div>
           <div class="rtDate" id="rtDownDate">-</div>
         </div>
 
-        <!-- Higher on right -->
         <div class="rTile" id="rtUp" role="button" tabindex="0">
           <div class="rtLabel">Round up</div>
           <div class="rtNum" id="rtUpNum">0</div>
@@ -1490,7 +1546,10 @@
 
     /* Presets */
     const emojiChoices = [
-      "☕️","🍽️","🍪","🥪","🍫","🍕","🍜","🥗","🍗","🍞","🧃","🥤","🍺","🍷","🍣","🍔","🌯","🍟","🧁","🍦","🍇","🍌","🍎"
+      "☕️","🍽️","🍪","🥪","🍫","🍕","🍜","🥗","🍗","🍞","🧃","🥤",
+      "🍺","🍷","🍣","🍔","🌯","🍟","🧁","🍦","🍇","🍌","🍎","🍐","🍓","🫐",
+      "🥐","🥯","🥞","🧇","🍳","🥚","🧀","🥓","🍗","🍖","🍝","🍛","🍚","🍙",
+      "🥟","🍤","🍿","🍩","🍰","🍮","🍫","🍬","🍭","🧋","🥛"
     ];
 
     const defaultPresets = () => ([
@@ -1684,7 +1743,17 @@
       card.innerHTML = `
         <div class="weighTop">
           <div class="wtitle">Weekly weigh in</div>
-          <button class="helpBtn" id="weighHelpBtn">?</button>
+          <div class="weighActions">
+            ${showLock ? `<button class="helpBtn" id="weighHelpBtn">?</button>` : ``}
+            ${showLock ? `
+              <div class="lockPill" aria-label="Locked for 7 days">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path class="lk" d="M7.5 11V8.7a4.5 4.5 0 0 1 9 0V11h.8c.9 0 1.7.8 1.7 1.7v6.6c0 .9-.8 1.7-1.7 1.7H6.7c-.9 0-1.7-.8-1.7-1.7v-6.6c0-.9.8-1.7 1.7-1.7h.8zm2 0h5V8.7a2.5 2.5 0 0 0-5 0V11z"></path>
+                </svg>
+                <span class="tiny7d">7d</span>
+              </div>
+            ` : ``}
+          </div>
         </div>
 
         <div class="kvRow">
@@ -1699,31 +1768,36 @@
         <div class="row">
           <div class="field">
             <label for="weighInput">Weigh in (lb)</label>
-            <input id="weighInput" type="number" inputmode="decimal" step="0.1" min="0" placeholder="${allowed ? "Optional" : ""}" ${allowed ? "" : "disabled"} />
+            <input
+              id="weighInput"
+              type="number"
+              inputmode="decimal"
+              step="0.1"
+              min="0"
+              placeholder="${allowed ? "Optional" : "Come back in 7 days"}"
+              ${allowed ? "" : "disabled"}
+            />
           </div>
-          <div class="field small">
-            <label style="visibility:hidden;">Save</label>
-            <button class="btn ${allowed ? "" : "neutral"}" id="weighSaveBtn" ${allowed ? "" : "disabled"}>${allowed ? "Save" : "Locked"}</button>
-          </div>
-        </div>
 
-        ${showLock ? `
-          <div class="lockRow">
-            <div class="lockPill">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path class="lk" d="M7.5 11V8.7a4.5 4.5 0 0 1 9 0V11h.8c.9 0 1.7.8 1.7 1.7v6.6c0 .9-.8 1.7-1.7 1.7H6.7c-.9 0-1.7-.8-1.7-1.7v-6.6c0-.9.8-1.7 1.7-1.7h.8zm2 0h5V8.7a2.5 2.5 0 0 0-5 0V11z"></path>
-              </svg>
-              <span class="tiny7d">7d</span>
+          ${allowed ? `
+            <div class="field small">
+              <label style="visibility:hidden;">Save</label>
+              <button class="btn" id="weighSaveBtn">Save</button>
             </div>
-          </div>
-        ` : ``}
+          ` : ``}
+        </div>
       `;
 
       stack.appendChild(card);
 
-      card.querySelector("#weighHelpBtn").addEventListener("click", () => {
-        el("weighHelpBack").classList.add("show");
-      });
+      if(showLock){
+        const help = card.querySelector("#weighHelpBtn");
+        if(help){
+          help.addEventListener("click", () => {
+            el("weighHelpBack").classList.add("show");
+          });
+        }
+      }
 
       const weighSaveBtn = card.querySelector("#weighSaveBtn");
       if(weighSaveBtn && allowed){
@@ -1786,9 +1860,10 @@
         const total = prog ? prog.totalDays : 0;
 
         c.innerHTML = `
-          <div>
-            <div class="trackTitle">You're on track!</div>
+          <div class="trackCenter">
+            <div class="trackTitle">You're on track</div>
             <div class="trackSub">Hit ${fmt(Number(plan.targetWeightLb))} lb by ${targetDateText}</div>
+
             <div class="trackMetaRow">
               <div class="pm">Daily deficit: ${fmt(Number(plan.dailyDeficit))}</div>
               <div class="pm">You got this</div>
@@ -1972,6 +2047,32 @@
     /* Preset modal logic */
     let presetEditingId = 1;
 
+    const renderPresetPicker = () => {
+      const row = el("presetPickRow");
+      row.innerHTML = "";
+      const presets = getPresets();
+
+      for(const p of presets){
+        const b = document.createElement("div");
+        b.className = "pickTile";
+        b.setAttribute("role","button");
+        b.setAttribute("tabindex","0");
+        b.setAttribute("data-pick", String(p.id));
+        b.textContent = p.emoji || "🍽️";
+        b.addEventListener("click", () => selectPresetTile(p.id));
+        row.appendChild(b);
+      }
+
+      updatePresetPickerActive();
+    };
+
+    const updatePresetPickerActive = () => {
+      document.querySelectorAll("[data-pick]").forEach((node) => {
+        const id = Number(node.getAttribute("data-pick") || 0);
+        node.classList.toggle("active", id === presetEditingId);
+      });
+    };
+
     const openPresetModal = () => {
       const sel = el("presetEmoji");
       sel.innerHTML = "";
@@ -1983,7 +2084,9 @@
       }
 
       presetEditingId = 1;
+      renderPresetPicker();
       selectPresetTile(1);
+
       el("presetBack").classList.add("show");
     };
 
@@ -1991,10 +2094,7 @@
 
     const selectPresetTile = (id) => {
       presetEditingId = id;
-
-      el("pickTile1").style.opacity = id === 1 ? "1" : ".75";
-      el("pickTile2").style.opacity = id === 2 ? "1" : ".75";
-      el("pickTile3").style.opacity = id === 3 ? "1" : ".75";
+      updatePresetPickerActive();
 
       const presets = getPresets();
       const p = presets.find(x => x.id === id) || presets[0];
@@ -2002,10 +2102,6 @@
       el("presetEmoji").value = p.emoji;
       el("presetAmount").value = String(p.cals || 0);
     };
-
-    el("pickTile1").addEventListener("click", () => selectPresetTile(1));
-    el("pickTile2").addEventListener("click", () => selectPresetTile(2));
-    el("pickTile3").addEventListener("click", () => selectPresetTile(3));
 
     el("presetSaveBtn").addEventListener("click", () => {
       const presets = getPresets();
@@ -2019,8 +2115,11 @@
       presets[idx] = { id: presetEditingId, emoji: em, cals };
       setPresets(presets);
 
-      closePresetModal();
       renderPresetTiles();
+      renderPresetPicker();
+
+      closePresetModal();
+      render();
     });
 
     el("editPresetsBtn").addEventListener("click", openPresetModal);
@@ -2157,6 +2256,18 @@
       setActivePage("Progress");
     };
 
+    const setMaybeNone = (node, value, noneText) => {
+      if(!node) return;
+      const v = Math.round(Number(value || 0));
+      if(v === 0){
+        node.textContent = noneText;
+        node.classList.add("mutedVal");
+      }else{
+        node.textContent = fmt(v);
+        node.classList.remove("mutedVal");
+      }
+    };
+
     /* Render */
     const render = () => {
       ensureDayRoll();
@@ -2173,10 +2284,18 @@
       el("budgetBig").textContent = fmt(budgetTotal);
 
       el("yTdeeKpi").textContent = fmt(today.yTdee || 0);
-      el("deficitKpi").textContent = today.maintenance ? "0" : `-${fmt(settings.deficit)}`;
 
-      el("rolloverKpi").textContent = fmt(today.rolloverApplied || 0);
-      el("bankedKpi").textContent = fmt(banks.banked || 0);
+      const defNode = el("deficitKpi");
+      if(today.maintenance){
+        defNode.textContent = "None today";
+        defNode.classList.add("mutedVal");
+      }else{
+        defNode.textContent = `-${fmt(settings.deficit)}`;
+        defNode.classList.remove("mutedVal");
+      }
+
+      setMaybeNone(el("rolloverKpi"), today.rolloverApplied || 0, "None");
+      setMaybeNone(el("bankedKpi"), banks.banked || 0, "None");
 
       el("tdeeInputDash").value = today.yTdee ? String(today.yTdee) : "";
       el("maintenanceToggleDash").checked = !!today.maintenance;
@@ -2187,6 +2306,9 @@
       el("leftBig").textContent = fmt(left);
       el("intakeKpi").textContent = fmt(intake);
       el("budgetLogKpi").textContent = fmt(budgetTotal);
+
+      const pct = budgetTotal > 0 ? Math.max(0, Math.min(1, intake / budgetTotal)) : 0;
+      el("intakeFill").style.width = `${Math.round(pct * 100)}%`;
 
       el("deficitInput").value = String(settings.deficit);
 
