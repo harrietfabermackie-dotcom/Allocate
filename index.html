@@ -17,6 +17,11 @@
       --shadow: 0 20px 55px rgba(25, 10, 30, .18);
       --shadow2: 0 10px 24px rgba(25, 10, 30, .12);
       --radius: 24px;
+
+      --navBg: rgba(255,255,255,.92);
+      --navBorder: rgba(255,255,255,.75);
+      --navIcon: rgba(27,16,32,.72);
+      --navIconActive: var(--accent);
     }
 
     *{ box-sizing:border-box; }
@@ -38,7 +43,6 @@
       width:min(420px, 100%);
       border-radius: 36px;
       padding: 16px;
-      padding-bottom: 96px;
       background: rgba(255,255,255,.18);
       border: 1px solid rgba(255,255,255,.25);
       box-shadow: var(--shadow);
@@ -46,9 +50,15 @@
       -webkit-backdrop-filter: blur(10px);
 
       max-height: calc(100vh - 44px);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .scrollArea{
+      max-height: calc(100vh - 44px);
       overflow:auto;
       -webkit-overflow-scrolling: touch;
-      position: relative;
+      padding-bottom: 116px;
     }
 
     .topbar{
@@ -320,19 +330,16 @@
     }
 
     .bottomTabsWrap{
-      position: sticky;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      margin-top: 12px;
+      position:absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
       padding: 10px 10px;
-      background: rgba(255,255,255,.22);
-      border: 1px solid rgba(255,255,255,.45);
+      background: var(--navBg);
+      border: 1px solid var(--navBorder);
       border-radius: 20px;
       box-shadow: var(--shadow2);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      z-index: 10;
+      z-index: 20;
     }
     .bottomTabs{
       display:grid;
@@ -348,23 +355,35 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:8px;
-      font-weight:900;
       cursor:pointer;
       user-select:none;
       -webkit-tap-highlight-color: transparent;
-      color: rgba(27,16,32,.75);
+      color: var(--navIcon);
       min-width: 0;
     }
     .btab .ico{
-      font-size:18px;
-      line-height: 1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width: 22px;
+      height: 22px;
+      color: inherit;
+    }
+    .btab .ico svg{
+      width: 20px;
+      height: 20px;
+      display:block;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
     .btab.active{
-      background: rgba(255,255,255,.45);
-      border-color: rgba(255,255,255,.65);
+      background: rgba(255,255,255,.70);
+      border-color: rgba(255,255,255,.85);
       box-shadow: 0 10px 22px rgba(25,10,30,.10);
-      color: var(--ink);
+      color: var(--navIconActive);
     }
 
     .page{ display:none; margin-top:12px; }
@@ -520,6 +539,14 @@
     }
     .iconBtn:active{ transform: translateY(1px) scale(.99); }
 
+    .iconBtn.gradArrow{
+      background: rgba(255,255,255,.35);
+      color: transparent;
+      background-image: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
     .modalBack{
       position: fixed;
       inset: 0;
@@ -538,8 +565,6 @@
       border: 1px solid rgba(255,255,255,.75);
       box-shadow: var(--shadow);
       padding: 14px;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
     }
     .modalTop{
       display:flex;
@@ -631,6 +656,25 @@
       margin-top: 10px;
       text-align:center;
     }
+    .calcBig{
+      display:block;
+      font-size: 22px;
+      line-height: 1.1;
+      margin-top: 2px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+      letter-spacing: -0.2px;
+    }
+    .calcSub{
+      display:block;
+      margin-top: 6px;
+      font-size: 12px;
+      color: rgba(91,75,97,.88);
+      font-weight:900;
+    }
+
     .loadingDots{
       display:inline-block;
       width: 38px;
@@ -668,15 +712,24 @@
       font-size:14px;
       color: rgba(27,16,32,.85);
     }
-    .roundChoices{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      width:100%;
-      margin-top: 10px;
+    .roundPick{
+      font-weight:900;
+      font-size:12px;
+      color: rgba(91,75,97,.92);
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
     }
-    .choice{
-      flex: 1 1 160px;
+
+    .choiceRow{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    @media (max-width: 360px){
+      .choiceRow{ grid-template-columns: 1fr; }
+    }
+    .choiceCard{
       border: 1px solid rgba(255,255,255,.72);
       background: rgba(255,255,255,.55);
       border-radius: 18px;
@@ -684,30 +737,35 @@
       box-shadow: var(--shadow2);
       cursor:pointer;
       -webkit-tap-highlight-color: transparent;
+      text-align:left;
     }
-    .choice:active{ transform: translateY(1px) scale(.99); }
-    .choice .ct{
+    .choiceCard:active{ transform: translateY(1px) scale(.99); }
+    .choiceCard.selected{
+      outline: 3px solid rgba(255,95,154,.26);
+    }
+    .choiceTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
       font-weight:900;
       font-size:14px;
       color: rgba(27,16,32,.88);
-      margin-bottom: 6px;
-      white-space: nowrap;
-      overflow:hidden;
-      text-overflow: ellipsis;
     }
-    .choice .cv{
+    .choiceVal{
+      margin-top: 6px;
       font-weight:900;
-      font-size:16px;
+      font-size:18px;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       -webkit-background-clip:text;
       background-clip:text;
       color: transparent;
     }
-    .choice .cs{
+    .choiceSmall{
       margin-top: 4px;
       font-weight:900;
       font-size:12px;
-      color: rgba(91,75,97,.85);
+      color: rgba(91,75,97,.86);
     }
 
     .planCardTitle{
@@ -748,26 +806,6 @@
       font-size:12px;
       color: rgba(91,75,97,.9);
       font-weight:900;
-    }
-    .sparkRow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-top: 10px;
-    }
-    .sparkPill{
-      border: 1px solid rgba(255,255,255,.72);
-      background: rgba(255,255,255,.55);
-      border-radius: 999px;
-      padding: 8px 12px;
-      font-weight:900;
-      font-size:12px;
-      color: rgba(27,16,32,.82);
-      display:flex;
-      align-items:center;
-      gap:8px;
-      box-shadow: var(--shadow2);
     }
 
     .weighRow{
@@ -816,6 +854,11 @@
       font-size: 12px;
       line-height: 1;
     }
+    .tinyTag{
+      opacity:.72;
+      font-weight:900;
+      font-size:12px;
+    }
 
     .fadeIn{
       animation: fadeIn .18s ease;
@@ -824,259 +867,338 @@
       from{ opacity:0; transform: translateY(4px); }
       to{ opacity:1; transform: translateY(0); }
     }
+
+    .transitionBack{
+      position: fixed;
+      inset: 0;
+      background: rgba(25,10,30,.18);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      z-index: 80;
+    }
+    .transitionBack.show{ display:flex; }
+    .transitionCard{
+      width:min(420px, 100%);
+      border-radius: 24px;
+      background: rgba(255,255,255,.94);
+      border: 1px solid rgba(255,255,255,.85);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      text-align:center;
+      animation: popIn .22s ease;
+    }
+    @keyframes popIn{
+      from{ opacity:0; transform: scale(.98) translateY(6px); }
+      to{ opacity:1; transform: scale(1) translateY(0); }
+    }
+    .transitionTitle{
+      font-weight:900;
+      font-size:16px;
+      color: rgba(27,16,32,.92);
+    }
+    .transitionSub{
+      font-weight:900;
+      font-size:12px;
+      color: rgba(91,75,97,.88);
+      margin-top: 6px;
+    }
+    .check{
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      margin: 0 auto 10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: rgba(255,255,255,.70);
+      border: 1px solid rgba(255,255,255,.85);
+      box-shadow: var(--shadow2);
+      color: transparent;
+      background-image: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      font-weight:900;
+      font-size: 22px;
+      line-height: 1;
+    }
   </style>
 </head>
 <body>
   <div class="phone">
-    <div class="topbar">
-      <div class="brand"><span class="dot"></span>Allocate</div>
-      <button class="pillbtn" id="exportBtn">Export</button>
-    </div>
+    <div class="scrollArea">
+      <div class="topbar">
+        <div class="brand"><span class="dot"></span>Allocate</div>
+        <button class="pillbtn" id="exportBtn">Export</button>
+      </div>
 
-    <!-- DASHBOARD -->
-    <div class="page active" id="pageDash">
-      <div class="stack">
-        <div class="card hero">
-          <p class="subline" id="todayDate"></p>
-          <div class="label">Today's budget</div>
-          <p class="big" id="budgetBig">0</p>
+      <!-- DASHBOARD -->
+      <div class="page active" id="pageDash">
+        <div class="stack">
+          <div class="card hero">
+            <p class="subline" id="todayDate"></p>
+            <div class="label">Today's budget</div>
+            <p class="big" id="budgetBig">0</p>
 
-          <div class="spacer"></div>
+            <div class="spacer"></div>
 
-          <div class="grid2">
-            <div class="kpi">
-              <div class="klabel">Burned yesterday</div>
-              <div class="kval"><span class="knum" id="yTdeeKpi">0</span></div>
-            </div>
-            <div class="kpi">
-              <div class="klabel">Deficit</div>
-              <div class="kval"><span class="knum" id="deficitKpi">-0</span></div>
-            </div>
-          </div>
-
-          <div class="spacer"></div>
-
-          <div class="grid2">
-            <div class="kpi">
-              <div class="klabel">Rollover calories</div>
-              <div class="kval"><span class="knum" id="rolloverKpi">0</span></div>
-            </div>
-            <div class="kpi">
-              <div class="klabel">Banked calories</div>
-              <div class="kval">
-                <span class="knum" id="bankedKpi">0</span>
-                <button class="iconBtn" id="useBankedBtn" aria-label="Use banked calories">↑</button>
+            <div class="grid2">
+              <div class="kpi">
+                <div class="klabel">Burned yesterday</div>
+                <div class="kval"><span class="knum" id="yTdeeKpi">0</span></div>
+              </div>
+              <div class="kpi">
+                <div class="klabel">Deficit</div>
+                <div class="kval"><span class="knum" id="deficitKpi">-0</span></div>
               </div>
             </div>
-          </div>
 
-          <div class="spacer"></div>
+            <div class="spacer"></div>
 
-          <div class="row">
-            <div class="field">
-              <label for="tdeeInputDash">Yesterday's TDEE</label>
-              <input id="tdeeInputDash" type="number" inputmode="numeric" min="0" placeholder="Enter TDEE" />
-            </div>
-
-            <div class="field">
-              <div class="switchRow">
-                <div class="slabel">Maintenance</div>
-                <div class="iosSwitch" aria-label="Maintenance">
-                  <input id="maintenanceToggleDash" type="checkbox" />
-                  <span class="iosTrack"></span>
-                  <span class="iosThumb"></span>
+            <div class="grid2">
+              <div class="kpi">
+                <div class="klabel">Rollover calories</div>
+                <div class="kval"><span class="knum" id="rolloverKpi">0</span></div>
+              </div>
+              <div class="kpi">
+                <div class="klabel">Banked calories</div>
+                <div class="kval">
+                  <span class="knum" id="bankedKpi">0</span>
+                  <button class="iconBtn gradArrow" id="useBankedBtn" aria-label="Use banked calories">↑</button>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="spacer"></div>
-          <button class="btn" id="applyDashBtn">Apply</button>
+            <div class="spacer"></div>
 
-          <div class="mini">
-            <div class="hint" id="modeHint"></div>
-            <div class="hint" id="savedHint"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SETTINGS -->
-    <div class="page" id="pageSettings">
-      <div class="stack">
-        <div class="card">
-          <div class="field">
-            <label for="deficitInput">Deficit</label>
-            <input id="deficitInput" type="number" inputmode="numeric" min="0" placeholder="750" />
-          </div>
-          <div class="spacer"></div>
-          <button class="btn" id="saveSettingsBtn">Save</button>
-        </div>
-
-        <div class="card" id="statsCard">
-          <div class="statsHeader">
-            <div class="statsTitle">My stats</div>
-            <button class="pencil" id="editStatsBtn" aria-label="Edit stats">✎</button>
-          </div>
-
-          <div id="statsView">
-            <div class="kvRow">
-              <div class="kv"><div class="k">Height</div><div class="v" id="svHeight">-</div></div>
-              <div class="kv"><div class="k">Weight</div><div class="v" id="svWeight">-</div></div>
-              <div class="kv"><div class="k">Age</div><div class="v" id="svAge">-</div></div>
-              <div class="kv"><div class="k">Gender</div><div class="v" id="svGender">-</div></div>
-            </div>
-          </div>
-
-          <div id="statsEdit" style="display:none;">
             <div class="row">
               <div class="field">
-                <label for="heightInput">Height (cm)</label>
-                <input id="heightInput" type="number" inputmode="numeric" min="0" />
+                <label for="tdeeInputDash">Yesterday's TDEE</label>
+                <input id="tdeeInputDash" type="number" inputmode="numeric" min="0" placeholder="Enter TDEE" />
               </div>
+
               <div class="field">
-                <label for="weightStatInput">Weight (lb)</label>
-                <input id="weightStatInput" type="number" inputmode="decimal" step="0.1" min="0" />
+                <div class="switchRow">
+                  <div class="slabel">Maintenance</div>
+                  <div class="iosSwitch" aria-label="Maintenance">
+                    <input id="maintenanceToggleDash" type="checkbox" />
+                    <span class="iosTrack"></span>
+                    <span class="iosThumb"></span>
+                  </div>
+                </div>
               </div>
             </div>
+
             <div class="spacer"></div>
+            <button class="btn" id="applyDashBtn">Apply</button>
+
+            <div class="mini">
+              <div class="hint" id="modeHint"></div>
+              <div class="hint" id="savedHint"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="page" id="pageSettings">
+        <div class="stack">
+          <div class="card">
+            <div class="field">
+              <label for="deficitInput">Deficit</label>
+              <input id="deficitInput" type="number" inputmode="numeric" min="0" placeholder="750" />
+            </div>
+            <div class="spacer"></div>
+            <button class="btn" id="saveSettingsBtn">Save</button>
+          </div>
+
+          <div class="card" id="statsCard">
+            <div class="statsHeader">
+              <div class="statsTitle">My stats</div>
+              <button class="pencil" id="editStatsBtn" aria-label="Edit stats">✎</button>
+            </div>
+
+            <div id="statsView">
+              <div class="kvRow">
+                <div class="kv"><div class="k">Height</div><div class="v" id="svHeight">-</div></div>
+                <div class="kv"><div class="k">Weight</div><div class="v" id="svWeight">-</div></div>
+                <div class="kv"><div class="k">Age</div><div class="v" id="svAge">-</div></div>
+                <div class="kv"><div class="k">Gender</div><div class="v" id="svGender">-</div></div>
+              </div>
+            </div>
+
+            <div id="statsEdit" style="display:none;">
+              <div class="row">
+                <div class="field">
+                  <label for="heightInput">Height (cm)</label>
+                  <input id="heightInput" type="number" inputmode="numeric" min="0" />
+                </div>
+                <div class="field">
+                  <label for="weightStatInput">Weight (lb)</label>
+                  <input id="weightStatInput" type="number" inputmode="decimal" step="0.1" min="0" />
+                </div>
+              </div>
+              <div class="spacer"></div>
+              <div class="row">
+                <div class="field">
+                  <label for="ageInput">Age</label>
+                  <input id="ageInput" type="number" inputmode="numeric" min="0" />
+                </div>
+                <div class="field">
+                  <label for="genderInput">Gender</label>
+                  <select id="genderInput">
+                    <option value="">Select</option>
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                    <option value="other">Other</option>
+                    <option value="na">Prefer not to say</option>
+                  </select>
+                </div>
+              </div>
+              <div class="spacer"></div>
+              <button class="btn ghost" id="applyStatsBtn">Apply</button>
+            </div>
+
+            <div class="note" id="statsSavedHint" style="display:none;">Saved</div>
+          </div>
+
+          <div class="card calcWrap" id="goalCard">
+            <div style="font-weight:900; font-size:14px; color: rgba(27,16,32,.85);">Goal calculator</div>
+            <div class="spacer"></div>
+
+            <div class="calcRow">
+              <div class="field">
+                <label for="currentWeightInput">Current weight (lb)</label>
+                <input id="currentWeightInput" type="number" inputmode="decimal" step="0.1" min="0" placeholder="From stats" />
+              </div>
+              <div class="field">
+                <label for="targetWeightInput">Target weight (lb)</label>
+                <input id="targetWeightInput" type="number" inputmode="decimal" step="0.1" min="0" />
+              </div>
+            </div>
+
+            <div class="spacer"></div>
+
+            <div class="calcRow">
+              <div class="field">
+                <label for="targetDateInput">Target date</label>
+                <input id="targetDateInput" type="date" />
+              </div>
+              <div class="field small">
+                <button class="btn" id="calcBtn">Calculate</button>
+              </div>
+            </div>
+
+            <div class="calcMsg" id="calcMsg"></div>
+
+            <div id="savePlanWrap" style="display:none;">
+              <div class="spacer"></div>
+
+              <div class="roundRow">
+                <div class="rlabel">Round to 50</div>
+                <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+                  <div class="roundPick" id="roundPickText">Optional</div>
+                  <button class="smBtn" id="roundOpenBtn" type="button">Choose</button>
+                </div>
+              </div>
+
+              <div class="spacer"></div>
+              <button class="btn" id="savePlanBtn">Save plan</button>
+              <div class="note" id="savePlanHint" style="display:none;">Saved</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOGGING -->
+      <div class="page" id="pageLogging">
+        <div class="stack">
+          <div class="card hero">
+            <div class="label">Calories left today</div>
+            <p class="big" id="leftBig">0</p>
+
+            <div class="spacer"></div>
+
+            <div class="grid2">
+              <div class="kpi">
+                <div class="klabel">Running intake</div>
+                <div class="kval"><span class="knum" id="intakeKpi">0</span></div>
+              </div>
+              <div class="kpi">
+                <div class="klabel">Budget</div>
+                <div class="kval"><span class="knum" id="budgetLogKpi">0</span></div>
+              </div>
+            </div>
+
+            <div class="presetRow">
+              <button class="presetEditBtn" id="editPresetsBtn" aria-label="Edit presets">✎</button>
+              <div class="presetGrid" id="presetGrid"></div>
+            </div>
+          </div>
+
+          <div class="card">
             <div class="row">
               <div class="field">
-                <label for="ageInput">Age</label>
-                <input id="ageInput" type="number" inputmode="numeric" min="0" />
+                <label for="addInput">Log calories</label>
+                <input id="addInput" type="number" inputmode="numeric" min="0" />
               </div>
-              <div class="field">
-                <label for="genderInput">Gender</label>
-                <select id="genderInput">
-                  <option value="">Select</option>
-                  <option value="female">Female</option>
-                  <option value="male">Male</option>
-                  <option value="other">Other</option>
-                  <option value="na">Prefer not to say</option>
-                </select>
+              <div class="field small">
+                <button class="btn" id="addBtn">Add</button>
               </div>
             </div>
-            <div class="spacer"></div>
-            <button class="btn ghost" id="applyStatsBtn">Apply</button>
-          </div>
 
-          <div class="note" id="statsSavedHint" style="display:none;">Saved</div>
-        </div>
-
-        <div class="card calcWrap" id="goalCard">
-          <div style="font-weight:900; font-size:14px; color: rgba(27,16,32,.85);">Goal calculator</div>
-          <div class="spacer"></div>
-
-          <div class="calcRow">
-            <div class="field">
-              <label for="currentWeightInput">Current weight (lb)</label>
-              <input id="currentWeightInput" type="number" inputmode="decimal" step="0.1" min="0" placeholder="From stats" />
-            </div>
-            <div class="field">
-              <label for="targetWeightInput">Target weight (lb)</label>
-              <input id="targetWeightInput" type="number" inputmode="decimal" step="0.1" min="0" />
-            </div>
-          </div>
-
-          <div class="spacer"></div>
-
-          <div class="calcRow">
-            <div class="field">
-              <label for="targetDateInput">Target date</label>
-              <input id="targetDateInput" type="date" />
-            </div>
-            <div class="field small">
-              <button class="btn" id="calcBtn">Calculate</button>
-            </div>
-          </div>
-
-          <div class="calcMsg" id="calcMsg"></div>
-
-          <div id="savePlanWrap" style="display:none;">
-            <div class="spacer"></div>
-
-            <div class="roundRow">
-              <div class="rlabel">Round to 50</div>
-              <div style="font-weight:900; color: rgba(91,75,97,.90); font-size:12px;">Pick one</div>
-            </div>
-
-            <div class="roundChoices" id="roundChoices"></div>
+            <ul class="entryList" id="entryList"></ul>
 
             <div class="spacer"></div>
-            <button class="btn" id="savePlanBtn">Save plan</button>
-            <div class="note" id="savePlanHint" style="display:none;">Saved</div>
+
+            <div class="grid2">
+              <button class="btn ghost" id="undoBtn">Undo last add</button>
+              <button class="btn" id="endDayBtn">End day</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- LOGGING -->
-    <div class="page" id="pageLogging">
-      <div class="stack">
-        <div class="card hero">
-          <div class="label">Calories left today</div>
-          <p class="big" id="leftBig">0</p>
-
-          <div class="spacer"></div>
-
-          <div class="grid2">
-            <div class="kpi">
-              <div class="klabel">Running intake</div>
-              <div class="kval"><span class="knum" id="intakeKpi">0</span></div>
-            </div>
-            <div class="kpi">
-              <div class="klabel">Budget</div>
-              <div class="kval"><span class="knum" id="budgetLogKpi">0</span></div>
-            </div>
-          </div>
-
-          <div class="presetRow">
-            <div class="presetGrid" id="presetGrid"></div>
-            <button class="presetEditBtn" id="editPresetsBtn" aria-label="Edit presets">✎</button>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="row">
-            <div class="field">
-              <label for="addInput">Log calories</label>
-              <input id="addInput" type="number" inputmode="numeric" min="0" />
-            </div>
-            <div class="field small">
-              <button class="btn" id="addBtn">Add</button>
-            </div>
-          </div>
-
-          <ul class="entryList" id="entryList"></ul>
-
-          <div class="spacer"></div>
-
-          <div class="grid2">
-            <button class="btn ghost" id="undoBtn">Undo last add</button>
-            <button class="btn" id="endDayBtn">End day</button>
-          </div>
-        </div>
+      <!-- PROGRESS -->
+      <div class="page" id="pageProgress">
+        <div class="stack" id="progressStack"></div>
       </div>
-    </div>
 
-    <!-- PROGRESS -->
-    <div class="page" id="pageProgress">
-      <div class="stack" id="progressStack"></div>
-    </div>
-
-    <!-- LOG -->
-    <div class="page" id="pageLog">
-      <div class="stack" id="logStack"></div>
+      <!-- LOG -->
+      <div class="page" id="pageLog">
+        <div class="stack" id="logStack"></div>
+      </div>
     </div>
 
     <!-- Bottom tabs -->
     <div class="bottomTabsWrap">
       <div class="bottomTabs">
-        <button class="btab active" data-page="Dash" aria-label="Dashboard"><span class="ico">✨</span></button>
-        <button class="btab" data-page="Settings" aria-label="Settings"><span class="ico">⚙️</span></button>
-        <button class="btab" data-page="Logging" aria-label="Logging"><span class="ico">＋</span></button>
-        <button class="btab" data-page="Progress" aria-label="Progress"><span class="ico">⚡</span></button>
-        <button class="btab" data-page="Log" aria-label="Log"><span class="ico">📖</span></button>
+        <button class="btab active" data-page="Dash" aria-label="Dashboard">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 2l1.2 4.2L17 7.5l-3.8 1.2L12 13l-1.2-4.3L7 7.5l3.8-1.3L12 2z"></path><path d="M5 13l.8 2.7L8.5 16l-2.7.8L5 19.5l-.8-2.7L1.5 16l2.7-.8L5 13z"></path></svg>
+          </span>
+        </button>
+        <button class="btab" data-page="Settings" aria-label="Settings">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path><path d="M19.4 15a8.2 8.2 0 0 0 .1-2l2-1.2-2-3.4-2.3.7a7.6 7.6 0 0 0-1.7-1L15.2 5h-4.4L10.5 8a7.6 7.6 0 0 0-1.7 1l-2.3-.7-2 3.4 2 1.2a8.2 8.2 0 0 0 .1 2l-2 1.2 2 3.4 2.3-.7a7.6 7.6 0 0 0 1.7 1l.3 3h4.4l.3-3a7.6 7.6 0 0 0 1.7-1l2.3.7 2-3.4-2-1.2z"></path></svg>
+          </span>
+        </button>
+        <button class="btab" data-page="Logging" aria-label="Logging">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+          </span>
+        </button>
+        <button class="btab" data-page="Log" aria-label="Log">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M7 4h10a2 2 0 0 1 2 2v14H7a2 2 0 0 0-2 2V6a2 2 0 0 1 2-2z"></path><path d="M7 4v16"></path><path d="M10 8h6"></path><path d="M10 12h6"></path></svg>
+          </span>
+        </button>
+        <button class="btab" data-page="Progress" aria-label="Progress">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z"></path></svg>
+          </span>
+        </button>
       </div>
     </div>
   </div>
@@ -1172,6 +1294,45 @@
     </div>
   </div>
 
+  <!-- Round to 50 modal -->
+  <div class="modalBack" id="roundBack">
+    <div class="modal">
+      <div class="modalTop">
+        <div class="mtitle">Round to 50</div>
+        <button class="closeBtn" id="roundClose">Close</button>
+      </div>
+
+      <div class="note">Optional. You can keep the exact number if you want.</div>
+      <div class="spacer"></div>
+
+      <div class="choiceRow">
+        <button class="choiceCard" id="roundDownBtn" type="button">
+          <div class="choiceTop"><span>Round down</span><span id="roundDownVal"></span></div>
+          <div class="choiceVal" id="roundDownValBig">0</div>
+          <div class="choiceSmall" id="roundDownDate"></div>
+        </button>
+
+        <button class="choiceCard" id="roundUpBtn" type="button">
+          <div class="choiceTop"><span>Round up</span><span id="roundUpVal"></span></div>
+          <div class="choiceVal" id="roundUpValBig">0</div>
+          <div class="choiceSmall" id="roundUpDate"></div>
+        </button>
+      </div>
+
+      <div class="spacer"></div>
+      <button class="btn ghost" id="roundExactBtn" type="button">Use exact</button>
+    </div>
+  </div>
+
+  <!-- Transition overlay -->
+  <div class="transitionBack" id="transitionBack" aria-hidden="true">
+    <div class="transitionCard">
+      <div class="check">✓</div>
+      <div class="transitionTitle" id="transitionTitle">Saved</div>
+      <div class="transitionSub" id="transitionSub">Nice and steady.</div>
+    </div>
+  </div>
+
   <script>
     const LS_SETTINGS = "allocate_settings_v7";
     const LS_STATS = "allocate_stats_v7";
@@ -1185,7 +1346,18 @@
     const DEFAULT_DEFICIT = 750;
     const DAY_CUTOFF_HOUR = 3;
 
-    const EMOJI_CHOICES = ["☕️","🍽️","🍎","🥤","🍫","🥐","🍝","🍣","🍦","🍷","🍌","🍪"];
+    const EMOJI_CHOICES = [
+      "☕️","🍵","🧋","🥤","🧃","🥛","🧉","🍺","🍷","🥂","🍸","🍹","🍾",
+      "🍎","🍐","🍊","🍋","🍌","🍉","🍇","🍓","🫐","🍒","🥝","🍍","🥭","🍑","🍈",
+      "🥕","🌽","🥦","🥬","🍅","🥒","🫑","🍄","🧄","🧅","🥔","🍠","🫘","🫛",
+      "🥜","🌰",
+      "🍞","🥐","🥖","🥯","🥨","🫓","🥞","🧇","🍳","🥚","🧀","🥓",
+      "🍗","🍖","🌭","🍔","🍟","🍕","🥪","🌯","🌮","🥙","🧆","🥘","🍲","🫕",
+      "🍝","🍜","🍛","🍣","🍱","🍙","🍚","🍘","🍤","🦐","🦀","🐟","🍥","🥟","🥡",
+      "🥗","🥫",
+      "🍦","🍧","🍨","🍩","🍪","🍰","🧁","🍫","🍬","🍭","🍮","🥧",
+      "🥣","🍿","🧂"
+    ];
 
     const el = (id) => document.getElementById(id);
 
@@ -1382,6 +1554,21 @@
       b.addEventListener("click", () => setActivePage(b.getAttribute("data-page")));
     });
 
+    const showTransition = (title, sub) => {
+      el("transitionTitle").textContent = title || "Saved";
+      el("transitionSub").textContent = sub || "";
+      el("transitionBack").classList.add("show");
+    };
+    const hideTransition = () => el("transitionBack").classList.remove("show");
+
+    const transitionTo = (pageName, title, sub) => {
+      showTransition(title, sub);
+      setTimeout(() => {
+        setActivePage(pageName);
+        setTimeout(() => hideTransition(), 180);
+      }, 520);
+    };
+
     const addEntry = (cals, emoji = "") => {
       ensureDayRoll();
       const today = getToday();
@@ -1491,13 +1678,8 @@
       const top = document.createElement("div");
       top.className = "card fadeIn";
       top.innerHTML = `
-        <div class="planCardTitle">You're on track!</div>
+        <div class="planCardTitle">You're on track</div>
         <div class="planCardSub" id="trackLine"></div>
-
-        <div class="sparkRow">
-          <div class="sparkPill">✨ Keep it cute</div>
-          <div class="sparkPill">⚡ One day at a time</div>
-        </div>
       `;
       stack.appendChild(top);
 
@@ -1508,7 +1690,7 @@
         const targetDate = new Date(`${plan.targetDateISO}T12:00:00`);
         const targetDateText = targetDate.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
 
-        trackLine.textContent = `Hit ${fmt(Number(plan.targetWeightLb))} lb by ${targetDateText}. Daily deficit ${fmt(Number(plan.dailyDeficit))}.`;
+        trackLine.textContent = `Hit ${fmt(Number(plan.targetWeightLb))} lb by ${targetDateText}, with a daily deficit of ${fmt(Number(plan.dailyDeficit))}.`;
 
         const pctW = prog ? Math.round(prog.pct * 100) : 0;
         const elapsed = prog ? prog.elapsedDays : 0;
@@ -1523,7 +1705,7 @@
           </div>
           <div class="planMeta">
             <div class="pm">${elapsed} of ${total} days</div>
-            <div class="pm">You're doing it</div>
+            <div class="pm">Keep going</div>
           </div>
         `;
         stack.appendChild(c);
@@ -1545,7 +1727,7 @@
             <div class="lpTop">
               <span>${lockIcon}</span>
               <span>${lockTop}</span>
-              <span style="opacity:.72; font-weight:900; font-size:12px;">${locked ? "7d" : ""}</span>
+              <span class="tinyTag">${locked ? "7d" : ""}</span>
               <button class="tinyQ" id="weighQ" aria-label="Why is it locked?">?</button>
             </div>
             <div class="lpSub">${lockSub}</div>
@@ -1897,10 +2079,13 @@
       setSettings({ deficit });
 
       const btn = el("saveSettingsBtn");
-      setSavedButton(btn, "Saved");
-      setTimeout(() => setUnsavedButton(btn, "Save", false), 1200);
-
-      render();
+      btn.classList.add("loading");
+      btn.textContent = "Saving";
+      setTimeout(() => {
+        setSavedButton(btn, "Saved");
+        setTimeout(() => setUnsavedButton(btn, "Save", false), 1100);
+        render();
+      }, 320);
     });
 
     el("deficitInput").addEventListener("input", () => {
@@ -1931,11 +2116,12 @@
       el("calcMsg").textContent = "";
       el("savePlanWrap").style.display = "none";
       lastCalc = null;
+      lastRoundPick = null;
+      updateRoundPickText();
 
       render();
     });
 
-    // Goal calculator with round choices
     let lastCalc = null;
     let lastRoundPick = null;
 
@@ -1977,294 +2163,67 @@
       return { ok:true, daily, days, cw, tw, totalCals, targetDateISO: td, startKey };
     };
 
-    const renderRoundChoices = (baseDaily, totalCals, startKey) => {
-      const wrap = el("roundChoices");
-      wrap.innerHTML = "";
-
+    const makeHitDateText = (def, totalCals, startKey) => {
+      if(def <= 0) return "";
       const startDate = parseDayKeyToDateNoon(startKey);
-
-      const down = Math.max(0, roundDown50(baseDaily));
-      const up = Math.max(0, roundUp50(baseDaily));
-
-      const makeDateLine = (def) => {
-        if(def <= 0) return "Pick a higher deficit";
-        const daysNeed = Math.ceil(totalCals / def);
-        const hit = addDaysNoon(startDate, daysNeed);
-        const txt = hit.toLocaleDateString("en-GB", { day:"numeric", month:"short" });
-        return `Hit date: ${txt}`;
-      };
-
-      const mk = (title, def) => {
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "choice";
-        btn.innerHTML = `
-          <div class="ct">${title}</div>
-          <div class="cv">${fmt(def)}</div>
-          <div class="cs">${makeDateLine(def)}</div>
-        `;
-        btn.addEventListener("click", () => {
-          lastRoundPick = def;
-          wrap.querySelectorAll(".choice").forEach(x => x.style.outline = "none");
-          btn.style.outline = "3px solid rgba(255,95,154,.30)";
-        });
-        return btn;
-      };
-
-      wrap.appendChild(mk("Round down", down));
-      wrap.appendChild(mk("Round up", up));
-
-      lastRoundPick = null;
+      const daysNeed = Math.ceil(totalCals / def);
+      const hit = addDaysNoon(startDate, daysNeed);
+      const txt = hit.toLocaleDateString("en-GB", { day:"numeric", month:"short" });
+      return `Hit date: ${txt}`;
     };
 
-    el("calcBtn").addEventListener("click", () => {
-      showCalcLoading();
-      el("savePlanWrap").style.display = "none";
-      el("savePlanHint").style.display = "none";
-      lastCalc = null;
-      lastRoundPick = null;
+    const updateRoundPickText = () => {
+      if(!lastCalc){
+        el("roundPickText").textContent = "Optional";
+        return;
+      }
+      if(lastRoundPick === null){
+        el("roundPickText").textContent = "Exact";
+        return;
+      }
+      if(Number.isFinite(lastRoundPick)){
+        el("roundPickText").textContent = `${fmt(lastRoundPick)}`;
+        return;
+      }
+      el("roundPickText").textContent = "Optional";
+    };
 
-      setTimeout(() => {
-        const res = calcDailyDeficit();
-        if(!res.ok){
-          el("calcMsg").textContent = res.msg;
-          return;
-        }
-        lastCalc = res;
-        el("calcMsg").textContent = `Daily deficit: ${fmt(res.daily)}.`;
-        el("savePlanWrap").style.display = "block";
-
-        renderRoundChoices(res.daily, res.totalCals, res.startKey);
-      }, 650);
-    });
-
-    el("savePlanBtn").addEventListener("click", () => {
+    const openRoundModal = () => {
       if(!lastCalc) return;
 
-      const finalDef = (Number.isFinite(lastRoundPick) && lastRoundPick !== null)
-        ? Math.max(0, Math.round(lastRoundPick))
-        : Math.max(0, Math.round(lastCalc.daily));
+      const down = Math.max(0, roundDown50(lastCalc.daily));
+      const up = Math.max(0, roundUp50(lastCalc.daily));
 
-      setSettings({ deficit: finalDef });
-      el("deficitInput").value = String(finalDef);
+      el("roundDownVal").textContent = "";
+      el("roundUpVal").textContent = "";
+      el("roundDownValBig").textContent = fmt(down);
+      el("roundUpValBig").textContent = fmt(up);
 
-      setPlan({
-        savedAtISO: new Date().toISOString(),
-        startDayKey: lastCalc.startKey,
-        currentWeightLb: lastCalc.cw,
-        targetWeightLb: lastCalc.tw,
-        targetDateISO: lastCalc.targetDateISO,
-        dailyDeficit: finalDef
-      });
+      el("roundDownDate").textContent = makeHitDateText(down, lastCalc.totalCals, lastCalc.startKey);
+      el("roundUpDate").textContent = makeHitDateText(up, lastCalc.totalCals, lastCalc.startKey);
 
-      const btn = el("savePlanBtn");
-      btn.classList.add("loading");
-      btn.textContent = "Saving";
-      setTimeout(() => {
-        setSavedButton(btn, "Saved");
-        el("savePlanHint").style.display = "block";
-        setTimeout(() => { el("savePlanHint").style.display = "none"; }, 900);
+      const setSelected = () => {
+        el("roundDownBtn").classList.toggle("selected", lastRoundPick === down);
+        el("roundUpBtn").classList.toggle("selected", lastRoundPick === up);
+      };
+      setSelected();
 
-        render();
-
-        setTimeout(() => {
-          setActivePage("Progress");
-          setTimeout(() => {
-            btn.classList.remove("saved");
-            btn.textContent = "Save plan";
-          }, 350);
-        }, 450);
-      }, 420);
-    });
-
-    // Use banked
-    const openUseModal = () => {
-      const banks = getBanks();
-      const max = Math.round(banks.banked || 0);
-      el("useAmount").value = "";
-      el("useHint").textContent = max > 0 ? `${fmt(max)} available.` : "0 available.";
-      el("useBack").classList.add("show");
-    };
-    const closeUseModal = () => el("useBack").classList.remove("show");
-
-    el("useBankedBtn").addEventListener("click", () => openUseModal());
-    el("useClose").addEventListener("click", closeUseModal);
-    el("useBack").addEventListener("click", (e) => {
-      if(e.target === el("useBack")) closeUseModal();
-    });
-
-    el("useApplyBtn").addEventListener("click", () => {
-      ensureDayRoll();
-      const banks = getBanks();
-      const today = getToday();
-
-      const max = Math.round(banks.banked || 0);
-      const v = Number(el("useAmount").value || 0);
-      if(!Number.isFinite(v) || v <= 0) return;
-
-      const amt = Math.min(max, Math.round(v));
-      if(amt <= 0) return;
-
-      banks.banked = Math.max(0, Math.round(max - amt));
-      setBanks(banks);
-
-      today.usedBanked = Math.round((today.usedBanked || 0) + amt);
-      setToday(today);
-
-      closeUseModal();
-      render();
-    });
-
-    // Presets
-    const openPresetModal = () => {
-      const presets = getPresets();
-      const wrap = el("presetEditor");
-      wrap.innerHTML = "";
-
-      presets.forEach((p, idx) => {
-        const row = document.createElement("div");
-        row.className = "card";
-        row.style.padding = "12px";
-        row.innerHTML = `
-          <div class="row">
-            <div class="field">
-              <label>Emoji</label>
-              <select data-emo="${idx}">
-                ${EMOJI_CHOICES.map(e => `<option value="${e}" ${e === p.emoji ? "selected" : ""}>${e}</option>`).join("")}
-              </select>
-            </div>
-            <div class="field">
-              <label>Calories</label>
-              <input data-cal="${idx}" type="number" inputmode="numeric" min="0" value="${p.cals || 0}" />
-            </div>
-          </div>
-        `;
-        wrap.appendChild(row);
-      });
-
-      el("presetSavedHint").style.display = "none";
-      el("presetBack").classList.add("show");
-    };
-    const closePresetModal = () => el("presetBack").classList.remove("show");
-
-    el("editPresetsBtn").addEventListener("click", openPresetModal);
-    el("presetClose").addEventListener("click", closePresetModal);
-    el("presetBack").addEventListener("click", (e) => {
-      if(e.target === el("presetBack")) closePresetModal();
-    });
-
-    el("presetSaveBtn").addEventListener("click", () => {
-      const presets = getPresets();
-
-      const next = presets.map((p, idx) => {
-        const emo = document.querySelector(`[data-emo="${idx}"]`);
-        const cal = document.querySelector(`[data-cal="${idx}"]`);
-        const e = emo ? String(emo.value || p.emoji) : p.emoji;
-        const c = cal ? Math.max(0, Math.round(Number(cal.value || 0))) : p.cals;
-        return { id: p.id, emoji: e, cals: c };
-      });
-
-      setPresets(next);
-      el("presetSavedHint").style.display = "block";
-      setTimeout(() => { el("presetSavedHint").style.display = "none"; }, 900);
-
-      renderPresets();
-      closePresetModal();
-    });
-
-    // Weigh info modal
-    el("weighInfoClose").addEventListener("click", () => el("weighInfoBack").classList.remove("show"));
-    el("weighInfoBack").addEventListener("click", (e) => {
-      if(e.target === el("weighInfoBack")) el("weighInfoBack").classList.remove("show");
-    });
-
-    // Export
-    el("exportBtn").addEventListener("click", () => {
-      const payload = {
-        exportedAt: new Date().toISOString(),
-        cutoffHour: DAY_CUTOFF_HOUR,
-        settings: getSettings(),
-        stats: getStats(),
-        banks: getBanks(),
-        plan: getPlan(),
-        presets: getPresets(),
-        weigh: getWeigh(),
-        today: getToday(),
-        days: getDays()
+      el("roundDownBtn").onclick = () => {
+        lastRoundPick = down;
+        setSelected();
+        updateRoundPickText();
+        el("roundBack").classList.remove("show");
+      };
+      el("roundUpBtn").onclick = () => {
+        lastRoundPick = up;
+        setSelected();
+        updateRoundPickText();
+        el("roundBack").classList.remove("show");
+      };
+      el("roundExactBtn").onclick = () => {
+        lastRoundPick = null;
+        updateRoundPickText();
+        el("roundBack").classList.remove("show");
       };
 
-      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `allocate_export_${dayKeyWithCutoff()}.json`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    });
-
-    // Edit saved day modal
-    let editingId = null;
-
-    const openEdit = (id) => {
-      const days = getDays();
-      const d = days.find(x => String(x.id) === String(id));
-      if(!d) return;
-
-      editingId = id;
-      el("editTitle").textContent = `Edit ${formatDayKey(d.dayKey)}`;
-      el("editYTdee").value = String(d.yTdee || 0);
-      el("editIntake").value = String(d.intake || 0);
-      el("editBack").classList.add("show");
-    };
-
-    const closeEdit = () => {
-      editingId = null;
-      el("editBack").classList.remove("show");
-    };
-
-    el("editClose").addEventListener("click", closeEdit);
-    el("editBack").addEventListener("click", (e) => {
-      if(e.target === el("editBack")) closeEdit();
-    });
-
-    el("editSave").addEventListener("click", () => {
-      if(!editingId) return;
-
-      const days = getDays();
-      const idx = days.findIndex(x => String(x.id) === String(editingId));
-      if(idx < 0) return;
-
-      const y = Number(el("editYTdee").value || 0);
-      const i = Number(el("editIntake").value || 0);
-
-      days[idx].yTdee = Number.isFinite(y) ? Math.max(0, Math.round(y)) : 0;
-      days[idx].intake = Number.isFinite(i) ? Math.max(0, Math.round(i)) : 0;
-
-      const settings = getSettings();
-      const tdee = days[idx].yTdee || 0;
-      const budget = days[idx].maintenance ? tdee : Math.max(0, Math.round(tdee - settings.deficit));
-      days[idx].budget = budget;
-
-      setDays(days);
-      closeEdit();
-      render();
-    });
-
-    // Keep day rollover accurate
-    setInterval(() => {
-      const keyNow = dayKeyWithCutoff();
-      const today = getToday();
-      if(today.dayKey !== keyNow){
-        ensureDayRoll();
-        render();
-      }
-    }, 60000);
-
-    // Init
-    renderStatsView();
-    render();
-  </script>
-</body>
-</html>
+      el("roundBack
