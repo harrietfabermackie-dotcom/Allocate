@@ -27,7 +27,7 @@
       --tabH: 78px;
       --tabPad: 10px;
 
-      --softNone: rgba(27,16,32,.42);
+      --pinkSolid: #ff5f9a;
     }
 
     *{ box-sizing:border-box; }
@@ -43,12 +43,16 @@
       align-items:flex-start;
       justify-content:center;
       padding:22px 14px 40px;
-      overflow:hidden;
+    }
+
+    body.night{
+      background:
+        radial-gradient(1200px 800px at 20% 10%, rgba(255,255,255,.08), transparent 60%),
+        linear-gradient(145deg, #1b2a5a, #2b5fd6);
     }
 
     .phone{
       width:min(420px, 100%);
-      height: min(820px, calc(100vh - 62px));
       border-radius: 36px;
       padding: 16px;
       background: rgba(255,255,255,.18);
@@ -58,8 +62,11 @@
       -webkit-backdrop-filter: blur(10px);
       position: relative;
       overflow:hidden;
-      display:flex;
-      flex-direction:column;
+    }
+
+    body.night .phone{
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.18);
     }
 
     .topbar{
@@ -68,7 +75,6 @@
       justify-content:space-between;
       padding: 6px 6px 12px;
       gap: 10px;
-      flex: 0 0 auto;
     }
     .brand{
       font-weight:900;
@@ -78,6 +84,7 @@
       align-items:center;
       gap:10px;
       min-width: 0;
+      user-select:none;
     }
     .dot{
       width:10px;
@@ -87,6 +94,12 @@
       box-shadow: 0 6px 14px rgba(255,95,154,.35);
       flex: 0 0 auto;
     }
+
+    body.night .dot{
+      background: linear-gradient(135deg, #2b5fd6, #5aa6ff);
+      box-shadow: 0 6px 14px rgba(90,166,255,.28);
+    }
+
     .topActions{
       display:flex;
       align-items:center;
@@ -109,11 +122,14 @@
     }
     .pillbtn:active{ transform: translateY(1px) scale(.99); }
 
+    body.night .pillbtn{
+      border-color: rgba(255,255,255,.28);
+      background: rgba(255,255,255,.12);
+      color: rgba(255,255,255,.92);
+    }
+
     .content{
-      flex: 1 1 auto;
-      overflow:auto;
-      padding-bottom: calc(var(--tabH) + 44px);
-      -webkit-overflow-scrolling: touch;
+      padding-bottom: calc(var(--tabH) + 26px);
     }
 
     .card{
@@ -123,11 +139,20 @@
       padding: 16px;
       box-shadow: var(--shadow2);
     }
+
+    body.night .card{
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.18);
+      box-shadow: 0 10px 24px rgba(8, 12, 30, .28);
+      color: rgba(255,255,255,.92);
+    }
+
     .stack{ display:flex; flex-direction:column; gap:12px; }
 
     .hero{
       text-align:center;
       padding: 18px 16px 14px;
+      position: relative;
     }
     .hero .label{
       font-weight:900;
@@ -139,7 +164,12 @@
       color: rgba(91,75,97,.85);
       font-weight:900;
       margin: 0 0 10px 0;
+      user-select:none;
     }
+    body.night .subline{
+      color: rgba(255,255,255,.72);
+    }
+
     .big{
       font-weight:900;
       font-size:64px;
@@ -150,6 +180,14 @@
       background-clip:text;
       color: transparent;
       letter-spacing: -1.5px;
+      user-select:none;
+    }
+
+    body.night .big{
+      background: linear-gradient(135deg, #5aa6ff, #2b5fd6);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
     }
 
     .grid2{
@@ -169,6 +207,11 @@
       text-align:left;
       min-width: 0;
     }
+    body.night .kpi{
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.18);
+    }
+
     .kpi .klabel{
       font-size:12px;
       color:var(--muted);
@@ -179,7 +222,10 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      user-select:none;
     }
+    body.night .kpi .klabel{ color: rgba(255,255,255,.72); }
+
     .kpi .kval{
       font-size:18px;
       font-weight:900;
@@ -196,9 +242,13 @@
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    .knum.none{
-      color: var(--softNone);
+
+    .mutedNone{
+      color: rgba(91,75,97,.65);
       font-weight:800;
+    }
+    body.night .mutedNone{
+      color: rgba(255,255,255,.70);
     }
 
     .row{
@@ -213,7 +263,10 @@
       color:var(--muted);
       font-weight:900;
       margin: 0 0 6px 2px;
+      user-select:none;
     }
+    body.night label{ color: rgba(255,255,255,.72); }
+
     input, select{
       width:100%;
       border:1px solid rgba(255,255,255,.8);
@@ -226,10 +279,24 @@
       color: var(--ink);
       font-family: "SF Pro Rounded", ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
     }
+
+    body.night input, body.night select{
+      border-color: rgba(255,255,255,.22);
+      background: rgba(255,255,255,.10);
+      color: rgba(255,255,255,.92);
+    }
+
     input::placeholder{ color: rgba(91,75,97,.65); font-weight:800; }
+    body.night input::placeholder{ color: rgba(255,255,255,.55); }
+
     input:focus, select:focus{
       border-color: rgba(255,95,154,.55);
       box-shadow: 0 0 0 4px rgba(255,95,154,.18);
+    }
+
+    body.night input:focus, body.night select:focus{
+      border-color: rgba(90,166,255,.55);
+      box-shadow: 0 0 0 4px rgba(90,166,255,.20);
     }
 
     .field{ flex: 1 1 170px; min-width: 0; }
@@ -252,18 +319,39 @@
       font-family: "SF Pro Rounded", ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
     }
     .btn:active{ transform: translateY(1px) scale(.995); }
+
+    body.night .btn{
+      background: linear-gradient(135deg, #2b5fd6, #5aa6ff);
+      box-shadow: 0 14px 30px rgba(90,166,255,.22);
+    }
+
     .btn.ghost{
       background: rgba(255,255,255,.35);
       color: var(--ink);
       border: 1px solid rgba(255,255,255,.65);
       box-shadow: var(--shadow2);
     }
+
+    body.night .btn.ghost{
+      background: rgba(255,255,255,.12);
+      color: rgba(255,255,255,.92);
+      border-color: rgba(255,255,255,.18);
+      box-shadow: 0 10px 24px rgba(8,12,30,.22);
+    }
+
     .btn.neutral{
       background: rgba(255,255,255,.55);
       color: var(--ink);
       border: 1px solid rgba(255,255,255,.75);
       box-shadow: var(--shadow2);
     }
+
+    body.night .btn.neutral{
+      background: rgba(255,255,255,.12);
+      color: rgba(255,255,255,.92);
+      border-color: rgba(255,255,255,.18);
+    }
+
     .btn.small{
       padding: 12px 12px;
       font-size: 16px;
@@ -275,9 +363,16 @@
       border: 1px solid rgba(255,255,255,.75);
       box-shadow: var(--shadow2);
     }
+    body.night .btn.saved{
+      background: rgba(255,255,255,.14);
+      color: rgba(255,255,255,.92);
+      border-color: rgba(255,255,255,.18);
+    }
+
     .btn:disabled{
-      opacity:.75;
+      opacity:.55;
       cursor:not-allowed;
+      filter: saturate(.6);
     }
 
     .mini{
@@ -292,7 +387,9 @@
       font-size:12px;
       color: var(--muted);
       font-weight:900;
+      user-select:none;
     }
+    body.night .mini .hint{ color: rgba(255,255,255,.72); }
 
     .spacer{ height: 8px; }
 
@@ -309,12 +406,18 @@
       flex: 1 1 190px;
       min-width: 0;
     }
+    body.night .switchRow{
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.18);
+    }
+
     .switchRow .slabel{
       font-weight:900;
       font-size:16px;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
+      user-select:none;
     }
 
     .iosSwitch{
@@ -359,6 +462,10 @@
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       border-color: rgba(255,255,255,.65);
     }
+    body.night .iosSwitch input:checked + .iosTrack{
+      background: linear-gradient(135deg, #2b5fd6, #5aa6ff);
+      border-color: rgba(255,255,255,.22);
+    }
     .iosSwitch input:checked ~ .iosThumb{
       transform: translateX(20px);
     }
@@ -378,9 +485,15 @@
       padding: 0;
       -webkit-tap-highlight-color: transparent;
       flex: 0 0 auto;
-      font-family: "SF Pro Rounded", ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
     }
     .iconBtn:active{ transform: translateY(1px) scale(.99); }
+
+    body.night .iconBtn{
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.12);
+      color: rgba(255,255,255,.92);
+      box-shadow: 0 10px 24px rgba(8,12,30,.22);
+    }
 
     .entryList{
       margin: 10px 0 0 0;
@@ -390,6 +503,14 @@
       flex-direction:column;
       gap:8px;
     }
+
+    .entryScroller{
+      margin-top: 10px;
+      max-height: 280px;
+      overflow:auto;
+      padding-right: 2px;
+    }
+
     .entry{
       display:flex;
       align-items:center;
@@ -401,6 +522,11 @@
       border: 1px solid rgba(255,255,255,.72);
       min-width: 0;
     }
+    body.night .entry{
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.18);
+    }
+
     .entry .left{
       display:flex;
       flex-direction:column;
@@ -411,7 +537,10 @@
       font-size:12px;
       color: var(--muted);
       font-weight:900;
+      user-select:none;
     }
+    body.night .entry .time{ color: rgba(255,255,255,.72); }
+
     .entry .calsLine{
       display:flex;
       align-items:center;
@@ -426,13 +555,21 @@
     .entry .cals{
       font-size:16px;
       font-weight:900;
+      white-space:nowrap;
+      user-select:none;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       -webkit-background-clip:text;
       background-clip:text;
       color: transparent;
-      white-space:nowrap;
     }
-    .editBtn{
+    body.night .entry .cals{
+      background: linear-gradient(135deg, #5aa6ff, #2b5fd6);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+    }
+
+    .xbtn{
       border: 1px solid rgba(255,255,255,.7);
       background: rgba(255,255,255,.55);
       color: var(--ink);
@@ -445,12 +582,17 @@
       flex: 0 0 auto;
       font-family: "SF Pro Rounded", ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
     }
-    .editBtn:active{ transform: translateY(1px) scale(.99); }
+    body.night .xbtn{
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.12);
+      color: rgba(255,255,255,.92);
+    }
+    .xbtn:active{ transform: translateY(1px) scale(.99); }
 
     .page{ display:none; margin-top:12px; }
     .page.active{ display:block; }
 
-    /* Bottom nav pinned to phone container */
+    /* Bottom nav sticks to the phone container */
     .bottomTabsWrap{
       position: absolute;
       left: 16px;
@@ -467,6 +609,12 @@
       justify-content:center;
       z-index: 999;
     }
+    body.night .bottomTabsWrap{
+      background: rgba(255,255,255,.12);
+      border-color: rgba(255,255,255,.18);
+      box-shadow: 0 10px 24px rgba(8,12,30,.22);
+    }
+
     .bottomTabs{
       width:100%;
       display:grid;
@@ -487,23 +635,26 @@
       -webkit-tap-highlight-color: transparent;
       color: var(--offblack);
       min-width: 0;
-      font-family: "SF Pro Rounded", ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
     }
     .btab.active{
       background: rgba(0,0,0,.06);
       border-color: rgba(0,0,0,.06);
     }
+    body.night .btab.active{
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.10);
+    }
+
     .navIco{
       width: 30px;
       height: 30px;
       display:block;
     }
-    .navIco .fill{
-      fill: var(--offblack);
-    }
-    .btab.active .navIco .fill{
-      fill: url(#navGrad);
-    }
+    .navIco .fill{ fill: var(--offblack); }
+    body.night .navIco .fill{ fill: rgba(255,255,255,.90); }
+
+    .btab.active .navIco .fill{ fill: url(#navGrad); }
+    body.night .btab.active .navIco .fill{ fill: url(#nightGrad); }
 
     /* Progress */
     .planBar{
@@ -514,6 +665,11 @@
       overflow:hidden;
       margin-top: 12px;
     }
+    body.night .planBar{
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.18);
+    }
+
     .planFill{
       height:100%;
       width: 0%;
@@ -521,6 +677,10 @@
       border-radius: 999px;
       transition: width .35s ease;
     }
+    body.night .planFill{
+      background: linear-gradient(135deg, #2b5fd6, #5aa6ff);
+    }
+
     .trackTitle{
       font-weight:900;
       font-size: 28px;
@@ -532,14 +692,25 @@
       color: transparent;
       letter-spacing: -.6px;
       text-align:center;
+      user-select:none;
     }
+    body.night .trackTitle{
+      background: linear-gradient(135deg, #5aa6ff, #2b5fd6);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+    }
+
     .trackSub{
       margin-top: 10px;
       font-weight:900;
-      font-size: 18px;
+      font-size: 15px;
       color: rgba(27,16,32,.86);
       text-align:center;
+      user-select:none;
     }
+    body.night .trackSub{ color: rgba(255,255,255,.88); }
+
     .trackMetaRow{
       margin-top: 8px;
       display:flex;
@@ -552,9 +723,11 @@
       font-size:12px;
       color: rgba(91,75,97,.92);
       font-weight:900;
+      user-select:none;
     }
+    body.night .trackMetaRow .pm{ color: rgba(255,255,255,.72); }
 
-    /* Weigh in tile */
+    /* Weekly weigh in tile */
     .weighTop{
       display:flex;
       align-items:center;
@@ -565,7 +738,15 @@
     .weighTop .wtitle{
       font-weight:900;
       font-size:16px;
+      user-select:none;
     }
+
+    .helpZone{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
     .helpBtn{
       width: 34px;
       height: 34px;
@@ -583,17 +764,18 @@
       flex: 0 0 auto;
       font-size: 14px;
       line-height: 1;
-      font-family: "SF Pro Rounded", ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+      user-select:none;
     }
+    body.night .helpBtn{
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.12);
+      color: rgba(255,255,255,.92);
+      box-shadow: 0 10px 24px rgba(8,12,30,.22);
+    }
+
     .helpBtn:active{ transform: translateY(1px) scale(.99); }
 
-    .weighIcons{
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-
-    .lockPillMini{
+    .lockPillInline{
       padding: 6px 10px;
       border-radius: 999px;
       background: rgba(0,0,0,.06);
@@ -603,16 +785,23 @@
       display:flex;
       align-items:center;
       gap:8px;
+      user-select:none;
     }
-    .lockPillMini svg{
+    body.night .lockPillInline{
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.10);
+      color: rgba(255,255,255,.78);
+    }
+
+    .lockPillInline svg{
       width: 14px;
       height: 14px;
       display:block;
     }
-    .lockPillMini .lk{
-      fill: rgba(27,16,32,.62);
-    }
-    .lockPillMini .tiny7d{
+    .lockPillInline .lk{ fill: rgba(27,16,32,.62); }
+    body.night .lockPillInline .lk{ fill: rgba(255,255,255,.78); }
+
+    .lockPillInline .tiny7d{
       font-weight:900;
       opacity:.92;
       font-size: 12px;
@@ -630,7 +819,10 @@
       font-weight:900;
       font-size:14px;
       color: rgba(27,16,32,.85);
+      user-select:none;
     }
+    body.night .statsTitle{ color: rgba(255,255,255,.88); }
+
     .pencil{
       width: 48px;
       height: 48px;
@@ -645,14 +837,15 @@
       -webkit-tap-highlight-color: transparent;
       color: var(--ink);
       padding: 0;
-      font-family: "SF Pro Rounded", ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+    body.night .pencil{
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.12);
+      box-shadow: 0 10px 24px rgba(8,12,30,.22);
+      color: rgba(255,255,255,.92);
     }
     .pencil:active{ transform: translateY(1px) scale(.99); }
-    .pencil svg{
-      width: 22px;
-      height: 22px;
-      display:block;
-    }
+    .pencil svg{ width: 22px; height: 22px; display:block; }
     .pencil path{
       stroke: var(--ink);
       stroke-width: 2.8;
@@ -660,12 +853,9 @@
       stroke-linejoin: round;
       fill: none;
     }
+    body.night .pencil path{ stroke: rgba(255,255,255,.92); }
 
-    .kvRow{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
+    .kvRow{ display:flex; gap:10px; flex-wrap:wrap; }
     .kv{
       flex: 1 1 45%;
       min-width: 150px;
@@ -674,42 +864,54 @@
       border-radius: 16px;
       padding: 10px 12px;
     }
-    .kv .k{ font-size:12px; color: var(--muted); font-weight:900; }
-    .kv .v{ font-size:14px; font-weight:900; margin-top: 2px; }
+    body.night .kv{
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.18);
+    }
+    .kv .k{ font-size:12px; color: var(--muted); font-weight:900; user-select:none; }
+    body.night .kv .k{ color: rgba(255,255,255,.72); }
+    .kv .v{ font-size:14px; font-weight:900; margin-top: 2px; user-select:none; }
 
     .note{
       font-size:12px;
       color: rgba(91,75,97,.8);
       font-weight:900;
       margin-top: 6px;
+      user-select:none;
     }
+    body.night .note{ color: rgba(255,255,255,.72); }
 
     /* Goal calc */
     .calcWrap{ display:none; }
-    .calcWrap .card{
-      padding-top: 18px;
-    }
     .calcRow{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
       align-items:flex-end;
     }
+    .calcRow.tight{
+      align-items:stretch;
+    }
     .calcMsg{
       font-weight:900;
       color: rgba(27,16,32,.85);
-      margin-top: 16px;
+      margin-top: 14px;
       text-align:center;
-      min-height: 26px;
+      min-height: 28px;
+      user-select:none;
     }
+    body.night .calcMsg{ color: rgba(255,255,255,.88); }
+
     .calcMsg .bigDef{
       font-size: 22px;
       font-weight: 900;
-      margin-top: 6px;
+      margin-top: 8px;
+      display:block;
     }
+
     .loadingDots{
       display:inline-block;
-      width: 44px;
+      width: 54px;
       text-align:left;
     }
     .loadingDots span{
@@ -721,6 +923,7 @@
       margin-right: 6px;
       animation: bounce 1s infinite ease-in-out;
     }
+    body.night .loadingDots span{ background: rgba(255,255,255,.78); }
     .loadingDots span:nth-child(2){ animation-delay: .15s; }
     .loadingDots span:nth-child(3){ animation-delay: .30s; }
     @keyframes bounce{
@@ -744,7 +947,10 @@
       align-items:center;
       gap:10px;
       min-width: 0;
+      user-select:none;
     }
+    body.night .presetTitle{ color: rgba(255,255,255,.88); }
+
     .presetTiles{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -765,36 +971,52 @@
       user-select:none;
       min-width: 0;
     }
-    .ptile:active{ transform: translateY(1px) scale(.995); }
-    .ptile .e{
-      font-size:18px;
-      line-height:1;
-      flex:0 0 auto;
+    body.night .ptile{
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.18);
     }
+    .ptile:active{ transform: translateY(1px) scale(.995); }
+    .ptile .e{ font-size:18px; line-height:1; flex:0 0 auto; }
     .ptile .n{
       font-weight:900;
-      color: rgba(27,16,32,.85);
       white-space:nowrap;
       overflow:hidden;
       text-overflow: ellipsis;
       min-width:0;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+    }
+    body.night .ptile .n{
+      background: linear-gradient(135deg, #5aa6ff, #2b5fd6);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
     }
 
-    /* Thin intake vs budget bar */
-    .thinBarWrap{
-      margin-top: 12px;
+    /* Intake vs budget bar */
+    .intakeBar{
       height: 8px;
       border-radius: 999px;
       background: rgba(91,75,97,.18);
       border: 1px solid rgba(255,255,255,.65);
       overflow:hidden;
+      margin-top: 12px;
     }
-    .thinBarFill{
+    body.night .intakeBar{
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.18);
+    }
+    .intakeFill{
       height:100%;
       width: 0%;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       border-radius: 999px;
       transition: width .25s ease;
+    }
+    body.night .intakeFill{
+      background: linear-gradient(135deg, #2b5fd6, #5aa6ff);
     }
 
     /* Modals */
@@ -818,6 +1040,7 @@
       padding: 14px;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
+      color: var(--ink);
     }
     .modalTop{
       display:flex;
@@ -829,6 +1052,7 @@
     .modalTop .mtitle{
       font-weight:900;
       font-size:16px;
+      user-select:none;
     }
     .closeBtn{
       border: 1px solid rgba(255,255,255,.75);
@@ -839,6 +1063,7 @@
       cursor:pointer;
       -webkit-tap-highlight-color: transparent;
       color: var(--ink);
+      user-select:none;
       font-family: "SF Pro Rounded", ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
     }
     .closeBtn:active{ transform: translateY(1px) scale(.99); }
@@ -850,6 +1075,7 @@
       font-size: 22px;
       color: rgba(27,16,32,.9);
       margin: 4px 0 10px 0;
+      user-select:none;
     }
 
     /* Rounding modal */
@@ -869,7 +1095,7 @@
       user-select:none;
     }
     .rTile.active{
-      outline: 3px solid rgba(255,95,154,.25);
+      outline: 3px solid rgba(255,95,154,.28);
     }
     .rTile .rtLabel{
       font-size:12px;
@@ -892,6 +1118,33 @@
       color: rgba(91,75,97,.9);
     }
 
+    /* Preset picker tiles in modal */
+    .pickTiles{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:10px;
+      margin-top:10px;
+    }
+    .pickTile{
+      background: rgba(255,255,255,.58);
+      border: 1px solid rgba(255,255,255,.72);
+      border-radius: 18px;
+      padding: 12px 10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      font-weight:900;
+      font-size: 18px;
+    }
+    .pickTile.active{
+      border-color: rgba(255,95,154,.75);
+      box-shadow: 0 0 0 3px rgba(255,95,154,.22);
+    }
+
     /* Smooth page nudge */
     .fadeNudge{
       animation: nudge .22s ease-out;
@@ -899,6 +1152,38 @@
     @keyframes nudge{
       from{ transform: translateY(4px); opacity:.85; }
       to{ transform: translateY(0); opacity:1; }
+    }
+
+    /* Night mode soft lock visual */
+    .lockedHint{
+      font-size:12px;
+      font-weight:900;
+      color: rgba(255,255,255,.78);
+      margin-top: 10px;
+      text-align:center;
+      user-select:none;
+    }
+
+    .goodnightBanner{
+      margin-top: 10px;
+      padding: 12px 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.18);
+      text-align:center;
+      user-select:none;
+    }
+    .goodnightBanner .gTitle{
+      font-weight:900;
+      font-size:22px;
+      margin: 0;
+      color: rgba(255,255,255,.92);
+    }
+    .goodnightBanner .gSub{
+      margin-top: 6px;
+      font-weight:900;
+      font-size:12px;
+      color: rgba(255,255,255,.72);
     }
 
     svg defs linearGradient stop{ stop-opacity:1; }
@@ -918,6 +1203,16 @@
           <stop offset="0" stop-color="#ff5f9a"></stop>
           <stop offset="1" stop-color="#ff9a5a"></stop>
         </linearGradient>
+
+        <linearGradient id="nightGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#2b5fd6"></stop>
+          <stop offset="1" stop-color="#5aa6ff"></stop>
+        </linearGradient>
+
+        <linearGradient id="nightPinkGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#2b5fd6"></stop>
+          <stop offset="1" stop-color="#5aa6ff"></stop>
+        </linearGradient>
       </defs>
     </svg>
 
@@ -935,17 +1230,17 @@
         <div class="stack">
           <div class="card hero">
             <p class="subline" id="todayDate"></p>
-            <div class="label">Today's budget</div>
+            <div class="label" id="dashMainLabel">Today's budget</div>
             <p class="big" id="budgetBig">0</p>
+
+            <div id="goodnightBox" style="display:none;"></div>
 
             <div class="spacer"></div>
 
             <div class="grid2">
-              <div class="kpi">
+              <div class="kpi" id="yTdeeKpiBox" role="button" tabindex="0" style="cursor:pointer;">
                 <div class="klabel">Yesterday's TDEE</div>
-                <div class="kval">
-                  <span class="knum" id="yTdeeKpi">0</span>
-                </div>
+                <div class="kval"><span class="knum" id="yTdeeKpi">0</span></div>
               </div>
 
               <div class="kpi">
@@ -968,7 +1263,7 @@
                   <span class="knum" id="bankedKpi">0</span>
                   <button class="iconBtn" id="useBankedBtn" aria-label="Use calorie bank">
                     <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M12 5.8c.4 0 .8.2 1.1.5l4 4a1.6 1.6 0 0 1-2.2 2.2l-1.3-1.3V18a1.6 1.6 0 0 1-3.2 0v-6.8l-1.3 1.3a1.6 1.6 0 0 1-2.2-2.2l4-4c.3-.3.7-.5 1.1-.5z" fill="url(#pinkGrad)"></path>
+                      <path id="useBankIconPath" d="M12 5.8c.4 0 .8.2 1.1.5l4 4a1.6 1.6 0 0 1-2.2 2.2l-1.3-1.3V18a1.6 1.6 0 0 1-3.2 0v-6.8l-1.3 1.3a1.6 1.6 0 0 1-2.2-2.2l4-4c.3-.3.7-.5 1.1-.5z" fill="url(#pinkGrad)"></path>
                     </svg>
                   </button>
                 </div>
@@ -978,7 +1273,7 @@
             <div class="spacer"></div>
 
             <div class="row">
-              <div class="field">
+              <div class="field" id="tdeeInputWrap">
                 <label for="tdeeInputDash">Yesterday's TDEE</label>
                 <input id="tdeeInputDash" type="number" inputmode="numeric" min="0" placeholder="Enter TDEE" />
               </div>
@@ -1074,7 +1369,7 @@
           </div>
 
           <div class="card calcWrap" id="goalCard">
-            <div style="font-weight:900; font-size:14px; color: rgba(27,16,32,.85);">Goal calculator</div>
+            <div style="font-weight:900; font-size:14px; color: rgba(27,16,32,.85);" id="goalTitle">Goal calculator</div>
             <div class="spacer"></div>
 
             <div class="calcRow">
@@ -1090,14 +1385,14 @@
 
             <div class="spacer"></div>
 
-            <div class="calcRow">
+            <div class="calcRow tight">
               <div class="field">
                 <label for="targetDateInput">Target date</label>
                 <input id="targetDateInput" type="date" />
               </div>
-              <div class="field small">
+              <div class="field small" style="flex:0 0 120px;">
                 <label style="visibility:hidden;">Calculate</label>
-                <button class="btn" id="calcBtn" style="height:48px;">Calculate</button>
+                <button class="btn" id="calcBtn" style="height: 48px;">Calculate</button>
               </div>
             </div>
 
@@ -1118,11 +1413,11 @@
       <div class="page" id="pageLogging">
         <div class="stack">
           <div class="card hero">
-            <div class="label">Calories left today</div>
+            <div class="label" id="logMainLabel">Calories left today</div>
             <p class="big" id="leftBig">0</p>
 
-            <div class="thinBarWrap" aria-label="Intake vs budget">
-              <div class="thinBarFill" id="thinFill" style="width:0%;"></div>
+            <div class="intakeBar" aria-label="Intake vs budget">
+              <div class="intakeFill" id="intakeFill" style="width:0%;"></div>
             </div>
 
             <div class="spacer"></div>
@@ -1137,6 +1432,8 @@
                 <div class="kval"><span class="knum" id="budgetLogKpi">0</span></div>
               </div>
             </div>
+
+            <div class="lockedHint" id="loggingLockedHint" style="display:none;">Locked for the night</div>
           </div>
 
           <div class="card">
@@ -1166,13 +1463,16 @@
               </div>
             </div>
 
-            <ul class="entryList" id="entryList"></ul>
-
             <div class="spacer"></div>
 
             <div class="grid2">
               <button class="btn ghost" id="undoBtn">Undo last add</button>
               <button class="btn" id="endDayBtn">End day</button>
+              <button class="btn neutral" id="returnBtn" style="display:none;">Return</button>
+            </div>
+
+            <div class="entryScroller" id="entryScroller">
+              <ul class="entryList" id="entryList"></ul>
             </div>
           </div>
         </div>
@@ -1218,7 +1518,7 @@
 
         <button class="btab" data-page="Progress" aria-label="Progress">
           <svg class="navIco" viewBox="0 0 24 24" aria-hidden="true">
-            <path class="fill" d="M12 2.8l2.2 6.2 6.5.2-5.2 3.9 1.9 6.3L12 15.7 6.6 19.4l1.9-6.3-5.2-3.9 6.5-.2L12 2.8z"></path>
+            <path class="fill" d="M12 3.2c4.8 0 8.8 4 8.8 8.8S16.8 20.8 12 20.8 3.2 16.8 3.2 12 7.2 3.2 12 3.2zm0 2.2a6.6 6.6 0 1 0 0 13.2 6.6 6.6 0 0 0 0-13.2zm-.2 2.4c.6 0 1 .4 1 1v2.7l2.2 1.3c.5.3.6 1 .4 1.5-.3.5-1 .6-1.5.4l-2.8-1.6a1 1 0 0 1-.5-.9V8.8c0-.6.4-1 1-1z"></path>
           </svg>
         </button>
       </div>
@@ -1237,8 +1537,8 @@
 
       <div class="stack">
         <button class="btn neutral" id="optRollover">Rollover to tomorrow</button>
-        <button class="btn neutral" id="optBanked">Save in calorie bank</button>
-        <button class="btn" id="optMoveOn">Reach goal faster</button>
+        <button class="btn neutral" id="optBanked">Save in the calorie bank</button>
+        <button class="btn" id="optMoveOn">Reach your goal faster</button>
       </div>
     </div>
   </div>
@@ -1267,11 +1567,14 @@
   <div class="modalBack" id="presetBack">
     <div class="modal">
       <div class="modalTop">
-        <div class="mtitle">Presets</div>
-        <div style="font-size:12px;font-weight:900;color:rgba(91,75,97,.85);">Tap a tile to edit</div>
+        <div>
+          <div class="mtitle">Presets</div>
+          <div style="font-size:12px;font-weight:900;color:rgba(91,75,97,.85);" id="presetSubtitle">Choose a tile to edit</div>
+        </div>
+        <button class="closeBtn" id="presetClose">Close</button>
       </div>
 
-      <div class="presetTiles" id="presetPickTiles" style="margin-top:10px;"></div>
+      <div class="pickTiles" id="pickTiles"></div>
 
       <div class="spacer"></div>
 
@@ -1352,10 +1655,6 @@
 
     const DEFAULT_DEFICIT = 750;
     const DAY_CUTOFF_HOUR = 3;
-    const CALS_PER_LB = 3500;
-
-    const HARD_STREAK_DAYS = 8;
-    const HARD_PLAN_TOTAL_DAYS = 34;
 
     const el = (id) => document.getElementById(id);
 
@@ -1437,9 +1736,7 @@
       if(!iso) return "";
       const dt = new Date(`${iso}T12:00:00`);
       if(Number.isNaN(dt.getTime())) return "";
-      const day = dt.getDate();
-      const month = dt.toLocaleDateString("en-GB", { month: "short" });
-      return `${ordinal(day)} ${month}`;
+      return dt.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
     };
 
     const getSettings = () => {
@@ -1474,7 +1771,9 @@
       maintenance: false,
       entries: [],
       rolloverApplied: 0,
-      usedBanked: 0
+      usedBanked: 0,
+      goodnight: false,
+      endUndo: null
     });
 
     const getToday = () => {
@@ -1484,6 +1783,8 @@
       if(typeof t.rolloverApplied !== "number") t.rolloverApplied = 0;
       if(typeof t.usedBanked !== "number") t.usedBanked = 0;
       if(typeof t.maintenance !== "boolean") t.maintenance = !!t.maintenance;
+      if(typeof t.goodnight !== "boolean") t.goodnight = !!t.goodnight;
+      if(typeof t.endUndo !== "object") t.endUndo = t.endUndo || null;
       return t;
     };
     const setToday = (today) => saveJSON(LS_TODAY, today);
@@ -1504,6 +1805,14 @@
     const calcBudgetTotal = (today, settings) => {
       const base = calcBudgetBase(today, settings);
       return Math.round(base + (today.rolloverApplied || 0) + (today.usedBanked || 0));
+    };
+
+    const setNightTheme = (isNight) => {
+      document.body.classList.toggle("night", !!isNight);
+      const path = el("useBankIconPath");
+      if(path){
+        path.setAttribute("fill", isNight ? "url(#nightPinkGrad)" : "url(#pinkGrad)");
+      }
     };
 
     const ensureDayRoll = () => {
@@ -1536,7 +1845,6 @@
       const area = el("contentArea");
       area.classList.add("fadeNudge");
       setTimeout(() => area.classList.remove("fadeNudge"), 230);
-      area.scrollTop = 0;
     };
 
     document.querySelectorAll(".btab").forEach((b) => {
@@ -1545,8 +1853,7 @@
 
     /* Presets */
     const emojiChoices = [
-      "☕️","🍽️","🍪","🥪","🍫","🍕","🍜","🥗","🍗","🍞","🧃","🥤","🍺","🍷","🍣","🍔","🌯","🍟","🧁","🍦","🍇","🍌","🍎",
-      "🥐","🍩","🍿","🍯","🥛","🍓","🍒","🥝","🍉","🍦","🍬","🍭","🥞","🍗","🍖","🥟","🍛","🍣","🍙","🍜"
+      "☕️","🍽️","🍪","🥪","🍫","🍕","🍜","🥗","🍗","🍞","🧃","🥤","🍺","🍷","🍣","🍔","🌯","🍟","🧁","🍦","🍇","🍌","🍎","🍓","🍉","🥨","🍩","🥞","🧀","🍿","🍛","🍣","🥟"
     ];
 
     const defaultPresets = () => ([
@@ -1571,12 +1878,17 @@
       const wrap = el("presetTiles");
       wrap.innerHTML = "";
 
+      const today = getToday();
+      const locked = !!today.goodnight;
+
       for(const p of presets){
         const btn = document.createElement("div");
         btn.className = "ptile";
         btn.setAttribute("role","button");
         btn.setAttribute("tabindex","0");
         btn.setAttribute("data-pid", String(p.id));
+        btn.style.opacity = locked ? ".55" : "1";
+        btn.style.pointerEvents = locked ? "none" : "auto";
         btn.innerHTML = `
           <div class="e">${p.emoji}</div>
           <div class="n">${fmt(p.cals)}</div>
@@ -1591,6 +1903,8 @@
     const addPresetEntry = (emoji, cals) => {
       ensureDayRoll();
       const today = getToday();
+      if(today.goodnight) return;
+
       const v = Number(cals || 0);
       if(!Number.isFinite(v) || v <= 0) return;
 
@@ -1605,73 +1919,6 @@
       today.entries.push(entry);
       setToday(today);
       render();
-    };
-
-    const openEntryEdit = (entryId) => {
-      ensureDayRoll();
-      const today = getToday();
-      const e = today.entries.find(x => String(x.id) === String(entryId));
-      if(!e) return;
-
-      const back = document.createElement("div");
-      back.className = "modalBack show";
-      back.innerHTML = `
-        <div class="modal">
-          <div class="modalTop">
-            <div class="mtitle">Edit entry</div>
-            <button class="closeBtn" id="eeClose">Close</button>
-          </div>
-
-          <div class="row">
-            <div class="field">
-              <label for="eeCals">Calories</label>
-              <input id="eeCals" type="number" inputmode="numeric" min="0" value="${String(Number(e.cals||0))}" />
-            </div>
-            <div class="field">
-              <label for="eeEmoji">Emoji</label>
-              <select id="eeEmoji"></select>
-            </div>
-          </div>
-
-          <div class="spacer"></div>
-          <button class="btn" id="eeSave">Save</button>
-
-          <div class="note" style="margin-top:8px;">You cannot delete entries, only edit them.</div>
-        </div>
-      `;
-      document.body.appendChild(back);
-
-      const sel = back.querySelector("#eeEmoji");
-      sel.innerHTML = `<option value="">None</option>`;
-      for(const em of emojiChoices){
-        const opt = document.createElement("option");
-        opt.value = em;
-        opt.textContent = em;
-        sel.appendChild(opt);
-      }
-      sel.value = e.emoji || "";
-
-      const close = () => back.remove();
-
-      back.querySelector("#eeClose").addEventListener("click", close);
-      back.addEventListener("click", (ev) => { if(ev.target === back) close(); });
-
-      back.querySelector("#eeSave").addEventListener("click", () => {
-        ensureDayRoll();
-        const today2 = getToday();
-        const idx = today2.entries.findIndex(x => String(x.id) === String(entryId));
-        if(idx < 0) return;
-
-        const v = Number(back.querySelector("#eeCals").value || 0);
-        const c = (Number.isFinite(v) && v >= 0) ? Math.round(v) : Number(today2.entries[idx].cals||0);
-
-        today2.entries[idx].cals = c;
-        today2.entries[idx].emoji = String(back.querySelector("#eeEmoji").value || "");
-
-        setToday(today2);
-        close();
-        render();
-      });
     };
 
     const renderEntries = (today) => {
@@ -1691,18 +1938,32 @@
               <span class="cals">${fmt(Number(e.cals)||0)}</span>
             </div>
           </div>
-          <button class="editBtn" data-editentry="${e.id}">Edit</button>
+          <button class="xbtn" data-x="${e.id}">X</button>
         `;
         list.appendChild(li);
       }
 
-      list.querySelectorAll("[data-editentry]").forEach((btn) => {
-        btn.addEventListener("click", () => openEntryEdit(btn.getAttribute("data-editentry")));
+      const locked = !!today.goodnight;
+
+      list.querySelectorAll("[data-x]").forEach((btn) => {
+        btn.disabled = locked;
+        btn.style.opacity = locked ? ".55" : "1";
+        btn.style.pointerEvents = locked ? "none" : "auto";
+        btn.addEventListener("click", () => {
+          ensureDayRoll();
+          const today = getToday();
+          if(today.goodnight) return;
+          const id = btn.getAttribute("data-x");
+          today.entries = today.entries.filter(x => String(x.id) !== String(id));
+          setToday(today);
+          render();
+        });
       });
     };
 
     /* Log page */
     const renderLogPage = () => {
+      const settings = getSettings();
       const stack = el("logStack");
       stack.innerHTML = "";
 
@@ -1717,13 +1978,10 @@
       }
 
       for(const d of days){
+        const deficit = d.maintenance ? 0 : settings.deficit;
+
         const card = document.createElement("div");
         card.className = "card";
-
-        const mode = d.maintenance ? "Maintenance" : "Deficit";
-        const prog = Number(d.progressDeficit || 0);
-        const progTxt = `${prog >= 0 ? "" : "-"}${fmt(Math.abs(prog))}`;
-
         card.innerHTML = `
           <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px;">
             <div style="font-weight:900; font-size:14px; color: rgba(27,16,32,.75);">${formatDayKey(d.dayKey)}</div>
@@ -1738,8 +1996,8 @@
               <div class="kval"><span class="knum">${fmt(Number(d.yTdee||0))}</span></div>
             </div>
             <div class="kpi">
-              <div class="klabel">Intake</div>
-              <div class="kval"><span class="knum">${fmt(Number(d.intake||0))}</span></div>
+              <div class="klabel">Budget</div>
+              <div class="kval"><span class="knum">${fmt(Number(d.budget||0))}</span></div>
             </div>
           </div>
 
@@ -1747,12 +2005,12 @@
 
           <div class="grid2">
             <div class="kpi">
-              <div class="klabel">Mode</div>
-              <div class="kval"><span class="knum">${mode}</span></div>
+              <div class="klabel">Intake</div>
+              <div class="kval"><span class="knum">${fmt(Number(d.intake||0))}</span></div>
             </div>
             <div class="kpi">
-              <div class="klabel">Progress calories</div>
-              <div class="kval"><span class="knum">${progTxt}</span></div>
+              <div class="klabel">Deficit</div>
+              <div class="kval"><span class="knum">${d.maintenance ? "0" : `-${fmt(deficit)}`}</span></div>
             </div>
           </div>
         `;
@@ -1792,16 +2050,16 @@
       card.innerHTML = `
         <div class="weighTop">
           <div class="wtitle">Weekly weigh in</div>
-          <div class="weighIcons">
+          <div class="helpZone">
             ${showLock ? `
-              <div class="lockPillMini" aria-label="Locked for 7 days">
+              <div class="lockPillInline" aria-label="Locked for 7 days">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path class="lk" d="M7.5 11V8.7a4.5 4.5 0 0 1 9 0V11h.8c.9 0 1.7.8 1.7 1.7v6.6c0 .9-.8 1.7-1.7 1.7H6.7c-.9 0-1.7-.8-1.7-1.7v-6.6c0-.9.8-1.7 1.7-1.7h.8zm2 0h5V8.7a2.5 2.5 0 0 0-5 0V11z"></path>
                 </svg>
                 <span class="tiny7d">7d</span>
               </div>
+              <button class="helpBtn" id="weighHelpBtn">?</button>
             ` : ``}
-            ${showLock ? `<button class="helpBtn" id="weighHelpBtn">?</button>` : ``}
           </div>
         </div>
 
@@ -1817,11 +2075,12 @@
         <div class="row">
           <div class="field">
             <label for="weighInput">Weigh in (lb)</label>
-            <input id="weighInput" type="number" inputmode="decimal" step="0.1" min="0" placeholder="${allowed ? "Optional" : "Come back in 7 days"}" ${allowed ? "" : "disabled"} />
+            <input id="weighInput" type="number" inputmode="decimal" step="0.1" min="0"
+              placeholder="${allowed ? "Optional" : "Come back in 7 days"}" ${allowed ? "" : "disabled"} />
           </div>
           <div class="field small">
             <label style="visibility:hidden;">Save</label>
-            <button class="btn ${allowed ? "" : "neutral"}" id="weighSaveBtn" ${allowed ? "" : "disabled"}>${allowed ? "Save" : "Locked"}</button>
+            <button class="btn ${allowed ? "" : "neutral"}" id="weighSaveBtn" ${allowed ? "" : "disabled"}>${allowed ? "Save" : "Saved"}</button>
           </div>
         </div>
       `;
@@ -1858,76 +2117,124 @@
       if(e.target === el("weighHelpBack")) el("weighHelpBack").classList.remove("show");
     });
 
-    /* Plan progress based on actual logged days */
-    const planTotals = (plan) => {
-      if(!plan || !plan.currentWeightLb || !plan.targetWeightLb) return null;
-      const cw = Number(plan.currentWeightLb);
-      const tw = Number(plan.targetWeightLb);
-      if(!Number.isFinite(cw) || !Number.isFinite(tw) || tw >= cw) return null;
-      const total = (cw - tw) * CALS_PER_LB;
-      return { totalCalories: Math.max(0, Math.round(total)) };
-    };
+    /* Plan adjustment math */
+    const computeCreditedForDay = (plan, day) => {
+      if(!plan || !day) return { credited: 0, deviation: 0 };
 
-    const sumPlanProgressCalories = (plan) => {
-      if(!plan || !plan.startDayKey) return 0;
-      const startKey = String(plan.startDayKey);
-      const days = getDays();
-      let sum = 0;
-      for(const d of days){
-        if(!d || !d.dayKey) continue;
-        if(String(d.dayKey) < startKey) continue;
-        sum += Number(d.progressDeficit || 0);
+      const base = day.maintenance ? 0 : Math.max(0, Math.round(Number(plan.dailyDeficit || 0)));
+      const budget = Math.round(Number(day.budget || 0));
+      const intake = Math.round(Number(day.intake || 0));
+      const left = Number.isFinite(day.leftAtEnd) ? Math.round(day.leftAtEnd) : Math.round(budget - intake);
+
+      const endChoice = String(day.endChoice || "");
+      let deviation = 0;
+
+      if(left <= 0){
+        deviation = left;
+      }else{
+        if(endChoice === "moveon"){
+          deviation = left;
+        }else{
+          deviation = 0;
+        }
       }
-      return Math.round(sum);
+
+      const credited = base + deviation;
+      return { credited, deviation };
     };
 
-    const computeAdjustedTarget = (plan) => {
-      if(!plan || !plan.dailyDeficit || !plan.startDayKey) return null;
-      const totals = planTotals(plan);
-      if(!totals) return null;
+    const computeAdjustedTarget = (plan, days) => {
+      if(!plan || !plan.startDayKey || !plan.targetDateISO || !plan.dailyDeficit) return null;
 
-      const plannedDaily = Math.max(1, Math.round(Number(plan.dailyDeficit) || 1));
-      const achieved = sumPlanProgressCalories(plan);
+      const start = parseDayKeyToDateNoon(plan.startDayKey);
 
-      const remaining = Math.max(0, Math.round(totals.totalCalories - achieved));
-      const remainingDays = Math.ceil(remaining / plannedDaily);
+      const cw = Number(plan.currentWeightLb || 0);
+      const tw = Number(plan.targetWeightLb || 0);
+      const daily = Math.max(1, Math.round(Number(plan.dailyDeficit || 0)));
+
+      if(!Number.isFinite(cw) || !Number.isFinite(tw) || tw <= 0 || cw <= tw) return null;
+
+      const totalCals = Math.round((cw - tw) * 3500);
+      const relevant = (days || []).filter(d => String(d.dayKey || "") >= String(plan.startDayKey));
+
+      let creditedTotal = 0;
+      for(const d of relevant){
+        const x = computeCreditedForDay(plan, d);
+        creditedTotal += (Number.isFinite(x.credited) ? x.credited : 0);
+      }
+
+      const remaining = Math.max(0, totalCals - creditedTotal);
+      const remainingDays = Math.ceil(remaining / daily);
+
+      const adjustedDate = addDays(start, remainingDays);
+      const adjustedISO = toISODate(adjustedDate);
 
       const nowKey = dayKeyWithCutoff(new Date());
-      const nowNoon = parseDayKeyToDateNoon(nowKey);
-      const hit = addDays(nowNoon, remainingDays);
+      const now = parseDayKeyToDateNoon(nowKey);
 
-      const pct = totals.totalCalories === 0 ? 1 : Math.max(0, Math.min(1, achieved / totals.totalCalories));
+      const elapsedDays = Math.max(0, Math.floor((now - start) / 86400000));
+      const totalDaysAdj = Math.max(1, Math.ceil((adjustedDate - start) / 86400000));
+
+      const pct = Math.max(0, Math.min(1, totalDaysAdj === 0 ? 1 : (elapsedDays / totalDaysAdj)));
+
       return {
-        achieved,
+        totalCals,
+        creditedTotal,
         remaining,
-        total: totals.totalCalories,
         remainingDays,
-        hitISO: toISODate(hit),
+        adjustedISO,
+        adjustedDate,
+        elapsedDays,
+        totalDaysAdj,
         pct
       };
     };
 
+    const computeStreak = (plan, days) => {
+      if(!plan || !plan.startDayKey) return 0;
+      const relevant = (days || []).filter(d => String(d.dayKey || "") >= String(plan.startDayKey))
+        .sort((a,b) => (a.dayKey < b.dayKey ? 1 : -1));
+
+      let streak = 0;
+      for(const d of relevant){
+        const base = d.maintenance ? 0 : Math.max(0, Math.round(Number(plan.dailyDeficit || 0)));
+        const x = computeCreditedForDay(plan, d);
+        const ok = (base === 0) ? (x.deviation >= 0) : (x.credited >= base);
+        if(ok){
+          streak += 1;
+        }else{
+          break;
+        }
+      }
+      return streak;
+    };
+
+    /* Progress */
     const renderProgress = () => {
       const stack = el("progressStack");
       stack.innerHTML = "";
 
       const plan = getPlan();
-      if(plan && plan.targetWeightLb && plan.dailyDeficit){
-        const adj = computeAdjustedTarget(plan);
+      const days = getDays();
+
+      if(plan && plan.targetWeightLb && plan.targetDateISO && plan.dailyDeficit){
+        const adj = computeAdjustedTarget(plan, days);
 
         const c = document.createElement("div");
         c.className = "card";
 
-        const targetWeight = fmt(Number(plan.targetWeightLb));
-        const hitText = adj ? niceShortDate(adj.hitISO) : "";
+        const targetISO = adj ? adj.adjustedISO : plan.targetDateISO;
+        const targetDate = new Date(`${targetISO}T12:00:00`);
+        const targetDateText = targetDate.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
 
         const pctW = adj ? Math.round(adj.pct * 100) : 0;
+        const elapsed = adj ? adj.elapsedDays : 0;
+        const total = adj ? adj.totalDaysAdj : 0;
 
         c.innerHTML = `
           <div>
-            <div class="trackTitle">You're on track</div>
-            <div class="trackSub">Hit ${targetWeight} lb by ${hitText}</div>
-
+            <div class="trackTitle">You're well on track</div>
+            <div class="trackSub">Hit ${fmt(Number(plan.targetWeightLb))} lb by ${targetDateText} ✨</div>
             <div class="trackMetaRow">
               <div class="pm">Daily deficit: ${fmt(Number(plan.dailyDeficit))}</div>
               <div class="pm">You got this</div>
@@ -1938,28 +2245,25 @@
             </div>
 
             <div class="trackMetaRow" style="margin-top:10px;">
-              <div class="pm">${HARD_STREAK_DAYS} of ${HARD_PLAN_TOTAL_DAYS} days</div>
+              <div class="pm">${elapsed} of ${total} days</div>
               <div class="pm">${pctW}%</div>
             </div>
           </div>
         `;
         stack.appendChild(c);
 
-        const streak = document.createElement("div");
-        streak.className = "card";
-        streak.innerHTML = `
-          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-            <div style="display:flex; align-items:center; gap:10px;">
-              <div style="font-size:20px;">✨</div>
-              <div>
-                <div style="font-weight:900; font-size:16px;">${HARD_STREAK_DAYS} days in a row</div>
-                <div style="font-weight:900; font-size:12px; color: rgba(91,75,97,.85); margin-top:2px;">Keep going, this is how it sticks.</div>
-              </div>
-            </div>
-            <div style="font-size:18px;">🔥</div>
+        const streak = computeStreak(plan, days);
+        const sCard = document.createElement("div");
+        sCard.className = "card";
+        sCard.innerHTML = `
+          <div style="text-align:center;">
+            <div style="font-weight:900; font-size:14px; color: rgba(27,16,32,.75);">Streak</div>
+            <div style="margin-top:8px; font-weight:900; font-size:42px; line-height:1; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip:text; background-clip:text; color: transparent;">${fmt(streak)}</div>
+            <div style="margin-top:8px; font-weight:900; font-size:12px; color: rgba(91,75,97,.85);">days in a row ✨</div>
           </div>
         `;
-        stack.appendChild(streak);
+        stack.appendChild(sCard);
+
       }else{
         const c = document.createElement("div");
         c.className = "card";
@@ -2069,7 +2373,7 @@
       if(days <= 0) return { ok:false, msg:"Target date must be in the future." };
 
       const lbsToLose = cw - tw;
-      const totalCals = lbsToLose * CALS_PER_LB;
+      const totalCals = lbsToLose * 3500;
       const daily = Math.round(totalCals / days);
 
       return { ok:true, daily, days, cw, tw, targetDateISO: td, startKey };
@@ -2078,10 +2382,10 @@
     const projectDateForDeficit = (cw, tw, startKey, deficit) => {
       const start = parseDayKeyToDateNoon(startKey);
       const lbsToLose = cw - tw;
-      const totalCals = lbsToLose * CALS_PER_LB;
+      const totalCals = lbsToLose * 3500;
       const d = Math.max(1, Math.ceil(totalCals / Math.max(1, deficit)));
       const hit = addDays(start, d);
-      return niceShortDate(toISODate(hit));
+      return hit.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
     };
 
     const openRoundingModal = () => {
@@ -2137,53 +2441,47 @@
         sel.appendChild(opt);
       }
 
-      const pickWrap = el("presetPickTiles");
-      pickWrap.innerHTML = "";
-
-      const presets = getPresets();
-      for(const p of presets){
-        const t = document.createElement("div");
-        t.className = "ptile";
-        t.setAttribute("role","button");
-        t.setAttribute("tabindex","0");
-        t.setAttribute("data-pick", String(p.id));
-        t.innerHTML = `<div class="e">${p.emoji}</div><div class="n">${fmt(p.cals)}</div>`;
-        pickWrap.appendChild(t);
-      }
-
       presetEditingId = 1;
+      renderPresetPickerTiles();
       selectPresetTile(1);
-      pickWrap.querySelectorAll("[data-pick]").forEach((node) => {
-        node.addEventListener("click", () => selectPresetTile(Number(node.getAttribute("data-pick"))));
-      });
 
       el("presetBack").classList.add("show");
     };
 
     const closePresetModal = () => el("presetBack").classList.remove("show");
 
-    const highlightPick = () => {
-      const pickWrap = el("presetPickTiles");
-      pickWrap.querySelectorAll("[data-pick]").forEach((node) => {
-        const id = Number(node.getAttribute("data-pick"));
-        if(id === presetEditingId){
-          node.style.outline = "3px solid rgba(255,95,154,.25)";
-        }else{
-          node.style.outline = "none";
-        }
-      });
+    el("presetClose").addEventListener("click", closePresetModal);
+    el("presetBack").addEventListener("click", (e) => {
+      if(e.target === el("presetBack")) closePresetModal();
+    });
+
+    const renderPresetPickerTiles = () => {
+      const wrap = el("pickTiles");
+      wrap.innerHTML = "";
+      const presets = getPresets();
+
+      for(const p of presets){
+        const div = document.createElement("div");
+        div.className = "pickTile";
+        div.setAttribute("data-pick", String(p.id));
+        div.textContent = p.emoji;
+        div.addEventListener("click", () => selectPresetTile(p.id));
+        wrap.appendChild(div);
+      }
     };
 
     const selectPresetTile = (id) => {
       presetEditingId = id;
+
+      document.querySelectorAll(".pickTile").forEach((x) => {
+        x.classList.toggle("active", x.getAttribute("data-pick") === String(id));
+      });
 
       const presets = getPresets();
       const p = presets.find(x => x.id === id) || presets[0];
 
       el("presetEmoji").value = p.emoji;
       el("presetAmount").value = String(p.cals || 0);
-
-      highlightPick();
     };
 
     el("presetSaveBtn").addEventListener("click", () => {
@@ -2198,11 +2496,15 @@
       presets[idx] = { id: presetEditingId, emoji: em, cals };
       setPresets(presets);
 
-      closePresetModal();
       renderPresetTiles();
+      renderPresetPickerTiles();
     });
 
-    el("editPresetsBtn").addEventListener("click", openPresetModal);
+    el("editPresetsBtn").addEventListener("click", () => {
+      const today = getToday();
+      if(today.goodnight) return;
+      openPresetModal();
+    });
 
     /* Modals: end day and bank */
     const openEndOptions = (left) => {
@@ -2217,6 +2519,8 @@
     });
 
     const openUseModal = () => {
+      const today = getToday();
+      if(today.goodnight) return;
       const banks = getBanks();
       const max = Math.round(banks.banked || 0);
       el("useAmount").value = "";
@@ -2233,25 +2537,6 @@
 
     /* Edit day in log page */
     let editingId = null;
-
-    const recalcProgressDeficitForDay = (dayObj) => {
-      const y = Math.max(0, Math.round(Number(dayObj.yTdee || 0)));
-      const i = Math.max(0, Math.round(Number(dayObj.intake || 0)));
-      const freeConsumed = Math.max(0, Math.round(Number(dayObj.freeConsumed || 0)));
-      const freeEarned = Math.max(0, Math.round(Number(dayObj.freeEarned || 0)));
-      const choice = String(dayObj.endChoice || "");
-
-      let base = y - i;
-      let prog = base + freeConsumed;
-
-      if(choice === "rollover" || choice === "bank"){
-        prog = prog - freeEarned;
-      }
-
-      dayObj.progressDeficit = Math.round(prog);
-      return dayObj;
-    };
-
     const openEdit = (id) => {
       const days = getDays();
       const d = days.find(x => String(x.id) === String(id));
@@ -2272,18 +2557,16 @@
           <div class="row">
             <div class="field">
               <label for="tempEditYTdee">TDEE</label>
-              <input id="tempEditYTdee" type="number" inputmode="numeric" min="0" value="${String(Number(d.yTdee||0))}" />
+              <input id="tempEditYTdee" type="number" inputmode="numeric" min="0" value="${String(Math.round(Number(d.yTdee||0)))}" />
             </div>
             <div class="field">
               <label for="tempEditIntake">Intake</label>
-              <input id="tempEditIntake" type="number" inputmode="numeric" min="0" value="${String(Number(d.intake||0))}" />
+              <input id="tempEditIntake" type="number" inputmode="numeric" min="0" value="${String(Math.round(Number(d.intake||0)))}" />
             </div>
           </div>
 
           <div class="spacer"></div>
           <button class="btn" id="tempEditSave">Save</button>
-
-          <div class="note" style="margin-top:8px;">Editing updates progress. You cannot delete days.</div>
         </div>
       `;
       document.body.appendChild(back);
@@ -2301,34 +2584,37 @@
       back.querySelector("#tempEditSave").addEventListener("click", () => {
         if(!editingId) return;
 
-        const days2 = getDays();
-        const idx = days2.findIndex(x => String(x.id) === String(editingId));
+        const days = getDays();
+        const idx = days.findIndex(x => String(x.id) === String(editingId));
         if(idx < 0) return;
 
         const y = Number(back.querySelector("#tempEditYTdee").value || 0);
         const i = Number(back.querySelector("#tempEditIntake").value || 0);
 
-        days2[idx].yTdee = Number.isFinite(y) ? Math.max(0, Math.round(y)) : 0;
-        days2[idx].intake = Number.isFinite(i) ? Math.max(0, Math.round(i)) : 0;
+        days[idx].yTdee = Number.isFinite(y) ? Math.max(0, Math.round(y)) : 0;
+        days[idx].intake = Number.isFinite(i) ? Math.max(0, Math.round(i)) : 0;
 
-        recalcProgressDeficitForDay(days2[idx]);
+        const settings = getSettings();
+        const tdee = days[idx].yTdee || 0;
+        const budget = days[idx].maintenance ? tdee : Math.max(0, Math.round(tdee - settings.deficit));
+        days[idx].budget = budget;
 
-        setDays(days2);
+        days[idx].leftAtEnd = Math.round(budget - days[idx].intake);
+
+        setDays(days);
         close();
         render();
       });
     };
 
-    /* Save day for log */
-    const saveDayToLog = () => {
+    /* End day and Goodnight mode */
+    const saveDayToLogWithChoice = (endChoice) => {
       ensureDayRoll();
       const settings = getSettings();
       const today = getToday();
 
-      const intake = Math.round(sumIntake(today.entries));
-      const budgetTotal = Math.round(calcBudgetTotal(today, settings));
-
-      const freeConsumed = Math.round((today.rolloverApplied || 0) + (today.usedBanked || 0));
+      const intake = sumIntake(today.entries);
+      const budgetTotal = calcBudgetTotal(today, settings);
       const left = Math.round(budgetTotal - intake);
 
       const dayObj = {
@@ -2336,62 +2622,96 @@
         dayKey: today.dayKey,
         yTdee: Math.round(today.yTdee || 0),
         maintenance: !!today.maintenance,
-        intake,
-        budget: budgetTotal,
-
-        freeConsumed,
-        freeEarned: 0,
-        endChoice: "",
-        progressDeficit: 0
+        budget: Math.round(budgetTotal),
+        intake: Math.round(intake),
+        leftAtEnd: Math.round(left),
+        endChoice: String(endChoice || "")
       };
-
-      recalcProgressDeficitForDay(dayObj);
 
       const days = getDays();
       const idx = days.findIndex(x => x.dayKey === dayObj.dayKey);
+      const prev = idx >= 0 ? days[idx] : null;
+
       if(idx >= 0) days[idx] = dayObj;
       else days.push(dayObj);
+
       setDays(days);
 
-      return { left };
+      return { left, dayObj, prevDayObj: prev };
     };
 
-    const updateDayEndChoice = (choice, freeEarned = 0) => {
-      ensureDayRoll();
+    const enterGoodnight = (undoPayload) => {
       const today = getToday();
-      const days = getDays();
-      const id = `day_${today.dayKey}`;
-      const idx = days.findIndex(x => String(x.id) === String(id));
-      if(idx < 0) return;
+      today.goodnight = true;
+      today.endUndo = undoPayload || null;
+      setToday(today);
 
-      days[idx].endChoice = String(choice || "");
-      days[idx].freeEarned = Math.max(0, Math.round(Number(freeEarned || 0)));
-
-      recalcProgressDeficitForDay(days[idx]);
-
-      setDays(days);
+      setActivePage("Dash");
+      render();
     };
 
-    const finishEndDay = () => {
-      const next = defaultToday();
-      next.dayKey = dayKeyWithCutoff(new Date());
-      setToday(next);
+    const exitGoodnight = () => {
+      const today = getToday();
+      const undo = today.endUndo;
+
+      if(undo && undo.dayKey){
+        const days = getDays();
+        const idx = days.findIndex(x => String(x.dayKey) === String(undo.dayKey));
+        if(idx >= 0){
+          if(undo.prevDayObj){
+            days[idx] = undo.prevDayObj;
+          }else{
+            days.splice(idx, 1);
+          }
+          setDays(days);
+        }
+
+        if(undo.banksBefore){
+          setBanks(undo.banksBefore);
+        }
+      }
+
+      today.goodnight = false;
+      today.endUndo = null;
+      setToday(today);
       render();
-      setActivePage("Progress");
+      setActivePage("Logging");
+    };
+
+    const finishEndDayFlow = (endChoice, applyBanksFn) => {
+      ensureDayRoll();
+
+      const todayBefore = getToday();
+      const banksBefore = getBanks();
+
+      const res = saveDayToLogWithChoice(endChoice);
+
+      const banksNow = getBanks();
+      const settings = getSettings();
+      const today = getToday();
+
+      const intake = sumIntake(today.entries);
+      const budgetTotal = calcBudgetTotal(today, settings);
+      const left = Math.round(budgetTotal - intake);
+
+      if(typeof applyBanksFn === "function"){
+        applyBanksFn(left, banksNow);
+      }
+
+      const banksAfter = getBanks();
+
+      const undoPayload = {
+        dayKey: todayBefore.dayKey,
+        prevDayObj: res.prevDayObj,
+        banksBefore: banksBefore,
+        endChoice: endChoice
+      };
+
+      closeEndOptions();
+      enterGoodnight(undoPayload);
     };
 
     /* Render */
-    const setKpiNoneOrNumber = (node, value, noneText = "None") => {
-      const v = Math.round(Number(value || 0));
-      if(v === 0){
-        node.textContent = noneText;
-        node.classList.add("none");
-      }else{
-        node.textContent = fmt(v);
-        node.classList.remove("none");
-      }
-    };
-
     const render = () => {
       ensureDayRoll();
 
@@ -2399,39 +2719,95 @@
       const banks = getBanks();
       const today = getToday();
 
+      setNightTheme(!!today.goodnight);
+
       const budgetTotal = calcBudgetTotal(today, settings);
       const intake = sumIntake(today.entries);
       const left = Math.round(budgetTotal - intake);
 
       el("todayDate").textContent = formatTodayLine(new Date());
-      el("budgetBig").textContent = fmt(budgetTotal);
 
-      el("yTdeeKpi").textContent = fmt(today.yTdee || 0);
+      const dashLabel = el("dashMainLabel");
+      const budgetBig = el("budgetBig");
+      const goodnightBox = el("goodnightBox");
 
-      if(today.maintenance){
-        setKpiNoneOrNumber(el("deficitKpi"), 0, "None today");
+      if(today.goodnight){
+        dashLabel.textContent = "Eaten today";
+        budgetBig.textContent = fmt(intake);
+
+        goodnightBox.style.display = "block";
+        goodnightBox.innerHTML = `
+          <div class="goodnightBanner">
+            <div class="gTitle">Goodnight</div>
+            <div class="gSub">Come back tomorrow, z Z Z 🌙</div>
+          </div>
+        `;
       }else{
-        el("deficitKpi").textContent = `-${fmt(settings.deficit)}`;
-        el("deficitKpi").classList.remove("none");
+        dashLabel.textContent = "Today's budget";
+        budgetBig.textContent = fmt(budgetTotal);
+        goodnightBox.style.display = "none";
+        goodnightBox.innerHTML = "";
       }
 
-      setKpiNoneOrNumber(el("rolloverKpi"), today.rolloverApplied || 0, "None");
-      setKpiNoneOrNumber(el("bankedKpi"), banks.banked || 0, "None");
+      /* Dashboard KPIs */
+      const yVal = today.yTdee || 0;
+      el("yTdeeKpi").textContent = yVal > 0 ? fmt(yVal) : "0";
 
-      el("tdeeInputDash").value = today.yTdee ? String(today.yTdee) : "";
+      if(today.maintenance){
+        el("deficitKpi").innerHTML = `<span class="mutedNone">None today</span>`;
+      }else{
+        el("deficitKpi").textContent = `-${fmt(settings.deficit)}`;
+      }
+
+      const rolloverShown = Math.round(today.rolloverApplied || 0);
+      const bankShown = Math.round(banks.banked || 0);
+
+      el("rolloverKpi").innerHTML = rolloverShown > 0 ? fmt(rolloverShown) : `<span class="mutedNone">None</span>`;
+      el("bankedKpi").innerHTML = bankShown > 0 ? fmt(bankShown) : `<span class="mutedNone">None</span>`;
+
+      /* Dashboard TDEE input behaviour */
+      const tdeeWrap = el("tdeeInputWrap");
+      const isLocked = !!today.goodnight;
+
+      if(yVal > 0){
+        tdeeWrap.style.display = "none";
+      }else{
+        tdeeWrap.style.display = "block";
+      }
+
+      el("tdeeInputDash").value = yVal ? String(yVal) : "";
       el("maintenanceToggleDash").checked = !!today.maintenance;
 
       el("modeHint").textContent = today.maintenance ? "Maintenance Day" : "Deficit";
       if(!el("savedHint").textContent) el("savedHint").textContent = "Saved";
 
-      el("leftBig").textContent = fmt(left);
+      /* Lock dashboard controls in goodnight */
+      el("applyDashBtn").disabled = isLocked;
+      el("tdeeInputDash").disabled = isLocked;
+      el("maintenanceToggleDash").disabled = isLocked;
+
+      /* Logging UI */
+      el("logMainLabel").textContent = today.goodnight ? "Come back tomorrow" : "Calories left today";
+      el("leftBig").textContent = today.goodnight ? "🌙" : fmt(left);
+
       el("intakeKpi").textContent = fmt(intake);
       el("budgetLogKpi").textContent = fmt(budgetTotal);
 
-      const ratio = budgetTotal <= 0 ? 0 : Math.max(0, Math.min(1, intake / budgetTotal));
-      el("thinFill").style.width = `${Math.round(ratio * 100)}%`;
+      const fillPct = Math.max(0, Math.min(1, budgetTotal <= 0 ? 0 : (intake / budgetTotal)));
+      el("intakeFill").style.width = `${Math.round(fillPct * 100)}%`;
 
       el("deficitInput").value = String(settings.deficit);
+
+      /* Goodnight lock for logging */
+      el("loggingLockedHint").style.display = today.goodnight ? "block" : "none";
+
+      el("addBtn").disabled = today.goodnight;
+      el("addInput").disabled = today.goodnight;
+      el("undoBtn").style.display = today.goodnight ? "none" : "inline-flex";
+      el("endDayBtn").style.display = today.goodnight ? "none" : "inline-flex";
+      el("returnBtn").style.display = today.goodnight ? "inline-flex" : "none";
+      el("editPresetsBtn").style.opacity = today.goodnight ? ".55" : "1";
+      el("useBankedBtn").disabled = today.goodnight;
 
       renderEntries(today);
       renderPresetTiles();
@@ -2446,6 +2822,7 @@
     el("applyDashBtn").addEventListener("click", () => {
       ensureDayRoll();
       const today = getToday();
+      if(today.goodnight) return;
 
       const v = Number(el("tdeeInputDash").value || 0);
       today.yTdee = Number.isFinite(v) ? Math.round(v) : 0;
@@ -2460,15 +2837,39 @@
     el("maintenanceToggleDash").addEventListener("change", () => {
       ensureDayRoll();
       const today = getToday();
+      if(today.goodnight) return;
       today.maintenance = !!el("maintenanceToggleDash").checked;
       setToday(today);
       render();
+    });
+
+    /* Tap KPI to edit TDEE */
+    el("yTdeeKpiBox").addEventListener("click", () => {
+      ensureDayRoll();
+      const today = getToday();
+      if(today.goodnight) return;
+
+      const current = Math.round(Number(today.yTdee || 0));
+      const nextRaw = prompt("Yesterday's TDEE", current > 0 ? String(current) : "");
+      if(nextRaw === null) return;
+
+      const v = Number(nextRaw || 0);
+      today.yTdee = Number.isFinite(v) ? Math.max(0, Math.round(v)) : 0;
+
+      setToday(today);
+      render();
+    });
+
+    el("yTdeeKpiBox").addEventListener("keydown", (e) => {
+      if(e.key === "Enter") el("yTdeeKpiBox").click();
     });
 
     /* Logging add, undo, end */
     el("addBtn").addEventListener("click", () => {
       ensureDayRoll();
       const today = getToday();
+      if(today.goodnight) return;
+
       const v = Number(el("addInput").value || 0);
       if(!Number.isFinite(v) || v <= 0) return;
 
@@ -2494,6 +2895,7 @@
     el("undoBtn").addEventListener("click", () => {
       ensureDayRoll();
       const today = getToday();
+      if(today.goodnight) return;
       if(!today.entries.length) return;
       today.entries.sort((a,b) => (a.createdAt || 0) - (b.createdAt || 0));
       today.entries.pop();
@@ -2501,63 +2903,53 @@
       render();
     });
 
+    const computeLeftNow = () => {
+      ensureDayRoll();
+      const settings = getSettings();
+      const today = getToday();
+      const budgetTotal = calcBudgetTotal(today, settings);
+      const intake = sumIntake(today.entries);
+      return Math.round(budgetTotal - intake);
+    };
+
     el("endDayBtn").addEventListener("click", () => {
-      const res = saveDayToLog();
-      if(res.left > 0){
-        openEndOptions(res.left);
+      const today = getToday();
+      if(today.goodnight) return;
+
+      const leftNow = computeLeftNow();
+
+      if(leftNow > 0){
+        openEndOptions(leftNow);
       }else{
-        finishEndDay();
+        finishEndDayFlow("closed", () => {});
       }
     });
 
     el("optRollover").addEventListener("click", () => {
-      ensureDayRoll();
-      const settings = getSettings();
-      const today = getToday();
-      const banks = getBanks();
-
-      const intake = sumIntake(today.entries);
-      const budgetTotal = calcBudgetTotal(today, settings);
-      const left = Math.round(budgetTotal - intake);
-
-      banks.rolloverPending = Math.round(left);
-      setBanks(banks);
-
-      updateDayEndChoice("rollover", left);
-
-      closeEndOptions();
-      finishEndDay();
+      finishEndDayFlow("rollover", (left, banks) => {
+        banks.rolloverPending = Math.round(left);
+        setBanks(banks);
+      });
     });
 
     el("optBanked").addEventListener("click", () => {
-      ensureDayRoll();
-      const settings = getSettings();
-      const today = getToday();
-      const banks = getBanks();
-
-      const intake = sumIntake(today.entries);
-      const budgetTotal = calcBudgetTotal(today, settings);
-      const left = Math.round(budgetTotal - intake);
-
-      banks.banked = Math.round((banks.banked || 0) + left);
-      banks.rolloverPending = 0;
-      setBanks(banks);
-
-      updateDayEndChoice("bank", left);
-
-      closeEndOptions();
-      finishEndDay();
+      finishEndDayFlow("bank", (left, banks) => {
+        banks.banked = Math.round((banks.banked || 0) + left);
+        banks.rolloverPending = 0;
+        setBanks(banks);
+      });
     });
 
     el("optMoveOn").addEventListener("click", () => {
-      const banks = getBanks();
-      banks.rolloverPending = 0;
-      setBanks(banks);
+      finishEndDayFlow("moveon", (left, banks) => {
+        banks.rolloverPending = 0;
+        setBanks(banks);
+      });
+    });
 
-      updateDayEndChoice("move", 0);
-
-      closeEndOptions();
-      finishEndDay();
+    /* Return from goodnight */
+    el("returnBtn").addEventListener("click", () => {
+      exitGoodnight();
     });
 
     /* Use banked */
@@ -2565,6 +2957,7 @@
       ensureDayRoll();
       const banks = getBanks();
       const today = getToday();
+      if(today.goodnight) return;
 
       const max = Math.round(banks.banked || 0);
       const v = Number(el("useAmount").value || 0);
@@ -2684,7 +3077,11 @@
       const btn = el("savePlanBtn");
       btn.disabled = true;
       btn.style.opacity = ".92";
-      btn.innerHTML = `Saving <span class="loadingDots" style="width:34px;"><span></span><span></span><span></span></span>`;
+      btn.innerHTML = `
+        <span class="loadingDots" aria-label="Saving">
+          <span></span><span></span><span></span>
+        </span>
+      `;
 
       setTimeout(() => {
         setSettings({ deficit: finalDef });
@@ -2692,7 +3089,7 @@
 
         setPlan({
           savedAtISO: new Date().toISOString(),
-          startDayKey: lastCalc.startKey,
+          startDayKey: dayKeyWithCutoff(new Date()),
           currentWeightLb: lastCalc.cw,
           targetWeightLb: lastCalc.tw,
           targetDateISO: lastCalc.targetDateISO,
@@ -2708,7 +3105,7 @@
 
         render();
         setActivePage("Progress");
-      }, 650);
+      }, 720);
     });
 
     /* Reset button */
