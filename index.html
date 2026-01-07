@@ -1,3 +1,4 @@
+```html
 <!doctype html>
 <html lang="en">
 <head>
@@ -566,8 +567,8 @@
       z-index: 999;
     }
     body.night .bottomTabsWrap{
-      background: rgba(255,255,255,.14);
-      border-color: rgba(255,255,255,.20);
+      background: rgba(255,255,255,.18);
+      border-color: rgba(255,255,255,.22);
     }
 
     .bottomTabs{
@@ -632,7 +633,6 @@
       transition: width .35s ease;
     }
 
-    /* Progress title no longer gradient */
     .trackTitle{
       font-weight:900;
       font-size: 26px;
@@ -1098,6 +1098,77 @@
     }
 
     svg defs linearGradient stop{ stop-opacity:1; }
+
+    /* Cheat days */
+    .cheatGrid{
+      display:grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap:8px;
+      margin-top: 12px;
+    }
+    @media (max-width: 390px){
+      .cheatGrid{ grid-template-columns: repeat(6, 1fr); }
+    }
+    .coin{
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size: 20px;
+      font-weight:900;
+      background: rgba(255,255,255,.58);
+      border: 1px solid rgba(255,255,255,.72);
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .coin:active{ transform: translateY(1px) scale(.995); }
+    .coin.used{
+      opacity:.35;
+      cursor:default;
+    }
+    body.night .coin{
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.18);
+    }
+
+    .confettiWrap{
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2500;
+      overflow:hidden;
+    }
+    .confetti{
+      position:absolute;
+      top: -12px;
+      width: 8px;
+      height: 14px;
+      border-radius: 4px;
+      background: rgba(255,255,255,.9);
+      transform: rotate(12deg);
+      animation: confFall 1.3s ease-out forwards;
+    }
+    @keyframes confFall{
+      0%{ transform: translateY(0) rotate(12deg); opacity: 1; }
+      100%{ transform: translateY(110vh) rotate(220deg); opacity: 0; }
+    }
+
+    .undoRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-top: 10px;
+    }
+    .undoNote{
+      font-size:12px;
+      font-weight:900;
+      color: var(--muted);
+    }
+    body.night .undoNote{ color: rgba(255,255,255,.75); }
   </style>
 </head>
 
@@ -1220,6 +1291,23 @@
               <div class="hint" id="savedHint"></div>
             </div>
           </div>
+
+          <!-- Cheat days (dashboard) -->
+          <div class="card" id="cheatDashCard" style="display:none;">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+              <div style="font-weight:900; font-size:14px;">Cheat days</div>
+              <div style="font-weight:900; font-size:12px; color: var(--muted);" id="cheatDashMeta">0 of 0 used</div>
+            </div>
+
+            <div class="note" id="cheatDashNote" style="margin-top:6px;">Use a coin to add calories to today.</div>
+
+            <div class="cheatGrid" id="cheatGrid"></div>
+
+            <div class="undoRow" id="cheatUndoRow" style="display:none;">
+              <div class="undoNote" id="cheatUndoNote">Undo available for 10 seconds.</div>
+              <button class="btn neutral small" id="cheatUndoBtn" style="max-width:140px;">Undo</button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1331,6 +1419,40 @@
               <div class="lockedOverlayInner" id="goalLockedText">Fill in your stats first to unlock</div>
             </div>
           </div>
+
+          <!-- Cheat days (settings) -->
+          <div class="card lockedCard" id="cheatCardWrap">
+            <div id="cheatCardContent">
+              <div style="font-weight:900; font-size:14px; color: rgba(27,16,32,.85);" id="cheatTitle">Cheat days</div>
+              <div class="note" id="cheatExplain" style="margin-top:8px;">Optional, and capped to a 5% plan extension.</div>
+
+              <div class="spacer"></div>
+
+              <div class="row">
+                <div class="field">
+                  <label for="cheatCountInput">How many?</label>
+                  <input id="cheatCountInput" type="number" inputmode="numeric" min="0" placeholder="0" />
+                </div>
+                <div class="field">
+                  <label for="cheatAmountInput">Calories per cheat day</label>
+                  <input id="cheatAmountInput" type="number" inputmode="numeric" min="0" placeholder="1200" />
+                </div>
+              </div>
+
+              <div class="calcMsg" id="cheatMsg" style="min-height: 22px;"></div>
+
+              <div class="spacer"></div>
+              <button class="btn" id="cheatApplyBtn">Apply</button>
+
+              <div class="note" id="cheatFinePrint" style="margin-top:10px;">
+                Cheat days are pre-planned, your target date updates now, redeeming later does not move it again.
+              </div>
+            </div>
+
+            <div class="lockedOverlay" id="cheatLockedOverlay" style="display:none;">
+              <div class="lockedOverlayInner" id="cheatLockedText">Save a plan first to unlock</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1411,7 +1533,6 @@
 
     <div class="bottomTabsWrap" id="bottomTabsWrap">
       <div class="bottomTabs">
-        <!-- Dashboard icon updated -->
         <button class="btab active" data-page="Dash" aria-label="Dashboard">
           <svg class="navIco" viewBox="0 0 24 24" aria-hidden="true">
             <path class="fill" d="M12 3.2c.4 0 .7.1 1 .4l7.4 6.5c.4.3.5.9.2 1.3-.2.3-.5.5-.9.5h-1.2v7.2c0 .9-.7 1.6-1.6 1.6h-3.9v-5.8c0-.6-.5-1.1-1.1-1.1s-1.1.5-1.1 1.1v5.8H7.1c-.9 0-1.6-.7-1.6-1.6v-7.2H4.3c-.4 0-.7-.2-.9-.5-.3-.4-.2-1 .2-1.3L11 3.6c.3-.3.6-.4 1-.4z"></path>
@@ -1424,14 +1545,12 @@
           </svg>
         </button>
 
-        <!-- Logging plus made thicker -->
         <button class="btab" data-page="Logging" aria-label="Logging">
           <svg class="navIco" viewBox="0 0 24 24" aria-hidden="true">
             <path class="fill" d="M12 2.6c5.2 0 9.4 4.2 9.4 9.4s-4.2 9.4-9.4 9.4S2.6 17.2 2.6 12 6.8 2.6 12 2.6zm1.4 5.2c0-.8-.6-1.4-1.4-1.4s-1.4.6-1.4 1.4v2.8H7.8c-.8 0-1.4.6-1.4 1.4s.6 1.4 1.4 1.4h2.8v2.8c0 .8.6 1.4 1.4 1.4s1.4-.6 1.4-1.4v-2.8h2.8c.8 0 1.4-.6 1.4-1.4s-.6-1.4-1.4-1.4h-2.8V7.8z"></path>
           </svg>
         </button>
 
-        <!-- Log icon updated (calendar/list vibe, not ghosty) -->
         <button class="btab" data-page="Log" aria-label="Log">
           <svg class="navIco" viewBox="0 0 24 24" aria-hidden="true">
             <path class="fill" d="M7 3.2h10c1.2 0 2.2 1 2.2 2.2v13.4c0 1.2-1 2.2-2.2 2.2H7c-1.2 0-2.2-1-2.2-2.2V5.4C4.8 4.2 5.8 3.2 7 3.2zm2.1 5.4c-.6 0-1.1.5-1.1 1.1s.5 1.1 1.1 1.1h5.8c.6 0 1.1-.5 1.1-1.1s-.5-1.1-1.1-1.1H9.1zm0 4.2c-.6 0-1.1.5-1.1 1.1s.5 1.1 1.1 1.1h5.8c.6 0 1.1-.5 1.1-1.1s-.5-1.1-1.1-1.1H9.1zm0 4.2c-.6 0-1.1.5-1.1 1.1s.5 1.1 1.1 1.1H13c.6 0 1.1-.5 1.1-1.1S13.6 17 13 17H9.1z"></path>
@@ -1547,8 +1666,8 @@
       <div class="spacer"></div>
 
       <div class="grid2">
-        <button class="btn ghost" id="roundStickBtn">Stick to 0</button>
-        <button class="btn" id="roundUseBtn">Use selected</button>
+        <button class="btn ghost" id="roundUseBtn">Use selected</button>
+        <button class="btn" id="roundStickBtn">Stick to 0</button>
       </div>
     </div>
   </div>
@@ -1583,6 +1702,10 @@
     const DAY_CUTOFF_HOUR = 3;
     const MIN_DEFICIT_DAY_BUDGET = 1200;
     const MAX_DAILY_DEFICIT = 1000;
+
+    const CHEAT_MIN_PLAN_DAYS = 5;
+    const CHEAT_MAX_EXT_PCT = 0.05;
+    const CHEAT_UNDO_MS = 10000;
 
     const el = (id) => document.getElementById(id);
 
@@ -1670,6 +1793,20 @@
       return d;
     };
 
+    const parseISODateNoon = (iso) => {
+      if(!iso) return null;
+      const d = new Date(`${iso}T12:00:00`);
+      if(Number.isNaN(d.getTime())) return null;
+      return d;
+    };
+
+    const isoFromDate = (d) => {
+      const yyyy = d.getFullYear();
+      const mm = pad2(d.getMonth()+1);
+      const dd = pad2(d.getDate());
+      return `${yyyy}-${mm}-${dd}`;
+    };
+
     const getSettings = () => {
       const s = loadJSON(LS_SETTINGS, null);
       if(!s || typeof s.deficit !== 'number'){
@@ -1689,7 +1826,20 @@
       return Number.isFinite(a) && a >= 18;
     };
 
-    const getPlan = () => loadJSON(LS_PLAN, null);
+    const getPlan = () => {
+      const p = loadJSON(LS_PLAN, null);
+      if(!p) return null;
+
+      if(p.cheat && typeof p.cheat === 'object'){
+        const c = p.cheat;
+        c.count = Math.max(0, Math.round(Number(c.count || 0)));
+        c.amount = Math.max(0, Math.round(Number(c.amount || 0)));
+        c.used = Math.max(0, Math.round(Number(c.used || 0)));
+        if(c.used > c.count) c.used = c.count;
+        p.cheat = c;
+      }
+      return p;
+    };
     const setPlan = (plan) => saveJSON(LS_PLAN, plan);
 
     const getBanks = () => {
@@ -1709,6 +1859,8 @@
       entries: [],
       rolloverApplied: 0,
       usedBanked: 0,
+      cheatApplied: 0,
+      cheatRedeemedAt: 0,
       ended: false,
       endedAt: 0,
       endChoice: ''
@@ -1720,6 +1872,8 @@
       if(!Array.isArray(t.entries)) t.entries = [];
       if(typeof t.rolloverApplied !== 'number') t.rolloverApplied = 0;
       if(typeof t.usedBanked !== 'number') t.usedBanked = 0;
+      if(typeof t.cheatApplied !== 'number') t.cheatApplied = 0;
+      if(typeof t.cheatRedeemedAt !== 'number') t.cheatRedeemedAt = 0;
       if(typeof t.maintenance !== 'boolean') t.maintenance = !!t.maintenance;
       if(typeof t.ended !== 'boolean') t.ended = !!t.ended;
       if(typeof t.endedAt !== 'number') t.endedAt = 0;
@@ -1754,7 +1908,7 @@
 
     const calcBudgetTotal = (today, deficit) => {
       const base = calcBudgetBase(today, deficit);
-      return Math.round(base + (today.rolloverApplied || 0) + (today.usedBanked || 0));
+      return Math.round(base + (today.rolloverApplied || 0) + (today.usedBanked || 0) + (today.cheatApplied || 0));
     };
 
     const ensureDayRoll = () => {
@@ -1903,77 +2057,6 @@
       list.querySelectorAll('.xbtn').forEach((b) => b.disabled = locked);
     };
 
-    const renderLogPage = () => {
-      const stack = el('logStack');
-      stack.innerHTML = '';
-
-      const days = getDays().slice().sort((a,b) => (a.dayKey < b.dayKey ? 1 : -1));
-
-      if(days.length === 0){
-        const c = document.createElement('div');
-        c.className = 'card';
-        c.innerHTML = `<div style="font-weight:900; font-size:16px;">No days saved yet</div>`;
-        stack.appendChild(c);
-        return;
-      }
-
-      for(const d of days){
-        const card = document.createElement('div');
-        card.className = 'card';
-
-        const tag = d.maintenance ? 'Maintenance day' : 'Deficit day';
-        const end = d.endChoice ? `, ${d.endChoice}` : '';
-
-        const freeApplied = Math.max(0, Math.round(Number(d.freeApplied || 0)));
-        const baseBudget = Math.max(0, Math.round(Number(d.budget || 0) - freeApplied));
-        const deficitUsed = d.maintenance
-          ? 0
-          : Math.max(0, Math.round(Number(d.yTdee || 0) - baseBudget));
-
-        card.innerHTML = `
-          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px;">
-            <div style="font-weight:900; font-size:14px; color: var(--ink);">${formatDayKeyLong(d.dayKey)}</div>
-            <div style="display:flex; gap:8px;">
-              <button class="btn neutral small" data-edit="${d.id}">Edit</button>
-            </div>
-          </div>
-
-          <div style="font-weight:900; font-size:12px; color: var(--muted); margin-bottom:10px;">
-            ${tag}${end}
-          </div>
-
-          <div class="grid2">
-            <div class="kpi">
-              <div class="klabel">TDEE</div>
-              <div class="kval"><span class="knum">${fmt(Number(d.yTdee||0))}</span></div>
-            </div>
-            <div class="kpi">
-              <div class="klabel">Budget</div>
-              <div class="kval"><span class="knum">${fmt(Number(d.budget||0))}</span></div>
-            </div>
-          </div>
-
-          <div class="spacer"></div>
-
-          <div class="grid2">
-            <div class="kpi">
-              <div class="klabel">Intake</div>
-              <div class="kval"><span class="knum">${fmt(Number(d.intake||0))}</span></div>
-            </div>
-            <div class="kpi">
-              <div class="klabel">Deficit</div>
-              <div class="kval"><span class="knum">${d.maintenance ? 'None' : `-${fmt(deficitUsed)}`}</span></div>
-            </div>
-          </div>
-        `;
-        stack.appendChild(card);
-      }
-
-      stack.querySelectorAll('[data-edit]').forEach((btn) => {
-        btn.addEventListener('click', () => openEdit(btn.getAttribute('data-edit')));
-      });
-    };
-
     const showAdultModal = () => el('adultBack').classList.add('show');
     const closeAdultModal = () => el('adultBack').classList.remove('show');
 
@@ -2018,12 +2101,19 @@
       }
 
       const remaining = Math.max(0, totalNeed - progressCals);
-      const daysRemaining = Math.max(0, Math.ceil(remaining / daily));
+
+      const cheat = plan.cheat && typeof plan.cheat === 'object' ? plan.cheat : null;
+      const cheatRemaining = cheat ? Math.max(0, (Math.max(0, cheat.count - cheat.used) * cheat.amount)) : 0;
+      const plannedRemaining = Math.max(0, remaining + cheatRemaining);
+
+      const daysRemaining = Math.max(0, Math.ceil(plannedRemaining / daily));
 
       return {
         totalNeed,
         progressCals,
         remaining,
+        cheatRemaining,
+        plannedRemaining,
         daysRemaining,
         daily
       };
@@ -2080,6 +2170,10 @@
         const pct = totalNeed > 0 ? Math.max(0, Math.min(1, done / totalNeed)) : 0;
         const pctW = Math.round(pct * 100);
 
+        const cheatLine = (prog && prog.cheatRemaining > 0)
+          ? `<div class="pm">Cheat allowance left: ${fmt(prog.cheatRemaining)}</div>`
+          : `<div class="pm">Cheat allowance left: 0</div>`;
+
         c.innerHTML = `
           <div>
             <div class="trackTitle">You're well on track</div>
@@ -2097,6 +2191,7 @@
             <div class="trackMetaRow" style="margin-top:10px;">
               <div class="pm">${fmt(done)} of ${fmt(totalNeed)} calories</div>
               <div class="pm">${prog ? `${prog.daysRemaining} days left` : ''}</div>
+              ${cheatLine}
             </div>
           </div>
         `;
@@ -2463,7 +2558,7 @@
 
       const intake = sumIntake(today.entries);
       const baseBudget = calcBudgetBase(today, planDef);
-      const budgetTotal = Math.round(baseBudget + (today.rolloverApplied || 0) + (today.usedBanked || 0));
+      const budgetTotal = Math.round(baseBudget + (today.rolloverApplied || 0) + (today.usedBanked || 0) + (today.cheatApplied || 0));
 
       const dayObj = {
         id: `day_${today.dayKey}`,
@@ -2473,6 +2568,7 @@
         budget: Math.round(budgetTotal),
         intake: Math.round(intake),
         freeApplied: Math.round((today.rolloverApplied || 0) + (today.usedBanked || 0)),
+        cheatApplied: Math.round(today.cheatApplied || 0),
         endChoice: ''
       };
 
@@ -2504,6 +2600,355 @@
       render();
     };
 
+    const renderLogPage = () => {
+      const stack = el('logStack');
+      stack.innerHTML = '';
+
+      const days = getDays().slice().sort((a,b) => (a.dayKey < b.dayKey ? 1 : -1));
+
+      if(days.length === 0){
+        const c = document.createElement('div');
+        c.className = 'card';
+        c.innerHTML = `<div style="font-weight:900; font-size:16px;">No days saved yet</div>`;
+        stack.appendChild(c);
+        return;
+      }
+
+      for(const d of days){
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const isCheat = Math.round(Number(d.cheatApplied || 0)) > 0;
+        const tag = d.maintenance ? 'Maintenance day' : (isCheat ? 'Cheat day' : 'Deficit day');
+        const end = d.endChoice ? `, ${d.endChoice}` : '';
+
+        const freeApplied = Math.max(0, Math.round(Number(d.freeApplied || 0)));
+        const cheatApplied = Math.max(0, Math.round(Number(d.cheatApplied || 0)));
+        const baseBudget = Math.max(0, Math.round(Number(d.budget || 0) - freeApplied - cheatApplied));
+        const deficitUsed = d.maintenance
+          ? 0
+          : Math.max(0, Math.round(Number(d.yTdee || 0) - baseBudget));
+
+        card.innerHTML = `
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px;">
+            <div style="font-weight:900; font-size:14px; color: var(--ink);">${formatDayKeyLong(d.dayKey)}</div>
+            <div style="display:flex; gap:8px;">
+              <button class="btn neutral small" data-edit="${d.id}">Edit</button>
+            </div>
+          </div>
+
+          <div style="font-weight:900; font-size:12px; color: var(--muted); margin-bottom:10px;">
+            ${tag}${end}
+          </div>
+
+          <div class="grid2">
+            <div class="kpi">
+              <div class="klabel">TDEE</div>
+              <div class="kval"><span class="knum">${fmt(Number(d.yTdee||0))}</span></div>
+            </div>
+            <div class="kpi">
+              <div class="klabel">Budget</div>
+              <div class="kval"><span class="knum">${fmt(Number(d.budget||0))}</span></div>
+            </div>
+          </div>
+
+          <div class="spacer"></div>
+
+          <div class="grid2">
+            <div class="kpi">
+              <div class="klabel">Intake</div>
+              <div class="kval"><span class="knum">${fmt(Number(d.intake||0))}</span></div>
+            </div>
+            <div class="kpi">
+              <div class="klabel">Deficit</div>
+              <div class="kval"><span class="knum">${d.maintenance ? 'None' : `-${fmt(deficitUsed)}`}</span></div>
+            </div>
+          </div>
+        `;
+        stack.appendChild(card);
+      }
+
+      stack.querySelectorAll('[data-edit]').forEach((btn) => {
+        btn.addEventListener('click', () => openEdit(btn.getAttribute('data-edit')));
+      });
+    };
+
+    const confetti = () => {
+      const wrap = document.createElement('div');
+      wrap.className = 'confettiWrap';
+      const count = 38;
+
+      for(let i = 0; i < count; i++){
+        const d = document.createElement('div');
+        d.className = 'confetti';
+        d.style.left = `${Math.random() * 100}vw`;
+        d.style.animationDelay = `${Math.random() * 0.15}s`;
+        d.style.transform = `rotate(${Math.random()*45}deg)`;
+        d.style.opacity = `${0.65 + Math.random() * 0.35}`;
+        d.style.width = `${6 + Math.round(Math.random()*6)}px`;
+        d.style.height = `${10 + Math.round(Math.random()*10)}px`;
+        wrap.appendChild(d);
+      }
+      document.body.appendChild(wrap);
+      setTimeout(() => wrap.remove(), 1400);
+    };
+
+    const planDaysAndLimit = (plan) => {
+      if(!plan || !plan.startDayKey) return { planDays: 0, maxExtraDays: 0 };
+
+      const baseISO = plan.baseTargetDateISO || plan.targetDateISO;
+      const baseDate = parseISODateNoon(baseISO);
+      const startDate = parseDayKeyToDateNoon(plan.startDayKey);
+      if(!baseDate || !startDate) return { planDays: 0, maxExtraDays: 0 };
+
+      const msPerDay = 86400000;
+      const planDays = Math.max(0, Math.ceil((baseDate - startDate) / msPerDay));
+      const maxExtraDays = Math.max(0, Math.floor(planDays * CHEAT_MAX_EXT_PCT));
+      return { planDays, maxExtraDays };
+    };
+
+    const renderCheatSettings = () => {
+      const plan = getPlan();
+      const locked = !plan;
+
+      el('cheatLockedOverlay').style.display = locked ? 'flex' : 'none';
+      el('cheatCardContent').classList.toggle('lockedBlur', locked);
+
+      if(locked){
+        el('cheatLockedText').textContent = 'Save a plan first to unlock';
+        el('cheatMsg').textContent = '';
+        return;
+      }
+
+      const { planDays, maxExtraDays } = planDaysAndLimit(plan);
+
+      const cheat = plan.cheat && typeof plan.cheat === 'object' ? plan.cheat : { count:0, amount:0, used:0 };
+      el('cheatCountInput').value = String(Math.max(0, cheat.count || 0));
+      el('cheatAmountInput').value = String(Math.max(0, cheat.amount || 0));
+
+      if(planDays < CHEAT_MIN_PLAN_DAYS){
+        el('cheatMsg').textContent = `Cheat days unlock at ${CHEAT_MIN_PLAN_DAYS} plan days.`;
+      }else{
+        el('cheatMsg').textContent = `Limit: up to ${maxExtraDays} extra days (5%).`;
+      }
+    };
+
+    const applyCheatDays = async () => {
+      if(!isAdult()){ showAdultModal(); return; }
+
+      const plan = getPlan();
+      if(!plan){
+        el('cheatMsg').textContent = 'Save a plan first.';
+        return;
+      }
+
+      const { planDays, maxExtraDays } = planDaysAndLimit(plan);
+      if(planDays < CHEAT_MIN_PLAN_DAYS){
+        el('cheatMsg').textContent = `Cheat days unlock at ${CHEAT_MIN_PLAN_DAYS} plan days.`;
+        return;
+      }
+
+      const count = Math.max(0, Math.round(Number(el('cheatCountInput').value || 0)));
+      const amount = Math.max(0, Math.round(Number(el('cheatAmountInput').value || 0)));
+
+      if(count === 0 || amount === 0){
+        const c = plan.cheat && typeof plan.cheat === 'object' ? plan.cheat : null;
+        if(c && (c.used || 0) > 0){
+          el('cheatMsg').textContent = 'You already used a cheat day. Keep them enabled.';
+          return;
+        }
+
+        if(plan.cheat){
+          delete plan.cheat;
+          if(plan.baseTargetDateISO){
+            plan.targetDateISO = plan.baseTargetDateISO;
+            delete plan.baseTargetDateISO;
+          }
+          setPlan(plan);
+        }
+
+        el('cheatMsg').textContent = 'Cheat days disabled.';
+        render();
+        return;
+      }
+
+      const daily = Math.max(1, Math.round(Number(plan.dailyDeficit || 0)));
+      const extraDaysNeeded = Math.ceil((count * amount) / daily);
+
+      if(extraDaysNeeded > maxExtraDays){
+        el('cheatMsg').textContent = `That's over the 5% limit. Try fewer days or fewer calories.`;
+        return;
+      }
+
+      const baseISO = plan.baseTargetDateISO || plan.targetDateISO;
+      const baseDate = parseISODateNoon(baseISO);
+      if(!baseDate){
+        el('cheatMsg').textContent = 'Plan date is missing.';
+        return;
+      }
+
+      const newDate = addDays(baseDate, extraDaysNeeded);
+      const newISO = isoFromDate(newDate);
+
+      const btn = el('cheatApplyBtn');
+      btn.disabled = true;
+      btn.innerHTML = `
+        <span class="loadingDots" aria-label="Saving">
+          <span></span><span></span><span></span>
+        </span>
+      `;
+
+      setTimeout(() => {
+        plan.baseTargetDateISO = baseISO;
+        plan.targetDateISO = newISO;
+        plan.cheat = { count, amount, used: 0 };
+
+        setPlan(plan);
+
+        btn.disabled = false;
+        btn.textContent = 'Apply';
+
+        el('cheatMsg').textContent = `Saved. Target date extended by ${extraDaysNeeded} day${extraDaysNeeded === 1 ? '' : 's'}.`;
+        setActivePage('Dash');
+        confetti();
+        render();
+      }, 650);
+    };
+
+    el('cheatApplyBtn').addEventListener('click', applyCheatDays);
+
+    const renderCheatDash = () => {
+      const plan = getPlan();
+      const today = getToday();
+      const inNight = !!today.ended;
+
+      const wrap = el('cheatDashCard');
+      const grid = el('cheatGrid');
+      const meta = el('cheatDashMeta');
+      const note = el('cheatDashNote');
+
+      if(!plan || !plan.cheat || !plan.cheat.count || !plan.cheat.amount){
+        wrap.style.display = 'none';
+        return;
+      }
+
+      const cheat = plan.cheat;
+      const count = Math.max(0, Math.round(Number(cheat.count || 0)));
+      const used = Math.max(0, Math.round(Number(cheat.used || 0)));
+      const amount = Math.max(0, Math.round(Number(cheat.amount || 0)));
+
+      wrap.style.display = 'block';
+      meta.textContent = `${used} of ${count} used`;
+
+      const alreadyToday = Math.round(Number(today.cheatApplied || 0)) > 0;
+      const remainingCoins = Math.max(0, count - used);
+
+      if(inNight){
+        note.textContent = `Locked in Goodnight mode.`;
+      }else if(alreadyToday){
+        note.textContent = `Cheat day used today (+${fmt(amount)}).`;
+      }else if(remainingCoins <= 0){
+        note.textContent = `All used up.`;
+      }else{
+        note.textContent = `Tap a coin to add +${fmt(amount)} to today's budget.`;
+      }
+
+      grid.innerHTML = '';
+
+      for(let i = 0; i < count; i++){
+        const isUsed = i < used;
+        const b = document.createElement('div');
+        b.className = `coin${isUsed ? ' used' : ''}`;
+        b.textContent = '🪙';
+        b.setAttribute('role','button');
+        b.setAttribute('tabindex','0');
+
+        const canTap = !isUsed && !inNight && !alreadyToday && remainingCoins > 0 && isAdult();
+        if(!canTap) b.style.opacity = isUsed ? '.35' : '.60';
+
+        b.addEventListener('click', () => {
+          if(!canTap) return;
+          redeemCheatDay();
+        });
+
+        grid.appendChild(b);
+      }
+    };
+
+    const redeemCheatDay = () => {
+      ensureDayRoll();
+      const today = getToday();
+      if(today.ended) return;
+      if(!isAdult()){ showAdultModal(); return; }
+
+      const plan = getPlan();
+      if(!plan || !plan.cheat) return;
+
+      const cheat = plan.cheat;
+      const count = Math.max(0, Math.round(Number(cheat.count || 0)));
+      const used = Math.max(0, Math.round(Number(cheat.used || 0)));
+      const amount = Math.max(0, Math.round(Number(cheat.amount || 0)));
+
+      if(used >= count) return;
+      if(Math.round(Number(today.cheatApplied || 0)) > 0) return;
+
+      cheat.used = used + 1;
+      plan.cheat = cheat;
+      setPlan(plan);
+
+      today.cheatApplied = amount;
+      today.cheatRedeemedAt = Date.now();
+      setToday(today);
+
+      confetti();
+      el('contentArea').scrollTo({ top: 0, behavior: 'smooth' });
+      render();
+
+      showCheatUndoIfAvailable();
+    };
+
+    const showCheatUndoIfAvailable = () => {
+      const today = getToday();
+      const ts = Number(today.cheatRedeemedAt || 0);
+      const active = ts > 0 && (Date.now() - ts) <= CHEAT_UNDO_MS;
+
+      el('cheatUndoRow').style.display = active ? 'flex' : 'none';
+      if(!active) return;
+
+      const left = Math.max(0, CHEAT_UNDO_MS - (Date.now() - ts));
+      el('cheatUndoNote').textContent = `Undo available for ${Math.ceil(left / 1000)} seconds.`;
+
+      setTimeout(() => {
+        showCheatUndoIfAvailable();
+      }, 250);
+    };
+
+    const undoCheatDay = () => {
+      ensureDayRoll();
+      const today = getToday();
+      if(today.ended) return;
+
+      const ts = Number(today.cheatRedeemedAt || 0);
+      if(!(ts > 0 && (Date.now() - ts) <= CHEAT_UNDO_MS)) return;
+
+      const plan = getPlan();
+      if(!plan || !plan.cheat) return;
+
+      const cheat = plan.cheat;
+      cheat.used = Math.max(0, Math.round(Number(cheat.used || 0)) - 1);
+      plan.cheat = cheat;
+      setPlan(plan);
+
+      today.cheatApplied = 0;
+      today.cheatRedeemedAt = 0;
+      setToday(today);
+
+      el('cheatUndoRow').style.display = 'none';
+      render();
+    };
+
+    el('cheatUndoBtn').addEventListener('click', undoCheatDay);
+
     const render = () => {
       ensureDayRoll();
 
@@ -2511,6 +2956,7 @@
       const banks = getBanks();
       const today = getToday();
       const stats = getStats();
+      const plan = getPlan();
 
       const intake = sumIntake(today.entries);
       const budgetTotal = calcBudgetTotal(today, planDef);
@@ -2561,7 +3007,7 @@
       el('tdeeInputDash').value = today.yTdee ? String(today.yTdee) : '';
       el('maintenanceToggleDash').checked = !!today.maintenance;
 
-      const canApply = hasFilledStats(stats);
+      const canApply = hasFilledStats(stats) && isAdult();
       el('applyDashBtn').disabled = !canApply || inNight;
       el('maintenanceToggleDash').disabled = inNight;
       el('tdeeInputDash').disabled = inNight;
@@ -2570,7 +3016,12 @@
 
       el('useBankedBtn').disabled = inNight || !isAdult();
 
-      el('modeHint').textContent = today.maintenance ? 'Maintenance Day' : 'Deficit';
+      if(!hasFilledStats(stats)){
+        el('modeHint').textContent = 'See settings first';
+      }else{
+        el('modeHint').textContent = today.maintenance ? 'Maintenance Day' : 'Deficit';
+      }
+
       if(!el('savedHint').textContent) el('savedHint').textContent = 'Saved';
 
       el('reopenCard').style.display = inNight ? 'block' : 'none';
@@ -2599,6 +3050,10 @@
       renderProgress();
       renderStatsView(false);
 
+      renderCheatSettings();
+      renderCheatDash();
+      showCheatUndoIfAvailable();
+
       setToday(today);
     };
 
@@ -2619,9 +3074,13 @@
 
       const s = getStats();
       if(!hasFilledStats(s)){
-        el('savedHint').textContent = 'Fill in My stats first';
+        el('savedHint').textContent = 'See settings first';
         setTimeout(() => { el('savedHint').textContent = 'Saved'; }, 900);
         render();
+        return;
+      }
+      if(!isAdult()){
+        showAdultModal();
         return;
       }
 
@@ -2948,7 +3407,7 @@
     el('exportBtn').addEventListener('click', () => {
       const payload = {
         exportedAt: new Date().toISOString(),
-        version: 'v12',
+        version: 'v12+cheat',
         cutoffHour: DAY_CUTOFF_HOUR,
         settings: getSettings(),
         stats: getStats(),
@@ -2970,7 +3429,6 @@
       URL.revokeObjectURL(url);
     });
 
-    /* Import */
     el('importBtn').addEventListener('click', () => el('importFile').click());
 
     el('importFile').addEventListener('change', async (e) => {
@@ -3022,3 +3480,4 @@
   </script>
 </body>
 </html>
+```
