@@ -2,7 +2,7 @@
   "name": "Allocate",
   "short_name": "Allocate",
   "description": "Calorie tracking and allocation app",
-  "start_url": "/",
+  "start_url": "/Allocate/",
   "display": "standalone",
   "background_color": "#ff7aa2",
   "theme_color": "#ff7aa2",
