@@ -65,26 +65,32 @@
       height: 100vh;
       height: -webkit-fill-available;
       overflow: hidden;
+      margin: 0;
+      padding: 0;
       background:
         radial-gradient(1200px 800px at 20% 10%, rgba(255,255,255,.35), transparent 55%),
         linear-gradient(145deg, var(--bg1), var(--bg2));
+      background-attachment: fixed;
     }
-    body{ 
-      height:100%;
-      min-height: 100vh;
-      min-height: -webkit-fill-available;
+    body{
+      height:100vh;
+      height: -webkit-fill-available;
       margin:0;
+      padding:0;
       font-family: "SF Pro Rounded", ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
       color:var(--ink);
       letter-spacing: -0.5px;
       background:
         radial-gradient(1200px 800px at 20% 10%, rgba(255,255,255,.35), transparent 55%),
         linear-gradient(145deg, var(--bg1), var(--bg2));
+      background-attachment: fixed;
       transition: background .8s ease;
       display:flex;
       align-items:flex-start;
       justify-content:center;
       padding:22px 14px 0;
+      padding-bottom: 0;
+      overflow-x: hidden;
     }
     body.night{
       background:
@@ -99,7 +105,8 @@
 
     .phone{
       width:min(420px, 100%);
-      height: min(860px, calc(100vh - 44px));
+      height: min(860px, calc(100vh - 22px));
+      max-height: calc(100vh - 22px);
       border-radius: 36px;
       padding: 16px;
       padding-bottom: calc(16px + env(safe-area-inset-bottom));
