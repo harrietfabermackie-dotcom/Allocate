@@ -91,15 +91,13 @@
       align-items:flex-start;
       justify-content:center;
       padding:22px 14px 0;
-      height: 100vh;
-      height: -webkit-fill-available;
-      padding-bottom: calc(env(safe-area-inset-bottom) + 22px);
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
     }
 
     .phone{
       width:min(420px, 100%);
-      height: calc(100vh - 44px - env(safe-area-inset-bottom));
-      max-height: calc(100vh - 44px - env(safe-area-inset-bottom));
+      height: min(860px, calc(100vh - 44px));
       border-radius: 36px;
       padding: 16px;
       padding-bottom: calc(16px + env(safe-area-inset-bottom));
@@ -114,6 +112,7 @@
       overflow:hidden;
       filter: blur(0px);
       transition: filter 0.4s ease-in-out;
+      margin-bottom: 0;
     }
     body.night .phone{
       background: rgba(255,255,255,.18);
