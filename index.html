@@ -61,21 +61,23 @@
 
     *{ box-sizing:border-box; }
     html{ 
-      height:100%;
       height: 100vh;
       height: -webkit-fill-available;
       overflow: hidden;
       margin: 0;
       padding: 0;
+      position: fixed;
+      width: 100%;
       background:
         radial-gradient(1200px 800px at 20% 10%, rgba(255,255,255,.35), transparent 55%),
         linear-gradient(145deg, var(--bg1), var(--bg2));
       background-attachment: fixed;
       background-size: cover;
+      background-repeat: no-repeat;
     }
     body{
-      min-height: 100vh;
-      min-height: -webkit-fill-available;
+      height: 100vh;
+      height: -webkit-fill-available;
       margin:0;
       padding:0;
       font-family: "SF Pro Rounded", ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
@@ -86,25 +88,27 @@
         linear-gradient(145deg, var(--bg1), var(--bg2));
       background-attachment: fixed;
       background-size: cover;
+      background-repeat: no-repeat;
       transition: background .8s ease;
       display:flex;
       align-items:flex-start;
       justify-content:center;
-      padding:22px 14px;
-      overflow-x: hidden;
+      padding:22px 14px 0;
+      overflow: hidden;
       position: relative;
+      width: 100%;
     }
-    body::after {
+    body::before {
       content: '';
       position: fixed;
-      bottom: 0;
+      top: 0;
       left: 0;
       right: 0;
-      height: 100vh;
+      bottom: 0;
       background:
         radial-gradient(1200px 800px at 20% 10%, rgba(255,255,255,.35), transparent 55%),
         linear-gradient(145deg, var(--bg1), var(--bg2));
-      z-index: -1;
+      z-index: -999;
       pointer-events: none;
     }
     body.night{
