@@ -7,10 +7,12 @@
   <meta name="theme-color" content="#ff7aa2" />
   
   <!-- PWA Icons for iOS -->
-  <link rel="apple-touch-icon" sizes="1024x1024" href="icon-1024.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png" />
-  <link rel="icon" type="image/png" sizes="1024x1024" href="icon-1024.png" />
-  <link rel="icon" type="image/png" sizes="180x180" href="icon-180.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="icon-1024.png?v=3" />
+  <link rel="apple-touch-icon" sizes="1024x1024" href="icon-1024.png?v=3" />
+  <link rel="apple-touch-icon" href="icon-1024.png?v=3" />
+  <link rel="icon" type="image/png" sizes="180x180" href="icon-1024.png?v=3" />
+  <link rel="icon" type="image/png" sizes="1024x1024" href="icon-1024.png?v=3" />
+  <link rel="icon" type="image/png" href="icon-1024.png?v=3" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Allocate" />
@@ -63,6 +65,7 @@
       margin:0;
       font-family: "SF Pro Rounded", ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
       color:var(--ink);
+      letter-spacing: -0.5px;
       background:
         radial-gradient(1200px 800px at 20% 10%, rgba(255,255,255,.35), transparent 55%),
         linear-gradient(145deg, var(--bg1), var(--bg2));
@@ -94,6 +97,8 @@
       display:flex;
       flex-direction:column;
       overflow:hidden;
+      filter: blur(0px);
+      transition: filter 0.4s ease-in-out;
     }
     body.night .phone{
       background: rgba(255,255,255,.18);
@@ -149,28 +154,33 @@
       flex: 0 0 auto;
     }
     .pillbtn{
-      border:1px solid rgba(255,255,255,.55);
+      border:0.5px solid rgba(255,255,255,.55);
       background: rgba(255,255,255,.28);
       color: var(--ink);
       padding: 12px 16px;
       border-radius: 999px;
       cursor:pointer;
       font-weight:900;
-      box-shadow: 0 4px 12px rgba(0,0,0,.1), 0 2px 4px rgba(0,0,0,.06), inset 0 1px 0 rgba(255,255,255,.4);
+      box-shadow: 0 4px 12px rgba(0,0,0,.1), 0 2px 4px rgba(0,0,0,.06);
       transition: transform .12s cubic-bezier(0.34, 1.56, 0.64, 1);
       user-select:none;
       -webkit-tap-highlight-color: transparent;
       white-space: nowrap;
       font-family: "SF Pro Rounded", ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      vertical-align: middle;
     }
     .pillbtn:active{ transform: translateY(2px) scale(.97); }
     .pillbtn:hover:not(:active){ transform: translateY(-1px) scale(1.02); }
 
     body.night .pillbtn{
-      border:1px solid rgba(255,255,255,.55);
+      border:0.5px solid rgba(255,255,255,.55);
       background: rgba(255,255,255,.28);
       color: var(--ink);
-      box-shadow: 0 4px 12px rgba(0,0,0,.1), 0 2px 4px rgba(0,0,0,.06), inset 0 1px 0 rgba(255,255,255,.4);
+      box-shadow: 0 4px 12px rgba(0,0,0,.1), 0 2px 4px rgba(0,0,0,.06);
     }
 
     .content{
@@ -782,7 +792,7 @@
       color: rgba(91,75,97,.92);
       font-weight:900;
     }
-    body.night .trackMetaRow .pm{ color: rgba(255,255,255,.75); }
+    body.night .trackMetaRow .pm{ color: rgba(91,75,97,.92); }
 
     .streakWrap{
       display:flex;
@@ -801,7 +811,7 @@
       font-size:14px;
       color: rgba(27,16,32,.85);
     }
-    body.night .streakTitle{ color: rgba(255,255,255,.88); }
+    body.night .streakTitle{ color: rgba(27,16,32,.85); }
     .streakBig{
       font-weight:900;
       font-size:22px;
@@ -816,7 +826,7 @@
       font-size:12px;
       color: rgba(91,75,97,.85);
     }
-    body.night .streakNote{ color: rgba(255,255,255,.75); }
+    body.night .streakNote{ color: rgba(91,75,97,.85); }
 
     .statsHeader{
       display:flex;
@@ -830,7 +840,7 @@
       font-size:14px;
       color: rgba(27,16,32,.85);
     }
-    body.night .statsTitle{ color: rgba(255,255,255,.85); }
+    body.night .statsTitle{ color: rgba(27,16,32,.85); }
 
     .pencil{
       width: 48px;
@@ -923,7 +933,7 @@
       font-weight:900;
       margin-top: 6px;
     }
-    body.night .note{ color: rgba(255,255,255,.72); }
+    body.night .note{ color: rgba(91,75,97,.8); }
 
     .lockedCard{
       position: relative;
@@ -983,7 +993,7 @@
       text-align:center;
       min-height: 26px;
     }
-    body.night .calcMsg{ color: rgba(255,255,255,.85); }
+    body.night .calcMsg{ color: rgba(27,16,32,.85); }
     .calcMsg .bigDef{
       font-size: 22px;
       font-weight: 900;
@@ -1046,7 +1056,7 @@
       gap:10px;
       min-width: 0;
     }
-    body.night .presetTitle{ color: rgba(255,255,255,.88); }
+    body.night .presetTitle{ color: rgba(27,16,32,.85); }
 
     .presetTiles{
       display:grid;
@@ -1126,6 +1136,8 @@
       background: linear-gradient(145deg, #ff7aa2, #ffb36a) !important;
       position: relative;
       overflow: hidden;
+      filter: blur(0px);
+      transition: filter 0.4s ease-in-out, opacity 0.4s ease-in-out;
     }
     #morningScreen::before{
       content: '';
@@ -1143,42 +1155,17 @@
       pointer-events: none;
     }
     .morningGreeting{
-      width: 100%;
-      max-width: 480px;
+      font-size: 33.6px;
+      font-weight: 900;
+      color: rgba(45, 31, 20, 1);
       margin-top: 0;
       margin-bottom: 24px;
       opacity: 0;
       transform: translateY(12px);
       transition: opacity 0.9s cubic-bezier(0.2, 0, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0, 0.2, 1);
-      text-shadow: none !important;
-    }
-    .morningGreeting svg{
-      width: 100%;
-      height: auto;
-    }
-    .morningGreetingText{
-      font-size: 60px;
-      font-weight: 900;
-      font-style: italic;
-      fill: #ffffff !important;
-      font-family: 'Fraunces', serif;
-      letter-spacing: -1.5px;
-      -webkit-font-smoothing: none;
-      -moz-osx-font-smoothing: auto;
-      text-rendering: geometricPrecision;
-      mix-blend-mode: normal;
-      paint-order: stroke fill;
-      stroke: #ffffff;
-      stroke-width: 2px;
-      filter: brightness(1.2) contrast(1.1);
-    }
-    .morningGreeting[style*="opacity: 1"],
-    .morningGreeting[style*="opacity:1"],
-    .morningGreeting[style*="opacity: 1"],
-    .morningGreeting[style*="opacity:1"]{
-      opacity: 1 !important;
-      color: #ffffff !important;
-      text-shadow: none !important;
+      font-family: 'SF Pro Rounded', ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
+      letter-spacing: -0.5px;
+      text-align: center;
     }
     .morningText{
       font-size: 16px;
@@ -1198,19 +1185,20 @@
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      letter-spacing: -1.5px;
+      letter-spacing: -1px;
       font-family: 'SF Pro Rounded', ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
-      line-height: 1;
+      line-height: 1.1;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
     .morningNumberBubble{
       display: inline-block;
       background: rgba(255, 255, 255, 1);
       border-radius: 28px;
-      padding: 20px 32px;
+      padding: 16px 24px;
       margin-bottom: 20px;
       box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.12),
-        0 4px 16px rgba(0, 0, 0, 0.08),
         inset 0 1px 0 rgba(255, 255, 255, 0.9),
         0 0 0 1px rgba(255, 255, 255, 0.5);
       backdrop-filter: blur(24px);
@@ -1222,15 +1210,11 @@
     .morningDeficitNumber{
       font-size: 48px;
       font-weight: 900;
-      background: linear-gradient(145deg, rgba(45, 31, 20, 0.95), rgba(30, 20, 15, 1));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      color: rgba(45, 31, 20, 1) !important;
       letter-spacing: -1.5px;
       font-family: 'SF Pro Rounded', ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
       line-height: 1;
       position: relative;
-      text-shadow: 0 0 8px rgba(45, 31, 20, 0.15);
     }
     .morningDeficitNumber::before{
       content: '';
@@ -1250,16 +1234,14 @@
       -webkit-backdrop-filter: blur(32px);
       border-radius: 28px;
       border: 1px solid rgba(255, 255, 255, 0.95);
-      padding: 28px;
+      padding: 22px;
       margin-top: 0;
       width: 100%;
-      max-width: 320px;
+      max-width: 300px;
       opacity: 0;
       transform: translateY(24px) scale(0.97);
       transition: opacity 0.9s cubic-bezier(0.2, 0, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0, 0.2, 1);
       box-shadow: 
-        0 12px 48px rgba(0, 0, 0, 0.12),
-        0 6px 24px rgba(0, 0, 0, 0.08),
         inset 0 1px 0 rgba(255, 255, 255, 1),
         0 0 0 1px rgba(255, 255, 255, 0.6);
     }
@@ -1275,7 +1257,7 @@
     .morningPanelLabel{
       font-size: 16px;
       font-weight: 800;
-      color: rgba(91, 75, 97, 0.6);
+      color: rgba(45, 31, 20, 0.65);
       letter-spacing: 0.3px;
       font-family: 'SF Pro Rounded', ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
     }
@@ -1287,7 +1269,10 @@
       font-family: 'SF Pro Rounded', ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
     }
     .morningPanelValue.positive{
-      color: #ff8c5a;
+      background: linear-gradient(145deg, #ff7aa2, #ffb36a);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
       font-size: 28px;
       letter-spacing: -0.6px;
     }
@@ -1313,25 +1298,25 @@
     }
     #morningTapHint{
       margin-top: 20px;
+      margin-bottom: 0;
       opacity: 0;
       transition: opacity 1s cubic-bezier(0.2, 0, 0.2, 1);
       pointer-events: none;
       display: flex;
       align-items: center;
       justify-content: center;
-      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3)) drop-shadow(0 3px 12px rgba(0, 0, 0, 0.2));
     }
     #morningTapHint svg{
-      width: 48px;
-      height: 48px;
+      width: 36.72px;
+      height: 36.72px;
     }
     #morningTapHint svg path{
-      stroke: #ffffff !important;
+      stroke: rgba(45, 31, 20, 1) !important;
+      stroke-width: 4.5px;
       -webkit-font-smoothing: none;
       -moz-osx-font-smoothing: auto;
       text-rendering: geometricPrecision;
       mix-blend-mode: normal;
-      filter: brightness(1.2) contrast(1.1);
     }
     #morningTapHint[style*="opacity: 1"],
     #morningTapHint[style*="opacity:1"]{
@@ -1392,7 +1377,7 @@
       color: rgba(27,16,32,.9);
       margin: 4px 0 10px 0;
     }
-    body.night .leftBigLine{ color: rgba(255,255,255,.9); }
+    body.night .leftBigLine{ color: rgba(27,16,32,.9); }
 
     .roundTiles{
       display:grid;
@@ -1616,7 +1601,7 @@
       font-weight:900;
       color: var(--muted);
     }
-    body.night .undoNote{ color: rgba(255,255,255,.75); }
+    body.night .undoNote{ color: var(--muted); }
   </style>
 </head>
 
@@ -1663,7 +1648,7 @@
           <!-- Goodnight tile (shown only in night mode) -->
           <div class="card" id="goodnightTile" style="display:none; padding: 16px; text-align:center;">
             <div style="font-size:32px; line-height:1; margin-bottom:6px;">🌙</div>
-            <div style="font-weight:900; font-size:36px; line-height:1.1; margin: 0; padding-bottom: 4px; letter-spacing: -0.5px; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 2px 8px rgba(123,163,209,.4));">Goodnight</div>
+            <div style="font-weight:900; font-size:36px; line-height:1.1; margin: 0; padding-bottom: 4px; letter-spacing: -0.5px; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; color: transparent;">Goodnight</div>
           </div>
 
           <div class="card hero">
@@ -2208,31 +2193,13 @@
 
   <!-- Morning Opening Screen -->
   <div class="modalBack" id="morningScreen" style="z-index:3000; display:none;">
-    <div style="position:relative; width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:60px 20px; z-index:1;">
+    <div style="position:relative; width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:50px 20px; z-index:1; transform: translateY(-20px);">
       
       <!-- Content Area -->
       <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; max-width:360px;">
         <!-- "Good morning" greeting -->
-        <div class="morningGreeting" id="morningGreeting">
-          <svg width="100%" height="80" viewBox="0 0 500 80" preserveAspectRatio="xMidYMid meet" style="overflow: visible;">
-            <defs>
-              <path id="morningArc" d="M 50 60 Q 250 45 450 60" />
-              <filter id="whiteFilter">
-                <feComponentTransfer>
-                  <feFuncR type="discrete" tableValues="1"/>
-                  <feFuncG type="discrete" tableValues="1"/>
-                  <feFuncB type="discrete" tableValues="1"/>
-                </feComponentTransfer>
-              </filter>
-            </defs>
-            <text class="morningGreetingText" filter="url(#whiteFilter)">
-              <textPath href="#morningArc" startOffset="50%" text-anchor="middle" dominant-baseline="middle">
-                Good morning
-              </textPath>
-            </text>
-          </svg>
-        </div>
-
+        <div class="morningGreeting" id="morningGreeting">Good morning</div>
+        
         <!-- "Yesterday you burned" -->
         <div class="morningText" id="morningText1">Yesterday you burned</div>
         
@@ -2242,7 +2209,7 @@
         </div>
         
         <!-- "Daily deficit" -->
-        <div class="morningText" id="morningText2">Daily deficit</div>
+        <div class="morningText" id="morningText2">Your daily deficit is</div>
         
         <!-- Deficit Number (counts down) -->
         <div class="morningDeficitContainer">
@@ -2265,7 +2232,7 @@
           
           <!-- Today's Budget (final) -->
           <div class="morningPanelRow" id="morningRow3" style="border-top: 1px solid rgba(91,75,97,0.12); margin-top:18px; padding-top:20px;">
-            <span class="morningPanelLabel" style="color:rgba(45,31,20,0.85);">Today's budget</span>
+            <span class="morningPanelLabel" style="color:rgba(45,31,20,1);">Today's budget</span>
             <span class="morningPanelValue" id="morningBudgetNum" style="font-size:28px; font-weight:900; color:rgba(45,31,20,1); letter-spacing:-0.6px;">2,097</span>
           </div>
         </div>
@@ -2866,12 +2833,12 @@
     });
 
     const emojiChoices = [
-      '☕️','🥗','🌯','🍽️','🍪','🥪','🍫','🍕','🍜','🍗','🍞','🧃','🥤','🍺','🍷','🍣','🍔','🍟','🧁','🍦','🍇','🍌','🍎','🧀','🥛','🍓','🍒','🥑','🥚','🍚','🍝','🍛'
+      '☕️','🍴','🌯','🍽️','🍪','🥪','🍫','🍕','🍜','🍗','🍞','🧃','🥤','🍺','🍷','🍣','🍔','🍟','🧁','🍦','🍇','🍌','🍎','🧀','🥛','🍓','🍒','🥑','🥚','🍚','🍝','🍛'
     ];
 
     const defaultPresets = () => ([
       { id: 1, emoji: '☕️', cals: 75 },
-      { id: 2, emoji: '🥗', cals: 430 },
+      { id: 2, emoji: '🍴', cals: 430 },
       { id: 3, emoji: '🌯', cals: 580 }
     ]);
 
@@ -6400,8 +6367,11 @@
       const update = () => {
         const elapsed = Date.now() - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        const easeOut = 1 - Math.pow(1 - progress, 3);
-        const current = Math.round(start + range * easeOut);
+        // Ease-in-out cubic function
+        const easeInOut = progress < 0.5
+          ? 4 * Math.pow(progress, 3)
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+        const current = Math.round(start + range * easeInOut);
         element.textContent = prefix + current.toLocaleString('en-GB');
         
         if(progress < 1){
@@ -6421,7 +6391,12 @@
       
       // Hide app content
       const phone = document.querySelector('.phone');
-      if(phone) phone.style.display = 'none';
+      if(phone) {
+        phone.style.filter = 'blur(20px)';
+        setTimeout(() => {
+          if(phone) phone.style.display = 'none';
+        }, 50);
+      }
       
       // Show morning screen
       screen.style.display = 'flex';
@@ -6453,7 +6428,7 @@
       const tapHint = el('morningTapHint');
       
       // Reset states
-      if(greeting) { greeting.style.opacity = '0'; greeting.style.transform = 'translateY(8px)'; }
+      if(greeting) { greeting.style.opacity = '0'; greeting.style.transform = 'translateY(12px)'; }
       if(text1) { text1.style.opacity = '0'; text1.style.transform = 'translateY(8px)'; }
       if(text2) { text2.style.opacity = '0'; text2.style.transform = 'translateY(8px)'; }
       if(yesterdayBubble) { yesterdayBubble.style.opacity = '0'; }
@@ -6472,17 +6447,15 @@
       // Play gentle sound
       setTimeout(() => playSound('success'), 400);
       
-      // Step 1: Fade in greeting (300ms)
+      // Step 1: Show "Good morning" (300ms)
       setTimeout(() => {
         if(greeting) {
           greeting.style.opacity = '1';
-          greeting.style.color = '#ffffff';
-          greeting.style.textShadow = 'none';
           greeting.style.transform = 'translateY(0)';
         }
       }, 300);
       
-      // Step 2: Show "Yesterday you burned" (800ms)
+      // Step 2: Show "Yesterday you burned" (600ms)
       setTimeout(() => {
         if(text1) {
           text1.style.opacity = '1';
@@ -6569,8 +6542,6 @@
       setTimeout(() => {
         if(tapHint) {
           tapHint.style.opacity = '1';
-          tapHint.style.color = '#ffffff';
-          tapHint.style.textShadow = 'none';
         }
       }, 6000);
     };
@@ -6598,7 +6569,7 @@
       const tapHint = el('morningTapHint');
       
       const yesterdayBubble = el('morningYesterdayBubble');
-      if(greeting) { greeting.style.opacity = '1'; greeting.style.color = '#ffffff'; greeting.style.transform = 'translateY(0)'; }
+      if(greeting) { greeting.style.opacity = '1'; greeting.style.transform = 'translateY(0)'; }
       if(text1) { text1.style.opacity = '1'; text1.style.transform = 'translateY(0)'; }
       if(text2) { text2.style.opacity = '1'; text2.style.transform = 'translateY(0)'; }
       if(yesterdayBubble) { yesterdayBubble.style.opacity = '1'; }
@@ -6613,8 +6584,6 @@
       if(budgetNum) { budgetNum.textContent = finalBudget.toLocaleString('en-GB'); }
       if(tapHint) { 
         tapHint.style.opacity = '1';
-        tapHint.style.color = '#ffffff';
-        tapHint.style.textShadow = 'none';
       }
     };
 
@@ -6622,21 +6591,32 @@
       const screen = el('morningScreen');
       if(!screen) return;
       
-      // Fade out the entire screen
-      screen.style.transition = 'opacity 0.6s ease-out';
+      const phone = document.querySelector('.phone');
+      
+      // Blur transition: blur morning screen, unblur app
+      screen.style.filter = 'blur(20px)';
       screen.style.opacity = '0';
       
+      if(phone) {
+        phone.style.display = '';
+        phone.style.filter = 'blur(20px)';
+        // Trigger reflow to ensure blur is applied
+        void phone.offsetWidth;
+        // Unblur the app
+        phone.style.filter = 'blur(0px)';
+      }
+      
+      // Hide morning screen after transition
       setTimeout(() => {
         if(screen) {
           screen.style.display = 'none';
+          screen.style.filter = 'blur(0px)';
           screen.style.opacity = '1';
           screen.style.transition = '';
         }
-        
-        const phone = document.querySelector('.phone');
-        if(phone) phone.style.display = '';
-        
-        // Reset for next time
+      }, 400);
+      
+      // Reset for next time
         const greeting = el('morningGreeting');
         const text1 = el('morningText1');
         const text2 = el('morningText2');
@@ -6649,7 +6629,7 @@
         const tapHint = el('morningTapHint');
         
         const yesterdayBubble = el('morningYesterdayBubble');
-        if(greeting) { greeting.style.opacity = '0'; greeting.style.transform = 'translateY(8px)'; }
+        if(greeting) { greeting.style.opacity = '0'; greeting.style.transform = 'translateY(12px)'; }
         if(text1) { text1.style.opacity = '0'; text1.style.transform = 'translateY(8px)'; }
         if(text2) { text2.style.opacity = '0'; text2.style.transform = 'translateY(8px)'; }
         if(yesterdayBubble) { yesterdayBubble.style.opacity = '0'; }
@@ -6669,7 +6649,6 @@
     renderPresetTiles();
     renderStatsView(false);
     render();
-      }, 600);
     };
 
     // Event listeners for morning screen - tap anywhere to continue
