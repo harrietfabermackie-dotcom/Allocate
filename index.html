@@ -40,7 +40,7 @@
       --shadow2: 0 10px 24px rgba(25, 10, 30, .12);
       --radius: 24px;
 
-      --tabH: 78px;
+      --tabH: 100px;
       --tabPad: 10px;
     }
 
@@ -66,6 +66,7 @@
       overflow: hidden;
       margin: 0;
       padding: 0;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
       position: fixed;
       width: 100%;
       background:
@@ -93,7 +94,10 @@
       display:flex;
       align-items:flex-start;
       justify-content:center;
-      padding:22px 14px 0;
+      padding-top: 22px;
+      padding-left: 14px;
+      padding-right: 14px;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
       overflow: hidden;
       position: relative;
       width: 100%;
@@ -124,11 +128,12 @@
 
     .phone{
       width:min(420px, 100%);
-      height: min(860px, calc(100vh - 44px));
-      max-height: calc(100vh - 44px);
+      height: 100vh;
+      height: 100dvh;
+      max-height: 100vh;
+      max-height: 100dvh;
       border-radius: 36px;
       padding: 16px;
-      padding-bottom: calc(16px + env(safe-area-inset-bottom));
       background: rgba(255,255,255,.18);
       border: 1px solid rgba(255,255,255,.25);
       box-shadow: var(--shadow);
@@ -148,6 +153,12 @@
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
+    }
+
+    @media (max-width: 500px){
+      .phone{
+        border-radius: 0;
+      }
     }
 
     .topbar{
@@ -229,7 +240,7 @@
       flex: 1 1 auto;
       overflow:auto;
       -webkit-overflow-scrolling: touch;
-      padding-bottom: calc(var(--tabH) + 26px);
+      padding-bottom: calc(var(--tabH) + 40px + env(safe-area-inset-bottom, 0px));
     }
 
     .card{
@@ -714,9 +725,9 @@
       position: absolute;
       left: 16px;
       right: 16px;
-      bottom: 14px;
+      bottom: 34px;
       padding: var(--tabPad);
-      background: rgba(255,255,255,.98);
+      background: #fff;
       border: 1px solid rgba(255,255,255,.82);
       border-radius: 20px;
       box-shadow: var(--shadow2);
@@ -727,7 +738,7 @@
       z-index: 999;
     }
     body.night .bottomTabsWrap{
-      background: rgba(255,255,255,.98);
+      background: #fff;
       border: 1px solid rgba(255,255,255,.82);
       box-shadow: var(--shadow2);
     }
