@@ -937,38 +937,6 @@
     .kv .k{ font-size:12px; color: var(--muted); font-weight:900; }
     .kv .v{ font-size:14px; font-weight:900; margin-top: 2px; }
 
-    .cheatCurrentBox{
-      background: rgba(255,255,255,.58);
-      border: 1px solid rgba(255,255,255,.72);
-      border-radius: 18px;
-      padding: 12px 12px;
-    }
-    body.night .cheatCurrentBox{
-      background: var(--cardSolid);
-      border-color: rgba(220,235,255,.5);
-      box-shadow: 0 4px 12px rgba(100, 150, 200, .12), inset 0 1px 0 rgba(255,255,255,.4);
-    }
-    .cheatCurrentLabel{
-      font-size:12px;
-      color: var(--muted);
-      font-weight:900;
-      margin-bottom:8px;
-      font-family: "SF Pro Rounded", ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
-    }
-    body.night .cheatCurrentLabel{
-      color: rgba(255,255,255,.8);
-    }
-    .cheatCurrentValue{
-      font-size:14px;
-      font-weight:900;
-      color: var(--ink);
-      font-family: "SF Pro Rounded", ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
-      line-height:1.4;
-    }
-    body.night .cheatCurrentValue{
-      color: rgba(255,255,255,.98);
-    }
-
     .note{
       font-size:12px;
       color: rgba(91,75,97,.8);
@@ -1174,198 +1142,6 @@
     .modalBack.show{ display:flex; }
     body.night .modalBack{ background: rgba(25,10,30,.25); }
 
-    #morningScreen{
-      background: linear-gradient(145deg, #ff7aa2, #ffb36a) !important;
-      position: relative;
-      overflow: hidden;
-      filter: blur(0px);
-      transition: filter 0.4s ease-in-out, opacity 0.4s ease-in-out;
-    }
-    #morningScreen::before{
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
-      opacity: 0.4;
-      pointer-events: none;
-    }
-    #morningScreen::after{
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(1200px 800px at 20% 10%, rgba(255,255,255,.35), transparent 55%);
-      pointer-events: none;
-    }
-    .morningGreeting{
-      font-size: 33.6px;
-      font-weight: 900;
-      color: rgba(45, 31, 20, 1);
-      margin-top: 0;
-      margin-bottom: 24px;
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.9s cubic-bezier(0.2, 0, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0, 0.2, 1);
-      font-family: 'SF Pro Rounded', ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
-      letter-spacing: -0.5px;
-      text-align: center;
-    }
-    .morningText{
-      font-size: 16px;
-      font-weight: 700;
-      color: rgba(45, 31, 20, 0.65);
-      margin-bottom: 6px;
-      opacity: 0;
-      transform: translateY(6px);
-      transition: opacity 0.7s cubic-bezier(0.2, 0, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0, 0.2, 1);
-      font-family: 'SF Pro Rounded', ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
-      letter-spacing: 0.2px;
-    }
-    .morningNumber{
-      font-size: 48px;
-      font-weight: 900;
-      background: linear-gradient(145deg, #ff7aa2, #ffb36a);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      letter-spacing: -1px;
-      font-family: 'SF Pro Rounded', ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
-      line-height: 1.1;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-    .morningNumberBubble{
-      display: inline-block;
-      background: rgba(255, 255, 255, 1);
-      border-radius: 28px;
-      padding: 16px 24px;
-      margin-bottom: 20px;
-      box-shadow: 
-        inset 0 1px 0 rgba(255, 255, 255, 0.9),
-        0 0 0 1px rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-    }
-    .morningDeficitContainer{
-      margin-bottom: 20px;
-    }
-    .morningDeficitNumber{
-      font-size: 48px;
-      font-weight: 900;
-      color: rgba(45, 31, 20, 1) !important;
-      letter-spacing: -1.5px;
-      font-family: 'SF Pro Rounded', ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
-      line-height: 1;
-      position: relative;
-    }
-    .morningDeficitNumber::before{
-      content: '';
-      position: absolute;
-      inset: -8px -12px;
-      background: linear-gradient(135deg, rgba(255, 122, 162, 0.15), rgba(255, 179, 106, 0.15));
-      border-radius: 20px;
-      opacity: 0;
-      transition: opacity 0.6s cubic-bezier(0.2, 0, 0.2, 1);
-    }
-    .morningDeficitNumber.animate::before{
-      opacity: 1;
-    }
-    #morningPanel{
-      background: rgba(255, 255, 255, 0.98);
-      backdrop-filter: blur(32px);
-      -webkit-backdrop-filter: blur(32px);
-      border-radius: 28px;
-      border: 1px solid rgba(255, 255, 255, 0.95);
-      padding: 22px;
-      margin-top: 0;
-      width: 100%;
-      max-width: 300px;
-      opacity: 0;
-      transform: translateY(24px) scale(0.97);
-      transition: opacity 0.9s cubic-bezier(0.2, 0, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0, 0.2, 1);
-      box-shadow: 
-        inset 0 1px 0 rgba(255, 255, 255, 1),
-        0 0 0 1px rgba(255, 255, 255, 0.6);
-    }
-    .morningPanelRow{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 0;
-      opacity: 0;
-      transform: translateX(-8px);
-      transition: opacity 0.6s cubic-bezier(0.2, 0, 0.2, 1), transform 0.6s cubic-bezier(0.2, 0, 0.2, 1);
-    }
-    .morningPanelLabel{
-      font-size: 16px;
-      font-weight: 800;
-      color: rgba(45, 31, 20, 0.65);
-      letter-spacing: 0.3px;
-      font-family: 'SF Pro Rounded', ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
-    }
-    .morningPanelValue{
-      font-size: 20px;
-      font-weight: 900;
-      color: rgba(45, 31, 20, 1);
-      letter-spacing: -0.4px;
-      font-family: 'SF Pro Rounded', ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
-    }
-    .morningPanelValue.positive{
-      background: linear-gradient(145deg, #ff7aa2, #ffb36a);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      font-size: 28px;
-      letter-spacing: -0.6px;
-    }
-    .morningPanelValue.negative{
-      color: #ff7aa2;
-    }
-    #morningPanelRow3{
-      border-top: 1px solid rgba(91, 75, 97, 0.12);
-      margin-top: 18px;
-      padding-top: 20px;
-    }
-    #morningPanelRow3 .morningPanelLabel{
-      font-size: 16px;
-      font-weight: 800;
-      color: rgba(45, 31, 20, 0.85);
-      letter-spacing: 0.3px;
-    }
-    #morningPanelRow3 .morningPanelValue{
-      font-size: 28px;
-      font-weight: 900;
-      color: rgba(45, 31, 20, 1);
-      letter-spacing: -0.6px;
-    }
-    #morningTapHint{
-      margin-top: 20px;
-      margin-bottom: 0;
-      opacity: 0;
-      transition: opacity 1s cubic-bezier(0.2, 0, 0.2, 1);
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    #morningTapHint svg{
-      width: 36.72px;
-      height: 36.72px;
-    }
-    #morningTapHint svg path{
-      stroke: rgba(45, 31, 20, 1) !important;
-      stroke-width: 4.5px;
-      -webkit-font-smoothing: none;
-      -moz-osx-font-smoothing: auto;
-      text-rendering: geometricPrecision;
-      mix-blend-mode: normal;
-    }
-    #morningTapHint[style*="opacity: 1"],
-    #morningTapHint[style*="opacity:1"]{
-      color: #ffffff !important;
-      text-shadow: none !important;
-    }
-
     .modal{
       width:min(420px, 100%);
       border-radius: 24px;
@@ -1508,142 +1284,6 @@
 
     svg defs linearGradient stop{ stop-opacity:1; }
 
-    /* Cheat days */
-    .cheatGrid{
-      display:grid;
-      grid-template-columns: repeat(8, 1fr);
-      gap:8px;
-      margin-top: 12px;
-      min-height: 40px;
-      width: 100%;
-      position: relative;
-    }
-    @media (max-width: 390px){
-      .cheatGrid{ grid-template-columns: repeat(6, 1fr); }
-    }
-    .coin{
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      border-radius: 50%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size: 14px;
-      font-weight:900;
-      color: rgba(255,200,100,.9);
-      background: linear-gradient(135deg, #ffd89b 0%, #ffb347 50%, #ffa500 100%);
-      border: 2px solid rgba(255,220,150,.8);
-      box-shadow: 
-        inset 0 2px 4px rgba(255,255,255,.4),
-        inset 0 -2px 4px rgba(200,120,50,.3),
-        0 2px 8px rgba(255,180,80,.25);
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform .1s ease, box-shadow .2s ease;
-      min-width: 0;
-      min-height: 0;
-      opacity: 1;
-      visibility: visible;
-      z-index: 1;
-    }
-    .coin::before{
-      content: '';
-      position: absolute;
-      top: 20%;
-      left: 20%;
-      width: 30%;
-      height: 30%;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,255,255,.6) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .coin::after{
-      content: '★';
-      position: relative;
-      z-index: 1;
-      font-family: "SF Pro Rounded", ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
-      font-size: 12px;
-    }
-    .coin.used{
-      opacity: .3;
-      filter: grayscale(1);
-    }
-    .coin:active:not(.used){
-      transform: scale(.95);
-    }
-    .coinScratch{
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: 
-        repeating-linear-gradient(
-          45deg,
-          rgba(200,200,200,.9) 0px,
-          rgba(200,200,200,.9) 2px,
-          rgba(180,180,180,.9) 2px,
-          rgba(180,180,180,.9) 4px
-        );
-      mix-blend-mode: overlay;
-      pointer-events: none;
-      opacity: 1;
-      transition: opacity .3s ease;
-    }
-    .coinScratch.scratched{
-      opacity: 0;
-    }
-    @keyframes coinPop{
-      0%, 100%{ transform: scale(1); }
-      50%{ transform: scale(1.15); }
-    }
-    .coin.redeeming{
-      animation: coinPop .4s ease;
-    }
-    body.night .coin{
-      background: var(--cardSolid);
-      border-color: rgba(220,235,255,.5);
-      box-shadow: 0 2px 8px rgba(100, 150, 200, .1), inset 0 1px 0 rgba(255,255,255,.4);
-    }
-
-    .confettiWrap{
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 2500;
-      overflow:hidden;
-    }
-    .confetti{
-      position:absolute;
-      top: -12px;
-      width: 8px;
-      height: 14px;
-      border-radius: 4px;
-      background: rgba(255,255,255,.9);
-      transform: rotate(12deg);
-      animation: confFall 2.8s ease-out forwards;
-    }
-    @keyframes confFall{
-      0%{ transform: translateY(0) translateX(0) rotate(12deg); opacity: 1; }
-      50%{ transform: translateY(50vh) translateX(calc(var(--drift) * 1vw)) rotate(180deg); opacity: 0.9; }
-      100%{ transform: translateY(110vh) translateX(calc(var(--drift) * 2vw)) rotate(360deg); opacity: 0; }
-    }
-
-    .undoRow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-top: 10px;
-    }
-    .undoNote{
-      font-size:12px;
-      font-weight:900;
-      color: var(--muted);
-    }
-    body.night .undoNote{ color: var(--muted); }
   </style>
 </head>
 
@@ -1675,8 +1315,7 @@
         Allocate
       </div>
       <div class="topActions">
-        <button class="pillbtn" id="resetBtn" style="display:none;">R</button>
-        <button class="pillbtn" id="quickImportBtn" style="display:none;">Q</button>
+        <button class="pillbtn" id="resetAllBtn" type="button" title="Reset all saved data" aria-label="Reset all data">R</button>
         <button class="pillbtn" id="importBtn">Import</button>
         <button class="pillbtn" id="exportBtn">Export</button>
         <input id="importFile" type="file" accept="application/json" style="display:none;" aria-label="Import JSON file" />
@@ -1715,27 +1354,6 @@
 
             <div class="spacer"></div>
 
-            <div class="grid2">
-              <div class="kpi">
-                <div class="klabel">Rollover calories</div>
-                <div class="kval"><span class="knum" id="rolloverKpi">0</span></div>
-              </div>
-
-              <div class="kpi">
-                <div class="klabel">Calorie bank</div>
-                <div class="kval">
-                  <span class="knum" id="bankedKpi">0</span>
-                  <button class="iconBtn" id="useBankedBtn" aria-label="Use calorie bank">
-                    <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M12 5.8c.4 0 .8.2 1.1.5l4 4a1.6 1.6 0 0 1-2.2 2.2l-1.3-1.3V18a1.6 1.6 0 0 1-3.2 0v-6.8l-1.3 1.3a1.6 1.6 0 0 1-2.2-2.2l4-4c.3-.3.7-.5 1.1-.5z" fill="url(#pinkGrad)"></path>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div class="spacer"></div>
-
             <div class="row" id="dashInputsRow">
               <div class="field" id="dashYTdeeField">
                 <label for="tdeeInputDash" id="tdeeInputDashLabel">Yesterday's TDEE</label>
@@ -1766,29 +1384,6 @@
             </div>
           </div>
 
-          <!-- Cheat days (dashboard) -->
-          <div class="card" id="cheatDashCard">
-            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
-              <div style="font-weight:900; font-size:14px;">Cheat days</div>
-              <div style="font-weight:900; font-size:12px; color: var(--muted);" id="cheatDashMeta">0 of 0 left</div>
-            </div>
-
-            <div id="cheatDashContent">
-            <div class="note" id="cheatDashNote" style="margin-top:6px;">Use a coin to add calories to today.</div>
-            <div class="cheatGrid" id="cheatGrid"></div>
-
-            <div class="undoRow" id="cheatUndoRow" style="display:none;">
-              <div class="undoNote" id="cheatUndoNote">Undo available for 10 seconds.</div>
-              <button class="btn neutral small" id="cheatUndoBtn" style="max-width:140px;">Undo</button>
-            </div>
-          </div>
-            
-            <div id="cheatDashDisabled" style="display:none; margin-top:8px;">
-              <div class="note" style="margin-bottom:8px;">Set cheat days in Settings</div>
-              <button class="btn ghost" id="cheatDashGoToSettings" style="width:100%;">Go to Settings</button>
-            </div>
-          </div>
-
           <!-- Continue logging tile (shown only in night mode, at bottom) -->
           <div class="card" id="continueLoggingTile" style="display:none; padding: 16px; text-align:center;">
             <div style="font-weight:900; color: var(--muted); margin-bottom:12px; font-size:14px;">Need to add something?</div>
@@ -1807,17 +1402,6 @@
             </div>
             <div class="calcMsg" id="deficitMsg" style="min-height: 22px; margin-top:4px;"></div>
             <button class="btn" id="saveSettingsBtn" style="margin-top:8px;">Save</button>
-          </div>
-
-          <div class="card">
-            <div class="switchRow">
-              <div class="slabel">Sounds</div>
-              <div class="iosSwitch" aria-label="Sounds">
-                <input id="soundsToggle" type="checkbox" />
-                <span class="iosTrack"></span>
-                <span class="iosThumb"></span>
-              </div>
-            </div>
           </div>
 
           <div class="card" id="statsCard">
@@ -1876,87 +1460,36 @@
 
           <div class="card lockedCard" id="goalCardWrap">
             <div id="goalCardContent">
-              <div style="font-weight:900; font-size:14px; color: var(--ink);" id="goalTitle">Goal calculator</div>
+              <div style="font-weight:900; font-size:14px; color: var(--ink);" id="goalTitle">Weight plan</div>
               <div class="spacer"></div>
 
               <div class="calcRow">
                 <div class="field">
-                  <label for="targetWeightInput">Target weight (lb)</label>
-                  <input id="targetWeightInput" type="number" inputmode="decimal" step="0.1" min="0" />
+                  <label for="planCurrentWeightInput">Current weight (lb)</label>
+                  <input id="planCurrentWeightInput" type="number" inputmode="decimal" step="0.1" min="0" />
+                </div>
+                <div class="field">
+                  <label for="planTargetDateInput">Target date</label>
+                  <input id="planTargetDateInput" type="date" />
                 </div>
               </div>
 
               <div class="spacer"></div>
 
-              <div class="calcRowNoWrap">
-                <div class="field">
-                  <label for="targetDateInput">Target date</label>
-                  <input id="targetDateInput" type="date" />
-                </div>
-                <div class="field small">
-                  <label style="visibility:hidden;">Calculate</label>
-                  <button class="btn" id="calcBtn">Calculate</button>
-                </div>
+              <div class="field">
+                <label for="planDailyDeficitInput">Daily deficit (calories)</label>
+                <input id="planDailyDeficitInput" type="number" inputmode="numeric" min="1" max="1000" placeholder="e.g. 500" />
               </div>
 
-              <div class="calcMsg" id="calcMsg"></div>
+              <div class="spacer"></div>
 
-              <div id="planActions" style="display:none;">
-                <div class="spacer"></div>
-                <button class="btn neutral" id="roundOpenBtn">Round up or down</button>
-                <div class="spacer"></div>
-                <button class="btn neutral" id="manualInputBtn">Manual input</button>
-                <div class="spacer"></div>
-                <button class="btn" id="savePlanBtn">Save plan</button>
-                <div class="note" id="savePlanHint" style="display:none;">Saved</div>
-              </div>
+              <button class="btn" id="saveSimplePlanBtn" type="button">Save</button>
+
+              <div class="calcMsg" id="planProjectionMsg" style="min-height:22px; margin-top:10px;"></div>
             </div>
 
             <div class="lockedOverlay" id="goalLockedOverlay" style="display:none;">
               <div class="lockedOverlayInner" id="goalLockedText">Fill in your stats first to unlock</div>
-            </div>
-          </div>
-
-          <!-- Cheat days (settings) -->
-          <div class="card lockedCard" id="cheatCardWrap">
-            <div id="cheatCardContent">
-              <div style="font-weight:900; font-size:14px; color: var(--ink);" id="cheatTitle">Cheat days</div>
-
-              <!-- Current cheat days display (when set) -->
-              <div id="cheatCurrentDisplay" style="display:none; margin-top:12px; margin-bottom:12px;">
-                <div class="cheatCurrentBox">
-                  <div class="cheatCurrentLabel">Current settings</div>
-                  <div class="cheatCurrentValue" id="cheatCurrentText"></div>
-                  <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="btn ghost small" id="cheatEditBtn" style="flex:1;">Edit</button>
-                    <button class="btn ghost small" id="cheatRemoveBtn" style="flex:1;">Remove</button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Input fields (shown when not set or editing) -->
-              <div id="cheatInputSection" style="display:none;">
-              <div class="spacer"></div>
-
-              <div class="row">
-                <div class="field">
-                  <label for="cheatCountInput">How many?</label>
-                    <input id="cheatCountInput" type="number" inputmode="numeric" min="0" placeholder="5" />
-                </div>
-                <div class="field">
-                  <label for="cheatAmountInput">Calories per cheat day</label>
-                    <input id="cheatAmountInput" type="number" inputmode="numeric" min="0" placeholder="500" />
-                </div>
-              </div>
-
-                <div class="calcMsg" id="cheatMsg" style="min-height: 0; margin-bottom:0; margin-top:4px;"></div>
-
-                <button class="btn" id="cheatApplyBtn" style="margin-top:4px;">Apply</button>
-              </div>
-            </div>
-
-            <div class="lockedOverlay" id="cheatLockedOverlay" style="display:none;">
-              <div class="lockedOverlayInner" id="cheatLockedText">Save a plan first to unlock</div>
             </div>
           </div>
         </div>
@@ -2071,44 +1604,6 @@
     </div>
   </div>
 
-  <!-- End day options modal -->
-  <div class="modalBack" id="endBack">
-    <div class="modal">
-      <div class="modalTop">
-        <div class="mtitle">Leftover calories</div>
-        <button class="closeBtn" id="endClose">Close</button>
-      </div>
-
-      <div class="leftBigLine" id="endBigLine">0 calories left!</div>
-
-      <div class="stack">
-        <button class="btn neutral" id="optRollover">Rollover to tomorrow</button>
-        <button class="btn" id="optBanked">Save in the calorie bank</button>
-        <button class="btn neutral" id="optMoveOn">Reach your goal faster</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Use banked modal -->
-  <div class="modalBack" id="useBack">
-    <div class="modal">
-      <div class="modalTop">
-        <div class="mtitle">Use calorie bank</div>
-        <button class="closeBtn" id="useClose">Close</button>
-      </div>
-      <div class="row">
-        <div class="field">
-          <label for="useAmount">Amount</label>
-          <input id="useAmount" type="number" inputmode="numeric" min="0" />
-        </div>
-        <div class="field small">
-          <button class="btn" id="useApplyBtn">Use</button>
-        </div>
-      </div>
-      <div class="note" id="useHint"></div>
-    </div>
-  </div>
-
   <!-- Quick adds modal -->
   <div class="modalBack" id="presetBack">
     <div class="modal">
@@ -2139,70 +1634,6 @@
     </div>
   </div>
 
-  <!-- Rounding modal -->
-  <div class="modalBack" id="roundBack">
-    <div class="modal">
-      <div class="modalTop">
-        <div class="mtitle">Rounding</div>
-        <button class="closeBtn" id="roundClose">Close</button>
-      </div>
-
-      <div class="note" id="roundNote"></div>
-
-      <div class="roundTiles">
-        <div class="rTile active" id="rtDown" role="button" tabindex="0">
-          <div class="rtLabel">Round down</div>
-          <div class="rtNum" id="rtDownNum">0</div>
-          <div class="rtDate" id="rtDownDate">-</div>
-        </div>
-
-        <div class="rTile" id="rtUp" role="button" tabindex="0">
-          <div class="rtLabel">Round up</div>
-          <div class="rtNum" id="rtUpNum">0</div>
-          <div class="rtDate" id="rtUpDate">-</div>
-        </div>
-      </div>
-
-      <div class="spacer"></div>
-
-      <div class="grid2">
-        <button class="btn" id="roundUseBtn">Use selected</button>
-        <button class="btn ghost" id="roundStickBtn">Stick to 0</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Manual input modal -->
-  <div class="modalBack" id="manualInputBack">
-    <div class="modal">
-      <div class="modalTop">
-        <div class="mtitle">Manual deficit</div>
-        <button class="closeBtn" id="manualInputClose">Close</button>
-      </div>
-
-      <div class="note" id="manualInputNote" style="margin-bottom:16px;">
-        Enter your daily deficit (max 1000)
-      </div>
-
-      <div class="field">
-        <label for="manualDeficitInput">Daily deficit</label>
-        <input id="manualDeficitInput" type="number" inputmode="numeric" step="1" min="1" max="1000" />
-        <div class="error" id="manualInputError" style="display:none; margin-top:8px;"></div>
-      </div>
-
-      <div class="note" id="manualInputDate" style="margin-top:16px; font-weight:900; font-size:14px;">
-        <!-- Projected date will be shown here -->
-      </div>
-
-      <div class="spacer"></div>
-
-      <div class="grid2">
-        <button class="btn ghost" id="manualInputCancel">Cancel</button>
-        <button class="btn" id="manualInputUse">Use this</button>
-      </div>
-    </div>
-  </div>
-
   <!-- Adults only modal -->
   <div class="modalBack" id="adultBack">
     <div class="modal">
@@ -2230,83 +1661,6 @@
       </div>
       <div class="spacer"></div>
       <button class="btn" id="completeStatsGoBtn">Go to Settings</button>
-    </div>
-  </div>
-
-  <!-- Morning Opening Screen -->
-  <div class="modalBack" id="morningScreen" style="z-index:3000; display:none;">
-    <div style="position:relative; width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:50px 20px; z-index:1; transform: translateY(-20px);">
-      
-      <!-- Content Area -->
-      <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; max-width:360px;">
-        <!-- "Good morning" greeting -->
-        <div class="morningGreeting" id="morningGreeting">Good morning</div>
-        
-        <!-- "Yesterday you burned" -->
-        <div class="morningText" id="morningText1">Yesterday you burned</div>
-        
-        <!-- Calorie Number (counts up) in white bubble -->
-        <div class="morningNumberBubble" id="morningYesterdayBubble" style="opacity:0;">
-          <div class="morningNumber" id="morningYesterdayNum" style="margin:0;">0</div>
-        </div>
-        
-        <!-- "Daily deficit" -->
-        <div class="morningText" id="morningText2">Your daily deficit is</div>
-        
-        <!-- Deficit Number (counts down) -->
-        <div class="morningDeficitContainer">
-          <div class="morningDeficitNumber" id="morningDeficitNum">-750</div>
-        </div>
-        
-        <!-- Floating Panel -->
-        <div id="morningPanel">
-          <!-- Hormone Bonus -->
-          <div class="morningPanelRow" id="morningRow1">
-            <span class="morningPanelLabel">Hormone bonus</span>
-            <span class="morningPanelValue positive" id="morningHormoneNum">+71</span>
-          </div>
-          
-          <!-- Rollover Bonus -->
-          <div class="morningPanelRow" id="morningRow2">
-            <span class="morningPanelLabel">Rollover bonus</span>
-            <span class="morningPanelValue positive" id="morningRolloverNum">+83</span>
-          </div>
-          
-          <!-- Today's Budget (final) -->
-          <div class="morningPanelRow" id="morningRow3" style="border-top: 1px solid rgba(91,75,97,0.12); margin-top:18px; padding-top:20px;">
-            <span class="morningPanelLabel" style="color:rgba(45,31,20,1);">Today's budget</span>
-            <span class="morningPanelValue" id="morningBudgetNum" style="font-size:28px; font-weight:900; color:rgba(45,31,20,1); letter-spacing:-0.6px;">2,097</span>
-          </div>
-        </div>
-        
-        <!-- Tap hint -->
-        <div id="morningTapHint">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Cheat days suggestions modal -->
-  <div class="modalBack" id="cheatSuggestBack">
-    <div class="modal">
-      <div class="modalTop" style="flex-direction:column; align-items:center; gap:6px;">
-        <div class="mtitle" style="font-size:18px; text-align:center; margin-bottom:0;">Suggestions for your plan</div>
-        <div style="font-size:12px; font-weight:900; color: var(--accent); text-align:center; font-family: 'SF Pro Rounded', ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;">Chosen amount was too high</div>
-      </div>
-      
-      <div class="stack" id="cheatSuggestOptions" style="gap:10px; margin-top:16px;">
-        <!-- Options will be filled in -->
-      </div>
-      
-      <div class="spacer"></div>
-      
-      <div class="grid2">
-        <button class="btn ghost" id="cheatSuggestBackBtn">Go back</button>
-        <button class="btn" id="cheatSuggestUseBtn" style="display:none;">Claim</button>
-      </div>
     </div>
   </div>
 
@@ -2344,80 +1698,21 @@
     </div>
   </div>
 
-  <!-- Banked calories celebration modal -->
-  <div class="modalBack" id="bankedCelebrateBack">
-    <div class="modal">
-      <div class="modalTop">
-        <div class="mtitle">Calories banked</div>
-        <button class="closeBtn" id="bankedCelebrateClose">Close</button>
-      </div>
-      <div style="text-align:center; padding: 8px 0;">
-        <div id="bankedCelebrateAmount" style="font-size:22px; font-weight:900; margin-bottom:12px; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; color: transparent;">0 calories banked!</div>
-        <div class="note" style="margin-top:8px;">Redeem these free calories at any later date.</div>
-      </div>
-      <div class="spacer"></div>
-      <button class="btn" id="bankedCelebrateOk">Got it</button>
-    </div>
-  </div>
-
-  <!-- Cheat days confirmation modal -->
-  <div class="modalBack" id="cheatConfirmBack">
-    <div class="modal">
-      <div id="cheatConfirmDetails" style="text-align:center; margin-bottom:16px; margin-top:8px; display:flex; flex-direction:column; gap:8px;">
-        <!-- Details will be filled in -->
-      </div>
-      
-      <div class="spacer"></div>
-      
-      <button class="btn" id="cheatConfirmOk" style="width:100%;">Confirm</button>
-    </div>
-  </div>
-
-  <!-- Edit cheat days modal -->
-  <div class="modalBack" id="cheatEditBack">
-    <div class="modal">
-      <div class="modalTop">
-        <div class="mtitle">Update cheat days</div>
-        <button class="closeBtn" id="cheatEditClose">Close</button>
-      </div>
-      <div style="padding: 8px 0;">
-        <div class="row">
-          <div class="field">
-            <label for="cheatEditCountInput">How many?</label>
-            <input id="cheatEditCountInput" type="number" inputmode="numeric" min="0" placeholder="5" />
-          </div>
-          <div class="field">
-            <label for="cheatEditAmountInput">Calories per cheat day</label>
-            <input id="cheatEditAmountInput" type="number" inputmode="numeric" min="0" placeholder="500" />
-          </div>
-        </div>
-        <div class="calcMsg" id="cheatEditMsg" style="min-height: 0; margin-bottom:0; margin-top:4px;"></div>
-        <button class="btn" id="cheatEditApplyBtn" style="margin-top:4px;">Update</button>
-      </div>
-    </div>
-  </div>
-
   <script>
     const LS_SETTINGS = 'allocate_settings_v12';
     const LS_STATS = 'allocate_stats_v12';
     const LS_TODAY = 'allocate_today_v12';
     const LS_DAYS = 'allocate_days_v12';
-    const LS_BANKS = 'allocate_banks_v12';
     const LS_PLAN = 'allocate_plan_v12';
     const LS_PRESETS = 'allocate_presets_v12';
     const LS_WEIGHTS = 'allocate_weights_v12';
-    const LS_LAST_MORNING = 'allocate_last_morning_v1';
 
-    const ALL_KEYS = [LS_SETTINGS, LS_STATS, LS_TODAY, LS_DAYS, LS_BANKS, LS_PLAN, LS_PRESETS, LS_WEIGHTS];
+    const ALL_KEYS = [LS_SETTINGS, LS_STATS, LS_TODAY, LS_DAYS, LS_PLAN, LS_PRESETS, LS_WEIGHTS];
 
     const DEFAULT_DEFICIT = 750;
     const DAY_CUTOFF_HOUR = 3;
     const MIN_DEFICIT_DAY_BUDGET = 1200;
     const MAX_DAILY_DEFICIT = 1000;
-
-    const CHEAT_MIN_PLAN_DAYS = 5;
-    const CHEAT_MAX_EXT_PCT = 0.05;
-    const CHEAT_UNDO_MS = 10000;
 
     const el = (id) => document.getElementById(id);
 
@@ -2490,94 +1785,6 @@
             gainNode.connect(ctx.destination);
             osc.start(now);
             osc.stop(now + 0.1);
-            break;
-
-          case 'scratch':
-            // Subtle rubbing loop - for scratch cards later
-            osc = ctx.createOscillator();
-            gainNode = ctx.createGain();
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(300, now);
-            gainNode.gain.setValueAtTime(0.08, now);
-            gainNode.gain.exponentialRampToValueAtTime(0.05, now + 0.2);
-            osc.connect(gainNode);
-            gainNode.connect(ctx.destination);
-            osc.start(now);
-            osc.stop(now + 0.2);
-            break;
-
-          case 'chaching':
-            // Cash register sound - celebratory
-            const osc1 = ctx.createOscillator();
-            const osc2 = ctx.createOscillator();
-            const gain1 = ctx.createGain();
-            const gain2 = ctx.createGain();
-            
-            // First note - higher
-            osc1.type = 'sine';
-            osc1.frequency.setValueAtTime(880, now); // A5
-            osc1.frequency.exponentialRampToValueAtTime(1100, now + 0.08);
-            gain1.gain.setValueAtTime(0.15, now);
-            gain1.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
-            osc1.connect(gain1);
-            gain1.connect(ctx.destination);
-            osc1.start(now);
-            osc1.stop(now + 0.12);
-            
-            // Second note - lower, slightly delayed
-            osc2.type = 'sine';
-            osc2.frequency.setValueAtTime(660, now + 0.06); // E5
-            osc2.frequency.exponentialRampToValueAtTime(880, now + 0.14);
-            gain2.gain.setValueAtTime(0.12, now + 0.06);
-            gain2.gain.exponentialRampToValueAtTime(0.01, now + 0.18);
-            osc2.connect(gain2);
-            gain2.connect(ctx.destination);
-            osc2.start(now + 0.06);
-            osc2.stop(now + 0.18);
-            break;
-
-          case 'coin':
-            // Money/coin sound - like coins clinking together
-            // Create multiple short metallic "ting" sounds to simulate coins
-            const coinOsc1 = ctx.createOscillator();
-            const coinOsc2 = ctx.createOscillator();
-            const coinOsc3 = ctx.createOscillator();
-            const coinGain1 = ctx.createGain();
-            const coinGain2 = ctx.createGain();
-            const coinGain3 = ctx.createGain();
-            
-            // First coin - metallic "ting" (higher frequency, quick decay)
-            coinOsc1.type = 'triangle'; // Triangle wave for softer, more bell-like sound
-            coinOsc1.frequency.setValueAtTime(1200, now); // Higher pitch for metallic sound
-            coinOsc1.frequency.exponentialRampToValueAtTime(800, now + 0.08);
-            coinGain1.gain.setValueAtTime(0.2, now);
-            coinGain1.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
-            coinOsc1.connect(coinGain1);
-            coinGain1.connect(ctx.destination);
-            coinOsc1.start(now);
-            coinOsc1.stop(now + 0.12);
-            
-            // Second coin - slightly delayed, different pitch
-            coinOsc2.type = 'triangle';
-            coinOsc2.frequency.setValueAtTime(1000, now + 0.04);
-            coinOsc2.frequency.exponentialRampToValueAtTime(700, now + 0.12);
-            coinGain2.gain.setValueAtTime(0.18, now + 0.04);
-            coinGain2.gain.exponentialRampToValueAtTime(0.01, now + 0.16);
-            coinOsc2.connect(coinGain2);
-            coinGain2.connect(ctx.destination);
-            coinOsc2.start(now + 0.04);
-            coinOsc2.stop(now + 0.16);
-            
-            // Third coin - final "clink"
-            coinOsc3.type = 'triangle';
-            coinOsc3.frequency.setValueAtTime(1100, now + 0.08);
-            coinOsc3.frequency.exponentialRampToValueAtTime(900, now + 0.16);
-            coinGain3.gain.setValueAtTime(0.15, now + 0.08);
-            coinGain3.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
-            coinOsc3.connect(coinGain3);
-            coinGain3.connect(ctx.destination);
-            coinOsc3.start(now + 0.08);
-            coinOsc3.stop(now + 0.2);
             break;
         }
       }catch(e){
@@ -2709,38 +1916,15 @@
     const getPlan = () => {
       const p = loadJSON(LS_PLAN, null);
       if(!p) return null;
-
-      if(p.cheat && typeof p.cheat === 'object'){
-        const c = p.cheat;
-        c.count = Math.max(0, Math.round(Number(c.count || 0)));
-        c.amount = Math.max(0, Math.round(Number(c.amount || 0)));
-        c.used = Math.max(0, Math.round(Number(c.used || 0)));
-        if(c.used > c.count) c.used = c.count;
-        p.cheat = c;
-      }
       return p;
     };
     const setPlan = (plan) => saveJSON(LS_PLAN, plan);
-
-    const getBanks = () => {
-      const b = loadJSON(LS_BANKS, null);
-      if(!b) return { rolloverPending: 0, banked: 0 };
-      return {
-        rolloverPending: Math.max(0, Math.round(Number(b.rolloverPending || 0))),
-        banked: Math.max(0, Math.round(Number(b.banked || 0)))
-      };
-    };
-    const setBanks = (banks) => saveJSON(LS_BANKS, banks);
 
     const defaultToday = () => ({
       dayKey: dayKeyWithCutoff(),
       yTdee: 0,
       maintenance: false,
       entries: [],
-      rolloverApplied: 0,
-      usedBanked: 0,
-      cheatApplied: 0,
-      cheatRedeemedAt: 0,
       ended: false,
       endedAt: 0,
       endChoice: ''
@@ -2750,10 +1934,6 @@
       const t = loadJSON(LS_TODAY, null);
       if(!t || !t.dayKey) return defaultToday();
       if(!Array.isArray(t.entries)) t.entries = [];
-      if(typeof t.rolloverApplied !== 'number') t.rolloverApplied = 0;
-      if(typeof t.usedBanked !== 'number') t.usedBanked = 0;
-      if(typeof t.cheatApplied !== 'number') t.cheatApplied = 0;
-      if(typeof t.cheatRedeemedAt !== 'number') t.cheatRedeemedAt = 0;
       if(typeof t.maintenance !== 'boolean') t.maintenance = !!t.maintenance;
       if(typeof t.ended !== 'boolean') t.ended = !!t.ended;
       if(typeof t.endedAt !== 'number') t.endedAt = 0;
@@ -2788,7 +1968,7 @@
       const lastTime = Number(last.timestamp || 0);
       if(lastTime <= 0) return true;
       const daysSince = Math.floor((Date.now() - lastTime) / (1000 * 60 * 60 * 24));
-      return daysSince >= 7; // Can log if 7+ days have passed
+      return daysSince >= 4; // Can log if 4+ days have passed
     };
 
     const getDaysUntilCanLog = () => {
@@ -2797,7 +1977,7 @@
       const lastTime = Number(last.timestamp || 0);
       if(lastTime <= 0) return 0;
       const daysSince = Math.floor((Date.now() - lastTime) / (1000 * 60 * 60 * 24));
-      const daysUntil = Math.max(0, 7 - daysSince);
+      const daysUntil = Math.max(0, 4 - daysSince);
       return daysUntil;
     };
 
@@ -2822,11 +2002,10 @@
 
     const calcBudgetTotal = (today, deficit) => {
       const base = calcBudgetBase(today, deficit);
-      return Math.round(base + (today.rolloverApplied || 0) + (today.usedBanked || 0) + (today.cheatApplied || 0));
+      return Math.round(base);
     };
 
     const ensureDayRoll = () => {
-      const banks = getBanks();
       const today = getToday();
 
       const keyNow = dayKeyWithCutoff();
@@ -2834,10 +2013,6 @@
 
       const next = defaultToday();
       next.dayKey = keyNow;
-
-      next.rolloverApplied = Math.round(banks.rolloverPending || 0);
-      banks.rolloverPending = 0;
-      setBanks(banks);
 
       setToday(next);
     };
@@ -2850,18 +2025,10 @@
         b.classList.toggle('active', b.getAttribute('data-page') === name);
       });
 
-      const resetBtn = el('resetBtn');
-      const quickImportBtn = el('quickImportBtn');
-      if(resetBtn) resetBtn.style.display = (name === 'Settings') ? 'inline-flex' : 'none';
-      if(quickImportBtn) quickImportBtn.style.display = (name === 'Log') ? 'inline-flex' : 'none';
-
       // Render page-specific content when switching pages
       if(name === 'Progress'){
         renderProgress();
       } else if(name === 'Log'){
-        // Ensure Q button is visible on Log page
-        const qBtn = el('quickImportBtn');
-        if(qBtn) qBtn.style.display = 'inline-flex';
         renderLogPage();
       }
 
@@ -3018,11 +2185,6 @@
         const freeConsumed = Math.min(freeAllowance, Math.max(0, intake - baseBudget));
         let effectiveIntake = Math.max(0, intake - freeConsumed);
 
-        const choice = String(d.endChoice || '');
-        if(choice === 'banked' || choice === 'rolled'){
-          effectiveIntake = Math.max(effectiveIntake, baseBudget);
-        }
-
         const deficit = Math.round(y - effectiveIntake);
         progressCals += deficit;
       }
@@ -3048,18 +2210,13 @@
 
       const remaining = Math.max(0, totalNeed - progressCals);
 
-      const cheat = plan.cheat && typeof plan.cheat === 'object' ? plan.cheat : null;
-      const cheatRemaining = cheat ? Math.max(0, (Math.max(0, cheat.count - cheat.used) * cheat.amount)) : 0;
-      const plannedRemaining = Math.max(0, remaining + cheatRemaining);
-
-      const daysRemaining = Math.max(0, Math.ceil(plannedRemaining / daily));
+      const daysRemaining = Math.max(0, Math.ceil(remaining / daily));
 
       return {
         totalNeed,
         progressCals,
         remaining,
-        cheatRemaining,
-        plannedRemaining,
+        plannedRemaining: remaining,
         daysRemaining,
         daily
       };
@@ -3147,35 +2304,6 @@
             <div class="streakNote">You're speeding through this.</div>
           </div>
           <div style="font-size:28px; line-height:1;">💫</div>
-        </div>
-      `;
-      stack.appendChild(c);
-    };
-
-    const renderHormoneTile = (stack) => {
-      // Hardcode a good workout day (between 6-14)
-      const cycleDay = 10; // Day 10 - good workout day
-      const isGoodDay = cycleDay >= 6 && cycleDay <= 14;
-      
-      const statusMessage = isGoodDay ? 'Great day for a workout' : 'Rest day recommended';
-      const explanation = isGoodDay ? 'Oestrogen rising' : 'Progesterone high';
-      
-      const c = document.createElement('div');
-      c.className = 'card';
-      c.style.cursor = 'pointer';
-      c.addEventListener('click', () => {
-        // Placeholder for future detailed hormone view
-        alert('Hormone insights coming soon! This will show detailed cycle tracking and workout recommendations.');
-      });
-      
-      c.innerHTML = `
-        <div class="streakWrap">
-          <div class="streakLeft">
-            <div class="streakTitle">Cycle Day ${cycleDay}</div>
-            <div class="streakBig">${statusMessage}</div>
-            <div class="streakNote">${explanation}</div>
-          </div>
-          <div style="font-size:28px; line-height:1;">⚡</div>
         </div>
       `;
       stack.appendChild(c);
@@ -3292,12 +2420,9 @@
           const intake = Number(day.intake || 0);
           const budget = Number(day.budget || 0);
           const isMaintenance = day.maintenance;
-          const isCheat = Math.round(Number(day.cheatApplied || 0)) > 0;
           
           let status = 'none';
-          if(isCheat){
-            status = 'cheat';
-          } else if(isMaintenance){
+          if(isMaintenance){
             status = 'maintenance';
           } else if(intake <= budget){
             status = 'good';
@@ -3324,7 +2449,6 @@
               good: 'rgba(76,175,80,.6)',
               over: 'rgba(244,67,54,.6)',
               maintenance: 'rgba(255,193,7,.6)',
-              cheat: 'rgba(156,39,176,.6)',
               none: 'rgba(91,75,97,.15)'
             };
             return `<div style="aspect-ratio:1; border-radius:4px; background:${colors[cell.status] || colors.none}; border:1px solid rgba(255,255,255,.2);" title="${cell.dayKey}"></div>`;
@@ -3334,7 +2458,6 @@
           <div style="display:flex; align-items:center; gap:4px;"><div style="width:10px; height:10px; border-radius:2px; background:rgba(76,175,80,.6);"></div> Under budget</div>
           <div style="display:flex; align-items:center; gap:4px;"><div style="width:10px; height:10px; border-radius:2px; background:rgba(244,67,54,.6);"></div> Over budget</div>
           <div style="display:flex; align-items:center; gap:4px;"><div style="width:10px; height:10px; border-radius:2px; background:rgba(255,193,7,.6);"></div> Maintenance</div>
-          <div style="display:flex; align-items:center; gap:4px;"><div style="width:10px; height:10px; border-radius:2px; background:rgba(156,39,176,.6);"></div> Cheat day</div>
         </div>
       `;
       stack.appendChild(c);
@@ -3569,7 +2692,6 @@
         stack.appendChild(c);
 
         renderStreakTile(stack);
-        renderHormoneTile(stack);
         renderCircularProgress(stack);
         renderWeighInTile(stack);
       }else{
@@ -3588,15 +2710,42 @@
         stack.appendChild(c);
 
         renderStreakTile(stack);
-        renderHormoneTile(stack);
         renderCircularProgress(stack);
         renderWeighInTile(stack);
       }
     };
 
+    const formatPlanTargetDateDisplay = (iso) => {
+      if(!iso) return '';
+      const d = new Date(`${iso}T12:00:00`);
+      if(Number.isNaN(d.getTime())) return '';
+      return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    };
+
+    const syncPlanFormFromStorage = () => {
+      const plan = getPlan();
+      const s = getStats();
+      const wIn = el('planCurrentWeightInput');
+      const dIn = el('planTargetDateInput');
+      const defIn = el('planDailyDeficitInput');
+      const msg = el('planProjectionMsg');
+      if(plan && Number.isFinite(Number(plan.dailyDeficit)) && Number(plan.dailyDeficit) > 0){
+        wIn.value = plan.currentWeightLb != null && String(plan.currentWeightLb).trim() !== '' ? String(plan.currentWeightLb) : (s.weightLb || '');
+        dIn.value = plan.targetDateISO || '';
+        defIn.value = String(Math.round(Number(plan.dailyDeficit)));
+        const td = formatPlanTargetDateDisplay(plan.targetDateISO);
+        const tw = Number(plan.targetWeightLb || 0);
+        msg.textContent = (td && Number.isFinite(tw) && tw > 0) ? `By ${td} you'll weigh approximately ${fmt(tw)} lb.` : '';
+      }else{
+        wIn.value = s.weightLb || '';
+        dIn.value = '';
+        defIn.value = '';
+        msg.textContent = '';
+      }
+    };
+
     const renderStatsView = (scrollIfUnlocked = false) => {
       const s = getStats();
-      const plan = getPlan();
 
       el('svHeight').textContent = s.heightCm ? `${s.heightCm} cm` : '-';
       el('svWeight').textContent = s.weightLb ? `${s.weightLb} lb` : '-';
@@ -3614,15 +2763,8 @@
 
       const txt = under18 ? 'Adults only (18+), fix your age in My stats' : 'Fill in your stats first to unlock';
       el('goalLockedText').textContent = txt;
-      
-      // If plan exists, hide the action buttons and change Calculate to Update
-      const hasPlan = !!plan;
-      if(hasPlan) {
-        el('planActions').style.display = 'none';
-        el('calcBtn').textContent = 'Update';
-      } else {
-        el('calcBtn').textContent = 'Calculate';
-      }
+
+      syncPlanFormFromStorage();
 
       if(scrollIfUnlocked){
         setTimeout(() => {
@@ -3671,109 +2813,6 @@
       hint.textContent = 'Applied';
       setTimeout(() => { hint.textContent = 'Saved'; }, 900);
     };
-
-    let lastCalc = null;
-    let roundChoice = 'down';
-
-    const showCalcLoading = () => {
-      el('calcMsg').innerHTML = `
-        <span class="loadingDots" aria-label="Loading">
-          <span></span><span></span><span></span>
-        </span>
-      `;
-    };
-
-    const roundTo50 = (value, mode) => {
-      const v = Math.max(0, Math.round(Number(value) || 0));
-      const base = Math.floor(v / 50) * 50;
-      const up = base + 50;
-      if(mode === 'down') return base;
-      return up;
-    };
-
-    const calcDailyDeficit = () => {
-      const s = getStats();
-      const cw = Number(s.weightLb || 0);
-      const tw = Number(el('targetWeightInput').value || 0);
-      const td = String(el('targetDateInput').value || '');
-
-      if(!hasFilledStats(s)) return { ok:false, msg:'Fill in your stats first.' };
-      if(!isAdult()) return { ok:false, msg:'Adults only (18+).' };
-
-      if(!Number.isFinite(cw) || cw <= 0) return { ok:false, msg:'Your stats need a weight.' };
-      if(!Number.isFinite(tw) || tw <= 0) return { ok:false, msg:'Enter a target weight.' };
-      if(tw >= cw) return { ok:false, msg:'Target weight must be lower.' };
-      if(!td) return { ok:false, msg:'Pick a target date.' };
-
-      const targetDate = new Date(`${td}T12:00:00`);
-      if(Number.isNaN(targetDate.getTime())) return { ok:false, msg:'Pick a valid target date.' };
-
-      const startKey = dayKeyWithCutoff(new Date());
-      const startDate = parseDayKeyToDateNoon(startKey);
-
-      const msPerDay = 86400000;
-      const days = Math.ceil((targetDate - startDate) / msPerDay);
-      if(days <= 0) return { ok:false, msg:'Target date must be in the future.' };
-
-      const lbsToLose = cw - tw;
-      const totalCals = lbsToLose * 3500;
-      const daily = Math.round(totalCals / days);
-
-      if(daily > MAX_DAILY_DEFICIT){
-        return { ok:false, msg:'That daily deficit is too high. Please choose a later target date.' };
-      }
-
-      return { ok:true, daily, days, cw, tw, targetDateISO: td, startKey };
-    };
-
-    const projectDateForDeficit = (cw, tw, startKey, deficit) => {
-      const start = parseDayKeyToDateNoon(startKey);
-      const lbsToLose = cw - tw;
-      const totalCals = lbsToLose * 3500;
-      const d = Math.max(1, Math.ceil(totalCals / Math.max(1, deficit)));
-      const hit = addDays(start, d);
-      return hit.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-    };
-
-    const openRoundingModal = () => {
-      if(!lastCalc) return;
-
-      const exact = Math.max(0, Math.round(lastCalc.daily));
-      const up = roundTo50(exact, 'up');
-      const down = roundTo50(exact, 'down');
-
-      el('roundNote').textContent = `Exact: ${fmt(exact)} per day`;
-
-      el('rtDownNum').textContent = fmt(down);
-      el('rtUpNum').textContent = fmt(up);
-
-      el('rtDownDate').textContent = `Hit by ${projectDateForDeficit(lastCalc.cw, lastCalc.tw, lastCalc.startKey, down)}`;
-      el('rtUpDate').textContent = `Hit by ${projectDateForDeficit(lastCalc.cw, lastCalc.tw, lastCalc.startKey, up)}`;
-
-      el('roundStickBtn').textContent = `Stick to ${fmt(exact)}`;
-
-      roundChoice = 'down';
-      el('rtDown').classList.add('active');
-      el('rtUp').classList.remove('active');
-
-      el('roundBack').classList.add('show');
-    };
-
-    const closeRoundingModal = () => el('roundBack').classList.remove('show');
-
-    const pickRound = (choice) => {
-      roundChoice = choice;
-      el('rtDown').classList.toggle('active', choice === 'down');
-      el('rtUp').classList.toggle('active', choice === 'up');
-    };
-
-    el('rtDown').addEventListener('click', () => pickRound('down'));
-    el('rtUp').addEventListener('click', () => pickRound('up'));
-
-    el('roundClose').addEventListener('click', closeRoundingModal);
-    el('roundBack').addEventListener('click', (e) => {
-      if(e.target === el('roundBack')) closeRoundingModal();
-    });
 
     let presetEditingId = 1;
 
@@ -3880,36 +2919,6 @@
       if(today.ended) return;
       if(!isAdult()){ showAdultModal(); return; }
       openPresetModal();
-    });
-
-    const openEndOptions = (left) => {
-      el('endBigLine').textContent = `${fmt(left)} calories left!`;
-      el('endBack').classList.add('show');
-    };
-    const closeEndOptions = () => el('endBack').classList.remove('show');
-
-    el('endClose').addEventListener('click', closeEndOptions);
-    el('endBack').addEventListener('click', (e) => {
-      if(e.target === el('endBack')) closeEndOptions();
-    });
-
-    const openUseModal = () => {
-      const today = getToday();
-      if(today.ended) return;
-      if(!isAdult()){ showAdultModal(); return; }
-
-      const banks = getBanks();
-      const max = Math.round(banks.banked || 0);
-      el('useAmount').value = '';
-      el('useHint').textContent = max > 0 ? `${fmt(max)} available.` : '0 available.';
-      el('useBack').classList.add('show');
-    };
-    const closeUseModal = () => el('useBack').classList.remove('show');
-
-    el('useBankedBtn').addEventListener('click', openUseModal);
-    el('useClose').addEventListener('click', closeUseModal);
-    el('useBack').addEventListener('click', (e) => {
-      if(e.target === el('useBack')) closeUseModal();
     });
 
     let editingId = null;
@@ -4180,7 +3189,7 @@
 
       const intake = sumIntake(today.entries);
       const baseBudget = calcBudgetBase(today, planDef);
-      const budgetTotal = Math.round(baseBudget + (today.rolloverApplied || 0) + (today.usedBanked || 0) + (today.cheatApplied || 0));
+      const budgetTotal = Math.round(baseBudget);
 
       const dayObj = {
         id: `day_${today.dayKey}`,
@@ -4189,8 +3198,8 @@
         maintenance: !!today.maintenance,
         budget: Math.round(budgetTotal),
         intake: Math.round(intake),
-        freeApplied: Math.round((today.rolloverApplied || 0) + (today.usedBanked || 0)),
-        cheatApplied: Math.round(today.cheatApplied || 0),
+        freeApplied: 0,
+        cheatApplied: 0,
         endChoice: ''
       };
 
@@ -4256,13 +3265,8 @@
         const card = document.createElement('div');
         card.className = 'card';
 
-        const isCheat = Math.round(Number(d.cheatApplied || 0)) > 0;
-        const tag = d.maintenance ? 'Maintenance day' : (isCheat ? 'Cheat day' : '');
-        const end = d.endChoice ? `, ${d.endChoice}` : '';
+        const tag = d.maintenance ? 'Maintenance day' : '';
 
-        const freeApplied = Math.max(0, Math.round(Number(d.freeApplied || 0)));
-        const cheatApplied = Math.max(0, Math.round(Number(d.cheatApplied || 0)));
-        const baseBudget = Math.max(0, Math.round(Number(d.budget || 0) - freeApplied - cheatApplied));
         // Deficit is simply TDEE minus intake
         const deficit = d.maintenance
           ? 0
@@ -4305,7 +3309,7 @@
           </div>
 
           <div style="font-weight:900; font-size:12px; color: var(--muted); margin-bottom:10px;">
-            ${tag}${end}
+            ${tag}
           </div>
 
           <div class="grid2">
@@ -4340,1086 +3344,6 @@
       });
     };
 
-    const confetti = (element = null) => {
-      // Play celebratory sound
-      try {
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-        
-        // Create a pleasant ascending tone
-        oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
-        oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.15);
-        oscillator.frequency.exponentialRampToValueAtTime(600, audioContext.currentTime + 0.3);
-        
-        oscillator.type = 'sine';
-        
-        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-        
-        oscillator.start(audioContext.currentTime);
-        oscillator.stop(audioContext.currentTime + 0.3);
-      } catch(e) {
-        // Silently fail if audio context not available
-      }
-      
-      const wrap = document.createElement('div');
-      wrap.className = 'confettiWrap';
-      const count = 50;
-      
-      // Colorful palette
-      const colors = [
-        '#FF5F9A', // Pink
-        '#4EA3FF', // Blue
-        '#FFD93D', // Yellow
-        '#6BCF7F', // Green
-        '#FF8C42', // Orange
-        '#9B59B6', // Purple
-        '#FF6B9D', // Rose
-        '#4ECDC4', // Teal
-        '#FFE66D', // Light Yellow
-        '#95E1D3'  // Mint
-      ];
-
-      // If element provided, position confetti relative to it
-      let baseLeft = '50vw';
-      let baseTop = '50vh';
-      if(element){
-        const rect = element.getBoundingClientRect();
-        baseLeft = `${rect.left + rect.width / 2}px`;
-        baseTop = `${rect.top + rect.height / 2}px`;
-      }
-
-      for(let i = 0; i < count; i++){
-        const d = document.createElement('div');
-        d.className = 'confetti';
-        if(element){
-          const offsetX = (Math.random() - 0.5) * 200;
-          const offsetY = (Math.random() - 0.5) * 200;
-          d.style.left = `calc(${baseLeft} + ${offsetX}px)`;
-          d.style.top = `calc(${baseTop} + ${offsetY}px)`;
-        } else {
-        d.style.left = `${Math.random() * 100}vw`;
-        }
-        d.style.animationDelay = `${Math.random() * 0.3}s`;
-        d.style.transform = `rotate(${Math.random()*360}deg)`;
-        d.style.opacity = `${0.7 + Math.random() * 0.3}`;
-        d.style.width = `${6 + Math.round(Math.random()*8)}px`;
-        d.style.height = `${10 + Math.round(Math.random()*12)}px`;
-        
-        // Random colorful background
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        d.style.background = color;
-        d.style.boxShadow = `0 0 4px ${color}40`;
-        
-        // Add horizontal drift for more dynamic movement
-        const drift = (Math.random() - 0.5) * 40; // -20vw to +20vw
-        d.style.setProperty('--drift', drift);
-        
-        wrap.appendChild(d);
-      }
-      document.body.appendChild(wrap);
-      setTimeout(() => wrap.remove(), 3100);
-    };
-
-    const planDaysAndLimit = (plan) => {
-      if(!plan || !plan.startDayKey) return { planDays: 0, maxExtraCalories: 0 };
-
-      const baseISO = plan.baseTargetDateISO || plan.targetDateISO;
-      const baseDate = parseISODateNoon(baseISO);
-      const startDate = parseDayKeyToDateNoon(plan.startDayKey);
-      if(!baseDate || !startDate) return { planDays: 0, maxExtraCalories: 0 };
-
-      const msPerDay = 86400000;
-      const planDays = Math.max(0, Math.ceil((baseDate - startDate) / msPerDay));
-      
-      // Calculate total calorie deficit for the plan
-      const cw = Number(plan.currentWeightLb || 0);
-      const tw = Number(plan.targetWeightLb || 0);
-      const totalDeficitCals = (cw > 0 && tw > 0 && tw < cw) ? Math.round((cw - tw) * 3500) : 0;
-      
-      // 5% of total deficit calories
-      const maxExtraCalories = Math.max(0, Math.floor(totalDeficitCals * CHEAT_MAX_EXT_PCT));
-      
-      return { planDays, maxExtraCalories };
-    };
-
-    const renderCheatSettings = () => {
-      const plan = getPlan();
-      const locked = !plan;
-
-      // Always show cheat days tile, but blur it when locked
-      el('cheatCardWrap').style.display = 'block';
-      el('cheatLockedOverlay').style.display = locked ? 'flex' : 'none';
-      el('cheatCardContent').classList.toggle('lockedBlur', locked);
-
-      if(locked){
-        el('cheatLockedText').textContent = 'Save a plan first to unlock';
-        el('cheatMsg').textContent = '';
-        el('cheatCurrentDisplay').style.display = 'none';
-        return;
-      }
-
-      const { planDays, maxExtraCalories } = planDaysAndLimit(plan);
-
-      const cheat = plan.cheat && typeof plan.cheat === 'object' ? plan.cheat : { count:0, amount:0, used:0 };
-      const count = Math.max(0, Math.round(Number(cheat.count || 0)));
-      const amount = Math.max(0, Math.round(Number(cheat.amount || 0)));
-      const used = Math.max(0, Math.round(Number(cheat.used || 0)));
-      const remaining = Math.max(0, count - used);
-      
-      el('cheatCountInput').value = String(count);
-      el('cheatAmountInput').value = String(amount);
-
-      // Show current settings if cheat days are configured, otherwise show input fields
-      const hasCheatDays = count > 0 && amount > 0;
-      el('cheatCurrentDisplay').style.display = hasCheatDays ? 'block' : 'none';
-      el('cheatInputSection').style.display = hasCheatDays ? 'none' : 'block';
-      
-      if(hasCheatDays){
-        el('cheatCurrentText').textContent = `${count} cheat day${count === 1 ? '' : 's'} × ${fmt(amount)} cal each (${remaining} of ${count} remaining)`;
-      } else {
-        // Pre-fill inputs with current values (even if 0)
-        el('cheatCountInput').value = String(count);
-        el('cheatAmountInput').value = String(amount);
-      }
-
-      if(planDays < CHEAT_MIN_PLAN_DAYS){
-        el('cheatMsg').textContent = `Cheat days unlock at ${CHEAT_MIN_PLAN_DAYS} plan days.`;
-      }else{
-        el('cheatMsg').textContent = '';
-      }
-    };
-
-    const applyCheatDays = async () => {
-      if(!isAdult()){ showAdultModal(); return; }
-
-      const plan = getPlan();
-      if(!plan){
-        el('cheatMsg').textContent = 'Save a plan first.';
-        return;
-      }
-
-      const { planDays, maxExtraCalories } = planDaysAndLimit(plan);
-      if(planDays < CHEAT_MIN_PLAN_DAYS){
-        el('cheatMsg').textContent = `Cheat days unlock at ${CHEAT_MIN_PLAN_DAYS} plan days.`;
-        return;
-      }
-
-      const count = Math.max(0, Math.round(Number(el('cheatCountInput').value || 0)));
-      const amount = Math.max(0, Math.round(Number(el('cheatAmountInput').value || 0)));
-
-      if(count === 0 || amount === 0){
-        const c = plan.cheat && typeof plan.cheat === 'object' ? plan.cheat : null;
-        if(c && (c.used || 0) > 0){
-          el('cheatMsg').textContent = 'You already used a cheat day. Keep them enabled.';
-          return;
-        }
-
-        // Only show "disabled" message if cheat days were actually configured before
-        const hadCheatDays = plan.cheat && typeof plan.cheat === 'object';
-
-        if(plan.cheat){
-          delete plan.cheat;
-          if(plan.baseTargetDateISO){
-            plan.targetDateISO = plan.baseTargetDateISO;
-            delete plan.baseTargetDateISO;
-          }
-          setPlan(plan);
-        }
-
-        // Clear message - the UI will update to reflect the change
-        el('cheatMsg').textContent = '';
-        render();
-        return;
-      }
-
-      const daily = Math.max(1, Math.round(Number(plan.dailyDeficit || 0)));
-      const totalCheatCalories = count * amount;
-
-      if(totalCheatCalories > maxExtraCalories){
-        // Show suggestions modal with pre-calculated options
-        showCheatSuggestions(plan, maxExtraCalories, daily);
-        return;
-      }
-      const extraDaysNeeded = Math.ceil(totalCheatCalories / daily);
-
-      const baseISO = plan.baseTargetDateISO || plan.targetDateISO;
-      const baseDate = parseISODateNoon(baseISO);
-      if(!baseDate){
-        el('cheatMsg').textContent = 'Plan date is missing.';
-        return;
-      }
-
-      const newDate = addDays(baseDate, extraDaysNeeded);
-      const newISO = isoFromDate(newDate);
-
-      // Show confirmation modal
-      el('cheatConfirmDetails').innerHTML = `
-        <div style="font-size:16px; font-weight:900; font-family: 'SF Pro Rounded', ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;">
-          Target date moves by <span style="color: var(--accent); font-weight:900;">${extraDaysNeeded} day${extraDaysNeeded === 1 ? '' : 's'}</span>.
-        </div>
-        <div style="font-size:16px; font-weight:900; font-family: 'SF Pro Rounded', ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;">
-          You will get <span style="color: var(--accent); font-weight:900;">${fmt(count)} cheat day token${count === 1 ? '' : 's'}</span>.
-        </div>
-      `;
-      
-      el('cheatConfirmBack').classList.add('show');
-    };
-
-    const saveCheatDaysConfirmed = () => {
-      const plan = getPlan();
-      if(!plan) return;
-
-      const count = Math.max(0, Math.round(Number(el('cheatCountInput').value || 0)));
-      const amount = Math.max(0, Math.round(Number(el('cheatAmountInput').value || 0)));
-      
-      if(count === 0 || amount === 0) return;
-      
-      // Show loading animation on confirm button
-      const confirmBtn = el('cheatConfirmOk');
-      const originalText = confirmBtn.textContent;
-      confirmBtn.disabled = true;
-      confirmBtn.style.opacity = '.92';
-      confirmBtn.innerHTML = `
-        <span class="loadingDots" aria-label="Saving">
-          <span></span><span></span><span></span>
-        </span>
-      `;
-
-      const daily = Math.max(1, Math.round(Number(plan.dailyDeficit || 0)));
-      const extraDaysNeeded = Math.ceil((count * amount) / daily);
-
-      const baseISO = plan.baseTargetDateISO || plan.targetDateISO;
-      const baseDate = parseISODateNoon(baseISO);
-      if(!baseDate) return;
-
-      const newDate = addDays(baseDate, extraDaysNeeded);
-      const newISO = isoFromDate(newDate);
-
-        plan.baseTargetDateISO = baseISO;
-        plan.targetDateISO = newISO;
-        // Ensure values are numbers, not strings
-        plan.cheat = { 
-          count: Math.round(Number(count)), 
-          amount: Math.round(Number(amount)), 
-          used: 0 
-        };
-
-        console.log('Saving cheat days:', { 
-          count: plan.cheat.count, 
-          amount: plan.cheat.amount, 
-          used: plan.cheat.used,
-          planCheat: plan.cheat,
-          countType: typeof plan.cheat.count,
-          amountType: typeof plan.cheat.amount,
-          fullPlan: plan
-        });
-        
-        // Save the plan
-        setPlan(plan);
-
-        // Immediately verify localStorage was written
-        const rawSaved = localStorage.getItem('allocate_plan_v12');
-        console.log('Raw localStorage after save:', rawSaved);
-        if(rawSaved){
-          try {
-            const parsed = JSON.parse(rawSaved);
-            console.log('Parsed localStorage:', parsed?.cheat);
-          } catch(e) {
-            console.error('Failed to parse localStorage:', e);
-          }
-        }
-
-        // Verify it was saved (use setTimeout to ensure localStorage write completes)
-        setTimeout(() => {
-          const saved = getPlan();
-          console.log('Verified saved cheat days:', saved?.cheat);
-          console.log('Saved plan full object:', saved);
-          
-          // Double-check the values
-          if(saved?.cheat){
-            console.log('Cheat values:', {
-              count: saved.cheat.count,
-              amount: saved.cheat.amount,
-              used: saved.cheat.used,
-              countType: typeof saved.cheat.count,
-              amountType: typeof saved.cheat.amount
-            });
-          } else {
-            console.error('ERROR: Cheat data is missing after save!');
-          }
-        }, 50);
-
-        el('cheatMsg').textContent = `Saved. Target date extended by ${extraDaysNeeded} day${extraDaysNeeded === 1 ? '' : 's'}.`;
-      el('cheatConfirmBack').classList.remove('show');
-      
-      // Restore confirm button
-      confirmBtn.disabled = false;
-      confirmBtn.style.opacity = '1';
-      confirmBtn.textContent = originalText;
-        
-        // Navigate to Dashboard with smooth animation
-        setActivePage('Dash');
-        
-        // Force re-render after ensuring data is saved - use longer delay
-        setTimeout(() => {
-          console.log('Re-rendering after save...');
-          // Re-read plan to ensure we have latest data
-          const verifyPlan = getPlan();
-          console.log('Plan after save (before render):', verifyPlan?.cheat);
-          if(verifyPlan?.cheat){
-            console.log('Cheat data details:', {
-              count: verifyPlan.cheat.count,
-              amount: verifyPlan.cheat.amount,
-              used: verifyPlan.cheat.used,
-              countType: typeof verifyPlan.cheat.count,
-              amountType: typeof verifyPlan.cheat.amount
-            });
-          }
-          
-          // Force render
-        render();
-          
-          // Force cheat dash render again to be absolutely sure
-          setTimeout(() => {
-            const finalPlan = getPlan();
-            console.log('Final plan check before renderCheatDash:', finalPlan?.cheat);
-            
-            // Get tile reference
-            const cheatTile = el('cheatDashCard');
-            
-            // Render first (this sets display: 'block' if cheat days exist)
-            renderCheatDash();
-            
-            // Add magical appearing animation to cheat day tile
-            if(cheatTile && cheatTile.style.display !== 'none') {
-              // Immediately hide it (synchronously, before browser paints)
-              cheatTile.style.transition = 'none'; // No transition initially
-              cheatTile.style.opacity = '0';
-              cheatTile.style.transform = 'translateY(20px) scale(0.95)';
-              
-              // Force a reflow to ensure the hidden state is painted
-              cheatTile.offsetHeight;
-              
-              // Now animate in on the next frame
-              requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                  cheatTile.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-                  cheatTile.style.opacity = '1';
-                  cheatTile.style.transform = 'translateY(0) scale(1)';
-                  
-                  // Scroll to show the tile
-                  setTimeout(() => {
-                    const rect = cheatTile.getBoundingClientRect();
-                    const contentArea = el('contentArea');
-                    if(contentArea && rect.bottom > window.innerHeight) {
-                      const currentScroll = contentArea.scrollTop;
-                      const targetScroll = currentScroll + (rect.top - 100); // Show tile near top with padding
-                      contentArea.scrollTo({ top: targetScroll, behavior: 'smooth' });
-                    }
-                  }, 300);
-                });
-              });
-            }
-          }, 150);
-        }, 400);
-    };
-
-    const closeCheatConfirm = () => {
-      el('cheatConfirmBack').classList.remove('show');
-    };
-
-    el('cheatConfirmOk').addEventListener('click', saveCheatDaysConfirmed);
-    el('cheatConfirmBack').addEventListener('click', (e) => {
-      if(e.target === el('cheatConfirmBack')) closeCheatConfirm();
-    });
-
-    let selectedSuggestion = null;
-    let selectedCardIndex = null;
-
-    const showCheatSuggestions = (plan, maxExtraCalories, daily) => {
-      selectedSuggestion = null;
-      selectedCardIndex = null;
-      el('cheatSuggestUseBtn').style.display = 'none';
-      
-      // Generate 3 options with a range of day amounts that are within the limit
-      const suggestions = [];
-      const tried = [];
-      
-      // Try different day counts with appropriate calorie amounts (minimum 4 days)
-      const dayOptions = [
-        { count: 4, amount: Math.floor(maxExtraCalories / 4) },  // Medium days, medium calories
-        { count: 5, amount: Math.floor(maxExtraCalories / 5) },  // Alternative option
-        { count: 6, amount: Math.floor(maxExtraCalories / 6) }, // More days, lower calories
-        { count: 7, amount: Math.floor(maxExtraCalories / 7) }, // Alternative option
-        { count: 8, amount: Math.floor(maxExtraCalories / 8) },   // Alternative option
-        { count: 9, amount: Math.floor(maxExtraCalories / 9) },  // Alternative option
-        { count: 10, amount: Math.floor(maxExtraCalories / 10) }  // Alternative option
-      ];
-      
-      // Round amounts to nice numbers (50s or 100s) - minimum 4 days
-      for(const opt of dayOptions){
-        if(opt.count < 4 || opt.amount <= 0) continue;
-        
-        // Round to nearest 50
-        opt.amount = Math.floor(opt.amount / 50) * 50;
-        if(opt.amount < 200) opt.amount = 200; // Minimum 200 calories
-        
-        const total = opt.count * opt.amount;
-        if(total <= maxExtraCalories && total > 0){
-          const key = `${opt.count}-${opt.amount}`;
-          if(!tried.includes(key)){
-            tried.push(key);
-            suggestions.push({ count: opt.count, amount: opt.amount });
-          }
-        }
-      }
-      
-      // Sort by day count to ensure variety
-      suggestions.sort((a, b) => a.count - b.count);
-      
-      // If we have options, pick 3 with good variety
-      let finalSuggestions = [];
-      if(suggestions.length >= 3){
-        // Pick: lowest, middle, highest
-        finalSuggestions = [
-          suggestions[0],
-          suggestions[Math.floor(suggestions.length / 2)],
-          suggestions[suggestions.length - 1]
-        ];
-      }else if(suggestions.length > 0){
-        finalSuggestions = suggestions.slice(0, 3);
-      }
-      
-      // If still not enough, generate fallback options
-      if(finalSuggestions.length < 3){
-        const remaining = maxExtraCalories;
-        if(remaining > 0){
-          // Try to fill remaining slots with calculated options (minimum 4 days)
-          for(let i = finalSuggestions.length; i < 3; i++){
-            const count = 4 + (i * 2); // 4, 6, 8 days
-            const amount = Math.floor(remaining / count / 50) * 50;
-            if(amount >= 200 && count * amount <= maxExtraCalories){
-              finalSuggestions.push({ count, amount });
-            }
-          }
-        }
-      }
-      
-      // Remove duplicates and ensure we have exactly 3 different day counts (minimum 4 days)
-      const unique = [];
-      const dayCounts = [];
-      for(const s of finalSuggestions){
-        if(s.count >= 4 && !dayCounts.includes(s.count) && s.count * s.amount <= maxExtraCalories){
-          unique.push(s);
-          dayCounts.push(s.count);
-        }
-      }
-      
-      // If we don't have 3 with different day counts, add more (minimum 4 days)
-      while(unique.length < 3 && dayCounts.length < 10){
-        const baseCount = dayCounts.length > 0 ? Math.max(...dayCounts) : 3;
-        const newCount = Math.max(4, baseCount + 1);
-        const newAmount = Math.floor(maxExtraCalories / newCount / 50) * 50;
-        if(newAmount >= 200 && newCount >= 4 && newCount * newAmount <= maxExtraCalories && !dayCounts.includes(newCount)){
-          unique.push({ count: newCount, amount: newAmount });
-          dayCounts.push(newCount);
-        }else{
-          break;
-        }
-      }
-      
-      finalSuggestions = unique.slice(0, 3);
-      
-      const optionsEl = el('cheatSuggestOptions');
-      optionsEl.innerHTML = '';
-      
-      if(finalSuggestions.length === 0){
-        optionsEl.innerHTML = '<div class="note" style="text-align:center; padding:20px;">No options available</div>';
-      }else{
-        const recommendedIndex = Math.floor(finalSuggestions.length / 2);
-        
-        finalSuggestions.forEach((sug, index) => {
-          const totalCals = sug.count * sug.amount;
-          const extraDays = Math.ceil(totalCals / daily);
-          const isRecommended = index === recommendedIndex;
-          
-          const card = document.createElement('div');
-          card.className = 'card';
-          card.dataset.index = index;
-          card.style.cursor = 'pointer';
-          card.style.transition = 'all 0.15s ease';
-          card.style.padding = '18px 20px';
-          card.style.border = isRecommended ? '2px solid rgba(255,95,154,.3)' : '1px solid rgba(255,255,255,.55)';
-          card.style.background = isRecommended ? 'rgba(255,95,154,.04)' : 'var(--card)';
-          card.innerHTML = `
-            ${isRecommended ? '<div style="font-size:11px; font-weight:900; color: var(--accent); margin-bottom:6px; text-transform:uppercase; letter-spacing:.5px; font-family: \'SF Pro Rounded\', ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, \'Segoe UI\', Roboto, Arial, sans-serif;">Recommended</div>' : ''}
-            <div style="font-weight:900; font-size:22px; line-height:1.1; margin-bottom:6px; font-family: 'SF Pro Rounded', ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;">
-              ${fmt(sug.count)} × ${fmt(sug.amount)}
-            </div>
-            <div style="font-size:12px; font-weight:900; color: var(--muted); margin-bottom:6px; font-family: 'SF Pro Rounded', ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;">
-              ${fmt(totalCals)} extra calories
-            </div>
-            <div style="font-size:14px; font-weight:900; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; color: transparent; font-family: 'SF Pro Rounded', ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;">
-              Reaches target in +${extraDays} day${extraDays === 1 ? '' : 's'}
-            </div>
-          `;
-          
-          const updateSelection = () => {
-            // Remove selection from all cards, restore recommended styling
-            document.querySelectorAll('#cheatSuggestOptions .card').forEach(c => {
-              const cardIdx = Number(c.dataset.index);
-              const isRec = cardIdx === recommendedIndex;
-              c.style.border = isRec ? '2px solid rgba(255,95,154,.3)' : '1px solid rgba(255,255,255,.55)';
-              c.style.background = isRec ? 'rgba(255,95,154,.04)' : 'var(--card)';
-              c.style.transform = '';
-              c.style.boxShadow = '';
-            });
-            // Add selection to clicked card (stronger than recommended)
-            const isRec = index === recommendedIndex;
-            card.style.border = '2px solid rgba(255,95,154,.7)';
-            card.style.background = isRec ? 'rgba(255,95,154,.15)' : 'rgba(255,95,154,.12)';
-            card.style.boxShadow = '0 4px 16px rgba(255,95,154,.2)';
-            selectedSuggestion = sug;
-            selectedCardIndex = index;
-            el('cheatSuggestUseBtn').style.display = 'block';
-          };
-          
-          card.addEventListener('mouseenter', () => {
-            const isSelected = selectedCardIndex === index;
-            if(!isSelected){
-              card.style.transform = 'translateY(-2px)';
-              card.style.boxShadow = '0 6px 20px rgba(0, 0, 0, .1)';
-            }
-          });
-          card.addEventListener('mouseleave', () => {
-            const isSelected = selectedCardIndex === index;
-            if(!isSelected){
-              card.style.transform = '';
-              card.style.boxShadow = '';
-            }
-          });
-          card.addEventListener('click', updateSelection);
-          
-          optionsEl.appendChild(card);
-        });
-      }
-      
-      el('cheatSuggestBack').classList.add('show');
-    };
-
-    const closeCheatSuggest = () => {
-      el('cheatSuggestBack').classList.remove('show');
-      selectedSuggestion = null;
-      selectedCardIndex = null;
-      el('cheatSuggestUseBtn').style.display = 'none';
-    };
-
-    el('cheatSuggestBackBtn').addEventListener('click', closeCheatSuggest);
-    el('cheatSuggestUseBtn').addEventListener('click', () => {
-      if(!selectedSuggestion) return;
-      el('cheatCountInput').value = String(selectedSuggestion.count);
-      el('cheatAmountInput').value = String(selectedSuggestion.amount);
-      closeCheatSuggest();
-      applyCheatDays();
-    });
-    el('cheatSuggestBack').addEventListener('click', (e) => {
-      if(e.target === el('cheatSuggestBack')) closeCheatSuggest();
-    });
-
-    const closeCompleteStats = () => {
-      el('completeStatsBack').classList.remove('show');
-    };
-
-    el('completeStatsClose').addEventListener('click', closeCompleteStats);
-    el('completeStatsGoBtn').addEventListener('click', () => {
-      closeCompleteStats();
-      setActivePage('Settings');
-    });
-    el('completeStatsBack').addEventListener('click', (e) => {
-      if(e.target === el('completeStatsBack')) closeCompleteStats();
-    });
-
-    el('cheatApplyBtn').addEventListener('click', () => {
-      const btn = el('cheatApplyBtn');
-      const originalText = btn.textContent;
-      btn.disabled = true;
-      btn.style.opacity = '.92';
-      btn.innerHTML = `
-        <span class="loadingDots" aria-label="Saving">
-          <span></span><span></span><span></span>
-        </span>
-      `;
-
-      // Small delay to show loading, then apply
-      setTimeout(() => {
-        applyCheatDays();
-        // Restore button after apply (in case it shows modal)
-        setTimeout(() => {
-          btn.disabled = false;
-          btn.style.opacity = '1';
-          btn.textContent = originalText;
-        }, 100);
-      }, 300);
-    });
-    
-    el('cheatRemoveBtn').addEventListener('click', () => {
-      if(!confirm('Remove all cheat days? This will reset your target date if it was adjusted for cheat days.')){
-        return;
-      }
-      const plan = getPlan();
-      if(!plan) return;
-      
-      if(plan.cheat){
-        delete plan.cheat;
-        if(plan.baseTargetDateISO){
-          plan.targetDateISO = plan.baseTargetDateISO;
-          delete plan.baseTargetDateISO;
-        }
-        setPlan(plan);
-      }
-      
-      // Clear inputs
-      el('cheatCountInput').value = '';
-      el('cheatAmountInput').value = '';
-      el('cheatMsg').textContent = '';
-      
-        render();
-    });
-    
-    // Edit cheat days modal
-    const openCheatEdit = () => {
-      const plan = getPlan();
-      if(!plan || !plan.cheat) return;
-      
-      const cheat = plan.cheat;
-      const count = Math.max(0, Math.round(Number(cheat.count || 0)));
-      const amount = Math.max(0, Math.round(Number(cheat.amount || 0)));
-      
-      el('cheatEditCountInput').value = String(count);
-      el('cheatEditAmountInput').value = String(amount);
-      el('cheatEditMsg').textContent = '';
-      el('cheatEditBack').classList.add('show');
-    };
-    
-    const closeCheatEdit = () => {
-      el('cheatEditBack').classList.remove('show');
-    };
-    
-    el('cheatEditBtn').addEventListener('click', () => {
-      playSound('tap');
-      openCheatEdit();
-    });
-    
-    el('cheatEditClose').addEventListener('click', closeCheatEdit);
-    el('cheatEditBack').addEventListener('click', (e) => {
-      if(e.target === el('cheatEditBack')) closeCheatEdit();
-    });
-    
-    el('cheatEditApplyBtn').addEventListener('click', () => {
-      const btn = el('cheatEditApplyBtn');
-      const originalText = btn.textContent;
-      btn.disabled = true;
-      btn.style.opacity = '.92';
-      btn.innerHTML = `
-        <span class="loadingDots" aria-label="Saving">
-          <span></span><span></span><span></span>
-        </span>
-      `;
-      
-      // Copy values to main inputs and use existing applyCheatDays logic
-      el('cheatCountInput').value = el('cheatEditCountInput').value;
-      el('cheatAmountInput').value = el('cheatEditAmountInput').value;
-      
-      setTimeout(() => {
-        applyCheatDays();
-        closeCheatEdit();
-        // Restore button
-        setTimeout(() => {
-          btn.disabled = false;
-          btn.style.opacity = '1';
-          btn.textContent = originalText;
-        }, 100);
-      }, 300);
-    });
-
-    const renderCheatDash = () => {
-      const plan = getPlan();
-      const today = getToday();
-      const inNight = !!today.ended;
-
-      const wrap = el('cheatDashCard');
-      const grid = el('cheatGrid');
-      const meta = el('cheatDashMeta');
-      const note = el('cheatDashNote');
-      const content = el('cheatDashContent');
-      const disabled = el('cheatDashDisabled');
-
-      // Hide the card entirely if cheat days aren't set
-      // Check both the normalized plan and raw data
-      const hasCheat = plan?.cheat && typeof plan.cheat === 'object';
-      const cheatCount = hasCheat ? Math.max(0, Math.round(Number(plan.cheat.count || 0))) : 0;
-      const cheatAmount = hasCheat ? Math.max(0, Math.round(Number(plan.cheat.amount || 0))) : 0;
-      
-      // Also check localStorage directly as a fallback
-      let rawCheatData = null;
-      try {
-        const rawPlan = localStorage.getItem('allocate_plan_v12');
-        if(rawPlan) {
-          const parsed = JSON.parse(rawPlan);
-          rawCheatData = parsed?.cheat;
-        }
-      } catch(e) {
-        console.error('Error reading raw localStorage:', e);
-      }
-      
-      console.log('renderCheatDash check:', { 
-        planExists: !!plan, 
-        hasCheat,
-        cheatCount, 
-        cheatAmount,
-        rawCheat: plan?.cheat,
-        cheatCountRaw: plan?.cheat?.count,
-        cheatAmountRaw: plan?.cheat?.amount,
-        rawCheatDataFromLS: rawCheatData
-      });
-      
-      // If plan.cheat is missing but raw localStorage has it, use that
-      let finalCheatCount = cheatCount;
-      let finalCheatAmount = cheatAmount;
-      
-      if(!hasCheat && rawCheatData && typeof rawCheatData === 'object') {
-        console.warn('Plan.cheat missing but found in localStorage, using raw data');
-        plan.cheat = rawCheatData;
-        // Recalculate with raw data
-        finalCheatCount = Math.max(0, Math.round(Number(rawCheatData.count || 0)));
-        finalCheatAmount = Math.max(0, Math.round(Number(rawCheatData.amount || 0)));
-        console.log('Fixed values from localStorage:', { finalCheatCount, finalCheatAmount });
-      }
-      
-      if(!plan || (!hasCheat && !rawCheatData) || finalCheatCount === 0 || finalCheatAmount === 0){
-        console.log('Hiding cheat days card - conditions not met', {
-          hasPlan: !!plan,
-          hasCheat,
-          finalCheatCount,
-          finalCheatAmount,
-          rawCheatData: !!rawCheatData
-        });
-        wrap.style.display = 'none';
-        return;
-      }
-
-      console.log('Showing cheat days card with', finalCheatCount, 'coins');
-
-      // Use the plan cheat data (or raw if we fixed it)
-      const cheat = plan.cheat || rawCheatData;
-
-      // Show the card
-      wrap.style.display = 'block';
-
-      // Show active state
-      content.style.display = 'block';
-      disabled.style.display = 'none';
-
-      // Use the validated cheat data
-      const count = finalCheatCount;
-      const used = Math.max(0, Math.round(Number(cheat.used || 0)));
-      const amount = finalCheatAmount;
-      const remaining = Math.max(0, count - used);
-      
-      meta.textContent = `${remaining} of ${count} left`;
-
-      const alreadyToday = Math.round(Number(today.cheatApplied || 0)) > 0;
-
-      if(inNight){
-        note.textContent = `Locked in Goodnight mode.`;
-      }else if(alreadyToday){
-        note.textContent = `Cheat day used today (+${fmt(amount)}).`;
-      }else if(remaining <= 0){
-        note.textContent = `All used up.`;
-      }else{
-        note.textContent = `Scratch a coin to add +${fmt(amount)} to today's budget.`;
-      }
-
-      grid.innerHTML = '';
-      
-      // Ensure grid is visible
-      grid.style.display = 'grid';
-      grid.style.visibility = 'visible';
-      grid.style.opacity = '1';
-
-      if(count === 0){
-        const emptyMsg = document.createElement('div');
-        emptyMsg.className = 'note';
-        emptyMsg.style.marginTop = '8px';
-        emptyMsg.textContent = 'No cheat days set, add them in Settings';
-        grid.appendChild(emptyMsg);
-        return;
-      }
-
-      let coinsRendered = 0;
-
-      for(let i = 0; i < count; i++){
-        const isUsed = i < used;
-        const coin = document.createElement('div');
-        coin.className = `coin${isUsed ? ' used' : ''}`;
-        coin.setAttribute('role','button');
-        coin.setAttribute('tabindex','0');
-        coin.dataset.index = i;
-        
-        coin.style.display = 'flex';
-        coin.style.visibility = 'visible';
-        coin.style.opacity = '1';
-        coin.style.zIndex = '1';
-
-        const canScratch = !isUsed && !inNight && !alreadyToday && remaining > 0 && isAdult();
-        
-        if(isUsed) {
-          coin.style.opacity = '.3';
-        } else if(inNight) {
-          coin.style.opacity = '.5';
-        } else if(alreadyToday) {
-          coin.style.opacity = '1';
-        } else if(remaining <= 0) {
-          coin.style.opacity = '.3';
-        } else {
-          coin.style.opacity = '1';
-        }
-
-        if(!isUsed){
-          const scratch = document.createElement('div');
-          scratch.className = 'coinScratch';
-          scratch.dataset.scratched = '0';
-          coin.appendChild(scratch);
-          
-          let isScratching = false;
-          let scratchProgress = 0;
-          const scratchThreshold = 50;
-          
-          const updateScratch = (x, y) => {
-            if(isUsed || !canScratch) return;
-            
-            const rect = coin.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            const distX = Math.abs(x - centerX);
-            const distY = Math.abs(y - centerY);
-            const dist = Math.sqrt(distX * distX + distY * distY);
-            const maxDist = rect.width / 2;
-            
-            if(dist < maxDist){
-              const progress = Math.min(100, (1 - dist / maxDist) * 100);
-              scratchProgress = Math.max(scratchProgress, progress);
-              
-              const angle = Math.atan2(y - centerY, x - centerX) * 180 / Math.PI;
-              const radius = Math.min(maxDist, dist + 15);
-              scratch.style.background = `
-                radial-gradient(circle at ${50 + (x - centerX) / rect.width * 50}% ${50 + (y - centerY) / rect.height * 50}%, 
-                transparent ${Math.max(0, radius / maxDist * 100 - 10)}%, 
-                rgba(200,200,200,.9) ${Math.max(0, radius / maxDist * 100)}%,
-                rgba(200,200,200,.9) 100%)
-              `;
-              
-              if(scratchProgress >= scratchThreshold && !coin.classList.contains('redeeming')){
-                coin.classList.add('redeeming');
-                playSound('scratch');
-                setTimeout(() => {
-                  redeemCheatDayWithAnimation(coin, amount);
-                }, 200);
-              }
-            }
-          };
-          
-          if(canScratch){
-            const handleStart = (e) => {
-              if(!canScratch || isUsed) return;
-              isScratching = true;
-              playSound('scratch');
-              const x = e.touches ? e.touches[0].clientX : e.clientX;
-              const y = e.touches ? e.touches[0].clientY : e.clientY;
-              updateScratch(x, y);
-              e.preventDefault();
-            };
-            
-            const handleMove = (e) => {
-              if(!isScratching || !canScratch || isUsed) return;
-              const x = e.touches ? e.touches[0].clientX : e.clientX;
-              const y = e.touches ? e.touches[0].clientY : e.clientY;
-              updateScratch(x, y);
-              e.preventDefault();
-            };
-            
-            const handleEnd = () => {
-              isScratching = false;
-            };
-            
-            coin.addEventListener('mousedown', handleStart);
-            coin.addEventListener('touchstart', handleStart);
-            coin.addEventListener('mousemove', handleMove);
-            coin.addEventListener('touchmove', handleMove);
-            coin.addEventListener('mouseup', handleEnd);
-            coin.addEventListener('mouseleave', handleEnd);
-            coin.addEventListener('touchend', handleEnd);
-          }
-        }
-
-        grid.appendChild(coin);
-        coinsRendered++;
-      }
-    };
-
-    const redeemCheatDayWithAnimation = (coinElement, amount) => {
-      ensureDayRoll();
-      const today = getToday();
-      if(today.ended) return;
-      if(!isAdult()){ showAdultModal(); return; }
-
-      const plan = getPlan();
-      if(!plan || !plan.cheat) return;
-
-      const cheat = plan.cheat;
-      const count = Math.max(0, Math.round(Number(cheat.count || 0)));
-      const used = Math.max(0, Math.round(Number(cheat.used || 0)));
-
-      if(used >= count) return;
-      if(Math.round(Number(today.cheatApplied || 0)) > 0) return;
-
-      // Calculate current budget before updating
-      const planDef = getPlanDeficit();
-      const currentBudget = calcBudgetTotal(today, planDef);
-      const newBudget = currentBudget + amount;
-
-      // Update plan
-      cheat.used = used + 1;
-      plan.cheat = cheat;
-      setPlan(plan);
-
-      // Update today
-      today.cheatApplied = amount;
-      today.cheatRedeemedAt = Date.now();
-      setToday(today);
-
-      // Confetti near the coin
-      confetti(coinElement);
-      playSound('coin');
-
-      // Animate budget counting up
-      
-      const startValue = Number(String(el('budgetBig').textContent).replace(/,/g, '') || 0);
-      const endValue = newBudget;
-      const duration = 600;
-      const startTime = Date.now();
-      
-      const animateBudget = () => {
-        const elapsed = Date.now() - startTime;
-        const progress = Math.min(1, elapsed / duration);
-        const easeOut = 1 - Math.pow(1 - progress, 3);
-        const current = Math.round(startValue + (endValue - startValue) * easeOut);
-        el('budgetBig').textContent = fmt(current);
-        
-        if(progress < 1){
-          requestAnimationFrame(animateBudget);
-        } else {
-          // Final pop animation
-          el('budgetBig').classList.add('pulse');
-          setTimeout(() => {
-            el('budgetBig').classList.remove('pulse');
-          }, 400);
-        }
-      };
-      
-      animateBudget();
-
-      // Re-render to update coin states
-      setTimeout(() => {
-        render();
-        showCheatUndoIfAvailable();
-      }, 100);
-    };
-
-    const redeemCheatDay = () => {
-      ensureDayRoll();
-      const today = getToday();
-      if(today.ended) return;
-      if(!isAdult()){ showAdultModal(); return; }
-
-      const plan = getPlan();
-      if(!plan || !plan.cheat) return;
-
-      const cheat = plan.cheat;
-      const count = Math.max(0, Math.round(Number(cheat.count || 0)));
-      const used = Math.max(0, Math.round(Number(cheat.used || 0)));
-      const amount = Math.max(0, Math.round(Number(cheat.amount || 0)));
-
-      if(used >= count) return;
-      if(Math.round(Number(today.cheatApplied || 0)) > 0) return;
-
-      cheat.used = used + 1;
-      plan.cheat = cheat;
-      setPlan(plan);
-
-      today.cheatApplied = amount;
-      today.cheatRedeemedAt = Date.now();
-      setToday(today);
-
-      confetti();
-      el('contentArea').scrollTo({ top: 0, behavior: 'smooth' });
-      render();
-
-      showCheatUndoIfAvailable();
-    };
-
-    const showCheatUndoIfAvailable = () => {
-      const today = getToday();
-      const ts = Number(today.cheatRedeemedAt || 0);
-      const active = ts > 0 && (Date.now() - ts) <= CHEAT_UNDO_MS;
-
-      el('cheatUndoRow').style.display = active ? 'flex' : 'none';
-      if(!active) return;
-
-      const left = Math.max(0, CHEAT_UNDO_MS - (Date.now() - ts));
-      el('cheatUndoNote').textContent = `Undo available for ${Math.ceil(left / 1000)} seconds.`;
-
-      setTimeout(() => {
-        showCheatUndoIfAvailable();
-      }, 250);
-    };
-
-    const undoCheatDay = () => {
-      ensureDayRoll();
-      const today = getToday();
-      if(today.ended) return;
-
-      const ts = Number(today.cheatRedeemedAt || 0);
-      if(!(ts > 0 && (Date.now() - ts) <= CHEAT_UNDO_MS)) return;
-
-      const plan = getPlan();
-      if(!plan || !plan.cheat) return;
-
-      const cheat = plan.cheat;
-      cheat.used = Math.max(0, Math.round(Number(cheat.used || 0)) - 1);
-      plan.cheat = cheat;
-      setPlan(plan);
-
-      today.cheatApplied = 0;
-      today.cheatRedeemedAt = 0;
-      setToday(today);
-
-      el('cheatUndoRow').style.display = 'none';
-      render();
-    };
-
-    el('cheatUndoBtn').addEventListener('click', undoCheatDay);
-    
-    el('cheatDashGoToSettings').addEventListener('click', () => {
-      playSound('tap');
-      setActivePage('Settings');
-    });
-
     let lastBudgetValue = null;
     let lastLeftValue = null;
     let acknowledgementIndex = 0;
@@ -5437,7 +3361,6 @@
       ensureDayRoll();
 
       const planDef = getPlanDeficit();
-      const banks = getBanks();
       const today = getToday();
       const stats = getStats();
       const plan = getPlan();
@@ -5478,29 +3401,6 @@
         deficitLabel.classList.remove('none');
       }
 
-      const rollSpan = el('rolloverKpi');
-      const roll = Math.round(today.rolloverApplied || 0);
-      if(roll <= 0){
-        rollSpan.textContent = 'None';
-        rollSpan.classList.add('none');
-      }else{
-        rollSpan.textContent = fmt(roll);
-        rollSpan.classList.remove('none');
-      }
-
-      const bankSpan = el('bankedKpi');
-      const bank = Math.round(banks.banked || 0);
-      const useBtn = el('useBankedBtn');
-      if(bank <= 0){
-        bankSpan.textContent = 'None';
-        bankSpan.classList.add('none');
-        useBtn.style.display = 'none';
-      }else{
-        bankSpan.textContent = fmt(bank);
-        bankSpan.classList.remove('none');
-        useBtn.style.display = 'flex';
-      }
-
       const showTdeeInput = (today.yTdee <= 0) || (el('dashYTdeeField').dataset.editing === '1');
       el('dashYTdeeField').style.display = showTdeeInput ? 'block' : 'none';
 
@@ -5513,8 +3413,6 @@
       el('tdeeInputDash').disabled = inNight;
 
       el('dashLockTiny').style.display = inNight ? 'inline-flex' : 'none';
-
-      el('useBankedBtn').disabled = inNight || !isAdult();
 
       if(!hasFilledStats(stats)){
         el('modeHint').textContent = '';
@@ -5544,7 +3442,6 @@
 
       const settings = getSettings();
       el('deficitInput').value = settings.deficit !== null ? String(settings.deficit) : '';
-      el('soundsToggle').checked = settings.soundsEnabled !== false;
 
       // Hide deficit card if plan exists (plan's deficit is the source of truth)
       el('deficitCard').style.display = plan ? 'none' : 'block';
@@ -5560,10 +3457,6 @@
       renderLogPage();
       renderProgress();
       renderStatsView(false);
-
-      renderCheatSettings();
-      renderCheatDash();
-      showCheatUndoIfAvailable();
 
       setToday(today);
     };
@@ -5753,140 +3646,13 @@
     });
 
     el('endDayBtn').addEventListener('click', () => {
-      playSound('tap');
-      const today = getToday();
-      if(today.ended) return;
-      if(!isAdult()){ playSound('error'); showAdultModal(); return; }
-
-      const res = saveDayToLog();
-      if(res.left > 0){
-        openEndOptions(res.left);
-      }else{
-        playSound('success');
-        markDayEnded('closed');
-      }
-    });
-
-    el('optRollover').addEventListener('click', () => {
       ensureDayRoll();
-      const planDef = getPlanDeficit();
-      const today = getToday();
-      const banks = getBanks();
-
-      const intake = sumIntake(today.entries);
-      const budgetTotal = calcBudgetTotal(today, planDef);
-      const left = Math.round(budgetTotal - intake);
-
-      banks.rolloverPending = Math.round(left);
-      setBanks(banks);
-
-      const days = getDays();
-      const idx = days.findIndex(x => x.dayKey === today.dayKey);
-      if(idx >= 0){
-        days[idx].endChoice = 'rolled';
-        setDays(days);
-      }
-
-      closeEndOptions();
-      markDayEnded('rolled');
-    });
-
-    el('optBanked').addEventListener('click', () => {
-      playSound('tap');
-      el('optBanked').classList.add('confirmed');
-      setTimeout(() => el('optBanked').classList.remove('confirmed'), 800);
-      ensureDayRoll();
-      const planDef = getPlanDeficit();
-      const today = getToday();
-      const banks = getBanks();
-
-      const intake = sumIntake(today.entries);
-      const budgetTotal = calcBudgetTotal(today, planDef);
-      const left = Math.round(budgetTotal - intake);
-
-      banks.banked = Math.round((banks.banked || 0) + left);
-      banks.rolloverPending = 0;
-      setBanks(banks);
-
-      const days = getDays();
-      const idx = days.findIndex(x => x.dayKey === today.dayKey);
-      if(idx >= 0){
-        days[idx].endChoice = 'banked';
-        setDays(days);
-      }
-
-      closeEndOptions();
-      
-      // Show celebration popup (before marking day as ended to keep normal mode)
-      el('bankedCelebrateAmount').textContent = `${fmt(left)} calories banked!`;
-      playSound('chaching');
-      el('bankedCelebrateBack').classList.add('show');
-      
-      // Don't mark day as ended yet - wait until popup is closed
-    });
-
-    const closeBankedCelebrate = () => {
-      el('bankedCelebrateBack').classList.remove('show');
-    };
-
-    el('bankedCelebrateClose').addEventListener('click', () => {
-      closeBankedCelebrate();
-      // Now mark day as ended and apply night mode
-      markDayEnded('banked');
-    });
-    el('bankedCelebrateOk').addEventListener('click', () => {
-      playSound('tap');
-      closeBankedCelebrate();
-      // Now mark day as ended and apply night mode
-      markDayEnded('banked');
-    });
-    el('bankedCelebrateBack').addEventListener('click', (e) => {
-      if(e.target === el('bankedCelebrateBack')){
-        closeBankedCelebrate();
-        // Now mark day as ended and apply night mode
-        markDayEnded('banked');
-      }
-    });
-
-    el('optMoveOn').addEventListener('click', () => {
-      const banks = getBanks();
-      banks.rolloverPending = 0;
-      setBanks(banks);
-
-      const today = getToday();
-      const days = getDays();
-      const idx = days.findIndex(x => x.dayKey === today.dayKey);
-      if(idx >= 0){
-        days[idx].endChoice = 'moved';
-        setDays(days);
-      }
-
-      closeEndOptions();
-      markDayEnded('moved');
-    });
-
-    el('useApplyBtn').addEventListener('click', () => {
-      ensureDayRoll();
-      const banks = getBanks();
       const today = getToday();
       if(today.ended) return;
       if(!isAdult()){ showAdultModal(); return; }
 
-      const max = Math.round(banks.banked || 0);
-      const v = Number(el('useAmount').value || 0);
-      if(!Number.isFinite(v) || v <= 0) return;
-
-      const amt = Math.min(max, Math.round(v));
-      if(amt <= 0) return;
-
-      banks.banked = Math.max(0, Math.round(max - amt));
-      setBanks(banks);
-
-      today.usedBanked = Math.round((today.usedBanked || 0) + amt);
-      setToday(today);
-
-      closeUseModal();
-      render();
+      saveDayToLog();
+      markDayEnded('closed');
     });
 
     el('saveSettingsBtn').addEventListener('click', () => {
@@ -5899,8 +3665,8 @@
         return;
       }
       const deficit = (Number.isFinite(v) && v >= 0) ? Math.round(v) : null;
-      const soundsEnabled = el('soundsToggle').checked;
-      setSettings({ deficit, soundsEnabled });
+      const prev = getSettings();
+      setSettings({ deficit, soundsEnabled: prev.soundsEnabled !== false });
       playSound('success');
       el('deficitMsg').textContent = '';
 
@@ -5933,10 +3699,6 @@
       el('statsSavedHint').style.display = 'block';
       setTimeout(() => { el('statsSavedHint').style.display = 'none'; }, 900);
 
-      lastCalc = null;
-      el('calcMsg').textContent = '';
-      el('planActions').style.display = 'none';
-
       const after = hasFilledStats(stats);
       const unlockedNow = !before && after;
 
@@ -5948,377 +3710,112 @@
       render();
     });
 
-    el('calcBtn').addEventListener('click', () => {
-      const s = getStats();
-      if(!hasFilledStats(s)) return;
-      if(!isAdult()){ showAdultModal(); return; }
-
-      const plan = getPlan();
-      const hasPlan = !!plan;
-
-      showCalcLoading();
-      el('planActions').style.display = 'none';
-      lastCalc = null;
-
-      setTimeout(() => {
-        const res = calcDailyDeficit();
-        if(!res.ok){
-          el('calcMsg').textContent = res.msg;
-          return;
-        }
-        lastCalc = res;
-
-        el('calcMsg').innerHTML = `<div class="bigDef">Daily deficit: ${fmt(res.daily)}</div>`;
-        el('calcMsg').classList.add('slideIn');
-        setTimeout(() => el('calcMsg').classList.remove('slideIn'), 400);
-        
-        // Only show planActions if no plan exists (first time setup)
-        if(!hasPlan) {
-        el('planActions').style.display = 'block';
-        }
-        
-        // Scroll so expanded goal calculator is fully visible
-        // Wait for DOM to update with new content
-        setTimeout(() => {
-          requestAnimationFrame(() => {
-            const goalCard = el('goalCardWrap');
-            const contentArea = el('contentArea');
-            if(goalCard && contentArea) {
-              // Force a reflow to get accurate measurements
-              goalCard.offsetHeight;
-              
-              // Get the bottom of the goal card including all new content
-              const rect = goalCard.getBoundingClientRect();
-              const viewportHeight = window.innerHeight;
-              const cardBottom = rect.bottom;
-              
-              // If card extends below viewport, scroll to show it fully
-              if(cardBottom > viewportHeight - 20) { // 20px threshold
-                const currentScroll = contentArea.scrollTop;
-                const scrollNeeded = cardBottom - viewportHeight + 30; // 30px padding at bottom
-                const targetScroll = currentScroll + scrollNeeded;
-                contentArea.scrollTo({ top: targetScroll, behavior: 'smooth' });
-              }
-            }
-          });
-        }, 250);
-      }, 520);
-    });
-
-    el('roundOpenBtn').addEventListener('click', () => openRoundingModal());
-
-    el('roundUseBtn').addEventListener('click', () => {
-      if(!lastCalc) return;
-
-      const exact = Math.max(0, Math.round(lastCalc.daily));
-      const chosen = (roundChoice === 'up') ? roundTo50(exact, 'up') : roundTo50(exact, 'down');
-
-      lastCalc._rounded = chosen;
-      closeRoundingModal();
-
-      el('calcMsg').innerHTML = `<div class="bigDef">Daily deficit: ${fmt(chosen)}</div>`;
-    });
-
-    el('roundStickBtn').addEventListener('click', () => {
-      if(!lastCalc) return;
-
-      const exact = Math.max(0, Math.round(lastCalc.daily));
-      lastCalc._rounded = exact;
-      closeRoundingModal();
-
-      el('calcMsg').innerHTML = `<div class="bigDef">Daily deficit: ${fmt(exact)}</div>`;
-    });
-
-    const openManualInputModal = () => {
-      if(!lastCalc) return;
-
-      const exact = Math.max(0, Math.round(lastCalc.daily));
-      el('manualDeficitInput').value = String(exact);
-      el('manualInputError').style.display = 'none';
-      el('manualInputError').textContent = '';
-      updateManualInputDate();
-      el('manualInputBack').classList.add('show');
-    };
-
-    const closeManualInputModal = () => {
-      el('manualInputBack').classList.remove('show');
-    };
-
-    const updateManualInputDate = () => {
-      if(!lastCalc) return;
-
-      const inputVal = el('manualDeficitInput').value;
-      const deficit = Math.max(0, Math.round(Number(inputVal) || 0));
-
-      if(deficit <= 0 || !Number.isFinite(deficit)){
-        el('manualInputDate').textContent = '';
-        el('manualInputError').style.display = 'none';
-        return;
-      }
-
-      if(deficit > MAX_DAILY_DEFICIT){
-        el('manualInputDate').textContent = '';
-        el('manualInputError').style.display = 'block';
-        el('manualInputError').textContent = `Maximum deficit is ${MAX_DAILY_DEFICIT} calories per day.`;
-        return;
-      }
-
-      el('manualInputError').style.display = 'none';
-      el('manualInputError').textContent = '';
-
-      const projectedDate = projectDateForDeficit(lastCalc.cw, lastCalc.tw, lastCalc.startKey, deficit);
-      const exact = Math.max(0, Math.round(lastCalc.daily));
-      const lbsToLose = lastCalc.cw - lastCalc.tw;
-      const totalCals = lbsToLose * 3500;
-      
-      const daysWithExact = Math.ceil(totalCals / exact);
-      const daysWithDeficit = Math.ceil(totalCals / deficit);
-      const daysDiff = Math.abs(daysWithDeficit - daysWithExact);
-      
-      if(deficit === exact){
-        el('manualInputDate').textContent = `You'll hit your goal by ${projectedDate} (same as calculated)`;
-      }else if(deficit < exact){
-        el('manualInputDate').textContent = `You'll hit your goal by ${projectedDate} (${daysDiff} day${daysDiff === 1 ? '' : 's'} later than calculated)`;
-      }else{
-        el('manualInputDate').textContent = `You'll hit your goal by ${projectedDate} (${daysDiff} day${daysDiff === 1 ? '' : 's'} earlier than calculated)`;
-      }
-    };
-
-    el('manualInputBtn').addEventListener('click', openManualInputModal);
-    el('manualInputClose').addEventListener('click', closeManualInputModal);
-    el('manualInputCancel').addEventListener('click', closeManualInputModal);
-    el('manualInputBack').addEventListener('click', (e) => {
-      if(e.target === el('manualInputBack')) closeManualInputModal();
-    });
-
-    el('manualDeficitInput').addEventListener('input', updateManualInputDate);
-    el('manualDeficitInput').addEventListener('keydown', (e) => {
-      if(e.key === 'Enter'){
-        e.preventDefault();
-        el('manualInputUse').click();
-      }
-    });
-
-    el('manualInputUse').addEventListener('click', () => {
-      if(!lastCalc) return;
-
-      const inputVal = el('manualDeficitInput').value;
-      const deficit = Math.max(0, Math.round(Number(inputVal) || 0));
-
-      if(deficit <= 0 || !Number.isFinite(deficit)){
-        el('manualInputError').style.display = 'block';
-        el('manualInputError').textContent = 'Enter a valid deficit (1-1000).';
-        return;
-      }
-
-      if(deficit > MAX_DAILY_DEFICIT){
-        el('manualInputError').style.display = 'block';
-        el('manualInputError').textContent = `Maximum deficit is ${MAX_DAILY_DEFICIT} calories per day.`;
-        return;
-      }
-
-      lastCalc._rounded = deficit;
-      closeManualInputModal();
-
-      el('calcMsg').innerHTML = `<div class="bigDef">Daily deficit: ${fmt(deficit)}</div>`;
-    });
-
-    el('savePlanBtn').addEventListener('click', () => {
+    el('saveSimplePlanBtn').addEventListener('click', () => {
       playSound('tap');
-      if(!lastCalc) return;
-      if(!isAdult()){ playSound('error'); showAdultModal(); return; }
-
-      const exact = Math.max(0, Math.round(lastCalc.daily));
-      const finalDef = Number.isFinite(lastCalc._rounded) ? Math.max(0, Math.round(lastCalc._rounded)) : exact;
-
-      if(finalDef > MAX_DAILY_DEFICIT){
-        el('calcMsg').textContent = 'That daily deficit is too high. Please choose a later target date.';
+      const s = getStats();
+      if(!hasFilledStats(s)){
+        playSound('error');
+        el('planProjectionMsg').textContent = 'Fill in your stats first.';
+        return;
+      }
+      if(!isAdult()){
+        playSound('error');
+        showAdultModal();
         return;
       }
 
-      const btn = el('savePlanBtn');
-      btn.disabled = true;
-      btn.style.opacity = '.92';
-      btn.innerHTML = `
-        <span class="loadingDots" aria-label="Saving">
-          <span></span><span></span><span></span>
-        </span>
-      `;
+      const cw = Number(el('planCurrentWeightInput').value || 0);
+      const td = String(el('planTargetDateInput').value || '');
+      const deficit = Math.round(Number(el('planDailyDeficitInput').value || 0));
+      const msg = el('planProjectionMsg');
 
-      setTimeout(() => {
-        setSettings({ deficit: finalDef });
-        el('deficitInput').value = String(finalDef);
+      if(!Number.isFinite(cw) || cw <= 0){
+        msg.textContent = 'Enter your current weight.';
+        playSound('error');
+        return;
+      }
+      if(!td){
+        msg.textContent = 'Pick a target date.';
+        playSound('error');
+        return;
+      }
+      const targetDate = new Date(`${td}T12:00:00`);
+      if(Number.isNaN(targetDate.getTime())){
+        msg.textContent = 'Pick a valid target date.';
+        playSound('error');
+        return;
+      }
 
-        setPlan({
-          savedAtISO: new Date().toISOString(),
-          startDayKey: lastCalc.startKey,
-          currentWeightLb: lastCalc.cw,
-          targetWeightLb: lastCalc.tw,
-          targetDateISO: lastCalc.targetDateISO,
-          dailyDeficit: finalDef
-        });
+      const startKey = dayKeyWithCutoff(new Date());
+      const startDate = parseDayKeyToDateNoon(startKey);
+      const msPerDay = 86400000;
+      const days = Math.ceil((targetDate - startDate) / msPerDay);
+      if(days <= 0){
+        msg.textContent = 'Target date must be in the future.';
+        playSound('error');
+        return;
+      }
 
-        el('savePlanHint').style.display = 'block';
-        setTimeout(() => { el('savePlanHint').style.display = 'none'; }, 900);
+      if(!Number.isFinite(deficit) || deficit <= 0){
+        msg.textContent = 'Enter a daily deficit (calories).';
+        playSound('error');
+        return;
+      }
+      if(deficit > MAX_DAILY_DEFICIT){
+        msg.textContent = `Maximum deficit is ${MAX_DAILY_DEFICIT} calories per day.`;
+        playSound('error');
+        return;
+      }
 
-        btn.disabled = false;
-        btn.style.opacity = '1';
-        btn.textContent = 'Save plan';
+      const rawProjected = cw - (days * deficit) / 3500;
+      if(rawProjected >= cw - 1e-9){
+        msg.textContent = 'Increase your daily deficit or pick a later date to project weight loss.';
+        playSound('error');
+        return;
+      }
 
-        render();
-        // Add slide animation when navigating to Settings
-        setActivePage('Settings');
-        setTimeout(() => {
-          el('pageSettings').classList.add('slideIn');
-          setTimeout(() => {
-            el('pageSettings').classList.remove('slideIn');
-            // Scroll so cheat days tile bottom is at screen bottom
-            setTimeout(() => {
-              const cheatCard = el('cheatCardWrap');
-              const contentArea = el('contentArea');
-              if(cheatCard && contentArea) {
-                const rect = cheatCard.getBoundingClientRect();
-                const currentScroll = contentArea.scrollTop;
-                const targetScroll = currentScroll + (rect.bottom - window.innerHeight) + 20; // 20px padding
-                contentArea.scrollTo({ top: targetScroll, behavior: 'smooth' });
-              }
-            }, 100);
-          }, 400);
-        }, 50);
-      }, 720);
+      let tw = Math.round(Math.max(0, rawProjected) * 10) / 10;
+      if(tw >= cw){
+        tw = Math.max(0, Math.round((cw - 0.1) * 10) / 10);
+      }
+
+      const ss = getSettings();
+      setSettings({ deficit, soundsEnabled: ss.soundsEnabled !== false });
+      el('deficitInput').value = String(deficit);
+
+      setPlan({
+        savedAtISO: new Date().toISOString(),
+        startDayKey: startKey,
+        currentWeightLb: cw,
+        targetWeightLb: tw,
+        targetDateISO: td,
+        dailyDeficit: deficit
+      });
+
+      const tdText = formatPlanTargetDateDisplay(td);
+      msg.textContent = `By ${tdText} you'll weigh approximately ${fmt(tw)} lb.`;
+
+      playSound('success');
+      render();
     });
 
-    const resetBtn = el('resetBtn');
-    if(resetBtn){
-      resetBtn.addEventListener('click', () => {
-        playSound('tap');
-        const choice = confirm('Reset all data? This cannot be undone.\n\n(Or cancel and use "R" button to test morning screen)');
-        if(!choice){
-          return;
-        }
-        playSound('success');
-        
-        // Clear all known keys
-      for(const k of ALL_KEYS){
-        localStorage.removeItem(k);
+    el('resetAllBtn').addEventListener('click', () => {
+      playSound('tap');
+      if(!confirm('Reset all data stored in this browser for Allocate? This cannot be undone.')){
+        return;
       }
-        
-        // Also clear any old keys that might exist (for safety)
-        for(let i = 0; i < localStorage.length; i++){
-          const key = localStorage.key(i);
-          if(key && key.startsWith('allocate_')){
-            localStorage.removeItem(key);
-          }
-        }
-        
-        // Reset all state variables
-      lastCalc = null;
-      roundChoice = 'down';
-      el('savedHint').textContent = '';
-        
-        // Force a full page refresh to ensure everything is reset
-        setTimeout(() => {
-          window.location.reload();
-        }, 100);
-      });
-    }
-
-    // Add "R" button right-click or long-press to test morning screen (for development)
-    if(resetBtn){
-      // Right-click to test morning screen
-      resetBtn.addEventListener('contextmenu', (e) => {
-        e.preventDefault();
-        playSound('tap');
-        // Clear last morning seen and force it to show
-        localStorage.removeItem(LS_LAST_MORNING);
-        // Hide app and show morning screen
-        const phone = document.querySelector('.phone');
-        if(phone) phone.style.display = 'none';
-        showMorningScreen();
-      });
-    }
-
-    // Quick Import button (Q) - for development/testing
-    const quickImportBtn = el('quickImportBtn');
-    if(quickImportBtn){
-      quickImportBtn.addEventListener('click', () => {
-        playSound('tap');
-        const confirmed = confirm('Quick Import: This will set your stats, plan, and add 2 weeks of progress data. Continue?');
-        if(!confirmed) return;
-
-        playSound('success');
-
-        // 1. Set stats
-        setStats({
-          heightCm: '169',
-          weightLb: '136',
-          age: '24',
-          gender: 'female'
-        });
-
-        // 2. Set plan
-        const targetDate = new Date('2025-01-27T12:00:00');
-        const plan = {
-          currentWeightLb: 136,
-          targetWeightLb: 132,
-          dailyDeficit: 750,
-          targetDateISO: isoFromDate(targetDate),
-          baseTargetDateISO: isoFromDate(targetDate)
-        };
-        setPlan(plan);
-
-        // 3. Create 14 days of history (going back from today)
-        const days = [];
-        const dailyDeficit = 750;
-        const yTdee = 2500;
-        const intake = yTdee - dailyDeficit; // 1750
-        const budget = Math.max(MIN_DEFICIT_DAY_BUDGET, Math.round(yTdee - dailyDeficit)); // 1750
-
-        for(let i = 13; i >= 0; i--){
-          const date = new Date();
-          date.setDate(date.getDate() - i);
-          date.setHours(12, 0, 0, 0); // Set to noon for consistency
-          
-          const dayKey = dayKeyWithCutoff(date);
-          const dayDate = parseDayKeyToDateNoon(dayKey);
-          
-          days.push({
-            id: `day_${dayKey}`,
-            dayKey: dayKey,
-            yTdee: yTdee,
-            maintenance: false,
-            budget: budget,
-            intake: intake,
-            entries: [],
-            freeApplied: 0,
-            cheatApplied: 0,
-            rolloverApplied: 0,
-            usedBanked: 0,
-            ended: true,
-            endedAt: dayDate.getTime(),
-            endChoice: ''
-          });
-        }
-
-        setDays(days);
-
-        // 4. Refresh the UI
-        setTimeout(() => {
-          window.location.reload();
-        }, 100);
-      });
-    }
-
+      localStorage.clear();
+      location.reload();
+    });
 
     el('exportBtn').addEventListener('click', () => {
       playSound('tap');
       const payload = {
         exportedAt: new Date().toISOString(),
-        version: 'v12+cheat',
+        version: 'v12',
         cutoffHour: DAY_CUTOFF_HOUR,
         settings: getSettings(),
         stats: getStats(),
-        banks: getBanks(),
         plan: getPlan(),
         today: getToday(),
         days: getDays(),
@@ -6359,7 +3856,6 @@
 
         if(data.settings) saveJSON(LS_SETTINGS, data.settings);
         if(data.stats) saveJSON(LS_STATS, data.stats);
-        if(data.banks) saveJSON(LS_BANKS, data.banks);
         if(data.plan !== undefined) saveJSON(LS_PLAN, data.plan);
         if(data.today) saveJSON(LS_TODAY, data.today);
         if(Array.isArray(data.days)) saveJSON(LS_DAYS, data.days);
@@ -6385,382 +3881,10 @@
       }
     }, 60000);
 
-    // Morning screen functions
-    const checkFirstOpenToday = () => {
-      const now = new Date();
-      if(now.getHours() < DAY_CUTOFF_HOUR) return false; // Before 3am, don't show
-      
-      const lastMorning = loadJSON(LS_LAST_MORNING, null);
-      const todayKey = dayKeyWithCutoff(now);
-      
-      if(!lastMorning || lastMorning !== todayKey){
-        saveJSON(LS_LAST_MORNING, todayKey);
-        return true;
-      }
-      return false;
-    };
-
-    // Animated counting function
-    const animateNumber = (element, start, end, duration, callback, prefix = '') => {
-      if(!element) return;
-      const startTime = Date.now();
-      const range = end - start;
-      
-      const update = () => {
-        const elapsed = Date.now() - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        // Ease-in-out cubic function
-        const easeInOut = progress < 0.5
-          ? 4 * Math.pow(progress, 3)
-          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-        const current = Math.round(start + range * easeInOut);
-        element.textContent = prefix + current.toLocaleString('en-GB');
-        
-        if(progress < 1){
-          requestAnimationFrame(update);
-        } else {
-          element.textContent = prefix + end.toLocaleString('en-GB');
-          if(callback) callback();
-        }
-      };
-      
-      update();
-    };
-
-    const showMorningScreen = () => {
-      const screen = el('morningScreen');
-      if(!screen) return;
-      
-      // Hide app content
-      const phone = document.querySelector('.phone');
-      if(phone) {
-        phone.style.filter = 'blur(20px)';
-        setTimeout(() => {
-          if(phone) phone.style.display = 'none';
-        }, 50);
-      }
-      
-      // Show morning screen
-      screen.style.display = 'flex';
-      screen.style.position = 'fixed';
-      screen.style.inset = '0';
-      screen.style.zIndex = '3000';
-      
-      // Values (hardcoded for now - same as before)
-      const yesterdayBurned = 2693;
-      const dailyDeficit = 750;
-      const hormoneBonus = 71;
-      const rolloverBonus = 83;
-      const finalBudget = yesterdayBurned - dailyDeficit + hormoneBonus + rolloverBonus;
-      
-      // Reset all elements
-      const greeting = el('morningGreeting');
-      const text1 = el('morningText1');
-      const text2 = el('morningText2');
-      const yesterdayBubble = el('morningYesterdayBubble');
-      const yesterdayNum = el('morningYesterdayNum');
-      const deficitNum = el('morningDeficitNum');
-      const panel = el('morningPanel');
-      const row1 = el('morningRow1');
-      const row2 = el('morningRow2');
-      const row3 = el('morningRow3');
-      const hormoneNum = el('morningHormoneNum');
-      const rolloverNum = el('morningRolloverNum');
-      const budgetNum = el('morningBudgetNum');
-      const tapHint = el('morningTapHint');
-      
-      // Reset states
-      if(greeting) { greeting.style.opacity = '0'; greeting.style.transform = 'translateY(12px)'; }
-      if(text1) { text1.style.opacity = '0'; text1.style.transform = 'translateY(8px)'; }
-      if(text2) { text2.style.opacity = '0'; text2.style.transform = 'translateY(8px)'; }
-      if(yesterdayBubble) { yesterdayBubble.style.opacity = '0'; }
-      if(yesterdayNum) { yesterdayNum.textContent = '0'; }
-      if(deficitNum) { 
-        deficitNum.textContent = '0'; 
-        deficitNum.style.opacity = '0';
-        deficitNum.classList.remove('animate');
-      }
-      if(panel) { panel.style.opacity = '0'; panel.style.transform = 'translateY(20px) scale(0.96)'; }
-      if(row1) { row1.style.opacity = '0'; row1.style.transform = 'translateX(-10px)'; }
-      if(row2) { row2.style.opacity = '0'; row2.style.transform = 'translateX(-10px)'; }
-      if(row3) { row3.style.opacity = '0'; row3.style.transform = 'translateX(-10px)'; }
-      if(tapHint) { tapHint.style.opacity = '0'; }
-      
-      // Play gentle sound
-      setTimeout(() => playSound('success'), 400);
-      
-      // Step 1: Show "Good morning" (300ms)
-      setTimeout(() => {
-        if(greeting) {
-          greeting.style.opacity = '1';
-          greeting.style.transform = 'translateY(0)';
-        }
-      }, 300);
-      
-      // Step 2: Show "Yesterday you burned" (600ms)
-      setTimeout(() => {
-        if(text1) {
-          text1.style.opacity = '1';
-          text1.style.transform = 'translateY(0)';
-        }
-      }, 800);
-      
-      // Step 3: Animate calorie number counting up (1100ms)
-      setTimeout(() => {
-        if(yesterdayBubble) {
-          yesterdayBubble.style.opacity = '1';
-          if(yesterdayNum) {
-            animateNumber(yesterdayNum, 0, yesterdayBurned, 900, () => {
-              playSound('success');
-            });
-          }
-        }
-      }, 1100);
-      
-      // Step 4: Show "Daily deficit" (2200ms - after counting finishes)
-      setTimeout(() => {
-        if(text2) {
-          text2.style.opacity = '1';
-          text2.style.transform = 'translateY(0)';
-        }
-      }, 2200);
-      
-      // Step 5: Show deficit number counting down (2600ms)
-      setTimeout(() => {
-        if(deficitNum) {
-          deficitNum.style.opacity = '1';
-          deficitNum.classList.add('animate');
-          animateNumber(deficitNum, 0, dailyDeficit, 700, () => {
-            playSound('success');
-            setTimeout(() => {
-              if(deficitNum) deficitNum.classList.remove('animate');
-            }, 400);
-          }, '-');
-        }
-      }, 2600);
-      
-      // Step 6: Introduce floating panel (3500ms)
-      setTimeout(() => {
-        if(panel) {
-          panel.style.opacity = '1';
-          panel.style.transform = 'translateY(0) scale(1)';
-        }
-      }, 3500);
-      
-      // Step 7: Add hormone bonus (3900ms)
-      setTimeout(() => {
-        if(row1) {
-          row1.style.opacity = '1';
-          row1.style.transform = 'translateX(0)';
-          animateNumber(hormoneNum, 0, hormoneBonus, 500, () => {
-            playSound('success');
-          }, '+');
-        }
-      }, 3900);
-      
-      // Step 8: Add rollover bonus (4500ms)
-      setTimeout(() => {
-        if(row2) {
-          row2.style.opacity = '1';
-          row2.style.transform = 'translateX(0)';
-          animateNumber(rolloverNum, 0, rolloverBonus, 500, () => {
-            playSound('success');
-          }, '+');
-        }
-      }, 4500);
-      
-      // Step 9: Show final budget (5100ms)
-      setTimeout(() => {
-        if(row3) {
-          row3.style.opacity = '1';
-          row3.style.transform = 'translateX(0)';
-          animateNumber(budgetNum, 0, finalBudget, 700, () => {
-            playSound('success');
-          });
-        }
-      }, 5100);
-      
-      // Step 10: Show tap hint (6000ms)
-      setTimeout(() => {
-        if(tapHint) {
-          tapHint.style.opacity = '1';
-        }
-      }, 6000);
-    };
-
-    const skipToFinalScreen = () => {
-      // Skip to final state - show all elements with final values
-      const yesterdayBurned = 2693;
-      const dailyDeficit = 750;
-      const hormoneBonus = 71;
-      const rolloverBonus = 83;
-      const finalBudget = yesterdayBurned - dailyDeficit + hormoneBonus + rolloverBonus;
-      
-      const greeting = el('morningGreeting');
-      const text1 = el('morningText1');
-      const text2 = el('morningText2');
-      const yesterdayNum = el('morningYesterdayNum');
-      const deficitNum = el('morningDeficitNum');
-      const panel = el('morningPanel');
-      const row1 = el('morningRow1');
-      const row2 = el('morningRow2');
-      const row3 = el('morningRow3');
-      const hormoneNum = el('morningHormoneNum');
-      const rolloverNum = el('morningRolloverNum');
-      const budgetNum = el('morningBudgetNum');
-      const tapHint = el('morningTapHint');
-      
-      const yesterdayBubble = el('morningYesterdayBubble');
-      if(greeting) { greeting.style.opacity = '1'; greeting.style.transform = 'translateY(0)'; }
-      if(text1) { text1.style.opacity = '1'; text1.style.transform = 'translateY(0)'; }
-      if(text2) { text2.style.opacity = '1'; text2.style.transform = 'translateY(0)'; }
-      if(yesterdayBubble) { yesterdayBubble.style.opacity = '1'; }
-      if(yesterdayNum) { yesterdayNum.textContent = yesterdayBurned.toLocaleString('en-GB'); }
-      if(deficitNum) { deficitNum.textContent = '-' + dailyDeficit.toLocaleString('en-GB'); deficitNum.style.opacity = '1'; }
-      if(panel) { panel.style.opacity = '1'; panel.style.transform = 'translateY(0) scale(1)'; }
-      if(row1) { row1.style.opacity = '1'; row1.style.transform = 'translateX(0)'; }
-      if(row2) { row2.style.opacity = '1'; row2.style.transform = 'translateX(0)'; }
-      if(row3) { row3.style.opacity = '1'; row3.style.transform = 'translateX(0)'; }
-      if(hormoneNum) { hormoneNum.textContent = '+' + hormoneBonus.toLocaleString('en-GB'); }
-      if(rolloverNum) { rolloverNum.textContent = '+' + rolloverBonus.toLocaleString('en-GB'); }
-      if(budgetNum) { budgetNum.textContent = finalBudget.toLocaleString('en-GB'); }
-      if(tapHint) { 
-        tapHint.style.opacity = '1';
-      }
-    };
-
-    const closeMorningScreen = () => {
-      const screen = el('morningScreen');
-      if(!screen) return;
-      
-      const phone = document.querySelector('.phone');
-      
-      // Blur transition: blur morning screen, unblur app
-      screen.style.filter = 'blur(20px)';
-      screen.style.opacity = '0';
-      
-      if(phone) {
-        phone.style.display = '';
-        phone.style.filter = 'blur(20px)';
-        // Trigger reflow to ensure blur is applied
-        void phone.offsetWidth;
-        // Unblur the app
-        phone.style.filter = 'blur(0px)';
-      }
-      
-      // Hide morning screen after transition
-      setTimeout(() => {
-        if(screen) {
-          screen.style.display = 'none';
-          screen.style.filter = 'blur(0px)';
-          screen.style.opacity = '1';
-          screen.style.transition = '';
-        }
-      }, 400);
-      
-      // Reset for next time
-        const greeting = el('morningGreeting');
-        const text1 = el('morningText1');
-        const text2 = el('morningText2');
-        const yesterdayNum = el('morningYesterdayNum');
-        const deficitNum = el('morningDeficitNum');
-        const panel = el('morningPanel');
-        const row1 = el('morningRow1');
-        const row2 = el('morningRow2');
-        const row3 = el('morningRow3');
-        const tapHint = el('morningTapHint');
-        
-        const yesterdayBubble = el('morningYesterdayBubble');
-        if(greeting) { greeting.style.opacity = '0'; greeting.style.transform = 'translateY(12px)'; }
-        if(text1) { text1.style.opacity = '0'; text1.style.transform = 'translateY(8px)'; }
-        if(text2) { text2.style.opacity = '0'; text2.style.transform = 'translateY(8px)'; }
-        if(yesterdayBubble) { yesterdayBubble.style.opacity = '0'; }
-        if(yesterdayNum) { yesterdayNum.textContent = '0'; }
-        if(deficitNum) { 
-          deficitNum.style.opacity = '0'; 
-          deficitNum.textContent = '0';
-          deficitNum.classList.remove('animate');
-        }
-        if(panel) { panel.style.opacity = '0'; panel.style.transform = 'translateY(20px) scale(0.96)'; }
-        if(row1) { row1.style.opacity = '0'; row1.style.transform = 'translateX(-10px)'; }
-        if(row2) { row2.style.opacity = '0'; row2.style.transform = 'translateX(-10px)'; }
-        if(row3) { row3.style.opacity = '0'; row3.style.transform = 'translateX(-10px)'; }
-        if(tapHint) { tapHint.style.opacity = '0'; }
-        
-        // Render the app after closing
     renderPresetTiles();
     renderStatsView(false);
     render();
-    };
 
-    // Event listeners for morning screen - tap anywhere to continue
-    const morningScreen = el('morningScreen');
-    if(morningScreen) {
-      let sequenceComplete = false;
-      const tapToContinue = (e) => {
-        // Wait for tap hint to appear (sequence complete)
-        if(!sequenceComplete) {
-          // Check if tap hint is visible
-          const tapHint = el('morningTapHint');
-          if(tapHint && parseFloat(getComputedStyle(tapHint).opacity) > 0.5){
-            sequenceComplete = true;
-            playSound('tap');
-            closeMorningScreen();
-          }
-        } else {
-          playSound('tap');
-          closeMorningScreen();
-        }
-      };
-      
-      // Listen for tap anywhere after a delay (once sequence is playing)
-      setTimeout(() => {
-        if(morningScreen) {
-          morningScreen.addEventListener('click', tapToContinue);
-          morningScreen.addEventListener('touchend', tapToContinue);
-        }
-      }, 5000); // Enable after 5 seconds
-      
-      // Also enable immediately if tap hint is already visible
-      setTimeout(() => {
-        sequenceComplete = true;
-      }, 9000);
-    }
-
-    // Add keyboard shortcut: Press "R" to test morning screen (for development)
-    document.addEventListener('keydown', (e) => {
-      // Only trigger if not typing in an input field
-      if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-      
-      if(e.key === 'r' || e.key === 'R'){
-        e.preventDefault();
-        e.stopPropagation();
-        playSound('tap');
-        // Clear last morning seen and force it to show
-        localStorage.removeItem(LS_LAST_MORNING);
-        // Hide app and show morning screen
-        const phone = document.querySelector('.phone');
-        if(phone) phone.style.display = 'none';
-        if(typeof showMorningScreen === 'function'){
-          showMorningScreen();
-        }
-      }
-    }, true); // Use capture phase to catch event early
-
-    // Initialize app - CHECK FIRST, then conditionally render
-    // For testing: add ?testMorning to URL to force morning screen (or double-click R button)
-    const urlParams = new URLSearchParams(window.location.search);
-    const forceMorning = urlParams.has('testMorning');
-    
-    if(forceMorning || checkFirstOpenToday()){
-      // Show morning screen, don't render app yet
-      showMorningScreen();
-    } else {
-      // Normal initialization
-      renderPresetTiles();
-      renderStatsView(false);
-      render();
-    }
   </script>
 </body>
 </html>
