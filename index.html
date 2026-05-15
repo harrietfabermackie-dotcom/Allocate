@@ -93,7 +93,10 @@
       display:flex;
       align-items:flex-start;
       justify-content:center;
-      padding:22px 14px 0;
+      padding-top: 22px;
+      padding-left: 14px;
+      padding-right: 14px;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
       overflow: hidden;
       position: relative;
       width: 100%;
@@ -128,8 +131,6 @@
       max-height: calc(100vh - 44px);
       border-radius: 36px;
       padding: 16px;
-      /* Safe area lives on .bottomTabsWrap so the tab bar stays flush with no gradient gap */
-      padding-bottom: 16px;
       background: rgba(255,255,255,.18);
       border: 1px solid rgba(255,255,255,.25);
       box-shadow: var(--shadow);
@@ -230,7 +231,6 @@
       flex: 1 1 auto;
       overflow:auto;
       -webkit-overflow-scrolling: touch;
-      padding-bottom: calc(var(--tabH) + 26px + constant(safe-area-inset-bottom));
       padding-bottom: calc(var(--tabH) + 26px + env(safe-area-inset-bottom, 0px));
     }
 
@@ -716,24 +716,17 @@
       position: absolute;
       left: 16px;
       right: 16px;
-      bottom: 0;
+      bottom: 14px;
       padding: var(--tabPad);
-      /* Safe area: extend opaque bar into home-indicator zone (PWA + Safari); constant() for older iOS */
-      padding-bottom: calc(var(--tabPad) + constant(safe-area-inset-bottom));
-      padding-bottom: calc(var(--tabPad) + env(safe-area-inset-bottom, 0px));
       background: #fff;
       border: 1px solid rgba(255,255,255,.82);
       border-radius: 20px;
       box-shadow: var(--shadow2);
-      min-height: calc(var(--tabH) + constant(safe-area-inset-bottom));
-      min-height: calc(var(--tabH) + env(safe-area-inset-bottom, 0px));
-      height: auto;
+      height: var(--tabH);
       display:flex;
       align-items:center;
       justify-content:center;
       z-index: 999;
-      -webkit-backface-visibility: hidden;
-      backface-visibility: hidden;
     }
     body.night .bottomTabsWrap{
       background: #fff;
