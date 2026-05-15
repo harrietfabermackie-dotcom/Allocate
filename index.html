@@ -66,6 +66,7 @@
       overflow: hidden;
       margin: 0;
       padding: 0;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
       position: fixed;
       width: 100%;
       background:
@@ -127,8 +128,10 @@
 
     .phone{
       width:min(420px, 100%);
-      height: min(860px, calc(100vh - 44px));
-      max-height: calc(100vh - 44px);
+      height: 100vh;
+      height: 100dvh;
+      max-height: 100vh;
+      max-height: 100dvh;
       border-radius: 36px;
       padding: 16px;
       background: rgba(255,255,255,.18);
@@ -150,6 +153,12 @@
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
+    }
+
+    @media (max-width: 500px){
+      .phone{
+        border-radius: 0;
+      }
     }
 
     .topbar{
@@ -231,7 +240,7 @@
       flex: 1 1 auto;
       overflow:auto;
       -webkit-overflow-scrolling: touch;
-      padding-bottom: calc(var(--tabH) + 26px + env(safe-area-inset-bottom, 0px));
+      padding-bottom: calc(var(--tabH) + 40px + env(safe-area-inset-bottom, 0px));
     }
 
     .card{
@@ -716,7 +725,7 @@
       position: absolute;
       left: 16px;
       right: 16px;
-      bottom: 14px;
+      bottom: calc(14px + env(safe-area-inset-bottom, 0px));
       padding: var(--tabPad);
       background: #fff;
       border: 1px solid rgba(255,255,255,.82);
